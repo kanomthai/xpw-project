@@ -31,7 +31,7 @@ namespace OrderApp.Reportings
                         $"INNER JOIN TXP_PART p ON b.PARTNO = p.PARTNO AND e.FACTORY = p.VENDORCD  \n" +
                         $"WHERE b.ISSUINGKEY = '{invoice}' AND b.ORDERQTY > 0\n" +
                         $"{orderfilter}";
-
+            Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
             List<JobListData> list = new List<JobListData>();
             int xqty = 0;

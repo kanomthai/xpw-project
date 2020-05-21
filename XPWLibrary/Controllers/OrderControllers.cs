@@ -168,6 +168,7 @@ namespace XPWLibrary.Controllers
         public string CreatedJobList(OrderData b)
         {
             string refinvoice = b.RefNo;
+            new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT e WHERE e.ISSUINGKEY = '{b.RefNo}'");
             List<OrderBody> ord = GetOrderDetail(b);
             if (ord.Count > 0)
             {
@@ -191,6 +192,15 @@ namespace XPWLibrary.Controllers
                     int i = 0;
                     while (i < ord.Count)
                     {
+                        string uukey = Guid.NewGuid().ToString();
+                        DataSet drh = new ConnDB().GetFill($"select count(*) ctn from txp_isstransent where issuingkey='{b.RefNo}'");
+                        if (int.Parse(drh.Tables[0].Rows[0]["ctn"].ToString()) < 1)
+                        {
+                            sqlhead = $"insert into txp_isstransent(issuingkey,refinvoice,issuingstatus,etddte,factory,affcode,bishpc,custname,comercial,zoneid,shiptype,\n" +
+                             "combinv,pc,zonecode,note1,note2,upddte,sysdte,uuid,createdby,modifiedby,containertype,issuingmax)\n" +
+                             $"values('{refinvoice}','{refinvoice}',0,to_date('{j.Etd.ToString("dd-MM-yyyy")}','DD-MM-YYYY'),'{j.Factory}','{j.Affcode}','{j.Custcode}','{j.Custname}','{j.Commercial}','{j.BioABT}','{j.Ship}',\n" +
+                             $"'{j.Combinv}','{j.Pc}',{zonecode},'{Note1}','{Note2}',sysdate,sysdate,'{uukey}','SYS','SYS','{Note3}','{ord.Count()}')";
+                        }
                         new ConnDB().ExcuteSQL(sqlhead);
                         OrderBody r = ord[i];
                         Guid g = Guid.NewGuid();
@@ -238,7 +248,7 @@ namespace XPWLibrary.Controllers
                              "combinv,pc,zonecode,note1,note2,upddte,sysdte,uuid,createdby,modifiedby,containertype,issuingmax)\n" +
                              $"values('{refinvoice}','{refinvoice}',0,to_date('{j.Etd.ToString("dd-MM-yyyy")}','DD-MM-YYYY'),'{j.Factory}','{j.Affcode}','{j.Custcode}','{j.Custname}','{j.Commercial}','{j.BioABT}','{j.Ship}',\n" +
                              $"'{j.Combinv}','{j.Pc}',{zonecode},'{Note1}','{Note2}',sysdate,sysdate,'{Guid.NewGuid().ToString()}','SYS','SYS','{Note3}','{ord.Count()}')";
-                    Console.WriteLine(sqlhead);
+                    new ConnDB().ExcuteSQL(sqlhead);
                     //create body
                     int i = 0;
                     while (i < ord.Count)
@@ -248,7 +258,7 @@ namespace XPWLibrary.Controllers
                         string sql = $"insert into txp_isstransbody(issuingkey,issuingseq,pono,tagrp,partno,stdpack,orderqty,issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,upddte,sysdte,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,refinv)\n" +
                                 $"values('{refinvoice}',{i},'{r.OrderNo}','C','{r.PartNo}','{r.BiSTDP}','{r.BalQty}',0,0,0,0,0,0,{r.BiWidt},{r.BiLeng},{r.BiHigh},{r.BiNetW},{r.BiGrwt},sysdate,sysdate,'{r.OrderType}','{r.PartName}','{r.Ship}'," +
                                 $"to_date('{r.Etd.ToString("yyyy/MM/dd")}', 'yyyy/MM/dd'),'{g.ToString()}','SYS','SYS','{r.PartType}','{r.LotNo}','{r.Uuid}')";
-                        Console.WriteLine(sql);
+                        new ConnDB().ExcuteSQL(sql);
                         Console.WriteLine(g.ToString());
                         Console.WriteLine(r.Ctn);
                         Console.WriteLine(r.Uuid);
@@ -261,14 +271,14 @@ namespace XPWLibrary.Controllers
                             string fkey = new GreeterFunction().getFTicket(r.Factory);
                             string sqldetail = $"insert into txp_isspackdetail(issuingkey,pono,tagrp,partno,fticketno,orderqty,issuedqty,unit,issuingstatus,upddte,sysdte,uuid,createdby,modifedby,ITEM,splorder)\n" +
                                 $"values('{refinvoice}','{r.OrderNo}','C','{r.PartNo}','{fkey}','{r.BiSTDP}',0,'PCS',0,sysdate,sysdate,'{gid.ToString()}','SYS','SYS',{(rn + 1)},'{g.ToString()}')";
-                            Console.WriteLine(sqldetail);
+                            new ConnDB().ExcuteSQL(sqldetail);
                             if (GreeterFunction.updateFTicket(r.Factory))
                             {
                                 rn++;
                             }
                         }
                         string updateorder = $"update txp_orderplan set curinv = '{refinvoice}',orderstatus=1,upddte = sysdate where uuid = '{r.Uuid}'";
-                        Console.WriteLine(updateorder);
+                        new ConnDB().ExcuteSQL(updateorder);
                         i++;
                     }
                     new GreeterFunction().SumPallet(refinvoice);
@@ -420,7 +430,7 @@ namespace XPWLibrary.Controllers
 
         List<OrderBody> AddOrderBodyList(OrderData b, string sql)
         {
-            Console.WriteLine("##############################################");
+            Console.WriteLine($"##################### {b.RefNo} #########################");
             Console.WriteLine(sql);
             List<OrderBody> obj = new List<OrderBody>();
             DataSet dr = new ConnDB().GetFill(sql);
@@ -537,10 +547,10 @@ namespace XPWLibrary.Controllers
         public List<OrderBody> GetOrderDetail(OrderData b)
         {
             string sql = $"SELECT p.PONO custpono,p.PARTNO,p.PARTNAME,p.LOTNO,p.BALQTY,round(p.BALQTY/p.BISTDP) orderctn,p.BIIVPX,p.BIOABT,p.COMMERCIAL,p.PC,p.UUID," +
-                $"p.BISTDP,p.BIWIDT,p.BILENG,p.BIHIGH,p.BIGRWT,p.BINEWT,p.ORDERTYPE,p.BICOMD,p.CURINV,e.REFINVOICE invoceno,p.ORDERSTATUS," +
-                $"CASE WHEN p.FACTORY = 'INJ' THEN substr(p.REASONCD, 1, 1) ELSE substr(p.REASONCD, 2, 1) END rewrite,p.upddte,p.bicomd FROM TXP_ORDERPLAN p\n" +
-                "LEFT JOIN TXP_ISSTRANSBODY b ON p.CURINV = b.ISSUINGKEY AND p.PARTNO = b.PARTNO\n" +
-                "LEFT JOIN TXP_ISSTRANSENT e ON p.CURINV = e.ISSUINGKEY\n";
+                $"p.BISTDP,p.BIWIDT,p.BILENG,p.BIHIGH,p.BIGRWT,p.BINEWT,p.ORDERTYPE,p.BICOMD,p.CURINV,'' invoceno,p.ORDERSTATUS," +
+                $"CASE WHEN p.FACTORY = '{b.Factory}' THEN substr(p.REASONCD, 1, 1) ELSE substr(p.REASONCD, 2, 1) END rewrite,p.upddte,p.bicomd FROM TXP_ORDERPLAN p\n" +
+                "--LEFT JOIN TXP_ISSTRANSBODY b ON p.CURINV = b.ISSUINGKEY AND p.PARTNO = b.PARTNO\n" +
+                "--LEFT JOIN TXP_ISSTRANSENT e ON p.CURINV = e.ISSUINGKEY\n";
             List<OrderBody> obj = new List<OrderBody>();
             sql += CheckOrderGroup(b);
             foreach (OrderBody od in AddOrderBodyList(b, sql))

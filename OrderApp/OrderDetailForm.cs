@@ -33,7 +33,12 @@ namespace OrderApp
                     }
                 }
             }
-            List<OrderBody> ob = new OrderControllers().GetOrderDetail(obj);
+            ReloadData();
+        }
+
+        void ReloadData()
+        {
+            List<OrderBody> ob = new OrderControllers().GetOrderDetail(ord);
             gridControl.DataSource = ob;
             bsiRecordsCount.Caption = "RECORDS : " + ob.Count;
         }
@@ -194,6 +199,7 @@ namespace OrderApp
             {
                 OrderJobListPreviewForm frm = new OrderJobListPreviewForm(refinv);
                 frm.ShowDialog();
+                ReloadData();
             }
         }
 
@@ -201,7 +207,12 @@ namespace OrderApp
         {
             OrderJobListPreviewForm frm = new OrderJobListPreviewForm(refinv);
             frm.ShowDialog();
+            ReloadData();
         }
 
+        private void bbiRefresh_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ReloadData();
+        }
     }
 }
