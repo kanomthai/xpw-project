@@ -135,8 +135,8 @@ namespace InvoiceApp
                 bbiPlDetail.Enabled = false;
                 try
                 {
-                    var plout = gridView.GetFocusedRowCellValue("PlOut");
-                    var conno = gridView.GetFocusedRowCellValue("ContainerNo");
+                    var plout = gridView.GetFocusedRowCellValue("PlOut").ToString();
+                    var conno = gridView.GetFocusedRowCellValue("ContainerNo").ToString();
                     if (plout != "")
                     {
                         bbiPlDetail.Enabled = true;

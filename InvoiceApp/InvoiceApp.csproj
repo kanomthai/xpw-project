@@ -154,6 +154,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icons8-planner-48.ico" />
+    <None Include="Resources\print_32x325.png" />
+    <None Include="Resources\print_16x165.png" />
+    <None Include="Resources\print_32x324.png" />
+    <None Include="Resources\print_16x164.png" />
     <None Include="Resources\print_32x323.png" />
     <None Include="Resources\print_16x163.png" />
     <None Include="Resources\print_32x322.png" />

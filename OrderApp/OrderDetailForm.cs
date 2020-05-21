@@ -13,13 +13,21 @@ namespace OrderApp
     public partial class OrderDetailForm : DevExpress.XtraBars.Ribbon.RibbonForm
     {
         OrderData ord;
-        string refinv;
         public OrderDetailForm(OrderData obj)
         {
             InitializeComponent();
             this.Text = "ORDER DETAIL";
             ord = obj;
-            refinv = ord.RefNo;
+            bbiEtd.EditValue = ord.Etd;
+            bbiShip.EditValue = ord.Ship;
+            bbiZone.EditValue = ord.Zone;
+            bbiAffcode.EditValue = ord.Affcode;
+            bbiCustCode.EditValue = ord.Custcode;
+            bbiCustName.EditValue = ord.Custname;
+            bbiOrderBy.EditValue = ord.CustPoType;
+            bbiRefInv.EditValue = ord.RefNo;
+            bbiInvoice.EditValue = ord.RefInv;
+
             bool x = new OrderControllers().GetOrderBodyRefinvoice(obj);
             if (x)
             {
@@ -28,7 +36,7 @@ namespace OrderApp
                 {
                     if (CreateJobList())
                     {
-                        OrderJobListPreviewForm frm = new OrderJobListPreviewForm(refinv);
+                        OrderJobListPreviewForm frm = new OrderJobListPreviewForm(ord);
                         frm.ShowDialog();
                     }
                 }
@@ -173,6 +181,11 @@ namespace OrderApp
                             bbiCreateJobList.Caption = "Re-Create JobList";
                             bbiPrintJobList.Enabled = true;
                         }
+                        bbiShipingLabel.Enabled = false;
+                        if (ob[0].Status > 1)
+                        {
+                            bbiShipingLabel.Enabled = true;
+                        }
                         popupMenu1.ShowPopup(new System.Drawing.Point(MousePosition.X, MousePosition.Y));
                         break;
                     default:
@@ -188,7 +201,9 @@ namespace OrderApp
         bool CreateJobList()
         {
             SplashScreenManager.ShowDefaultWaitForm();
-            refinv = new OrderControllers().CreatedJobList(ord);
+            string refinv = new OrderControllers().CreatedJobList(ord);
+            ord.RefNo = refinv;
+            ord.RefInv = refinv;
             SplashScreenManager.CloseDefaultWaitForm();
             return true;
         }
@@ -197,7 +212,7 @@ namespace OrderApp
         {
             if (CreateJobList())
             {
-                OrderJobListPreviewForm frm = new OrderJobListPreviewForm(refinv);
+                OrderJobListPreviewForm frm = new OrderJobListPreviewForm(ord);
                 frm.ShowDialog();
                 ReloadData();
             }
@@ -205,7 +220,7 @@ namespace OrderApp
 
         private void bbiPrintJobList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            OrderJobListPreviewForm frm = new OrderJobListPreviewForm(refinv);
+            OrderJobListPreviewForm frm = new OrderJobListPreviewForm(ord);
             frm.ShowDialog();
             ReloadData();
         }
@@ -213,6 +228,12 @@ namespace OrderApp
         private void bbiRefresh_ItemClick(object sender, ItemClickEventArgs e)
         {
             ReloadData();
+        }
+
+        private void bbiConfirmInvoice_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            OrderPalletDetailForm frm = new OrderPalletDetailForm(ord);
+            frm.ShowDialog();
         }
     }
 }

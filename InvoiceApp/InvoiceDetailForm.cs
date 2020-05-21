@@ -92,8 +92,8 @@ namespace InvoiceApp
 
         private void bbiPrintJobList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            OrderJobListPreviewForm frm = new OrderJobListPreviewForm(ob.RefInv);
-            frm.ShowDialog();
+            //OrderJobListPreviewForm frm = new OrderJobListPreviewForm(ob);
+            //frm.ShowDialog();
         }
 
         private void bbiPrintCardBoard_ItemClick(object sender, ItemClickEventArgs e)
@@ -170,6 +170,31 @@ namespace InvoiceApp
         private void bbiShowLotDetail_ItemClick(object sender, ItemClickEventArgs e)
         {
 
+        }
+
+        private void bbiPrintAllShipingLabel_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            bool checkinv = new InvoiceControllers().CheckInvoiceStatus(ob.RefInv);
+            if (checkinv)
+            {
+                List<InvoiceBodyData> obj = gridControl.DataSource as List<InvoiceBodyData>;
+                SplashScreenManager.ShowDefaultWaitForm();
+                int i = 0;
+                while (i < obj.Count)
+                {
+                    InvoiceBodyData j = obj[i];
+                    bool plabel = new InvoiceControllers().PrintFTicket(j.RefInv, j.PartNo, j.OrderNo, j.StartFticket, j.StartFticket.ToString());
+                    if (plabel)
+                    {
+                        i++;
+                    }
+                }
+                XtraMessageBox.Show("ปริ้นข้อมูลเสร็จแล้ว");
+            }
+            else
+            {
+                XtraMessageBox.Show("กรุณาทำการยืนยัน Invoice ก่อน", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

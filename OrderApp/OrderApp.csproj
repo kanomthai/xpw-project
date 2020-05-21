@@ -103,6 +103,12 @@
     <Compile Include="Reportings\XtraJobListReport.Designer.cs">
       <DependentUpon>XtraJobListReport.cs</DependentUpon>
     </Compile>
+    <Compile Include="OrderPalletDetailForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderPalletDetailForm.Designer.cs">
+      <DependentUpon>OrderPalletDetailForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="OrderDetailForm.resx">
       <DependentUpon>OrderDetailForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -111,6 +117,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="OrderMainForm.resx">
       <DependentUpon>OrderMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderPalletDetailForm.aa-DJ.resx">
+      <DependentUpon>OrderPalletDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderPalletDetailForm.resx">
+      <DependentUpon>OrderPalletDetailForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -141,6 +153,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icons8-new-property-48.ico" />
+    <None Include="Resources\barcode_32x32.png" />
+    <None Include="Resources\barcode_16x16.png" />
+    <None Include="Resources\scripts_32x32.png" />
+    <None Include="Resources\scripts_16x16.png" />
     <None Include="Resources\database_32x321.png" />
     <None Include="Resources\database_16x161.png" />
     <None Include="Resources\addnewdatasource_32x32.png" />

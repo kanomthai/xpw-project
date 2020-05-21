@@ -10,22 +10,23 @@ using System.Windows.Forms;
 using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
 using OrderApp.Reportings;
+using XPWLibrary.Models;
 
 namespace OrderApp
 {
     public partial class OrderJobListPreviewForm : DevExpress.XtraEditors.XtraForm
     {
-        public OrderJobListPreviewForm(string refinv)
+        public OrderJobListPreviewForm(OrderData obj)
         {
             InitializeComponent();
             SplashScreenManager.ShowDefaultWaitForm();
-            this.Text = $"Print JobList {refinv}";
+            this.Text = $"Print JobList {obj.RefInv}";
             XtraJobListReport rp = new XtraJobListReport();
             foreach (DevExpress.XtraReports.Parameters.Parameter i in rp.Parameters)
             {
                 i.Visible = false;
             }
-            rp.InitData(refinv);
+            rp.InitData(obj);
             jbDoc.DocumentSource = rp;
             rp.PaperKind = System.Drawing.Printing.PaperKind.A4;
             //rp.Margins.Left = 3;

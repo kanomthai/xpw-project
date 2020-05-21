@@ -153,9 +153,9 @@ namespace InvoiceApp
 
         private void bbiPrintJobList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            string refinv = gridView.GetFocusedRowCellValue("RefInv").ToString();
-            OrderJobListPreviewForm frm = new OrderJobListPreviewForm(refinv);
-            frm.ShowDialog();
+            //string refinv = gridView.GetFocusedRowCellValue("RefInv").ToString();
+            //OrderJobListPreviewForm frm = new OrderJobListPreviewForm(refinv);
+            //frm.ShowDialog();
         }
 
         private void bbiPartShorting_ItemClick(object sender, ItemClickEventArgs e)

@@ -45,6 +45,7 @@
             this.bbiOrderId = new DevExpress.XtraBars.BarEditItem();
             this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.bbiSearch = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiInvoiceControl = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -69,9 +70,9 @@
             this.gridColumn12 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colPoType = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn13 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn14 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.gridColumn14 = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1.CalendarTimeProperties)).BeginInit();
@@ -102,9 +103,10 @@
             this.bbiFactory,
             this.bbiOnDay,
             this.bbiOrderId,
-            this.bbiSearch});
+            this.bbiSearch,
+            this.bbiInvoiceControl});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 26;
+            this.ribbonControl.MaxItemId = 27;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -235,6 +237,12 @@
             this.bbiSearch.Name = "bbiSearch";
             this.bbiSearch.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiSearch_ItemClick);
             // 
+            // bbiInvoiceControl
+            // 
+            this.bbiInvoiceControl.Caption = "Invoice Control";
+            this.bbiInvoiceControl.Id = 26;
+            this.bbiInvoiceControl.Name = "bbiInvoiceControl";
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -333,11 +341,12 @@
             this.colPoType,
             this.gridColumn13,
             this.gridColumn14});
-            this.gridView.CustomizationFormBounds = new System.Drawing.Rectangle(950, 502, 250, 280);
+            this.gridView.CustomizationFormBounds = new System.Drawing.Rectangle(950, 222, 250, 280);
             this.gridView.GridControl = this.gridControl;
             this.gridView.Name = "gridView";
             this.gridView.OptionsBehavior.Editable = false;
             this.gridView.OptionsBehavior.ReadOnly = true;
+            this.gridView.OptionsBehavior.SummariesIgnoreNullValues = true;
             this.gridView.OptionsView.ShowFooter = true;
             this.gridView.OptionsView.ShowGroupPanel = false;
             this.gridView.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gridView_CustomColumnDisplayText);
@@ -500,6 +509,15 @@
             this.gridColumn13.FieldName = "CustPoType";
             this.gridColumn13.Name = "gridColumn13";
             // 
+            // gridColumn14
+            // 
+            this.gridColumn14.Caption = "REWRITE";
+            this.gridColumn14.FieldName = "OrderRewrite";
+            this.gridColumn14.Name = "gridColumn14";
+            this.gridColumn14.Visible = true;
+            this.gridColumn14.VisibleIndex = 11;
+            this.gridColumn14.Width = 131;
+            // 
             // Root
             // 
             this.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
@@ -518,15 +536,6 @@
             this.layoutControlItem1.Size = new System.Drawing.Size(1151, 563);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
-            // 
-            // gridColumn14
-            // 
-            this.gridColumn14.Caption = "REWRITE";
-            this.gridColumn14.FieldName = "OrderRewrite";
-            this.gridColumn14.Name = "gridColumn14";
-            this.gridColumn14.Visible = true;
-            this.gridColumn14.VisibleIndex = 11;
-            this.gridColumn14.Width = 131;
             // 
             // OrderMainForm
             // 
@@ -602,5 +611,6 @@
         private DevExpress.XtraBars.BarButtonItem bbiSearch;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbOrderId;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn14;
+        private DevExpress.XtraBars.BarButtonItem bbiInvoiceControl;
     }
 }

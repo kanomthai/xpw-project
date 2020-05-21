@@ -101,6 +101,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.ppMenu = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.bbiPrintAllShipingLabel = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -160,9 +161,10 @@
             this.bbiPrintCardBoard,
             this.bbiEditOrder,
             this.bbiSetMultiLot,
-            this.bbiShowLotDetail});
+            this.bbiShowLotDetail,
+            this.bbiPrintAllShipingLabel});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 27;
+            this.ribbonControl.MaxItemId = 28;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -237,8 +239,8 @@
             // 
             this.bbiPrintCardBoard.Caption = "Shipping Label";
             this.bbiPrintCardBoard.Id = 23;
-            this.bbiPrintCardBoard.ImageOptions.Image = global::InvoiceApp.Properties.Resources.barcode_16x16;
-            this.bbiPrintCardBoard.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.barcode_32x32;
+            this.bbiPrintCardBoard.ImageOptions.Image = global::InvoiceApp.Properties.Resources.print_16x165;
+            this.bbiPrintCardBoard.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.print_32x325;
             this.bbiPrintCardBoard.Name = "bbiPrintCardBoard";
             this.bbiPrintCardBoard.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiPrintCardBoard_ItemClick);
             // 
@@ -956,6 +958,7 @@
             this.ppMenu.ItemLinks.Add(this.bbiPlConfirm);
             this.ppMenu.ItemLinks.Add(this.bbiPrintJobList);
             this.ppMenu.ItemLinks.Add(this.bbiPrintCardBoard);
+            this.ppMenu.ItemLinks.Add(this.bbiPrintAllShipingLabel);
             this.ppMenu.ItemLinks.Add(this.bbiEditOrder, true);
             this.ppMenu.ItemLinks.Add(this.bbiSetMultiLot);
             this.ppMenu.ItemLinks.Add(this.bbiShowLotDetail, true);
@@ -964,6 +967,15 @@
             this.ppMenu.Ribbon = this.ribbonControl;
             this.ppMenu.ShowCaption = true;
             this.ppMenu.ShowNavigationHeader = DevExpress.Utils.DefaultBoolean.True;
+            // 
+            // bbiPrintAllShipingLabel
+            // 
+            this.bbiPrintAllShipingLabel.Caption = "Print All Shipping";
+            this.bbiPrintAllShipingLabel.Id = 27;
+            this.bbiPrintAllShipingLabel.ImageOptions.Image = global::InvoiceApp.Properties.Resources.print_16x164;
+            this.bbiPrintAllShipingLabel.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.print_32x324;
+            this.bbiPrintAllShipingLabel.Name = "bbiPrintAllShipingLabel";
+            this.bbiPrintAllShipingLabel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiPrintAllShipingLabel_ItemClick);
             // 
             // InvoiceDetailForm
             // 
@@ -1094,5 +1106,6 @@
         private DevExpress.XtraBars.BarButtonItem bbiSetMultiLot;
         private DevExpress.Utils.WorkspaceManager workspaceManager1;
         private DevExpress.XtraBars.BarButtonItem bbiShowLotDetail;
+        private DevExpress.XtraBars.BarButtonItem bbiPrintAllShipingLabel;
     }
 }

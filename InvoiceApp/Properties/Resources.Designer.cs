@@ -303,6 +303,26 @@ namespace InvoiceApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap print_16x164 {
+            get {
+                object obj = ResourceManager.GetObject("print_16x164", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap print_16x165 {
+            get {
+                object obj = ResourceManager.GetObject("print_16x165", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap print_32x32 {
             get {
                 object obj = ResourceManager.GetObject("print_32x32", resourceCulture);
@@ -336,6 +356,26 @@ namespace InvoiceApp.Properties {
         internal static System.Drawing.Bitmap print_32x323 {
             get {
                 object obj = ResourceManager.GetObject("print_32x323", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap print_32x324 {
+            get {
+                object obj = ResourceManager.GetObject("print_32x324", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap print_32x325 {
+            get {
+                object obj = ResourceManager.GetObject("print_32x325", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
