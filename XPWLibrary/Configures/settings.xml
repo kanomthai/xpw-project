@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data>
+  <factory>INJ</factory>
+  <fticket>Microsoft Print to PDF</fticket>
+  <cartonprinter>Microsoft Print to PDF</cartonprinter>
+  <aw_totalpallet>45</aw_totalpallet>
+  <aw_palletlimit>17</aw_palletlimit>
+  <aw_boxbigsize>2</aw_boxbigsize>
+  <aw_netweight>1000</aw_netweight>
+  <ipaddress>192.168.101.215</ipaddress>
+  <dbname>RMW</dbname>
+  <user>sktsys</user>
+  <passwd>sktsys</passwd>
+  <aw_plprinter>POSTEKI300</aw_plprinter>
+  <inj_plprinter>POSTEKI300</inj_plprinter>
+  <confirmlotno>true</confirmlotno>
+  <editorder>false</editorder>
+  <editship>false</editship>
+</data>
