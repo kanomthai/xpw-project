@@ -394,6 +394,21 @@ namespace XPWLibrary.Interfaces
             return obj;
         }
 
+        public int GetInvoiceStatus(string refNo)
+        {
+            if (refNo == "")
+            {
+                return 0;
+            }
+            string sql = $"SELECT e.ISSUINGSTATUS FROM TXP_ISSTRANSENT e WHERE e.ISSUINGKEY = '{refNo}'";
+            DataSet dr = new ConnDB().GetFill(sql);
+            if (dr.Tables[0].Rows.Count < 1)
+            {
+                return 0;
+            }
+            return int.Parse(dr.Tables[0].Rows[0][0].ToString());
+        }
+
         internal static bool updateFTicket(object fac)
         {
             string sql = $"update TXM_SHIPLABELSN set lastsnno = lastsnno + 1 where factory = '{fac}'";

@@ -18,16 +18,6 @@ namespace OrderApp
             InitializeComponent();
             this.Text = "ORDER DETAIL";
             ord = obj;
-            bbiEtd.EditValue = ord.Etd;
-            bbiShip.EditValue = ord.Ship;
-            bbiZone.EditValue = ord.Zone;
-            bbiAffcode.EditValue = ord.Affcode;
-            bbiCustCode.EditValue = ord.Custcode;
-            bbiCustName.EditValue = ord.Custname;
-            bbiOrderBy.EditValue = ord.CustPoType;
-            bbiRefInv.EditValue = ord.RefNo;
-            bbiInvoice.EditValue = ord.RefInv;
-
             bool x = new OrderControllers().GetOrderBodyRefinvoice(obj);
             if (x)
             {
@@ -46,7 +36,16 @@ namespace OrderApp
 
         void ReloadData()
         {
+            bbiEtd.EditValue = ord.Etd;
+            bbiShip.EditValue = ord.Ship;
+            bbiZone.EditValue = ord.Zone;
+            bbiAffcode.EditValue = ord.Affcode;
+            bbiCustCode.EditValue = ord.Custcode;
+            bbiCustName.EditValue = ord.Custname;
+            bbiOrderBy.EditValue = ord.PoType;
+            bbiRefInv.EditValue = ord.RefNo;
             List<OrderBody> ob = new OrderControllers().GetOrderDetail(ord);
+            bbiInvoice.EditValue = ob[0].RefInv;
             gridControl.DataSource = ob;
             bsiRecordsCount.Caption = "RECORDS : " + ob.Count;
         }
@@ -176,14 +175,18 @@ namespace OrderApp
                     case "Right":
                         List<OrderBody> ob = gridControl.DataSource as List<OrderBody>;
                         bbiPrintJobList.Enabled = false;
+                        bbiPartDetail.Enabled = false;
+                        bbiConfirmInvoice.Enabled = false;
                         if (ob[0].Status > 0)
                         {
                             bbiCreateJobList.Caption = "Re-Create JobList";
                             bbiPrintJobList.Enabled = true;
+                            bbiConfirmInvoice.Enabled = true;
                         }
                         bbiShipingLabel.Enabled = false;
                         if (ob[0].Status > 1)
                         {
+                            bbiPartDetail.Enabled = true;
                             bbiShipingLabel.Enabled = true;
                         }
                         popupMenu1.ShowPopup(new System.Drawing.Point(MousePosition.X, MousePosition.Y));
@@ -204,6 +207,8 @@ namespace OrderApp
             string refinv = new OrderControllers().CreatedJobList(ord);
             ord.RefNo = refinv;
             ord.RefInv = refinv;
+            bbiRefInv.EditValue = refinv;
+            bbiInvoice.EditValue = refinv;
             SplashScreenManager.CloseDefaultWaitForm();
             return true;
         }
@@ -234,6 +239,35 @@ namespace OrderApp
         {
             OrderPalletDetailForm frm = new OrderPalletDetailForm(ord);
             frm.ShowDialog();
+            //after confirm order
+            ReloadData();
+        }
+
+        private void bbiPartDetail_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void bbiShipingLabel_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SplashScreenManager.ShowDefaultWaitForm();
+            List<OrderBody> ob = gridControl.DataSource as List<OrderBody>;
+            int stctn = 0;
+            int i = 0;
+            while (i < ob.Count)
+            {
+                OrderBody r = ob[i];
+                if (r.Ctn > 0)
+                {
+                    stctn += r.Ctn;
+                    int startlb = stctn - (r.Ctn - 1);
+                    Console.WriteLine($"{i}. {r.RefNo} PARTNO: {r.PartNo} CTN: {r.Ctn} SEQ START: {startlb} SEQ END: {stctn}");
+                    new InvoiceControllers().PrintFTicket(r.RefNo, r.PartNo, r.OrderNo, (startlb - 1), null);
+                }
+                i++;
+            }
+            Console.WriteLine($"TOTAL: {i}");
+            SplashScreenManager.CloseDefaultWaitForm();
         }
     }
 }

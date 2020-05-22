@@ -20,5 +20,6 @@
         public string LotNo { get; set; }
         public string SerialNo { get; set; }
         public string Shelve { get; set; }
+        public string RefInv { get; set; }
     }
 }

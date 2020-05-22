@@ -109,6 +109,12 @@
     <Compile Include="OrderPalletDetailForm.Designer.cs">
       <DependentUpon>OrderPalletDetailForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="OrderPalletForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderPalletForm.Designer.cs">
+      <DependentUpon>OrderPalletForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="OrderDetailForm.resx">
       <DependentUpon>OrderDetailForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -123,6 +129,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="OrderPalletDetailForm.resx">
       <DependentUpon>OrderPalletDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderPalletForm.resx">
+      <DependentUpon>OrderPalletForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -153,6 +162,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icons8-new-property-48.ico" />
+    <None Include="Resources\apply_32x32.png" />
+    <None Include="Resources\apply_16x16.png" />
+    <None Include="Resources\database_32x322.png" />
+    <None Include="Resources\database_16x162.png" />
     <None Include="Resources\barcode_32x32.png" />
     <None Include="Resources\barcode_16x16.png" />
     <None Include="Resources\scripts_32x32.png" />

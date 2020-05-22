@@ -155,6 +155,8 @@ namespace OrderApp
             int i = int.Parse(gridView.GetFocusedRowCellValue("Id").ToString()) - 1;
             OrderDetailForm frm = new OrderDetailForm(obj[i]);
             frm.ShowDialog();
+            int st = new GreeterFunction().GetInvoiceStatus(obj[i].RefNo);
+            gridView.SetRowCellValue(i, "Status", st);
         }
 
         private void bbiEtd_EditValueChanged(object sender, EventArgs e)

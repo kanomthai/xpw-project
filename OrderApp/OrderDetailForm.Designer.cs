@@ -42,6 +42,7 @@
             this.bbiSearchOrder = new DevExpress.XtraBars.BarButtonItem();
             this.bbiConfirmInvoice = new DevExpress.XtraBars.BarButtonItem();
             this.bbiShipingLabel = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiPartDetail = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -136,9 +137,10 @@
             this.bbiPrintJobList,
             this.bbiSearchOrder,
             this.bbiConfirmInvoice,
-            this.bbiShipingLabel});
+            this.bbiShipingLabel,
+            this.bbiPartDetail});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 26;
+            this.ribbonControl.MaxItemId = 27;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -233,6 +235,16 @@
             this.bbiShipingLabel.ImageOptions.Image = global::OrderApp.Properties.Resources.barcode_16x16;
             this.bbiShipingLabel.ImageOptions.LargeImage = global::OrderApp.Properties.Resources.barcode_32x32;
             this.bbiShipingLabel.Name = "bbiShipingLabel";
+            this.bbiShipingLabel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiShipingLabel_ItemClick);
+            // 
+            // bbiPartDetail
+            // 
+            this.bbiPartDetail.Caption = "Part Detail";
+            this.bbiPartDetail.Id = 26;
+            this.bbiPartDetail.ImageOptions.Image = global::OrderApp.Properties.Resources.database_16x162;
+            this.bbiPartDetail.ImageOptions.LargeImage = global::OrderApp.Properties.Resources.database_32x322;
+            this.bbiPartDetail.Name = "bbiPartDetail";
+            this.bbiPartDetail.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiPartDetail_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -779,6 +791,7 @@
             this.popupMenu1.ItemLinks.Add(this.bbiPrintJobList);
             this.popupMenu1.ItemLinks.Add(this.bbiConfirmInvoice, true);
             this.popupMenu1.ItemLinks.Add(this.bbiShipingLabel);
+            this.popupMenu1.ItemLinks.Add(this.bbiPartDetail, true);
             this.popupMenu1.Name = "popupMenu1";
             this.popupMenu1.Ribbon = this.ribbonControl;
             // 
@@ -889,5 +902,6 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem12;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem13;
         private DevExpress.XtraBars.BarButtonItem bbiShipingLabel;
+        private DevExpress.XtraBars.BarButtonItem bbiPartDetail;
     }
 }

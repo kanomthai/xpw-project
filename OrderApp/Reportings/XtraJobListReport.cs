@@ -39,7 +39,7 @@ namespace OrderApp.Reportings
                 prEtd.Value = r.Etd;
                 prShipType.Value = r.Ship;
                 prFactory.Value = r.Factory;
-                prGroupOrder.Value = new GreeterFunction().GetOrderGroupBy(r.PoType, r.CustPoType);
+                prGroupOrder.Value = r.PoType;
                 prPrintDate.Value = DateTime.Now;
                 prCustCode.Value = r.Custcode;
                 prBalQty.Value = xqty;
