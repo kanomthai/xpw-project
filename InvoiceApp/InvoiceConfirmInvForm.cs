@@ -3,7 +3,6 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
 using OrderApp;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Drawing;
 using XPWLibrary.Controllers;
 using XPWLibrary.Interfaces;

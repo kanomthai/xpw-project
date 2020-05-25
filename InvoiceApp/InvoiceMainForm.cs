@@ -157,7 +157,22 @@ namespace InvoiceApp
 
         private void bbiPartShorting_ItemClick(object sender, ItemClickEventArgs e)
         {
+            var id = gridView.GetFocusedRowCellValue("Id").ToString();
+            int i = (int.Parse(id) - 1);
+            Console.WriteLine(id);
+            List<InvoiceData> ob = gridControl.DataSource as List<InvoiceData>;
+            OrderData obj = new OrderData();
+            obj.Factory = ob[i].Factory;
+            obj.Zone = ob[i].Zname;
+            obj.Etd = ob[i].Etddte;
+            obj.Affcode = ob[i].Affcode;
+            obj.Custcode = ob[i].Bishpc;
+            obj.Custname = ob[i].Custname;
+            obj.Ship = ob[i].Ship;
+            obj.PoType = ob[i].Potype;
 
+            OrderPartShortingForm frm = new OrderPartShortingForm(obj);
+            frm.ShowDialog();
         }
 
         private void bbiOrderControl_ItemClick(object sender, ItemClickEventArgs e)
