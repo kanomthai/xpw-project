@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <data>
   <factory>INJ</factory>
-  <fticket>Microsoft Print to PDF</fticket>
-  <cartonprinter>Microsoft Print to PDF</cartonprinter>
+  <fticket>POSTEKI300</fticket>
+  <cartonprinter>POSTEKI300</cartonprinter>
   <aw_totalpallet>45</aw_totalpallet>
   <aw_palletlimit>17</aw_palletlimit>
   <aw_boxbigsize>2</aw_boxbigsize>

@@ -36,7 +36,7 @@ namespace OrderApp
                 gridControl.DataSource = obj;
                 bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
             }
-            sload = false;
+            sload = true;
             SplashScreenManager.CloseDefaultWaitForm();
         }
 

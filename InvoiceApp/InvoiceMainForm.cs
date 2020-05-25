@@ -52,10 +52,7 @@ namespace InvoiceApp
         {
             if (e.Button.ToString() == "Right")
             {
-                if (gridView.FocusedRowHandle >= 0)
-                {
-                    ppMenu.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
-                }
+                ppMenu.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
             }
             else
             {

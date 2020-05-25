@@ -1,6 +1,7 @@
 ﻿using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
+using OrderApp;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -40,7 +41,7 @@ namespace InvoiceApp
 
         private void bbiNew_ItemClick(object sender, ItemClickEventArgs e)
         {
-            InvoiceAddNewPalletForm frm = new InvoiceAddNewPalletForm(invno);
+            OrderAddNewPalletForm frm = new OrderAddNewPalletForm(invno);
             frm.ShowDialog();
         }
 
@@ -66,18 +67,13 @@ namespace InvoiceApp
         {
             if (invno.Substring(0, 1) == "I")
             {
-                if (new GreeterFunction().SumPlInj(invno))
-                {
-                    ReloadData();
-                }
+                new GreeterFunction().SumPlInj(invno);
             }
             else
             {
-                if (new GreeterFunction().SumPallet(invno))
-                {
-                    ReloadData();
-                }
+                new GreeterFunction().SumPallet(invno);
             }
+            ReloadData();
         }
 
         private void bbiConfirm_ItemClick(object sender, ItemClickEventArgs e)
@@ -135,13 +131,13 @@ namespace InvoiceApp
                 bbiPlDetail.Enabled = false;
                 try
                 {
-                    var plout = gridView.GetFocusedRowCellValue("PlOut").ToString();
-                    var conno = gridView.GetFocusedRowCellValue("ContainerNo").ToString();
-                    if (plout != "")
+                    var plout = gridView.GetFocusedRowCellValue("PlOut");
+                    var conno = gridView.GetFocusedRowCellValue("ContainerNo");
+                    if (plout != null)
                     {
                         bbiPlDetail.Enabled = true;
                     }
-                    if (conno != "")
+                    if (conno != null)
                     {
                         bbiContainerDetail.Enabled = true;
                     }

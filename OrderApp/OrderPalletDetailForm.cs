@@ -13,6 +13,7 @@ using System.ComponentModel.DataAnnotations;
 using XPWLibrary.Models;
 using XPWLibrary.Controllers;
 using XPWLibrary.Interfaces;
+using DevExpress.XtraSplashScreen;
 
 namespace OrderApp
 {
@@ -30,6 +31,7 @@ namespace OrderApp
 
         void ReloadData()
         {
+            SplashScreenManager.ShowDefaultWaitForm();
             if (refno.Replace("'", "").Trim().StartsWith("I"))
             {
                 new GreeterFunction().SumPlInj(refno.Replace("'", "").Trim());
@@ -41,6 +43,7 @@ namespace OrderApp
             BindingList<PalletData> dataSource = GetDataSource();
             gridControl.DataSource = dataSource;
             bsiRecordsCount.Caption = "RECORDS : " + dataSource.Count;
+            SplashScreenManager.CloseDefaultWaitForm();
         }
 
         void bbiPrintPreview_ItemClick(object sender, ItemClickEventArgs e)
@@ -118,6 +121,12 @@ namespace OrderApp
             catch (Exception)
             {
             }
+        }
+
+        private void bbiNew_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            OrderAddNewPalletForm frm = new OrderAddNewPalletForm(refno.Replace("'", "").Trim());
+            frm.ShowDialog();
         }
     }
 }

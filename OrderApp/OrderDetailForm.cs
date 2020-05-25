@@ -56,7 +56,7 @@ namespace OrderApp
 
         private void gridView_CustomColumnDisplayText(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs e)
         {
-            gridView.BeginUpdate();
+            //gridView.BeginUpdate();
             try
             {
                 switch (e.Column.FieldName.ToString())
@@ -163,7 +163,7 @@ namespace OrderApp
             catch (Exception)
             {
             }
-            gridView.EndUpdate();
+            //gridView.EndUpdate();
         }
 
         private void gridView_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
@@ -177,11 +177,17 @@ namespace OrderApp
                         bbiPrintJobList.Enabled = false;
                         bbiPartDetail.Enabled = false;
                         bbiConfirmInvoice.Enabled = false;
+                        bbiSetMultiLot.Enabled = false;
                         if (ob[0].Status > 0)
                         {
                             bbiCreateJobList.Caption = "Re-Create JobList";
                             bbiPrintJobList.Enabled = true;
                             bbiConfirmInvoice.Enabled = true;
+                            bbiSetMultiLot.Enabled = true;
+                            if (ob[0].Factory == "INJ")
+                            {
+                                bbiSetMultiLot.Enabled = false;
+                            }
                         }
                         bbiShipingLabel.Enabled = false;
                         if (ob[0].Status > 1)
@@ -189,6 +195,7 @@ namespace OrderApp
                             bbiPartDetail.Enabled = true;
                             bbiShipingLabel.Enabled = true;
                         }
+                        
                         popupMenu1.ShowPopup(new System.Drawing.Point(MousePosition.X, MousePosition.Y));
                         break;
                     default:
@@ -268,6 +275,33 @@ namespace OrderApp
             }
             Console.WriteLine($"TOTAL: {i}");
             SplashScreenManager.CloseDefaultWaitForm();
+        }
+
+        private void bbiSetMultiLot_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            DialogResult r;
+            if (StaticFunctionData.confirmlotno)
+            {
+                r = XtraMessageBox.Show("ยืนยันการจ่ายด้วย LOTNO. อื่น", "ยืนยันคำสั่ง", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (r == DialogResult.OK)
+                {
+                    Console.WriteLine($"UPDATE TXP_ISSTRANSBODY SET LOTSTKFLAG='Y',UPDDTE=sysdate WHERE ISSUINGKEY = '{ord.RefNo}'");
+                    bool x = new ConnDB().ExcuteSQL($"UPDATE TXP_ISSTRANSBODY SET LOTSTKFLAG='Y',UPDDTE=sysdate WHERE ISSUINGKEY = '{ord.RefNo}'");
+                    if (x)
+                    {
+                        XtraMessageBox.Show("บันทึกข้อมูลเสร็จแล้ว");
+                    }
+                }
+            }
+            else
+            {
+                r = XtraMessageBox.Show("ขอ อภัยคุณไม่มีสิทธิ์เข้าใช้งาน", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                if (r == DialogResult.OK)
+                {
+                    return;
+                }
+            }
+            return;
         }
     }
 }

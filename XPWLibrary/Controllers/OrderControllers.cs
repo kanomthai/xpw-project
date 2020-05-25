@@ -171,7 +171,7 @@ namespace XPWLibrary.Controllers
         {
             string refinvoice = b.RefNo;
             string refno;
-            //new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT e WHERE e.ISSUINGKEY = '{b.RefNo}'");
+            new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT e WHERE e.ISSUINGKEY = '{b.RefNo}'");
             List<OrderBody> ord = GetOrderDetail(b);
             if (ord.Count > 0)
             {
@@ -682,7 +682,13 @@ namespace XPWLibrary.Controllers
 
         public List<string> GetOrderRefinvoice(OrderData b)
         {
-            SplashScreenManager.Default.SetWaitFormDescription($"CHECK REFNO.");
+            try
+            {
+                SplashScreenManager.Default.SetWaitFormDescription($"CHECK REFNO.");
+            }
+            catch (Exception)
+            {
+            }
             string sql = $"SELECT p.CURINV FROM TXP_ORDERPLAN p\n" +
                 "LEFT JOIN TXP_ISSTRANSBODY b ON p.CURINV = b.ISSUINGKEY AND p.PARTNO = b.PARTNO\n" +
                 "LEFT JOIN TXP_ISSTRANSENT e ON p.CURINV = e.ISSUINGKEY\n";

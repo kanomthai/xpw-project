@@ -89,6 +89,7 @@
             this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.bbiSetMultiLot = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -138,9 +139,10 @@
             this.bbiSearchOrder,
             this.bbiConfirmInvoice,
             this.bbiShipingLabel,
-            this.bbiPartDetail});
+            this.bbiPartDetail,
+            this.bbiSetMultiLot});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 27;
+            this.ribbonControl.MaxItemId = 28;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -792,8 +794,18 @@
             this.popupMenu1.ItemLinks.Add(this.bbiConfirmInvoice, true);
             this.popupMenu1.ItemLinks.Add(this.bbiShipingLabel);
             this.popupMenu1.ItemLinks.Add(this.bbiPartDetail, true);
+            this.popupMenu1.ItemLinks.Add(this.bbiSetMultiLot);
             this.popupMenu1.Name = "popupMenu1";
             this.popupMenu1.Ribbon = this.ribbonControl;
+            // 
+            // bbiSetMultiLot
+            // 
+            this.bbiSetMultiLot.Caption = "Set Multi Lot";
+            this.bbiSetMultiLot.Id = 27;
+            this.bbiSetMultiLot.ImageOptions.Image = global::OrderApp.Properties.Resources.replace_16x16;
+            this.bbiSetMultiLot.ImageOptions.LargeImage = global::OrderApp.Properties.Resources.replace_32x32;
+            this.bbiSetMultiLot.Name = "bbiSetMultiLot";
+            this.bbiSetMultiLot.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiSetMultiLot_ItemClick);
             // 
             // OrderDetailForm
             // 
@@ -903,5 +915,6 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem13;
         private DevExpress.XtraBars.BarButtonItem bbiShipingLabel;
         private DevExpress.XtraBars.BarButtonItem bbiPartDetail;
+        private DevExpress.XtraBars.BarButtonItem bbiSetMultiLot;
     }
 }

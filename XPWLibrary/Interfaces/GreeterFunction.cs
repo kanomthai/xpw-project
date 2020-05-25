@@ -124,8 +124,8 @@ namespace XPWLibrary.Interfaces
                             PlGroup = plgroup,
                             PSize = partsize,
                             PlSize = "65x129x159",
-                            PlNo = 0,
-                            Total = ctn,
+                            PlNo = ctn,
+                            Total = 1,
                         });
 
                     }
@@ -138,8 +138,8 @@ namespace XPWLibrary.Interfaces
                             PlGroup = plgroup,
                             PSize = partsize,
                             PlSize = "65x129x195",
-                            PlNo = a,
-                            Total = 20,
+                            PlNo = 20,
+                            Total = a,
                         });
                         var b = ctn - (a * 20);
                         if (b > 0)
@@ -148,7 +148,7 @@ namespace XPWLibrary.Interfaces
                             {
                                 PlGroup = plgroup,
                                 PSize = partsize,
-                                PlSize = "TOTAL",
+                                PlSize = "BOX",
                                 PlNo = 0,
                                 Total = b,
                             });
@@ -160,7 +160,7 @@ namespace XPWLibrary.Interfaces
                         {
                             PlGroup = plgroup,
                             PSize = partsize,
-                            PlSize = "TOTAL",
+                            PlSize = "BOX",
                             PlNo = 0,
                             Total = ctn,
                         });
@@ -187,7 +187,7 @@ namespace XPWLibrary.Interfaces
                             {
                                 PlGroup = plgroup,
                                 PSize = partsize,
-                                PlSize = "TOTAL",
+                                PlSize = "BOX",
                                 PlNo = 0,
                                 Total = b,
                             });
@@ -199,12 +199,14 @@ namespace XPWLibrary.Interfaces
                         {
                             PlGroup = plgroup,
                             PSize = partsize,
-                            PlSize = "TOTAL",
+                            PlSize = "BOX",
                             PlNo = 0,
                             Total = ctn,
                         });
                     }
                     break;
+                case "43x27x14":
+                case "26x43x14":
                 case "27x43x14":
                     plgroup = "2";
                     if (ctn >= 64)
@@ -225,7 +227,7 @@ namespace XPWLibrary.Interfaces
                             {
                                 PlGroup = plgroup,
                                 PSize = partsize,
-                                PlSize = "TOTAL",
+                                PlSize = "BOX",
                                 PlNo = 0,
                                 Total = b,
                             });
@@ -237,13 +239,15 @@ namespace XPWLibrary.Interfaces
                         {
                             PlGroup = plgroup,
                             PSize = partsize,
-                            PlSize = "TOTAL",
+                            PlSize = "BOX",
                             PlNo = 0,
                             Total = ctn,
                         });
                     }
                     break;
                 case "38x56x39":
+                case "56x38x39":
+                case "39x56x40":
                     plgroup = "3";
                     if (ctn < 18)
                     {
@@ -251,7 +255,7 @@ namespace XPWLibrary.Interfaces
                         {
                             PlGroup = plgroup,
                             PSize = partsize,
-                            PlSize = "TOTAL",
+                            PlSize = "BOX",
                             PlNo = 0,
                             Total = ctn,
                         });
@@ -286,8 +290,8 @@ namespace XPWLibrary.Interfaces
                             PlGroup = plgroup,
                             PSize = partsize,
                             PlSize = "111x115x213",
-                            PlNo = a,
-                            Total = 30,
+                            PlNo = 30,
+                            Total = a,
                         });
                         var b = ctn - (a*30);
                         if (b > 0)
@@ -296,7 +300,7 @@ namespace XPWLibrary.Interfaces
                             {
                                 PlGroup = plgroup,
                                 PSize = partsize,
-                                PlSize = "",
+                                PlSize = "BOX",
                                 PlNo = 0,
                                 Total = b,
                             });
@@ -313,7 +317,7 @@ namespace XPWLibrary.Interfaces
                         {
                             PlGroup = plgroup,
                             PSize = partsize,
-                            PlSize = "",
+                            PlSize = "BOX",
                             PlNo = 0,
                             Total = ctn,
                         });
@@ -326,8 +330,8 @@ namespace XPWLibrary.Interfaces
                             PlGroup = plgroup,
                             PSize = partsize,
                             PlSize = "111x115x163",
-                            PlNo = a,
-                            Total = 36,
+                            PlNo = 36,
+                            Total = a,
                         });
                         var b = ctn - (a * 36);
                         if (b > 0)
@@ -336,7 +340,7 @@ namespace XPWLibrary.Interfaces
                             {
                                 PlGroup = plgroup,
                                 PSize = partsize,
-                                PlSize = "",
+                                PlSize = "BOX",
                                 PlNo = 0,
                                 Total = b,
                             });
@@ -351,7 +355,7 @@ namespace XPWLibrary.Interfaces
                         {
                             PlGroup = plgroup,
                             PSize = partsize,
-                            PlSize = "",
+                            PlSize = "BOX",
                             PlNo = 0,
                             Total = ctn,
                         });
@@ -364,8 +368,8 @@ namespace XPWLibrary.Interfaces
                             PlGroup = plgroup,
                             PSize = partsize,
                             PlSize = "111x115x130",
-                            PlNo = a,
-                            Total = 30,
+                            PlNo = 30,
+                            Total = a,
                         });
                         var b = ctn - (a * 30);
                         if (b > 0)
@@ -374,7 +378,7 @@ namespace XPWLibrary.Interfaces
                             {
                                 PlGroup = plgroup,
                                 PSize = partsize,
-                                PlSize = "",
+                                PlSize = "BOX",
                                 PlNo = 0,
                                 Total = b,
                             });
@@ -524,13 +528,32 @@ namespace XPWLibrary.Interfaces
             return ob;
         }
 
+        bool CheckPalleteDuplicate(INJPlData ob, string refinv)
+        {
+            string sql = $"SELECT count(*) FROM TXP_ISSPALLET l WHERE l.PALLETNO = '{ob.PlName}' AND l.ISSUINGKEY = '{refinv}'";
+            DataSet dr = new ConnDB().GetFill(sql);
+            if (int.Parse(dr.Tables[0].Rows[0][0].ToString()) < 1)
+            {
+                int t = ob.PlNo;
+                if (ob.PlName.IndexOf("C") >= 0)
+                {
+                    t = 1;
+                }
+                string ins = $"INSERT INTO TXP_ISSPALLET(FACTORY, ISSUINGKEY, PALLETNO, PLTYPE, PLOUTSTS, UPDDTE, SYSDTE, PLTOTAL, BOOKED)\n" +
+                         $"VALUES('{StaticFunctionData.Factory}', '{refinv}', '{ob.PlName}', '{ob.PlSize}', 0, current_timestamp, current_timestamp, {t}, 0)";
+                return new ConnDB().ExcuteSQL(ins);
+            }
+            return true;
+        }
+
         public bool SumPlInj(string invoice)
         {
             bool x = false;
             string sql = $"SELECT sum(round(b.ORDERQTY/b.STDPACK)) ctn,p.BIWIDT||'x'||p.BILENG||'x'||p.BIHIGH dm FROM TXP_ISSTRANSBODY b\n"+
                         $"INNER JOIN TXP_ORDERPLAN p ON b.ISSUINGKEY = p.CURINV AND b.PARTNO = p.PARTNO\n"+
                         $"WHERE b.ISSUINGKEY = '{invoice}'\n"+
-                        $"GROUP BY p.BIWIDT || 'x' || p.BILENG || 'x' || p.BIHIGH";
+                        $"GROUP BY p.BIWIDT || 'x' || p.BILENG || 'x' || p.BIHIGH\n" +
+                        $"ORDER BY sum(round(b.ORDERQTY/b.STDPACK)) DESC,p.BIWIDT || 'x' || p.BILENG || 'x' || p.BIHIGH";
             Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
 
@@ -538,136 +561,166 @@ namespace XPWLibrary.Interfaces
             List<INJPlData> ob = new List<INJPlData>();
             List<INJPlData> opl = new List<INJPlData>();
             int plnum = 1;
+            int bbctn = 1;
             foreach (DataRow r in dr.Tables[0].Rows)
             {
                 List<INJPlData> obj = PlInjSize(r["dm"].ToString(), int.Parse(r["ctn"].ToString()));
                 int i = 0;
                 while (i < obj.Count)
                 {
-                    Console.WriteLine($"P => {obj[i].PlNo}");
                     if (obj[i].PlNo > 0)
                     {
                         int j = 0;
-                        while (j < obj[i].PlNo)
+                        while (j < obj[i].Total)
                         {
+                            Console.WriteLine($"P => {obj[i].Total}");
                             obj[i].PlName = $"1P{plnum.ToString("D3")}";
                             ob.Add(obj[i]);
                             Console.WriteLine($"PARTSIZE: {obj[i].PSize} PLSIZE: {obj[i].PlSize} PLKEY: {obj[i].PlName}");
-                            plnum++;
-                            j++;
+                            if (CheckPalleteDuplicate(obj[i], invoice))
+                            {
+                                plnum++;
+                                j++;
+                            }
                         }
                     }
                     else
                     {
-                        opl.Add(obj[i]);
+                        int j = 0;
+                        while (j < obj[i].Total)
+                        {
+                            opl.Add(obj[i]);
+                            obj[i].PlName = $"1C{bbctn.ToString("D3")}";
+                            Console.WriteLine($"C => {obj[i].PlName}");
+                            Console.WriteLine($"PARTSIZE: {obj[i].PSize} PLSIZE: {obj[i].PlSize} PLKEY: {obj[i].PlName}");
+                            if (CheckPalleteDuplicate(obj[i], invoice))
+                            {
+                                bbctn++;
+                                j++;
+                            }
+                        }
                     }
                     i++;
                 }
             }
             Console.WriteLine($"FULLPL: {ob.Count} BBOX: {opl.Count}");
-            int bbctn = 1;
-            if (opl.Count > 0)
-            {
-                List<INJPlData> b = opl.OrderBy(rd => rd.PlGroup).ToList<INJPlData>();
-                int r = 0;
-                int sumpl = 0;
-                string plg = null;
-                string psize = null;
-                while (r < b.Count)
-                {
-                    Console.WriteLine(b[r].PlGroup);
-                    if (plg == null)
-                    {
-                        plg = b[r].PlGroup;
-                        sumpl = b[r].Total;
-                        psize = b[r].PSize;
-                        Console.WriteLine($"START NEW GRP:{plg} PSIZE: {psize} SUM:{sumpl}");
-                    }
-                    else
-                    {
-                        if (plg != b[r].PlGroup)
-                        {
-                            //Start new PL
-                            List<INJPlData> obj = PlInjSize(psize, sumpl);
-                            int i = 0;
-                            while (i < obj.Count)
-                            {
-                                Console.WriteLine($"P => {obj[i].PlNo}");
-                                if (obj[i].PlNo > 0)
-                                {
-                                    int j = 0;
-                                    while (j < obj[i].PlNo)
-                                    {
-                                        obj[i].PlName = $"1P{plnum.ToString("D3")}";
-                                        Console.WriteLine($"PARTSIZE: {obj[i].PSize} PLSIZE: {obj[i].PlSize} PLKEY: {obj[i].PlName}");
-                                        plnum++;
-                                        j++;
-                                    }
-                                }
-                                else
-                                {
-                                    //opl.Add(obj[i]);
-                                    int j = 0;
-                                    while (j < obj[i].Total)
-                                    {
-                                        obj[i].PlName = $"1C{bbctn.ToString("D3")}";
-                                        Console.WriteLine($"PARTSIZE: {obj[i].PSize} PLSIZE: {obj[i].PlSize} PLKEY: {obj[i].PlName}");
-                                        bbctn++;
-                                        j++;
-                                    }
-                                }
-                                i++;
-                            }
 
-                            plg = b[r].PlGroup;
-                            sumpl = b[r].Total;
-                            psize = b[r].PSize;
-                            Console.WriteLine($"START NEW GRP:{plg} PSIZE: {psize} SUM:{sumpl}");
-                        }
-                        else
-                        {
-                            sumpl += b[r].Total;
-                        }
-                    }
-                    Console.WriteLine($"GROUP: {plg} SUM: {sumpl}");
-                    r++;
-                    if (r >= b.Count)
-                    {
-                        //start pl ending
-                        List<INJPlData> obj = PlInjSize(psize, sumpl);
-                        int i = 0;
-                        while (i < obj.Count)
-                        {
-                            Console.WriteLine($"P => {obj[i].PlNo}");
-                            if (obj[i].PlNo > 0)
-                            {
-                                int j = 0;
-                                while (j < obj[i].PlNo)
-                                {
-                                    obj[i].PlName = $"1P{plnum.ToString("D3")}";
-                                    ob.Add(obj[i]);
-                                    Console.WriteLine($"PARTSIZE: {obj[i].PSize} PLSIZE: {obj[i].PlSize} PLKEY: {obj[i].PlName}");
-                                    plnum++;
-                                    j++;
-                                }
-                            }
-                            else
-                            {
-                                //opl.Add(obj[i]);
-                                int j = 0;
-                                while (j < obj[i].Total)
-                                {
-                                    obj[i].PlName = $"1C{bbctn.ToString("D3")}";
-                                    Console.WriteLine($"PARTSIZE: {obj[i].PSize} PLSIZE: {obj[i].PlSize} PLKEY: {obj[i].PlName}");
-                                    bbctn++;
-                                    j++;
-                                }
-                            }
-                            i++;
-                        }
-                    }
-                }
-            }
+            //int bbctn = 1;
+            //if (opl.Count > 0)
+            //{
+            //    List<INJPlData> b = opl.OrderBy(rd => rd.PlGroup).ToList<INJPlData>();
+            //    int r = 0;
+            //    int sumpl = 0;
+            //    string plg = null;
+            //    string psize = null;
+            //    while (r < b.Count)
+            //    {
+            //        Console.WriteLine(b[r].PlGroup);
+            //        if (plg == null)
+            //        {
+            //            plg = b[r].PlGroup;
+            //            sumpl = b[r].Total;
+            //            psize = b[r].PSize;
+            //            Console.WriteLine($"START NEW GRP:{plg} PSIZE: {psize} SUM:{sumpl}");
+            //        }
+            //        else
+            //        {
+            //            if (plg != b[r].PlGroup)
+            //            {
+            //                //Start new PL
+            //                List<INJPlData> obj = PlInjSize(psize, sumpl);
+            //                int i = 0;
+            //                while (i < obj.Count)
+            //                {
+            //                    Console.WriteLine($"P => {obj[i].PlNo}");
+            //                    if (obj[i].PlNo > 0)
+            //                    {
+            //                        int j = 0;
+            //                        while (j < obj[i].PlNo)
+            //                        {
+            //                            obj[i].PlName = $"1P{plnum.ToString("D3")}";
+            //                            Console.WriteLine($"PARTSIZE: {obj[i].PSize} PLSIZE: {obj[i].PlSize} PLKEY: {obj[i].PlName}");
+            //                            if (CheckPalleteDuplicate(obj[i], invoice))
+            //                            {
+            //                                plnum++;
+            //                                j++;
+            //                            }
+            //                        }
+            //                    }
+            //                    else
+            //                    {
+            //                        //opl.Add(obj[i]);
+            //                        int j = 0;
+            //                        while (j < obj[i].Total)
+            //                        {
+            //                            obj[i].PlName = $"1C{bbctn.ToString("D3")}";
+            //                            Console.WriteLine($"PARTSIZE: {obj[i].PSize} PLSIZE: {obj[i].PlSize} PLKEY: {obj[i].PlName}");
+            //                            if (CheckPalleteDuplicate(obj[i], invoice))
+            //                            {
+            //                                bbctn++;
+            //                                j++;
+            //                            }
+            //                        }
+            //                    }
+            //                    i++;
+            //                }
+
+            //                plg = b[r].PlGroup;
+            //                sumpl = b[r].Total;
+            //                psize = b[r].PSize;
+            //                Console.WriteLine($"START NEW GRP:{plg} PSIZE: {psize} SUM:{sumpl}");
+            //            }
+            //            else
+            //            {
+            //                sumpl += b[r].Total;
+            //            }
+            //        }
+            //        Console.WriteLine($"GROUP: {plg} SUM: {sumpl}");
+            //        r++;
+            //        if (r >= b.Count)
+            //        {
+            //            //start pl ending
+            //            List<INJPlData> obj = PlInjSize(psize, sumpl);
+            //            int i = 0;
+            //            while (i < obj.Count)
+            //            {
+            //                Console.WriteLine($"P => {obj[i].PlNo}");
+            //                if (obj[i].PlNo > 0)
+            //                {
+            //                    int j = 0;
+            //                    while (j < obj[i].PlNo)
+            //                    {
+            //                        obj[i].PlName = $"1P{plnum.ToString("D3")}";
+            //                        ob.Add(obj[i]);
+            //                        Console.WriteLine($"PARTSIZE: {obj[i].PSize} PLSIZE: {obj[i].PlSize} PLKEY: {obj[i].PlName}");
+            //                        if (CheckPalleteDuplicate(obj[i], invoice))
+            //                        {
+            //                            plnum++;
+            //                            j++;
+            //                        }
+            //                    }
+            //                }
+            //                else
+            //                {
+            //                    //opl.Add(obj[i]);
+            //                    int j = 0;
+            //                    while (j < obj[i].Total)
+            //                    {
+            //                        obj[i].PlName = $"1C{bbctn.ToString("D3")}";
+            //                        Console.WriteLine($"PARTSIZE: {obj[i].PSize} PLSIZE: {obj[i].PlSize} PLKEY: {obj[i].PlName}");
+            //                        if (CheckPalleteDuplicate(obj[i], invoice))
+            //                        {
+            //                            bbctn++;
+            //                            j++;
+            //                        }
+            //                    }
+            //                }
+            //                i++;
+            //            }
+            //        }
+            //    }
+            //}
+            //
             return x;
         }
 
