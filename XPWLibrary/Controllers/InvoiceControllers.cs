@@ -161,6 +161,7 @@ namespace XPWLibrary.Controllers
             string labeltemp = $"{AppDomain.CurrentDomain.BaseDirectory}Labels\\CK2_1DCTN.nlbl";
             if (RefInv.Substring(0, 1) != "A")
             {
+                SplashScreenManager.Default.SetWaitFormCaption("Printing Job Card");
                 labeltemp = $"{AppDomain.CurrentDomain.BaseDirectory}Labels\\CK2_1DCTN.nlbl";
                 prname = StaticFunctionData.fticketprinter;
                 IPrintEngine NL_PrintEngine = PrintEngineFactory.PrintEngine;

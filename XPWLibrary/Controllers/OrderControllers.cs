@@ -182,7 +182,7 @@ namespace XPWLibrary.Controllers
                 string Note2 = new GreeterFunction().GetNote(2, j.BioABT, j.Ship, j.Factory);
                 string Note3 = new GreeterFunction().GetNote(3, j.BioABT, j.Ship, j.Factory);
                 string zonecode = $"TO_CHAR(SYSDATE,'YYMMDD')||'{j.Prefix}'|| LPAD(substr('{refinvoice}',-5),5)";
-                //SplashScreenManager.Default.SetWaitFormCaption($"{ninv}");
+                SplashScreenManager.Default.SetWaitFormCaption($"{refno}");
                 string sqlhead;
                 //check issue
                 List<string> h = GetOrderRefinvoice(b);
@@ -204,6 +204,7 @@ namespace XPWLibrary.Controllers
                     }
                     new ConnDB().ExcuteSQL(sqlhead);
 
+                    SplashScreenManager.Default.SetWaitFormCaption($"CHECK BODY");
                     int i = 0;
                     while (i < ord.Count)
                     {
@@ -226,6 +227,8 @@ namespace XPWLibrary.Controllers
                                     $"values('{refinvoice}',{i},'{r.OrderNo}','C','{r.PartNo}','{r.BiSTDP}','{r.BalQty}',0,0,0,0,0,0,{r.BiWidt},{r.BiLeng},{r.BiHigh},{r.BiNetW},{r.BiGrwt},sysdate,sysdate,'{r.OrderType}','{r.PartName}','{r.Ship}'," +
                                     $"to_date('{r.Etd.ToString("yyyy/MM/dd")}', 'yyyy/MM/dd'),'{g.ToString()}','SYS','SYS','{r.PartType}','{r.LotNo}','{r.Uuid}')";
                         }
+                        SplashScreenManager.Default.SetWaitFormCaption($"{refinvoice}");
+                        SplashScreenManager.Default.SetWaitFormDescription($"CREATE DETAIL {r.PartNo}");
                         new ConnDB().ExcuteSQL(upb);
                         int rn = 0;
                         while (rn < r.Ctn)
@@ -237,6 +240,7 @@ namespace XPWLibrary.Controllers
                             {
                                 Guid gid = Guid.NewGuid();
                                 string fkey = new GreeterFunction().getFTicket(r.Factory);
+                                SplashScreenManager.Default.SetWaitFormDescription(fkey);
                                 string insql = $"insert into txp_isspackdetail(issuingkey,pono,tagrp,partno,fticketno,orderqty,issuedqty,unit,issuingstatus,upddte,sysdte,uuid,createdby,modifedby,ITEM,splorder)\n" +
                                     $"values('{refinvoice}','{r.OrderNo}','C','{r.PartNo}','{fkey}','{r.BiSTDP}',0,'PCS',0,sysdate,sysdate,'{gid.ToString()}','SYS','SYS',{nums},'{g.ToString()}')";
                                 new ConnDB().ExcuteSQL(insql);
@@ -246,6 +250,7 @@ namespace XPWLibrary.Controllers
                         }
                         string updateorder = $"update txp_orderplan set curinv = '{refinvoice}',orderstatus=1,upddte = sysdate where uuid = '{r.Uuid}'";
                         new ConnDB().ExcuteSQL(updateorder);
+                        SplashScreenManager.Default.SetWaitFormCaption($"UPDATE ORDER STATUS");
                         i++;
                     }
                 }
@@ -278,6 +283,8 @@ namespace XPWLibrary.Controllers
                         {
                             sql = $"update txp_isstransbody set ISSUINGKEY='{refinvoice}',ORDERQTY={r.BalQty}  WHERE PARTNO = '{r.PartNo}' AND PONO = '{r.OrderNo}' AND ISSUINGKEY IN ('{refinvoice}')";
                         }
+                        SplashScreenManager.Default.SetWaitFormCaption($"{refinvoice}");
+                        SplashScreenManager.Default.SetWaitFormDescription($"CREATE DETAIL {r.PartNo}");
                         new ConnDB().ExcuteSQL(sql);
                         Console.WriteLine(g.ToString());
                         Console.WriteLine(r.Ctn);
@@ -299,6 +306,7 @@ namespace XPWLibrary.Controllers
                         }
                         string updateorder = $"update txp_orderplan set curinv = '{refinvoice}',orderstatus=1,upddte = sysdate where uuid = '{r.Uuid}'";
                         new ConnDB().ExcuteSQL(updateorder);
+                        SplashScreenManager.Default.SetWaitFormCaption($"UPDATE ORDER STATUS");
                         i++;
                     }
                     new GreeterFunction().SumPallet(refinvoice);
@@ -674,6 +682,7 @@ namespace XPWLibrary.Controllers
 
         public List<string> GetOrderRefinvoice(OrderData b)
         {
+            SplashScreenManager.Default.SetWaitFormDescription($"CHECK REFNO.");
             string sql = $"SELECT p.CURINV FROM TXP_ORDERPLAN p\n" +
                 "LEFT JOIN TXP_ISSTRANSBODY b ON p.CURINV = b.ISSUINGKEY AND p.PARTNO = b.PARTNO\n" +
                 "LEFT JOIN TXP_ISSTRANSENT e ON p.CURINV = e.ISSUINGKEY\n";

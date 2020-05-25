@@ -366,6 +366,7 @@
             this.gridColumn2.Caption = "FACTORY";
             this.gridColumn2.FieldName = "Factory";
             this.gridColumn2.Name = "gridColumn2";
+            this.gridColumn2.OptionsFilter.FilterBySortField = DevExpress.Utils.DefaultBoolean.True;
             this.gridColumn2.Visible = true;
             this.gridColumn2.VisibleIndex = 1;
             this.gridColumn2.Width = 66;
@@ -379,6 +380,8 @@
             this.gridColumn3.Caption = "ETD";
             this.gridColumn3.FieldName = "Etd";
             this.gridColumn3.Name = "gridColumn3";
+            this.gridColumn3.OptionsFilter.AllowAutoFilter = false;
+            this.gridColumn3.OptionsFilter.FilterBySortField = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn3.Visible = true;
             this.gridColumn3.VisibleIndex = 2;
             this.gridColumn3.Width = 104;
@@ -392,6 +395,8 @@
             this.gridColumn4.Caption = "SHIP";
             this.gridColumn4.FieldName = "Ship";
             this.gridColumn4.Name = "gridColumn4";
+            this.gridColumn4.OptionsFilter.AllowAutoFilter = false;
+            this.gridColumn4.OptionsFilter.FilterBySortField = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn4.Visible = true;
             this.gridColumn4.VisibleIndex = 3;
             this.gridColumn4.Width = 54;
@@ -405,6 +410,8 @@
             this.gridColumn5.Caption = "ZONE";
             this.gridColumn5.FieldName = "Zone";
             this.gridColumn5.Name = "gridColumn5";
+            this.gridColumn5.OptionsFilter.AllowAutoFilter = false;
+            this.gridColumn5.OptionsFilter.FilterBySortField = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn5.Visible = true;
             this.gridColumn5.VisibleIndex = 4;
             this.gridColumn5.Width = 50;
@@ -414,6 +421,8 @@
             this.gridColumn6.Caption = "AFFCODE";
             this.gridColumn6.FieldName = "Affcode";
             this.gridColumn6.Name = "gridColumn6";
+            this.gridColumn6.OptionsFilter.AllowAutoFilter = false;
+            this.gridColumn6.OptionsFilter.FilterBySortField = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn6.Visible = true;
             this.gridColumn6.VisibleIndex = 5;
             this.gridColumn6.Width = 114;
@@ -423,6 +432,8 @@
             this.gridColumn7.Caption = "CUSTCODE";
             this.gridColumn7.FieldName = "Custcode";
             this.gridColumn7.Name = "gridColumn7";
+            this.gridColumn7.OptionsFilter.AllowAutoFilter = false;
+            this.gridColumn7.OptionsFilter.FilterBySortField = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn7.Visible = true;
             this.gridColumn7.VisibleIndex = 6;
             this.gridColumn7.Width = 114;
@@ -436,6 +447,8 @@
             this.gridColumn8.Caption = "CUSTNAME";
             this.gridColumn8.FieldName = "Custname";
             this.gridColumn8.Name = "gridColumn8";
+            this.gridColumn8.OptionsFilter.AllowAutoFilter = false;
+            this.gridColumn8.OptionsFilter.FilterBySortField = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn8.Visible = true;
             this.gridColumn8.VisibleIndex = 7;
             this.gridColumn8.Width = 114;
@@ -449,6 +462,7 @@
             this.gridColumn9.Caption = "CTN";
             this.gridColumn9.FieldName = "OrderCtn";
             this.gridColumn9.Name = "gridColumn9";
+            this.gridColumn9.OptionsFilter.FilterBySortField = DevExpress.Utils.DefaultBoolean.True;
             this.gridColumn9.Visible = true;
             this.gridColumn9.VisibleIndex = 10;
             this.gridColumn9.Width = 78;
@@ -462,6 +476,7 @@
             this.gridColumn10.Caption = "ITEM.";
             this.gridColumn10.FieldName = "ItemCtn";
             this.gridColumn10.Name = "gridColumn10";
+            this.gridColumn10.OptionsFilter.FilterBySortField = DevExpress.Utils.DefaultBoolean.True;
             this.gridColumn10.Visible = true;
             this.gridColumn10.VisibleIndex = 9;
             this.gridColumn10.Width = 60;
@@ -486,6 +501,8 @@
             this.gridColumn12.Caption = "STATUS";
             this.gridColumn12.FieldName = "Status";
             this.gridColumn12.Name = "gridColumn12";
+            this.gridColumn12.OptionsFilter.AllowAutoFilter = false;
+            this.gridColumn12.OptionsFilter.FilterBySortField = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn12.Visible = true;
             this.gridColumn12.VisibleIndex = 12;
             this.gridColumn12.Width = 98;
@@ -499,6 +516,8 @@
             this.colPoType.Caption = "TYPE";
             this.colPoType.FieldName = "PoType";
             this.colPoType.Name = "colPoType";
+            this.colPoType.OptionsFilter.AllowAutoFilter = false;
+            this.colPoType.OptionsFilter.FilterBySortField = DevExpress.Utils.DefaultBoolean.False;
             this.colPoType.Visible = true;
             this.colPoType.VisibleIndex = 8;
             this.colPoType.Width = 79;
@@ -514,6 +533,8 @@
             this.gridColumn14.Caption = "REWRITE";
             this.gridColumn14.FieldName = "OrderRewrite";
             this.gridColumn14.Name = "gridColumn14";
+            this.gridColumn14.OptionsFilter.AllowAutoFilter = false;
+            this.gridColumn14.OptionsFilter.FilterBySortField = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn14.Visible = true;
             this.gridColumn14.VisibleIndex = 11;
             this.gridColumn14.Width = 131;

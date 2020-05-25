@@ -81,7 +81,7 @@ namespace OrderApp
 
         private void gridView_CustomColumnDisplayText(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs e)
         {
-            gridView.BeginUpdate();
+            //gridView.BeginUpdate();
             switch (e.Column.FieldName.ToString())
             {
                 case "OrderCtn":
@@ -144,7 +144,7 @@ namespace OrderApp
                 default:
                     break;
             }
-            gridView.EndUpdate();
+            //gridView.EndUpdate();
         }
 
         private void gridView_DoubleClick(object sender, EventArgs e)
@@ -155,18 +155,20 @@ namespace OrderApp
             int i = int.Parse(gridView.GetFocusedRowCellValue("Id").ToString()) - 1;
             OrderDetailForm frm = new OrderDetailForm(obj[i]);
             frm.ShowDialog();
+            gridView.BeginUpdate();
             int st = new GreeterFunction().GetInvoiceStatus(obj[i].RefNo);
             gridView.SetRowCellValue(i, "Status", st);
+            gridView.EndUpdate();
         }
 
         private void bbiEtd_EditValueChanged(object sender, EventArgs e)
         {
-            sload = true;
+            ReloadData();
         }
 
         private void bbiOnDay_EditValueChanged(object sender, EventArgs e)
         {
-            sload = true;
+            ReloadData();
         }
     }
 }

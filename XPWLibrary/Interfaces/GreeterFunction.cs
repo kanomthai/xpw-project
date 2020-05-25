@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.XtraSplashScreen;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -69,7 +70,7 @@ namespace XPWLibrary.Interfaces
             int x = 1;
             if (dr.Tables[0].Rows.Count > 0)
             { 
-                int.Parse(dr.Tables[0].Rows[0]["rnum"].ToString()); 
+                x = int.Parse(dr.Tables[0].Rows[0]["rnum"].ToString()); 
             }
             dr = new ConnDB().GetFill($"SELECT e.shiptype  FROM TXP_ISSTRANSENT e WHERE e.ISSUINGKEY = '{refinv}' GROUP BY e.shiptype");
             return txt + refinv.Substring(1, 2) + x.ToString("D5") + dr.Tables[0].Rows[0]["shiptype"].ToString();
@@ -400,7 +401,19 @@ namespace XPWLibrary.Interfaces
             {
                 return 0;
             }
-            string sql = $"SELECT e.ISSUINGSTATUS FROM TXP_ISSTRANSENT e WHERE e.ISSUINGKEY = '{refNo}'";
+            //string sql = $"SELECT e.ISSUINGSTATUS + 1 FROM TXP_ISSTRANSENT e WHERE e.ISSUINGKEY = '{refNo}'";
+            //DataSet dr = new ConnDB().GetFill(sql);
+            //if (dr.Tables[0].Rows.Count < 1)
+            //{
+            //    sql = $"SELECT p.orderstatus FROM TXP_ORDERPLAN p WHERE p.curinv = '{refNo}'";
+            //    dr = new ConnDB().GetFill(sql);
+            //    if (dr.Tables[0].Rows.Count < 1)
+            //    {
+            //        return 0;
+            //    }
+            //    return int.Parse(dr.Tables[0].Rows[0][0].ToString());
+            //}
+            string sql = $"SELECT p.orderstatus FROM TXP_ORDERPLAN p WHERE p.curinv = '{refNo}'";
             DataSet dr = new ConnDB().GetFill(sql);
             if (dr.Tables[0].Rows.Count < 1)
             {
@@ -662,7 +675,7 @@ namespace XPWLibrary.Interfaces
         {
             try
             {
-                //SplashScreenManager.Default.SetWaitFormDescription($"SUMMARY PL.");
+                SplashScreenManager.Default.SetWaitFormDescription($"SUMMARY PL.");
                 string fac = "AW";
                 if (inv.Substring(0, 1) == "I")
                 {
