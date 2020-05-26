@@ -15,6 +15,8 @@ using XPWLibrary.Models;
 using XPWLibrary.Controllers;
 using DevExpress.XtraSplashScreen;
 using OrderApp;
+using BookingApp;
+using ShortingApp;
 
 namespace InvoiceApp
 {
@@ -170,8 +172,10 @@ namespace InvoiceApp
             obj.Custname = ob[i].Custname;
             obj.Ship = ob[i].Ship;
             obj.PoType = ob[i].Potype;
+            obj.CustPoType = ob[i].Ord;
 
-            OrderPartShortingForm frm = new OrderPartShortingForm(obj);
+            //OrderPartShortingForm frm = new OrderPartShortingForm(obj);
+            ShortingForm frm = new ShortingForm(obj);
             frm.ShowDialog();
         }
 
@@ -180,6 +184,12 @@ namespace InvoiceApp
             OrderMainForm frm = new OrderMainForm();
             frm.ShowDialog();
             bbiFactory.EditValue = StaticFunctionData.Factory;
+        }
+
+        private void bbiBookingControl_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            BookingForm frm = new BookingForm();
+            frm.ShowDialog();
         }
     }
 }

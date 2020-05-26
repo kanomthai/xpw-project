@@ -41,6 +41,7 @@ namespace XPWLibrary.Controllers
                         OrderRewrite = r["rewrite"].ToString(),
                         Status = int.Parse(r["orderstatus"].ToString()),
                         Combinv = ob["combinv"].ToString(),
+                        LastUpdate = DateTime.Parse(ob["upddte"].ToString())
                     });
                 }
             }
@@ -338,7 +339,7 @@ namespace XPWLibrary.Controllers
             {
                 fdte = $"AND p.ETDTAP between TRUNC(to_date('{dte}', 'ddMMyyyy') - 1, 'DY') AND(TRUNC(to_date('{dte}', 'ddMMyyyy'), 'DY') + {wnum})";
             }
-            string sql = $"SELECT p.FACTORY,p.ETDTAP,p.SHIPTYPE,get_zone(p.FACTORY, p.BIOABT) zname,p.AFFCODE,p.BISHPC,p.BISAFN,'' custpono,m.POTYPE,0 item,0 orderctn ,min(p.CURINV) CURINV,max(e.refinvoice) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,max(m.combinv) combinv,max(p.REASONCD) rewrite\n" +
+            string sql = $"SELECT p.FACTORY,p.ETDTAP,p.SHIPTYPE,get_zone(p.FACTORY, p.BIOABT) zname,p.AFFCODE,p.BISHPC,p.BISAFN,'' custpono,m.POTYPE,0 item,0 orderctn ,min(p.CURINV) CURINV,max(e.refinvoice) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,max(m.combinv) combinv,max(p.REASONCD) rewrite,max(p.upddte) upddte\n" +
                         "FROM TXP_ORDERPLAN p\n" +
                         "INNER JOIN TXM_CUSTOMER m ON p.FACTORY = m.FACTORY  AND p.AFFCODE = m.AFFCODE AND p.BISHPC = m.BISHPC AND p.BISAFN = m.CUSTNM AND m.POTYPE IS NOT NULL\n" +
                         "LEFT JOIN TXP_ISSTRANSENT e ON p.CURINV = e.ISSUINGKEY\n"+

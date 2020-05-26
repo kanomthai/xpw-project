@@ -25,6 +25,7 @@ namespace XPWLibrary.Models
         public int Status { get; set; }
         public string Combinv { get; set; }
         public string OrderRewrite { get; set; }
+        public DateTime LastUpdate { get; set; }
     }
 
     public class OrderBody : OrderData
@@ -51,6 +52,5 @@ namespace XPWLibrary.Models
         public string PartType { get; set; }
         public string OrderType { get; set; }//ORDERTYPE   ORDERTYPE	22	VARCHAR2				1	1	0	VARCHAR
         public string BiComd { get; set; }//BICOMD  BICOMD	24	VARCHAR2				5	5	0	VARCHAR
-        public DateTime LastUpdate { get; set; }
     }
 }

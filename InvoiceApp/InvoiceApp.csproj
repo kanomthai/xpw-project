@@ -154,6 +154,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icons8-planner-48.ico" />
+    <None Include="Resources\addgroupheader_32x32.png" />
+    <None Include="Resources\addgroupheader_16x16.png" />
     <None Include="Resources\print_32x325.png" />
     <None Include="Resources\print_16x165.png" />
     <None Include="Resources\print_32x324.png" />
@@ -194,9 +196,17 @@
     <None Include="Resources\article_16x16.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BookingApp\BookingApp.csproj">
+      <Project>{230C6DBD-0827-456C-BCD2-0BF1715AAB98}</Project>
+      <Name>BookingApp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OrderApp\OrderApp.csproj">
       <Project>{E1C7E0A1-B6B8-43BB-B13B-4E0E3018DD3A}</Project>
       <Name>OrderApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShortingApp\ShortingApp.csproj">
+      <Project>{9F624496-0EC0-4BEF-ABB7-67EFF8C34E20}</Project>
+      <Name>ShortingApp</Name>
     </ProjectReference>
     <ProjectReference Include="..\XPWLibrary\XPWLibrary.csproj">
       <Project>{13C19695-4A3E-4529-9553-EFBAAE328143}</Project>

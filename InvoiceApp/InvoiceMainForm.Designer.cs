@@ -49,6 +49,7 @@
             this.bbiDbName = new DevExpress.XtraBars.BarStaticItem();
             this.bbiStVersion = new DevExpress.XtraBars.BarStaticItem();
             this.bbiOrderControl = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiBookingControl = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -120,9 +121,10 @@
             this.barButtonItem5,
             this.bbiDbName,
             this.bbiStVersion,
-            this.bbiOrderControl});
+            this.bbiOrderControl,
+            this.bbiBookingControl});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 4;
+            this.ribbonControl.MaxItemId = 5;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -273,6 +275,15 @@
             this.bbiOrderControl.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.open_32x32;
             this.bbiOrderControl.Name = "bbiOrderControl";
             this.bbiOrderControl.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiOrderControl_ItemClick);
+            // 
+            // bbiBookingControl
+            // 
+            this.bbiBookingControl.Caption = "Booking Control";
+            this.bbiBookingControl.Id = 4;
+            this.bbiBookingControl.ImageOptions.Image = global::InvoiceApp.Properties.Resources.addgroupheader_16x16;
+            this.bbiBookingControl.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.addgroupheader_32x32;
+            this.bbiBookingControl.Name = "bbiBookingControl";
+            this.bbiBookingControl.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiBookingControl_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -643,9 +654,9 @@
             // ppMenu
             // 
             this.ppMenu.ItemLinks.Add(this.bbiShowDetail);
-            this.ppMenu.ItemLinks.Add(this.bbiPrintJobList, true);
-            this.ppMenu.ItemLinks.Add(this.bbiPartShorting);
-            this.ppMenu.ItemLinks.Add(this.bbiOrderControl, true);
+            this.ppMenu.ItemLinks.Add(this.bbiPartShorting, true);
+            this.ppMenu.ItemLinks.Add(this.bbiOrderControl);
+            this.ppMenu.ItemLinks.Add(this.bbiBookingControl);
             this.ppMenu.ItemLinks.Add(this.bbiRefresh, true);
             this.ppMenu.Name = "ppMenu";
             this.ppMenu.Ribbon = this.ribbonControl;
@@ -737,5 +748,6 @@
         private DevExpress.XtraBars.BarStaticItem bbiDbName;
         private DevExpress.XtraBars.BarStaticItem bbiStVersion;
         private DevExpress.XtraBars.BarButtonItem bbiOrderControl;
+        private DevExpress.XtraBars.BarButtonItem bbiBookingControl;
     }
 }
