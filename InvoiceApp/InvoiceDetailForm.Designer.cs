@@ -44,6 +44,7 @@
             this.bbiEditOrder = new DevExpress.XtraBars.BarButtonItem();
             this.bbiSetMultiLot = new DevExpress.XtraBars.BarButtonItem();
             this.bbiShowLotDetail = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiPrintAllShipingLabel = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -101,7 +102,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.ppMenu = new DevExpress.XtraBars.PopupMenu(this.components);
-            this.bbiPrintAllShipingLabel = new DevExpress.XtraBars.BarButtonItem();
+            this.gridColumn13 = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -170,7 +171,7 @@
             this.ribbonPage1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.OfficeUniversal;
             this.ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
-            this.ribbonControl.Size = new System.Drawing.Size(1024, 91);
+            this.ribbonControl.Size = new System.Drawing.Size(965, 91);
             this.ribbonControl.StatusBar = this.ribbonStatusBar;
             this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
@@ -237,7 +238,7 @@
             // 
             // bbiPrintCardBoard
             // 
-            this.bbiPrintCardBoard.Caption = "Shipping Label";
+            this.bbiPrintCardBoard.Caption = "Label/Short";
             this.bbiPrintCardBoard.Id = 23;
             this.bbiPrintCardBoard.ImageOptions.Image = global::InvoiceApp.Properties.Resources.print_16x165;
             this.bbiPrintCardBoard.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.print_32x325;
@@ -272,6 +273,15 @@
             this.bbiShowLotDetail.Name = "bbiShowLotDetail";
             this.bbiShowLotDetail.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiShowLotDetail_ItemClick);
             // 
+            // bbiPrintAllShipingLabel
+            // 
+            this.bbiPrintAllShipingLabel.Caption = "Print All Shipping";
+            this.bbiPrintAllShipingLabel.Id = 27;
+            this.bbiPrintAllShipingLabel.ImageOptions.Image = global::InvoiceApp.Properties.Resources.print_16x164;
+            this.bbiPrintAllShipingLabel.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.print_32x324;
+            this.bbiPrintAllShipingLabel.Name = "bbiPrintAllShipingLabel";
+            this.bbiPrintAllShipingLabel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiPrintAllShipingLabel_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -300,10 +310,10 @@
             // ribbonStatusBar
             // 
             this.ribbonStatusBar.ItemLinks.Add(this.bsiRecordsCount);
-            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 574);
+            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 674);
             this.ribbonStatusBar.Name = "ribbonStatusBar";
             this.ribbonStatusBar.Ribbon = this.ribbonControl;
-            this.ribbonStatusBar.Size = new System.Drawing.Size(1024, 26);
+            this.ribbonStatusBar.Size = new System.Drawing.Size(965, 26);
             // 
             // workspaceManager1
             // 
@@ -318,7 +328,7 @@
             this.layoutControl1.Location = new System.Drawing.Point(0, 91);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.Root = this.Root;
-            this.layoutControl1.Size = new System.Drawing.Size(1024, 483);
+            this.layoutControl1.Size = new System.Drawing.Size(965, 583);
             this.layoutControl1.TabIndex = 4;
             this.layoutControl1.Text = "layoutControl1";
             // 
@@ -327,7 +337,7 @@
             this.groupControl2.Controls.Add(this.layoutControl2);
             this.groupControl2.Location = new System.Drawing.Point(12, 12);
             this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(1000, 126);
+            this.groupControl2.Size = new System.Drawing.Size(941, 121);
             this.groupControl2.TabIndex = 16;
             this.groupControl2.Text = "INFOMATION";
             // 
@@ -350,29 +360,29 @@
             this.layoutControl2.Location = new System.Drawing.Point(2, 27);
             this.layoutControl2.Name = "layoutControl2";
             this.layoutControl2.Root = this.layoutControlGroup1;
-            this.layoutControl2.Size = new System.Drawing.Size(996, 97);
+            this.layoutControl2.Size = new System.Drawing.Size(937, 92);
             this.layoutControl2.TabIndex = 0;
             this.layoutControl2.Text = "layoutControl2";
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(733, 60);
+            this.label5.Location = new System.Drawing.Point(689, 60);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(251, 25);
+            this.label5.Size = new System.Drawing.Size(236, 20);
             this.label5.TabIndex = 16;
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(733, 36);
+            this.label4.Location = new System.Drawing.Point(689, 36);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(251, 20);
+            this.label4.Size = new System.Drawing.Size(236, 20);
             this.label4.TabIndex = 15;
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(627, 12);
+            this.label3.Location = new System.Drawing.Point(590, 12);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(357, 20);
+            this.label3.Size = new System.Drawing.Size(335, 20);
             this.label3.TabIndex = 14;
             // 
             // bbiFactory
@@ -386,14 +396,14 @@
             this.bbiFactory.Properties.Appearance.Options.UseBackColor = true;
             this.bbiFactory.Properties.Appearance.Options.UseFont = true;
             this.bbiFactory.Properties.Appearance.Options.UseForeColor = true;
-            this.bbiFactory.Size = new System.Drawing.Size(106, 20);
+            this.bbiFactory.Size = new System.Drawing.Size(96, 20);
             this.bbiFactory.StyleController = this.layoutControl2;
             this.bbiFactory.TabIndex = 4;
             // 
             // bbiShip
             // 
             this.bbiShip.Enabled = false;
-            this.bbiShip.Location = new System.Drawing.Point(234, 12);
+            this.bbiShip.Location = new System.Drawing.Point(224, 12);
             this.bbiShip.Name = "bbiShip";
             this.bbiShip.Properties.Appearance.BackColor = System.Drawing.Color.White;
             this.bbiShip.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
@@ -407,14 +417,14 @@
             "A",
             "B",
             "T"});
-            this.bbiShip.Size = new System.Drawing.Size(158, 20);
+            this.bbiShip.Size = new System.Drawing.Size(145, 20);
             this.bbiShip.StyleController = this.layoutControl2;
             this.bbiShip.TabIndex = 5;
             // 
             // bbiZone
             // 
             this.bbiZone.Enabled = false;
-            this.bbiZone.Location = new System.Drawing.Point(432, 12);
+            this.bbiZone.Location = new System.Drawing.Point(409, 12);
             this.bbiZone.Name = "bbiZone";
             this.bbiZone.Properties.Appearance.BackColor = System.Drawing.Color.White;
             this.bbiZone.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
@@ -422,7 +432,7 @@
             this.bbiZone.Properties.Appearance.Options.UseBackColor = true;
             this.bbiZone.Properties.Appearance.Options.UseFont = true;
             this.bbiZone.Properties.Appearance.Options.UseForeColor = true;
-            this.bbiZone.Size = new System.Drawing.Size(191, 20);
+            this.bbiZone.Size = new System.Drawing.Size(177, 20);
             this.bbiZone.StyleController = this.layoutControl2;
             this.bbiZone.TabIndex = 7;
             // 
@@ -442,14 +452,14 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.bbiEtd.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.bbiEtd.Size = new System.Drawing.Size(134, 20);
+            this.bbiEtd.Size = new System.Drawing.Size(124, 20);
             this.bbiEtd.StyleController = this.layoutControl2;
             this.bbiEtd.TabIndex = 6;
             // 
             // bbiAff
             // 
             this.bbiAff.Enabled = false;
-            this.bbiAff.Location = new System.Drawing.Point(234, 36);
+            this.bbiAff.Location = new System.Drawing.Point(224, 36);
             this.bbiAff.Name = "bbiAff";
             this.bbiAff.Properties.Appearance.BackColor = System.Drawing.Color.White;
             this.bbiAff.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
@@ -457,14 +467,14 @@
             this.bbiAff.Properties.Appearance.Options.UseBackColor = true;
             this.bbiAff.Properties.Appearance.Options.UseFont = true;
             this.bbiAff.Properties.Appearance.Options.UseForeColor = true;
-            this.bbiAff.Size = new System.Drawing.Size(110, 20);
+            this.bbiAff.Size = new System.Drawing.Size(100, 20);
             this.bbiAff.StyleController = this.layoutControl2;
             this.bbiAff.TabIndex = 8;
             // 
             // bbiCustCode
             // 
             this.bbiCustCode.Enabled = false;
-            this.bbiCustCode.Location = new System.Drawing.Point(411, 36);
+            this.bbiCustCode.Location = new System.Drawing.Point(391, 36);
             this.bbiCustCode.Name = "bbiCustCode";
             this.bbiCustCode.Properties.Appearance.BackColor = System.Drawing.Color.White;
             this.bbiCustCode.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
@@ -472,14 +482,14 @@
             this.bbiCustCode.Properties.Appearance.Options.UseBackColor = true;
             this.bbiCustCode.Properties.Appearance.Options.UseFont = true;
             this.bbiCustCode.Properties.Appearance.Options.UseForeColor = true;
-            this.bbiCustCode.Size = new System.Drawing.Size(120, 20);
+            this.bbiCustCode.Size = new System.Drawing.Size(108, 20);
             this.bbiCustCode.StyleController = this.layoutControl2;
             this.bbiCustCode.TabIndex = 9;
             // 
             // bbiCustName
             // 
             this.bbiCustName.Enabled = false;
-            this.bbiCustName.Location = new System.Drawing.Point(598, 36);
+            this.bbiCustName.Location = new System.Drawing.Point(566, 36);
             this.bbiCustName.Name = "bbiCustName";
             this.bbiCustName.Properties.Appearance.BackColor = System.Drawing.Color.White;
             this.bbiCustName.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
@@ -487,7 +497,7 @@
             this.bbiCustName.Properties.Appearance.Options.UseBackColor = true;
             this.bbiCustName.Properties.Appearance.Options.UseFont = true;
             this.bbiCustName.Properties.Appearance.Options.UseForeColor = true;
-            this.bbiCustName.Size = new System.Drawing.Size(131, 20);
+            this.bbiCustName.Size = new System.Drawing.Size(119, 20);
             this.bbiCustName.StyleController = this.layoutControl2;
             this.bbiCustName.TabIndex = 10;
             // 
@@ -502,14 +512,14 @@
             this.bbiOrderBy.Properties.Appearance.Options.UseBackColor = true;
             this.bbiOrderBy.Properties.Appearance.Options.UseFont = true;
             this.bbiOrderBy.Properties.Appearance.Options.UseForeColor = true;
-            this.bbiOrderBy.Size = new System.Drawing.Size(103, 20);
+            this.bbiOrderBy.Size = new System.Drawing.Size(93, 20);
             this.bbiOrderBy.StyleController = this.layoutControl2;
             this.bbiOrderBy.TabIndex = 11;
             // 
             // bbiInv
             // 
             this.bbiInv.Enabled = false;
-            this.bbiInv.Location = new System.Drawing.Point(248, 60);
+            this.bbiInv.Location = new System.Drawing.Point(238, 60);
             this.bbiInv.Name = "bbiInv";
             this.bbiInv.Properties.Appearance.BackColor = System.Drawing.Color.White;
             this.bbiInv.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
@@ -517,14 +527,14 @@
             this.bbiInv.Properties.Appearance.Options.UseBackColor = true;
             this.bbiInv.Properties.Appearance.Options.UseFont = true;
             this.bbiInv.Properties.Appearance.Options.UseForeColor = true;
-            this.bbiInv.Size = new System.Drawing.Size(217, 20);
+            this.bbiInv.Size = new System.Drawing.Size(199, 20);
             this.bbiInv.StyleController = this.layoutControl2;
             this.bbiInv.TabIndex = 12;
             // 
             // bbiRefInv
             // 
             this.bbiRefInv.Enabled = false;
-            this.bbiRefInv.Location = new System.Drawing.Point(516, 60);
+            this.bbiRefInv.Location = new System.Drawing.Point(488, 60);
             this.bbiRefInv.Name = "bbiRefInv";
             this.bbiRefInv.Properties.Appearance.BackColor = System.Drawing.Color.White;
             this.bbiRefInv.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
@@ -532,7 +542,7 @@
             this.bbiRefInv.Properties.Appearance.Options.UseBackColor = true;
             this.bbiRefInv.Properties.Appearance.Options.UseFont = true;
             this.bbiRefInv.Properties.Appearance.Options.UseForeColor = true;
-            this.bbiRefInv.Size = new System.Drawing.Size(213, 20);
+            this.bbiRefInv.Size = new System.Drawing.Size(197, 20);
             this.bbiRefInv.StyleController = this.layoutControl2;
             this.bbiRefInv.TabIndex = 13;
             // 
@@ -555,7 +565,7 @@
             this.layoutControlItem5,
             this.lbinv});
             this.layoutControlGroup1.Name = "layoutControlGroup1";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(996, 97);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(937, 92);
             this.layoutControlGroup1.TextVisible = false;
             // 
             // lbFactory
@@ -564,7 +574,7 @@
             this.lbFactory.CustomizationFormText = "FACTORY:";
             this.lbFactory.Location = new System.Drawing.Point(0, 0);
             this.lbFactory.Name = "lbFactory";
-            this.lbFactory.Size = new System.Drawing.Size(166, 24);
+            this.lbFactory.Size = new System.Drawing.Size(156, 24);
             this.lbFactory.Text = "FACTORY:";
             this.lbFactory.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.lbFactory.TextSize = new System.Drawing.Size(51, 13);
@@ -574,9 +584,9 @@
             // 
             this.lbship.Control = this.bbiShip;
             this.lbship.CustomizationFormText = "SHIPTYPE:";
-            this.lbship.Location = new System.Drawing.Point(166, 0);
+            this.lbship.Location = new System.Drawing.Point(156, 0);
             this.lbship.Name = "lbship";
-            this.lbship.Size = new System.Drawing.Size(218, 24);
+            this.lbship.Size = new System.Drawing.Size(205, 24);
             this.lbship.Text = "SHIPTYPE:";
             this.lbship.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.lbship.TextSize = new System.Drawing.Size(51, 13);
@@ -586,9 +596,9 @@
             // 
             this.lbzone.Control = this.bbiZone;
             this.lbzone.CustomizationFormText = "ZONE:";
-            this.lbzone.Location = new System.Drawing.Point(384, 0);
+            this.lbzone.Location = new System.Drawing.Point(361, 0);
             this.lbzone.Name = "lbzone";
-            this.lbzone.Size = new System.Drawing.Size(231, 24);
+            this.lbzone.Size = new System.Drawing.Size(217, 24);
             this.lbzone.Text = "ZONE:";
             this.lbzone.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.lbzone.TextSize = new System.Drawing.Size(31, 13);
@@ -600,7 +610,7 @@
             this.lbEtd.CustomizationFormText = "ETD:";
             this.lbEtd.Location = new System.Drawing.Point(0, 24);
             this.lbEtd.Name = "lbEtd";
-            this.lbEtd.Size = new System.Drawing.Size(166, 24);
+            this.lbEtd.Size = new System.Drawing.Size(156, 24);
             this.lbEtd.Text = "ETD:";
             this.lbEtd.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.lbEtd.TextSize = new System.Drawing.Size(23, 13);
@@ -610,9 +620,9 @@
             // 
             this.lbaff.Control = this.bbiAff;
             this.lbaff.CustomizationFormText = "AFFCODE:";
-            this.lbaff.Location = new System.Drawing.Point(166, 24);
+            this.lbaff.Location = new System.Drawing.Point(156, 24);
             this.lbaff.Name = "lbaff";
-            this.lbaff.Size = new System.Drawing.Size(170, 24);
+            this.lbaff.Size = new System.Drawing.Size(160, 24);
             this.lbaff.Text = "AFFCODE:";
             this.lbaff.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.lbaff.TextSize = new System.Drawing.Size(51, 13);
@@ -622,9 +632,9 @@
             // 
             this.lbcust.Control = this.bbiCustCode;
             this.lbcust.CustomizationFormText = "CUSTCODE:";
-            this.lbcust.Location = new System.Drawing.Point(336, 24);
+            this.lbcust.Location = new System.Drawing.Point(316, 24);
             this.lbcust.Name = "lbcust";
-            this.lbcust.Size = new System.Drawing.Size(187, 24);
+            this.lbcust.Size = new System.Drawing.Size(175, 24);
             this.lbcust.Text = "CUSTCODE:";
             this.lbcust.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.lbcust.TextSize = new System.Drawing.Size(58, 13);
@@ -636,7 +646,7 @@
             this.lbOrder.CustomizationFormText = "ORDER BY:";
             this.lbOrder.Location = new System.Drawing.Point(0, 48);
             this.lbOrder.Name = "lbOrder";
-            this.lbOrder.Size = new System.Drawing.Size(166, 29);
+            this.lbOrder.Size = new System.Drawing.Size(156, 24);
             this.lbOrder.Text = "ORDER BY:";
             this.lbOrder.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.lbOrder.TextSize = new System.Drawing.Size(54, 13);
@@ -646,9 +656,9 @@
             // 
             this.lbref.Control = this.bbiRefInv;
             this.lbref.CustomizationFormText = "REFNO.:";
-            this.lbref.Location = new System.Drawing.Point(457, 48);
+            this.lbref.Location = new System.Drawing.Point(429, 48);
             this.lbref.Name = "lbref";
-            this.lbref.Size = new System.Drawing.Size(264, 29);
+            this.lbref.Size = new System.Drawing.Size(248, 24);
             this.lbref.Text = "REFNO.:";
             this.lbref.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.lbref.TextSize = new System.Drawing.Size(42, 13);
@@ -658,9 +668,9 @@
             // 
             this.lbcustname.Control = this.bbiCustName;
             this.lbcustname.CustomizationFormText = "CUSTNAME:";
-            this.lbcustname.Location = new System.Drawing.Point(523, 24);
+            this.lbcustname.Location = new System.Drawing.Point(491, 24);
             this.lbcustname.Name = "lbcustname";
-            this.lbcustname.Size = new System.Drawing.Size(198, 24);
+            this.lbcustname.Size = new System.Drawing.Size(186, 24);
             this.lbcustname.Text = "CUSTNAME:";
             this.lbcustname.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.lbcustname.TextSize = new System.Drawing.Size(58, 13);
@@ -669,27 +679,27 @@
             // layoutControlItem3
             // 
             this.layoutControlItem3.Control = this.label3;
-            this.layoutControlItem3.Location = new System.Drawing.Point(615, 0);
+            this.layoutControlItem3.Location = new System.Drawing.Point(578, 0);
             this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(361, 24);
+            this.layoutControlItem3.Size = new System.Drawing.Size(339, 24);
             this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem3.TextVisible = false;
             // 
             // layoutControlItem4
             // 
             this.layoutControlItem4.Control = this.label4;
-            this.layoutControlItem4.Location = new System.Drawing.Point(721, 24);
+            this.layoutControlItem4.Location = new System.Drawing.Point(677, 24);
             this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(255, 24);
+            this.layoutControlItem4.Size = new System.Drawing.Size(240, 24);
             this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem4.TextVisible = false;
             // 
             // layoutControlItem5
             // 
             this.layoutControlItem5.Control = this.label5;
-            this.layoutControlItem5.Location = new System.Drawing.Point(721, 48);
+            this.layoutControlItem5.Location = new System.Drawing.Point(677, 48);
             this.layoutControlItem5.Name = "layoutControlItem5";
-            this.layoutControlItem5.Size = new System.Drawing.Size(255, 29);
+            this.layoutControlItem5.Size = new System.Drawing.Size(240, 24);
             this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem5.TextVisible = false;
             // 
@@ -697,9 +707,9 @@
             // 
             this.lbinv.Control = this.bbiInv;
             this.lbinv.CustomizationFormText = "INVOICENO.:";
-            this.lbinv.Location = new System.Drawing.Point(166, 48);
+            this.lbinv.Location = new System.Drawing.Point(156, 48);
             this.lbinv.Name = "lbinv";
-            this.lbinv.Size = new System.Drawing.Size(291, 29);
+            this.lbinv.Size = new System.Drawing.Size(273, 24);
             this.lbinv.Text = "INVOICENO.:";
             this.lbinv.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.lbinv.TextSize = new System.Drawing.Size(65, 13);
@@ -708,9 +718,9 @@
             // groupControl1
             // 
             this.groupControl1.Controls.Add(this.gridControl);
-            this.groupControl1.Location = new System.Drawing.Point(12, 142);
+            this.groupControl1.Location = new System.Drawing.Point(12, 137);
             this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(1000, 329);
+            this.groupControl1.Size = new System.Drawing.Size(941, 434);
             this.groupControl1.TabIndex = 15;
             // 
             // gridControl
@@ -721,7 +731,7 @@
             this.gridControl.MainView = this.gridView;
             this.gridControl.MenuManager = this.ribbonControl;
             this.gridControl.Name = "gridControl";
-            this.gridControl.Size = new System.Drawing.Size(996, 300);
+            this.gridControl.Size = new System.Drawing.Size(937, 405);
             this.gridControl.TabIndex = 0;
             this.gridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -740,7 +750,8 @@
             this.gridColumn9,
             this.gridColumn10,
             this.gridColumn11,
-            this.gridColumn12});
+            this.gridColumn12,
+            this.gridColumn13});
             this.gridView.CustomizationFormBounds = new System.Drawing.Rectangle(809, 490, 250, 280);
             this.gridView.GridControl = this.gridControl;
             this.gridView.Name = "gridView";
@@ -773,7 +784,7 @@
             this.gridColumn2.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn2.Visible = true;
             this.gridColumn2.VisibleIndex = 0;
-            this.gridColumn2.Width = 100;
+            this.gridColumn2.Width = 90;
             // 
             // gridColumn3
             // 
@@ -784,7 +795,7 @@
             this.gridColumn3.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn3.Visible = true;
             this.gridColumn3.VisibleIndex = 1;
-            this.gridColumn3.Width = 115;
+            this.gridColumn3.Width = 103;
             // 
             // gridColumn4
             // 
@@ -799,7 +810,7 @@
             this.gridColumn4.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn4.Visible = true;
             this.gridColumn4.VisibleIndex = 2;
-            this.gridColumn4.Width = 160;
+            this.gridColumn4.Width = 186;
             // 
             // gridColumn5
             // 
@@ -810,7 +821,7 @@
             this.gridColumn5.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn5.Visible = true;
             this.gridColumn5.VisibleIndex = 5;
-            this.gridColumn5.Width = 86;
+            this.gridColumn5.Width = 60;
             // 
             // gridColumn6
             // 
@@ -825,7 +836,7 @@
             this.gridColumn6.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn6.Visible = true;
             this.gridColumn6.VisibleIndex = 6;
-            this.gridColumn6.Width = 100;
+            this.gridColumn6.Width = 47;
             // 
             // gridColumn7
             // 
@@ -840,7 +851,7 @@
             this.gridColumn7.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn7.Visible = true;
             this.gridColumn7.VisibleIndex = 3;
-            this.gridColumn7.Width = 91;
+            this.gridColumn7.Width = 126;
             // 
             // gridColumn8
             // 
@@ -855,7 +866,7 @@
             this.gridColumn8.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn8.Visible = true;
             this.gridColumn8.VisibleIndex = 4;
-            this.gridColumn8.Width = 46;
+            this.gridColumn8.Width = 47;
             // 
             // gridColumn9
             // 
@@ -866,9 +877,10 @@
             this.gridColumn9.Caption = "SHORT";
             this.gridColumn9.FieldName = "ShCtn";
             this.gridColumn9.Name = "gridColumn9";
+            this.gridColumn9.OptionsEditForm.StartNewRow = true;
             this.gridColumn9.Visible = true;
             this.gridColumn9.VisibleIndex = 7;
-            this.gridColumn9.Width = 125;
+            this.gridColumn9.Width = 56;
             // 
             // gridColumn10
             // 
@@ -879,7 +891,7 @@
             this.gridColumn10.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn10.Visible = true;
             this.gridColumn10.VisibleIndex = 8;
-            this.gridColumn10.Width = 107;
+            this.gridColumn10.Width = 86;
             // 
             // gridColumn11
             // 
@@ -907,15 +919,15 @@
             this.layoutControlItem1,
             this.layoutControlItem2});
             this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(1024, 483);
+            this.Root.Size = new System.Drawing.Size(965, 583);
             this.Root.TextVisible = false;
             // 
             // layoutControlItem1
             // 
             this.layoutControlItem1.Control = this.groupControl1;
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 130);
+            this.layoutControlItem1.Location = new System.Drawing.Point(0, 125);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(1004, 333);
+            this.layoutControlItem1.Size = new System.Drawing.Size(945, 438);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
@@ -924,7 +936,7 @@
             this.layoutControlItem2.Control = this.groupControl2;
             this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(1004, 130);
+            this.layoutControlItem2.Size = new System.Drawing.Size(945, 125);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
             // 
@@ -968,20 +980,20 @@
             this.ppMenu.ShowCaption = true;
             this.ppMenu.ShowNavigationHeader = DevExpress.Utils.DefaultBoolean.True;
             // 
-            // bbiPrintAllShipingLabel
+            // gridColumn13
             // 
-            this.bbiPrintAllShipingLabel.Caption = "Print All Shipping";
-            this.bbiPrintAllShipingLabel.Id = 27;
-            this.bbiPrintAllShipingLabel.ImageOptions.Image = global::InvoiceApp.Properties.Resources.print_16x164;
-            this.bbiPrintAllShipingLabel.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.print_32x324;
-            this.bbiPrintAllShipingLabel.Name = "bbiPrintAllShipingLabel";
-            this.bbiPrintAllShipingLabel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiPrintAllShipingLabel_ItemClick);
+            this.gridColumn13.Caption = "STATUS";
+            this.gridColumn13.FieldName = "Status";
+            this.gridColumn13.Name = "gridColumn13";
+            this.gridColumn13.Visible = true;
+            this.gridColumn13.VisibleIndex = 9;
+            this.gridColumn13.Width = 111;
             // 
             // InvoiceDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1024, 600);
+            this.ClientSize = new System.Drawing.Size(965, 700);
             this.Controls.Add(this.layoutControl1);
             this.Controls.Add(this.ribbonStatusBar);
             this.Controls.Add(this.ribbonControl);
@@ -1107,5 +1119,6 @@
         private DevExpress.Utils.WorkspaceManager workspaceManager1;
         private DevExpress.XtraBars.BarButtonItem bbiShowLotDetail;
         private DevExpress.XtraBars.BarButtonItem bbiPrintAllShipingLabel;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn13;
     }
 }

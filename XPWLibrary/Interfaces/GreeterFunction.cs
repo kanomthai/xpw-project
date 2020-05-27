@@ -962,5 +962,17 @@ namespace XPWLibrary.Interfaces
             string sql = $"delete TXP_ISSPALLET where issuingkey = '{inv}'";
             return new ConnDB().ExcuteSQL(sql);
         }
+
+        public int GetShortQty(string partno, string fno, int ctn)
+        {
+            int x = 1;
+            string sql = $"SELECT shorderqty ctn FROM TXP_ISSTRANSBODY WHERE partno = '{partno}' AND ISSUINGKEY = '{fno}'";
+            DataSet dr = new ConnDB().GetFill(sql);
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                x = int.Parse(r["ctn"].ToString()) + ctn;
+            }
+            return x;
+        }
     }
 }

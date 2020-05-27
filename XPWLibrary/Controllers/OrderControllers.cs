@@ -51,7 +51,7 @@ namespace XPWLibrary.Controllers
         public List<OrderData> GetOrderData(string orderid)
         {
             List<OrderData> obj = new List<OrderData>();
-            string sql = $"SELECT p.FACTORY,p.ETDTAP,p.SHIPTYPE,get_zone(p.FACTORY, p.BIOABT) zname,p.AFFCODE,p.BISHPC,p.BISAFN,'' custpono,m.POTYPE,0 item,0 orderctn ,p.CURINV,'' invoceno,0 ORDERSTATUS,max(m.combinv) combinv,max(p.REASONCD) rewrite\n" +
+            string sql = $"SELECT p.FACTORY,p.ETDTAP,p.SHIPTYPE,get_zone(p.FACTORY, p.BIOABT) zname,p.AFFCODE,p.BISHPC,p.BISAFN,'' custpono,m.POTYPE,0 item,0 orderctn ,p.CURINV,'' invoceno,0 ORDERSTATUS,max(m.combinv) combinv,max(p.REASONCD) rewrite,max(p.upddte) upddte\n" +
                         "FROM TXP_ORDERPLAN p\n" +
                         "INNER JOIN TXM_CUSTOMER m ON p.FACTORY = m.FACTORY  AND p.AFFCODE = m.AFFCODE AND p.BISHPC = m.BISHPC AND p.BISAFN = m.CUSTNM AND m.POTYPE IS NOT NULL\n" +
                         $"WHERE p.ORDERID LIKE  '%{orderid}%'\n" +

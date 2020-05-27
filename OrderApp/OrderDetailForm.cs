@@ -81,6 +81,7 @@ namespace OrderApp
                                 e.DisplayText = "Invoice";
                                 break;
                             case "3":
+                                e.DisplayText = "Shorted";
                                 break;
                             case "4":
                                 break;
@@ -123,14 +124,6 @@ namespace OrderApp
                                     //e.Column.AppearanceCell.ForeColor = Color.DarkKhaki;
                                     e.DisplayText = "LOCAT.";
                                     break;
-                                default:
-                                    break;
-                            }
-                        }
-                        else
-                        {
-                            switch (e.Value.ToString())
-                            {
                                 case "0":
                                     //e.Column.AppearanceCell.ForeColor = Color.DarkOrange;
                                     e.DisplayText = "ADD/REM.";

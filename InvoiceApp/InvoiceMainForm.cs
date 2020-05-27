@@ -182,7 +182,7 @@ namespace InvoiceApp
         private void bbiOrderControl_ItemClick(object sender, ItemClickEventArgs e)
         {
             OrderMainForm frm = new OrderMainForm();
-            frm.ShowDialog();
+            frm.Show();
             bbiFactory.EditValue = StaticFunctionData.Factory;
         }
 

@@ -229,6 +229,7 @@
             // bbiPartShorting
             // 
             this.bbiPartShorting.Caption = "Part Shorting";
+            this.bbiPartShorting.Enabled = false;
             this.bbiPartShorting.Id = 26;
             this.bbiPartShorting.ImageOptions.Image = global::InvoiceApp.Properties.Resources.splitappointment_16x16;
             this.bbiPartShorting.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.splitappointment_32x32;

@@ -26,6 +26,7 @@ namespace InvoiceApp
                 "INNER JOIN TXP_ISSTRANSBODY b ON d.ISSUINGKEY = b.ISSUINGKEY AND b.PARTNO = d.PARTNO\n" +
                 $"WHERE d.PARTNO = '{obj.PartNo}' AND d.ISSUINGKEY = '{obj.RefInv}'\n" +
                 $"ORDER BY d.FTICKETNO ";
+            Console.WriteLine(sql);
             List<FTicketData> list = new List<FTicketData>();
             DataSet dr = new ConnDB().GetFill(sql);
             int iseq = ob.StartFticket;
@@ -79,7 +80,8 @@ namespace InvoiceApp
         {
             if (e.Button.ToString() == "Right")
             {
-                bbiJobCardOnly.Caption = $"Print Shipping Label({gridView.GetFocusedRowCellValue("Seq").ToString()})";
+                bbiJobCardOnly.Caption = $"Print Label({gridView.GetFocusedRowCellValue("Seq").ToString()})";
+                bbiDelete.Caption = $"Cut Short({gridView.GetFocusedRowCellValue("Seq").ToString()})";
                 popupMenu1.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
             }
             else
@@ -97,6 +99,26 @@ namespace InvoiceApp
                     if (int.Parse(e.Value.ToString()) > 0)
                     {
                         e.DisplayText = string.Format("{0:n0}", int.Parse(e.Value.ToString()));
+                    }
+                    break;
+                case "Status":
+                    switch (e.Value.ToString())
+                    {
+                        case "0":
+                            e.DisplayText = "None";
+                            break;
+                        case "1":
+                            e.DisplayText = "Printed";
+                            break;
+                        case "2":
+                            e.DisplayText = "Prepare";
+                            break;
+                        case "3":
+                            e.DisplayText = "Shorting";
+                            break;
+                        default:
+                            e.DisplayText = "Unkonw";
+                            break;
                     }
                     break;
                 default:
@@ -122,6 +144,25 @@ namespace InvoiceApp
                 XtraMessageBox.Show("กรุณาทำการยืนยัน Invoice ก่อน", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 this.Close();
             }
+        }
+
+        private void bbiDelete_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var fno = gridView.GetFocusedRowCellValue("FTicketNo");
+            DialogResult r = XtraMessageBox.Show($"คุณต้องการตัด Short {fno.ToString()} นี้ใช่หรือไม่", "ยืนยันคำสั่ง", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (r == DialogResult.Yes)
+            {
+                bool x = new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPACKDETAIL d SET d.ISSUINGSTATUS = 3 WHERE d.FTICKETNO = '{fno}'");
+                if (x)
+                {
+                    int ctn = int.Parse(gridView.GetFocusedRowCellValue("OrderQty").ToString());
+                    int xn = new GreeterFunction().GetShortQty(gridView.GetFocusedRowCellValue("PartNo").ToString(), ob.RefInv, ctn);
+                    new ConnDB().ExcuteSQL($"UPDATE TXP_ISSTRANSBODY d SET d.SHORDERQTY = {xn} WHERE d.PARTNO = '{gridView.GetFocusedRowCellValue("PartNo")}' and d.ISSUINGKEY = '{ob.RefInv}'");
+                    gridView.SetFocusedRowCellValue("Status", 3);
+                    XtraMessageBox.Show("บันทึกข้อมูลเสร็จแล้ว");
+                }
+            }
+            return;
         }
     }
 }

@@ -103,6 +103,7 @@ namespace InvoiceApp
                 InvoiceBodyData obj = gridView.GetFocusedRow() as InvoiceBodyData;
                 InvoiceJobCardForm frm = new InvoiceJobCardForm(obj);
                 frm.ShowDialog();
+                ReloadData();
             }
             catch (Exception ex)
             {
@@ -159,6 +160,37 @@ namespace InvoiceApp
                     else 
                     {
                         e.DisplayText = string.Format("{0:n0}", int.Parse(e.Value.ToString()));
+                    }
+                    break;
+                case "Status":
+                    e.DisplayText = "";
+                    switch (e.Value.ToString())
+                    {
+                        case "0":
+                            break;
+                        case "1":
+                            e.DisplayText = "JobList";
+                            break;
+                        case "2":
+                            e.DisplayText = "Invoice";
+                            break;
+                        case "3":
+                            e.DisplayText = "Shorted";
+                            break;
+                        case "4":
+                            break;
+                        case "5":
+                            break;
+                        case "6":
+                            break;
+                        case "7":
+                            break;
+                        case "8":
+                            break;
+                        case "9":
+                            break;
+                        default:
+                            break;
                     }
                     break;
                 default:

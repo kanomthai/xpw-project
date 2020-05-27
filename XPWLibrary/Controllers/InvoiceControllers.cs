@@ -114,7 +114,7 @@ namespace XPWLibrary.Controllers
                     Plno = ob.Plno,// = int.Parse(r["plno"].ToString()),
                     RmCon = ob.RmCon,// = int.Parse(r["pl"].ToString()) - int.Parse(r["plno"].ToString()),
                     Conn = ob.Conn,// = int.Parse(r["conn"].ToString()),
-                    Status = ob.Status,
+                    Status = int.Parse(r["status"].ToString()),
                     Upddte = ob.Upddte,
                     OrderNo = r["pono"].ToString(),
                     PartNo = r["partno"].ToString(),
@@ -215,6 +215,8 @@ namespace XPWLibrary.Controllers
                                     NL_Label.PrintSettings.JobName = $"NiceLabel Printing {r[i]["issuingkey"].ToString()}";
                                 }
                                 SplashScreenManager.Default.SetWaitFormDescription($"F_Ticket {invno}");
+                                //update detail
+                                new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPACKDETAIL d SET d.ISSUINGSTATUS = 1 WHERE d.FTICKETNO = '{r[i]["fticketno"].ToString()}'");
                                 NL_Label.Print(1);
                             }
                             i++;
