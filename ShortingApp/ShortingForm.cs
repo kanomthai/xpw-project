@@ -21,6 +21,9 @@ namespace ShortingApp
         {
             InitializeComponent();
             obj = ob;
+            if (obj.Custname == null) {
+                Console.WriteLine(obj);
+            }
             //gridControl.DataSource = GetDataSource();
             //BindingList<Customer> dataSource = GetDataSource();
             //gridControl.DataSource = dataSource;
