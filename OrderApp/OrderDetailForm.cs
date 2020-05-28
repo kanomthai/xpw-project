@@ -100,53 +100,44 @@ namespace OrderApp
                         }
                         break;
                     case "ReasonCD":
-                        if (StaticFunctionData.Factory == "INJ")
+                        e.DisplayText = "";
+                        switch (e.Value.ToString())
                         {
-                            switch (e.Value.ToString())
-                            {
-                                case "P":
-                                    //e.Column.AppearanceCell.ForeColor = Color.DarkOrange;
-                                    e.DisplayText = "ADD/REM.";
-                                    break;
-                                case "M":
-                                    //e.Column.AppearanceCell.ForeColor = Color.DarkBlue;
-                                    e.DisplayText = "SHIP.";
-                                    break;
-                                case "D":
-                                    //e.Column.AppearanceCell.ForeColor = Color.DarkCyan;
-                                    e.DisplayText = "ETD.";
-                                    break;
-                                case "Q":
-                                    //e.Column.AppearanceCell.ForeColor = Color.DarkRed;
-                                    e.DisplayText = "QTY.";
-                                    break;
-                                case "L":
-                                    //e.Column.AppearanceCell.ForeColor = Color.DarkKhaki;
-                                    e.DisplayText = "LOCAT.";
-                                    break;
-                                case "0":
-                                    //e.Column.AppearanceCell.ForeColor = Color.DarkOrange;
-                                    e.DisplayText = "ADD/REM.";
-                                    break;
-                                case "1":
-                                    //e.Column.AppearanceCell.ForeColor = Color.DarkGreen;
-                                    e.DisplayText = "UPDATE";
-                                    break;
-                                case "2":
-                                    //e.Column.AppearanceCell.ForeColor = Color.DarkBlue;
-                                    e.DisplayText = "CHANGE";
-                                    break;
-                                case "3":
-                                    //e.Column.AppearanceCell.ForeColor = Color.DarkOrange;
-                                    e.DisplayText = "REPLACE";
-                                    break;
-                                case "4":
-                                    //e.Column.AppearanceCell.ForeColor = Color.DarkRed;
-                                    e.DisplayText = "DRAFF";
-                                    break;
-                                default:
-                                    break;
-                            }
+                            case "P":
+                                //e.Column.AppearanceCell.ForeColor = Color.DarkOrange;
+                                e.DisplayText = "ADD/REM.";
+                                break;
+                            case "M":
+                                //e.Column.AppearanceCell.ForeColor = Color.DarkBlue;
+                                e.DisplayText = "SHIP.";
+                                break;
+                            case "D":
+                                //e.Column.AppearanceCell.ForeColor = Color.DarkCyan;
+                                e.DisplayText = "ETD.";
+                                break;
+                            case "Q":
+                                //e.Column.AppearanceCell.ForeColor = Color.DarkRed;
+                                e.DisplayText = "QTY.";
+                                break;
+                            case "L":
+                                //e.Column.AppearanceCell.ForeColor = Color.DarkKhaki;
+                                e.DisplayText = "LOCAT.";
+                                break;
+                            //AW
+                            case "0":
+                                e.DisplayText = "UPDATE";
+                                break;
+                            case "1":
+                                e.DisplayText = "CANCEL";
+                                break;
+                            case "2":
+                                e.DisplayText = "CHANGE";
+                                break;
+                            case "3":
+                                e.DisplayText = "REP.";
+                                break;
+                            default:
+                                break;
                         }
                         break;
                     default:

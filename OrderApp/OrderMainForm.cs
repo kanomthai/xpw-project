@@ -21,6 +21,8 @@ namespace OrderApp
             bbiOrderId.EditValue = "";
             bbiEtd.EditValue = DateTime.Now;
             bbiFactory.EditValue = StaticFunctionData.Factory;
+            string fileGridInvoiceName = $"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentOrderEnt.xml";
+            gridView.RestoreLayoutFromXml(fileGridInvoiceName);
         }
         void bbiPrintPreview_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -169,6 +171,12 @@ namespace OrderApp
         private void bbiOnDay_EditValueChanged(object sender, EventArgs e)
         {
             ReloadData();
+        }
+
+        private void gridView_Layout(object sender, EventArgs e)
+        {
+            string fileGridInvoiceName = $"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentOrderEnt.xml";
+            gridView.SaveLayoutToXml(fileGridInvoiceName);
         }
     }
 }

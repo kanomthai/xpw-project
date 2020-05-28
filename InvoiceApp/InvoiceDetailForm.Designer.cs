@@ -95,6 +95,7 @@
             this.gridColumn10 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn11 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn12 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn13 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -102,7 +103,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.ppMenu = new DevExpress.XtraBars.PopupMenu(this.components);
-            this.gridColumn13 = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -275,7 +275,7 @@
             // 
             // bbiPrintAllShipingLabel
             // 
-            this.bbiPrintAllShipingLabel.Caption = "Print All Shipping";
+            this.bbiPrintAllShipingLabel.Caption = "Print Shipping Label";
             this.bbiPrintAllShipingLabel.Id = 27;
             this.bbiPrintAllShipingLabel.ImageOptions.Image = global::InvoiceApp.Properties.Resources.print_16x164;
             this.bbiPrintAllShipingLabel.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.print_32x324;
@@ -761,6 +761,7 @@
             this.gridView.OptionsView.ShowGroupPanel = false;
             this.gridView.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gridView_CustomColumnDisplayText);
             this.gridView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gridView_MouseUp);
+            this.gridView.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
             // 
             // gridColumn1
             // 
@@ -911,6 +912,15 @@
             this.gridColumn12.OptionsColumn.AllowEdit = false;
             this.gridColumn12.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             // 
+            // gridColumn13
+            // 
+            this.gridColumn13.Caption = "STATUS";
+            this.gridColumn13.FieldName = "Status";
+            this.gridColumn13.Name = "gridColumn13";
+            this.gridColumn13.Visible = true;
+            this.gridColumn13.VisibleIndex = 9;
+            this.gridColumn13.Width = 111;
+            // 
             // Root
             // 
             this.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
@@ -979,15 +989,6 @@
             this.ppMenu.Ribbon = this.ribbonControl;
             this.ppMenu.ShowCaption = true;
             this.ppMenu.ShowNavigationHeader = DevExpress.Utils.DefaultBoolean.True;
-            // 
-            // gridColumn13
-            // 
-            this.gridColumn13.Caption = "STATUS";
-            this.gridColumn13.FieldName = "Status";
-            this.gridColumn13.Name = "gridColumn13";
-            this.gridColumn13.Visible = true;
-            this.gridColumn13.VisibleIndex = 9;
-            this.gridColumn13.Width = 111;
             // 
             // InvoiceDetailForm
             // 

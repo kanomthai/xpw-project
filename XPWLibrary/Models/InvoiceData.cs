@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace XPWLibrary.Models
 {
@@ -25,6 +21,7 @@ namespace XPWLibrary.Models
         public int Ctn { get; set; }
         public int Issue { get; set; }
         public int RmCtn { get; set; }
+        public int ShCtn { get; set; }
         public int Pl { get; set; }
         public int Plno { get; set; }
         public int RmCon { get; internal set; }

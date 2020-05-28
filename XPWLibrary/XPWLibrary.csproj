@@ -74,6 +74,7 @@
     <Compile Include="Models\FTicketData.cs" />
     <Compile Include="Models\INJPlData.cs" />
     <Compile Include="Models\InvoiceData.cs" />
+    <Compile Include="Models\InvoiceMasterData.cs" />
     <Compile Include="Models\JobListData.cs" />
     <Compile Include="Models\OrderData.cs" />
     <Compile Include="Models\PalletData.cs" />

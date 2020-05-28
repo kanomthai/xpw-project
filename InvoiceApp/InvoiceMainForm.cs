@@ -1,28 +1,31 @@
-﻿using System;
+﻿using BookingApp;
+using DevExpress.LookAndFeel;
+using DevExpress.Skins;
+using DevExpress.XtraBars;
+using DevExpress.XtraBars.Helpers;
+using DevExpress.XtraBars.Ribbon;
+using DevExpress.XtraSplashScreen;
+using InvoiceApp.Properties;
+using OrderApp;
+using ShortingApp;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
+using System.ComponentModel.Design;
 using System.Drawing;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DevExpress.XtraEditors;
-using DevExpress.XtraBars;
-using System.ComponentModel.DataAnnotations;
+using XPWLibrary.Controllers;
 using XPWLibrary.Interfaces;
 using XPWLibrary.Models;
-using XPWLibrary.Controllers;
-using DevExpress.XtraSplashScreen;
-using OrderApp;
-using BookingApp;
-using ShortingApp;
 
 namespace InvoiceApp
 {
     public partial class InvoiceMainForm : DevExpress.XtraBars.Ribbon.RibbonForm
     {
         bool stload = true;
+        string fileGridInvoiceName = $"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentInvoiceControl.xml";
+        string fileGridOnWeek = $"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentOnWeek.xml";
+        string fileGridForword = $"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentNextWeek.xml";
         public InvoiceMainForm()
         {
             InitializeComponent();
@@ -46,30 +49,52 @@ namespace InvoiceApp
                 gridControl.DataSource = obj;
                 bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
             }
+            GetToWeek();
+            GetForwardWeek();
             stload = false;
             SplashScreenManager.CloseDefaultWaitForm();
+        }
+
+        private void GetForwardWeek()
+        {
+            DateTime d = DateTime.Parse(bbiEtd.EditValue.ToString());
+            gridForwardControl.DataSource = GetMasterWeek(0, 7);
+        }
+
+        private BindingList<InvoiceMasterData> GetMasterWeek(int b, int en)
+        {
+            DateTime d = DateTime.Parse(bbiEtd.EditValue.ToString());
+            BindingList<InvoiceMasterData> list = new InvoiceControllers().GetInvoiceWeek(d, b, en) as BindingList<InvoiceMasterData>;
+            return list;
+        }
+
+        private void GetToWeek()
+        {
+            DateTime d = DateTime.Parse(bbiEtd.EditValue.ToString());
+            gridWeekControl.DataSource = new InvoiceControllers().GetInvoiceToWeek(d) as BindingList<InvoiceMasterData>;
         }
 
         private void gridView_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button.ToString() == "Right")
             {
-                ppMenu.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
-            }
-            else
-            {
-                ppMenu.HidePopup();
+                if (gridControl.DataSource == null)
+                {
+                    ppMenu.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
+                }
             }
         }
 
         private void bbiFactory_EditValueChanged(object sender, EventArgs e)
         {
             StaticFunctionData.Factory = bbiFactory.EditValue.ToString();
+            stload = true;
             ReloadData();
         }
 
         private void bbiEtd_EditValueChanged(object sender, EventArgs e)
         {
+            stload = true;
             ReloadData();
         }
 
@@ -87,7 +112,6 @@ namespace InvoiceApp
 
         private void gridView_CustomColumnDisplayText(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs e)
         {
-            gridView.BeginUpdate();
             switch (e.Column.FieldName.ToString())
             {
                 case "Itm":
@@ -113,13 +137,37 @@ namespace InvoiceApp
                     {
                     }
                     break;
+                case "Status":
+                    switch (e.Value.ToString())
+                    {
+                        case "0":
+                            e.DisplayText = "";
+                            break;
+                        case "1":
+                            e.DisplayText = "JobList";
+                            break;
+                        case "2":
+                            e.DisplayText = "Invoice";
+                            break;
+                        case "3":
+                            e.DisplayText = "Prepare";
+                            break;
+                        case "5":
+                            e.DisplayText = "Booking";
+                            break;
+                        case "6":
+                            e.DisplayText = "Closed";
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
                 case "Invoice":
-                    e.Column.AppearanceCell.ForeColor = Color.DarkRed;
+                    //e.Column.AppearanceCell.ForeColor = Color.DarkRed;
                     break;
                 default:
                     break;
             }
-            gridView.EndUpdate();
         }
 
         private void gridView_DoubleClick(object sender, EventArgs e)
@@ -190,6 +238,121 @@ namespace InvoiceApp
         {
             BookingForm frm = new BookingForm();
             frm.ShowDialog();
+        }
+
+        private void gridWeekView_CustomColumnDisplayText(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs e)
+        {
+            switch (e.Column.FieldName.ToString())
+            {
+                case "Status":
+                    switch (e.Value.ToString())
+                    {
+                        case "0":
+                            e.DisplayText = "";
+                            break;
+                        case "1":
+                            e.DisplayText = "JobList";
+                            break;
+                        case "2":
+                            e.DisplayText = "Invoice";
+                            break;
+                        case "3":
+                            e.DisplayText = "Prepare";
+                            break;
+                        case "4":
+                            e.DisplayText = "Booking";
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    if (e.Value.ToString() == "0")
+                    {
+                        e.DisplayText = "";
+                    }
+                    break;
+            }
+        }
+
+        private void gridWeekView_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
+        {
+            SplashScreenManager.ShowDefaultWaitForm();
+            var etd = gridWeekView.GetFocusedRowCellValue("Etd").ToString();
+            List<InvoiceData> obj = new InvoiceControllers().GetInvoiceData(DateTime.Parse(etd), e.Column.FieldName.ToString().ToUpper());
+            gridControl.DataSource = obj;
+            bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
+            SplashScreenManager.CloseDefaultWaitForm();
+        }
+
+        private void gridForwardView_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
+        {
+            SplashScreenManager.ShowDefaultWaitForm();
+            var etd = gridForwardView.GetFocusedRowCellValue("Etd").ToString();
+            List<InvoiceData> obj = new InvoiceControllers().GetInvoiceData(DateTime.Parse(etd), e.Column.FieldName.ToString().ToUpper());
+            gridControl.DataSource = obj;
+            bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
+            SplashScreenManager.CloseDefaultWaitForm();
+        }
+
+        private void gridView_Layout(object sender, EventArgs e)
+        {
+            gridView.SaveLayoutToXml(fileGridInvoiceName);
+            //gridWeekView.SaveLayoutToXml(fileGridOnWeek);
+            //gridForwardView.SaveLayoutToXml(fileGridForword);
+        }
+
+        private void InvoiceMainForm_Load(object sender, EventArgs e)
+        {
+            //SkinHelper.InitSkinGallery(skinPaletteRibbonGalleryBarItem1);
+            //UserLookAndFeel.Default.SkinName = Settings.Default["ApplicationSkinName"].ToString();
+            if (Settings.Default.ApplicationSkinName.ToString().Length > 0)
+            {
+                UserLookAndFeel.Default.SetSkinStyle(Settings.Default.ApplicationSkinName.ToString());
+            }
+            gridView.RestoreLayoutFromXml(fileGridInvoiceName);
+            gridWeekView.RestoreLayoutFromXml(fileGridOnWeek);
+            gridForwardView.RestoreLayoutFromXml(fileGridForword);
+        }
+
+        private void gridView_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
+        {
+            
+        }
+
+        private void gridView_RowClick(object sender, DevExpress.XtraGrid.Views.Grid.RowClickEventArgs e)
+        {
+            if (e.Button.ToString() == "Right")
+            {
+                ppMenu.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
+            }
+            else
+            {
+                ppMenu.HidePopup();
+            }
+        }
+
+        private void InvoiceMainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Settings.Default.ApplicationSkinName = UserLookAndFeel.Default.SkinName;
+            Settings.Default.Save();
+        }
+
+        private void gridWeekView_Layout(object sender, EventArgs e)
+        {
+            gridWeekView.SaveLayoutToXml(fileGridOnWeek);
+        }
+
+        private void gridForwardView_Layout(object sender, EventArgs e)
+        {
+            gridForwardView.SaveLayoutToXml(fileGridForword);
+        }
+
+        private void bbiRestoreLayOut_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            gridView.RestoreLayoutFromXml($"{AppDomain.CurrentDomain.BaseDirectory}Templates\\invoicecontrollayout.xml");
+            gridWeekView.RestoreLayoutFromXml($"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentOnWeekBnk.xml");
+            gridForwardView.RestoreLayoutFromXml($"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentNextWeekBnk.xml");
         }
     }
 }

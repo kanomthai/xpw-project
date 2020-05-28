@@ -67,8 +67,10 @@ namespace InvoiceApp
             {
                 ppMenu.MenuCaption = gridView.GetFocusedRowCellValue("PartNo").ToString();
                 bbiShowLotDetail.Enabled = false;
+                bbiSetMultiLot.Enabled = true;
                 if (StaticFunctionData.Factory == "INJ")
                 {
+                    bbiSetMultiLot.Enabled = false;
                     bbiShowLotDetail.Caption = $"{gridView.GetFocusedRowCellValue("PartNo").ToString()} Detail";
                 }
                 else
@@ -206,26 +208,44 @@ namespace InvoiceApp
 
         private void bbiPrintAllShipingLabel_ItemClick(object sender, ItemClickEventArgs e)
         {
-            bool checkinv = new InvoiceControllers().CheckInvoiceStatus(ob.RefInv);
-            if (checkinv)
+            DialogResult r = XtraMessageBox.Show("คุณต้องการที่จะปริ้น Shipping Label ใช่หรือไม่", "ยืนยันคำสั่ง", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (r == DialogResult.Yes)
             {
-                List<InvoiceBodyData> obj = gridControl.DataSource as List<InvoiceBodyData>;
-                SplashScreenManager.ShowDefaultWaitForm();
-                int i = 0;
-                while (i < obj.Count)
+                bool checkinv = new InvoiceControllers().CheckInvoiceStatus(ob.RefInv);
+                if (checkinv)
                 {
-                    InvoiceBodyData j = obj[i];
-                    bool plabel = new InvoiceControllers().PrintFTicket(j.RefInv, j.PartNo, j.OrderNo, j.StartFticket, j.StartFticket.ToString());
-                    if (plabel)
+                    List<InvoiceBodyData> obj = gridControl.DataSource as List<InvoiceBodyData>;
+                    SplashScreenManager.ShowDefaultWaitForm();
+                    int i = 0;
+                    while (i < obj.Count)
                     {
-                        i++;
+                        InvoiceBodyData j = obj[i];
+                        bool plabel = new InvoiceControllers().PrintFTicket(j.RefInv, j.PartNo, j.OrderNo, j.StartFticket, j.StartFticket.ToString());
+                        if (plabel)
+                        {
+                            i++;
+                        }
                     }
+                    XtraMessageBox.Show("ปริ้นข้อมูลเสร็จแล้ว");
                 }
-                XtraMessageBox.Show("ปริ้นข้อมูลเสร็จแล้ว");
+                else
+                {
+                    XtraMessageBox.Show("กรุณาทำการยืนยัน Invoice ก่อน", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-            else
+        }
+
+        private void gridView_DoubleClick(object sender, EventArgs e)
+        {
+            try
             {
-                XtraMessageBox.Show("กรุณาทำการยืนยัน Invoice ก่อน", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                InvoiceBodyData obj = gridView.GetFocusedRow() as InvoiceBodyData;
+                InvoiceJobCardForm frm = new InvoiceJobCardForm(obj);
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
             }
         }
     }

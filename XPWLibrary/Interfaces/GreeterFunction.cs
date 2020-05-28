@@ -974,5 +974,105 @@ namespace XPWLibrary.Interfaces
             }
             return x;
         }
+
+        public static string GetRewrite(string runno)
+        {
+            string txt = "";
+            switch (runno.Substring(0, 1))
+            {
+                case "P":
+                    //e.Column.AppearanceCell.ForeColor = Color.DarkOrange;
+                    txt = "ADD/REM.";
+                    break;
+                case "M":
+                    //e.Column.AppearanceCell.ForeColor = Color.DarkBlue;
+                    txt = "SHIP.";
+                    break;
+                case "D":
+                    //e.Column.AppearanceCell.ForeColor = Color.DarkCyan;
+                    txt = "ETD.";
+                    break;
+                case "Q":
+                    //e.Column.AppearanceCell.ForeColor = Color.DarkRed;
+                    txt = "QTY.";
+                    break;
+                case "L":
+                    //e.Column.AppearanceCell.ForeColor = Color.DarkKhaki;
+                    txt = "LOCAT.";
+                    break;
+                //AW
+                case "0":
+                    switch (runno)
+                    {
+                        case "00":
+                            txt = "UPDATE";
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "1":
+                    //e.Column.AppearanceCell.ForeColor = Color.DarkGreen;
+                    switch (runno)
+                    {
+                        case "10":
+                            txt = "CANCEL";
+                            break;
+                        case "11":
+                            txt = "REMOVE";
+                            break;
+                        case "12":
+                            txt = "REDUCE";
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "2":
+                    //e.Column.AppearanceCell.ForeColor = Color.DarkBlue;
+                    switch (runno)
+                    {
+                        case "20":
+                            txt = "CHANGE";
+                            break;
+                        case "21":
+                            txt = "ETD DATE";
+                            break;
+                        case "22":
+                            txt = "SHIP";
+                            break;
+                        case "23":
+                            txt = "SPLIT";
+                            break;
+                        case "24":
+                            txt = "ETD. CON.";
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                case "3":
+                    //e.Column.AppearanceCell.ForeColor = Color.DarkOrange;
+                    switch (runno)
+                    {
+                        case "30":
+                            txt = "REP.";
+                            break;
+                        case "31":
+                            txt = "CLAIM";
+                            break;
+                        case "32":
+                            txt = "SHIPPING";
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            return txt + " => " + runno;
+        }
     }
 }

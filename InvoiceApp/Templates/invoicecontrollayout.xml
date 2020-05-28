@@ -1,0 +1,542 @@
+﻿<XtraSerializer version="1.0" application="View">
+  <property name="#LayoutVersion" />
+  <property name="#LayoutScaleFactor">@1,Width=1@1,Height=1</property>
+  <property name="Columns" iskey="true" value="21">
+    <property name="Item1" isnull="true" iskey="true">
+      <property name="VisibleIndex">0</property>
+      <property name="Fixed">None</property>
+      <property name="Name">gridColumn1</property>
+      <property name="Caption">#</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Id</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">48</property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item2" isnull="true" iskey="true">
+      <property name="VisibleIndex">1</property>
+      <property name="Fixed">None</property>
+      <property name="Name">gridColumn2</property>
+      <property name="Caption">FAC.</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Factory</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">47</property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item3" isnull="true" iskey="true">
+      <property name="VisibleIndex">2</property>
+      <property name="Fixed">None</property>
+      <property name="Name">gridColumn3</property>
+      <property name="Caption">ZONE</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Zname</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">55</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseFont">true</property>
+        </property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item4" isnull="true" iskey="true">
+      <property name="VisibleIndex">3</property>
+      <property name="Fixed">None</property>
+      <property name="Name">gridColumn4</property>
+      <property name="Caption">ETD</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Etddte</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">98</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseFont">true</property>
+        </property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item5" isnull="true" iskey="true">
+      <property name="VisibleIndex">-1</property>
+      <property name="Fixed">None</property>
+      <property name="Name">gridColumn5</property>
+      <property name="Caption">AFF.</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Affcode</property>
+      <property name="ColumnEditName" />
+      <property name="Width">76</property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item6" isnull="true" iskey="true">
+      <property name="VisibleIndex">4</property>
+      <property name="Fixed">None</property>
+      <property name="Name">gridColumn6</property>
+      <property name="Caption">CODE</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Bishpc</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">56</property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item7" isnull="true" iskey="true">
+      <property name="VisibleIndex">5</property>
+      <property name="Fixed">None</property>
+      <property name="Name">gridColumn7</property>
+      <property name="Caption">NAME</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Custname</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">114</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseFont">true</property>
+        </property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item8" isnull="true" iskey="true">
+      <property name="VisibleIndex">6</property>
+      <property name="Fixed">None</property>
+      <property name="Name">gridColumn8</property>
+      <property name="Caption">SHIP</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Ship</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">83</property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item9" isnull="true" iskey="true">
+      <property name="VisibleIndex">7</property>
+      <property name="Fixed">None</property>
+      <property name="Name">gridColumn9</property>
+      <property name="Caption">INVOICE</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Invoice</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">148</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseForeColor">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="ForeColor">Blue</property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item10" isnull="true" iskey="true">
+      <property name="VisibleIndex">-1</property>
+      <property name="Fixed">None</property>
+      <property name="Name">gridColumn10</property>
+      <property name="Caption">REFINV</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">RefInv</property>
+      <property name="ColumnEditName" />
+      <property name="Width">89</property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item11" isnull="true" iskey="true">
+      <property name="VisibleIndex">8</property>
+      <property name="Fixed">None</property>
+      <property name="Name">gridColumn11</property>
+      <property name="Caption">PONO</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Ord</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">61</property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item12" isnull="true" iskey="true">
+      <property name="VisibleIndex">9</property>
+      <property name="Fixed">None</property>
+      <property name="Name">gridColumn12</property>
+      <property name="Caption">ITEM</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Itm</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">70</property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item13" isnull="true" iskey="true">
+      <property name="VisibleIndex">10</property>
+      <property name="Fixed">None</property>
+      <property name="Name">gridColumn13</property>
+      <property name="Caption">CTN.</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Ctn</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">63</property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item14" isnull="true" iskey="true">
+      <property name="VisibleIndex">14</property>
+      <property name="Fixed">None</property>
+      <property name="Name">gridColumn14</property>
+      <property name="Caption">PLOUT#</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Plno</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">69</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseBackColor">true</property>
+        </property>
+        <property name="BackColor">Transparent</property>
+      </property>
+      <property name="AppearanceHeader" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseBackColor">true</property>
+        </property>
+        <property name="BackColor">224, 224, 224</property>
+      </property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item15" isnull="true" iskey="true">
+      <property name="VisibleIndex">-1</property>
+      <property name="Fixed">None</property>
+      <property name="Name">gridColumn15</property>
+      <property name="Caption">BBOX</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="ColumnEditName" />
+      <property name="Width">93</property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item16" isnull="true" iskey="true">
+      <property name="VisibleIndex">13</property>
+      <property name="Fixed">None</property>
+      <property name="Name">gridColumn16</property>
+      <property name="Caption">ค้างจัด(CTN)</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">RmCtn</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">80</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseForeColor">true</property>
+          <property name="UseBackColor">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="ForeColor">@Critical</property>
+        <property name="BackColor">Transparent</property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="AppearanceHeader" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseBackColor">true</property>
+        </property>
+        <property name="BackColor">255, 224, 192</property>
+      </property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item17" isnull="true" iskey="true">
+      <property name="VisibleIndex">11</property>
+      <property name="Fixed">None</property>
+      <property name="Name">gridColumn17</property>
+      <property name="Caption">FC PL#</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Pl</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">68</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseBackColor">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="BackColor">White</property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item18" isnull="true" iskey="true">
+      <property name="VisibleIndex">16</property>
+      <property name="Fixed">None</property>
+      <property name="Name">gridColumn18</property>
+      <property name="Caption">STATUS</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Status</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">77</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseTextOptions">true</property>
+          <property name="UseBackColor">true</property>
+        </property>
+        <property name="BackColor">Transparent</property>
+        <property name="TextOptions" isnull="true" iskey="true">
+          <property name="HAlignment">Near</property>
+        </property>
+      </property>
+      <property name="AppearanceHeader" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseBackColor">true</property>
+        </property>
+        <property name="BackColor">224, 224, 224</property>
+      </property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item19" isnull="true" iskey="true">
+      <property name="VisibleIndex">100000</property>
+      <property name="Fixed">None</property>
+      <property name="Name">bandedGridColumn1</property>
+      <property name="Caption">STATUS</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">90</property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item20" isnull="true" iskey="true">
+      <property name="VisibleIndex">15</property>
+      <property name="Fixed">None</property>
+      <property name="Name">bandedGridColumn2</property>
+      <property name="Caption">WAITING</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">RmCon</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">58</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseForeColor">true</property>
+          <property name="UseBackColor">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="ForeColor">@Critical</property>
+        <property name="BackColor">Transparent</property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="AppearanceHeader" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseBackColor">true</property>
+        </property>
+        <property name="BackColor">224, 224, 224</property>
+      </property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item21" isnull="true" iskey="true">
+      <property name="VisibleIndex">12</property>
+      <property name="Fixed">None</property>
+      <property name="Name">bandedGridColumn3</property>
+      <property name="ToolTip">งานตัด Short</property>
+      <property name="Caption">CF SH#</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">ShCtn</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">72</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseBackColor">true</property>
+        </property>
+        <property name="BackColor">Transparent</property>
+      </property>
+      <property name="AppearanceHeader" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseBackColor">true</property>
+        </property>
+        <property name="BackColor">255, 224, 192</property>
+      </property>
+      <property name="MinWidth">20</property>
+    </property>
+  </property>
+  <property name="MinBandPanelRowCount">1</property>
+  <property name="OptionsView" isnull="true" iskey="true">
+    <property name="ShowFooter">true</property>
+    <property name="ShowGroupPanel">false</property>
+  </property>
+  <property name="BandPanelRowHeight">-1</property>
+  <property name="OptionsBehavior" isnull="true" iskey="true">
+    <property name="Editable">false</property>
+    <property name="ReadOnly">true</property>
+  </property>
+  <property name="FixedLineWidth">2</property>
+  <property name="IndicatorWidth">-1</property>
+  <property name="ColumnPanelRowHeight">-1</property>
+  <property name="RowSeparatorHeight">0</property>
+  <property name="FooterPanelHeight">-1</property>
+  <property name="HorzScrollVisibility">Auto</property>
+  <property name="VertScrollVisibility">Auto</property>
+  <property name="RowHeight">-1</property>
+  <property name="GroupRowHeight">-1</property>
+  <property name="GroupFormat">{0}: [#image]{1} {2}</property>
+  <property name="ChildGridLevelName" />
+  <property name="VertScrollTipFieldName" />
+  <property name="PreviewFieldName" />
+  <property name="GroupPanelText" />
+  <property name="NewItemRowText" />
+  <property name="LevelIndent">-1</property>
+  <property name="PreviewIndent">-1</property>
+  <property name="PreviewLineCount">-1</property>
+  <property name="ScrollStyle">LiveVertScroll, LiveHorzScroll</property>
+  <property name="FocusRectStyle">CellFocus</property>
+  <property name="HorzScrollStep">0</property>
+  <property name="ActiveFilterEnabled">true</property>
+  <property name="ViewCaptionHeight">-1</property>
+  <property name="ViewCaption" />
+  <property name="BorderStyle">NoBorder</property>
+  <property name="SynchronizeClones">true</property>
+  <property name="DetailTabHeaderLocation">Top</property>
+  <property name="Name">gridView</property>
+  <property name="DetailHeight">350</property>
+  <property name="Tag" isnull="true" />
+  <property name="Bands" iskey="true" value="5">
+    <property name="Item1" isnull="true" iskey="true">
+      <property name="AppearanceHeader" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseTextOptions">true</property>
+        </property>
+        <property name="TextOptions" isnull="true" iskey="true">
+          <property name="HAlignment">Center</property>
+        </property>
+      </property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="Width">501</property>
+      <property name="MinWidth">10</property>
+      <property name="Columns" iskey="true" value="8">
+        <property name="Item1">gridColumn1</property>
+        <property name="Item2">gridColumn2</property>
+        <property name="Item3">gridColumn3</property>
+        <property name="Item4">gridColumn4</property>
+        <property name="Item5">gridColumn5</property>
+        <property name="Item6">gridColumn6</property>
+        <property name="Item7">gridColumn7</property>
+        <property name="Item8">gridColumn8</property>
+      </property>
+      <property name="Children" iskey="true" value="0" />
+      <property name="Caption">ORDER</property>
+      <property name="Name">gridBand1</property>
+    </property>
+    <property name="Item2" isnull="true" iskey="true">
+      <property name="AppearanceHeader" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseTextOptions">true</property>
+        </property>
+        <property name="TextOptions" isnull="true" iskey="true">
+          <property name="HAlignment">Center</property>
+        </property>
+      </property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="Width">410</property>
+      <property name="MinWidth">10</property>
+      <property name="Columns" iskey="true" value="6">
+        <property name="Item1">gridColumn9</property>
+        <property name="Item2">gridColumn10</property>
+        <property name="Item3">gridColumn11</property>
+        <property name="Item4">gridColumn12</property>
+        <property name="Item5">gridColumn13</property>
+        <property name="Item6">gridColumn17</property>
+      </property>
+      <property name="Children" iskey="true" value="0" />
+      <property name="Caption">INVOICE</property>
+      <property name="Name">gridBand4</property>
+    </property>
+    <property name="Item3" isnull="true" iskey="true">
+      <property name="AppearanceHeader" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseTextOptions">true</property>
+          <property name="UseBackColor">true</property>
+        </property>
+        <property name="BackColor">255, 224, 192</property>
+        <property name="TextOptions" isnull="true" iskey="true">
+          <property name="HAlignment">Center</property>
+        </property>
+      </property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="Width">152</property>
+      <property name="MinWidth">10</property>
+      <property name="Columns" iskey="true" value="3">
+        <property name="Item1">bandedGridColumn3</property>
+        <property name="Item2">gridColumn16</property>
+        <property name="Item3">gridColumn15</property>
+      </property>
+      <property name="Children" iskey="true" value="0" />
+      <property name="Caption">PREPARE CATON</property>
+      <property name="Name">gridBand2</property>
+    </property>
+    <property name="Item4" isnull="true" iskey="true">
+      <property name="AppearanceHeader" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseTextOptions">true</property>
+          <property name="UseBackColor">true</property>
+        </property>
+        <property name="BackColor">224, 224, 224</property>
+        <property name="TextOptions" isnull="true" iskey="true">
+          <property name="HAlignment">Center</property>
+        </property>
+      </property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="Width">204</property>
+      <property name="MinWidth">10</property>
+      <property name="Columns" iskey="true" value="3">
+        <property name="Item1">gridColumn14</property>
+        <property name="Item2">bandedGridColumn2</property>
+        <property name="Item3">gridColumn18</property>
+      </property>
+      <property name="Children" iskey="true" value="0" />
+      <property name="Caption">LOADING CONTAINER</property>
+      <property name="Name">gridBand3</property>
+    </property>
+    <property name="Item5" isnull="true" iskey="true">
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="Width">90</property>
+      <property name="MinWidth">10</property>
+      <property name="Columns" iskey="true" value="1">
+        <property name="Item1">bandedGridColumn1</property>
+      </property>
+      <property name="Visible">false</property>
+      <property name="Children" iskey="true" value="0" />
+      <property name="Name">gridBand5</property>
+    </property>
+  </property>
+  <property name="GroupSummary" iskey="true" value="0" />
+  <property name="ActiveFilterString" />
+  <property name="FormatRules" iskey="true" value="0" />
+  <property name="FormatConditions" iskey="true" value="0" />
+  <property name="GroupSummarySortInfoState" />
+  <property name="FindFilterText" />
+  <property name="FindPanelVisible">false</property>
+</XtraSerializer>

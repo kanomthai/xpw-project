@@ -11,6 +11,7 @@
         public string SerialNo { get; set; }
         public int OrderQty { get; set; }
         public string Unit { get; set; }
+        public string PlOutNo { get; set; }
         public int Status { get; set; }
         public bool PrintFTicket { get; set; }
     }

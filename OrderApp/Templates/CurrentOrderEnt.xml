@@ -1,0 +1,379 @@
+﻿<XtraSerializer version="1.0" application="View">
+  <property name="#LayoutVersion" />
+  <property name="#LayoutScaleFactor">@1,Width=1@1,Height=1</property>
+  <property name="OptionsBehavior" isnull="true" iskey="true">
+    <property name="SummariesIgnoreNullValues">true</property>
+    <property name="Editable">false</property>
+    <property name="ReadOnly">true</property>
+  </property>
+  <property name="OptionsView" isnull="true" iskey="true">
+    <property name="ShowFooter">true</property>
+    <property name="ShowGroupPanel">false</property>
+  </property>
+  <property name="FixedLineWidth">2</property>
+  <property name="IndicatorWidth">-1</property>
+  <property name="ColumnPanelRowHeight">-1</property>
+  <property name="RowSeparatorHeight">0</property>
+  <property name="FooterPanelHeight">-1</property>
+  <property name="HorzScrollVisibility">Auto</property>
+  <property name="VertScrollVisibility">Auto</property>
+  <property name="RowHeight">-1</property>
+  <property name="GroupRowHeight">-1</property>
+  <property name="GroupFormat">{0}: [#image]{1} {2}</property>
+  <property name="ChildGridLevelName" />
+  <property name="VertScrollTipFieldName" />
+  <property name="PreviewFieldName" />
+  <property name="GroupPanelText" />
+  <property name="NewItemRowText" />
+  <property name="LevelIndent">-1</property>
+  <property name="PreviewIndent">-1</property>
+  <property name="PreviewLineCount">-1</property>
+  <property name="ScrollStyle">LiveVertScroll, LiveHorzScroll</property>
+  <property name="FocusRectStyle">CellFocus</property>
+  <property name="HorzScrollStep">0</property>
+  <property name="ActiveFilterEnabled">true</property>
+  <property name="ViewCaptionHeight">-1</property>
+  <property name="Columns" iskey="true" value="16">
+    <property name="Item1" isnull="true" iskey="true">
+      <property name="Name">gridColumn1</property>
+      <property name="Caption">#</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Id</property>
+      <property name="ColumnEditName" />
+      <property name="VisibleIndex">0</property>
+      <property name="Visible">true</property>
+      <property name="Width">56</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item2" isnull="true" iskey="true">
+      <property name="Name">gridColumn2</property>
+      <property name="OptionsFilter" isnull="true" iskey="true">
+        <property name="FilterBySortField">True</property>
+      </property>
+      <property name="Caption">FACTORY</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Factory</property>
+      <property name="ColumnEditName" />
+      <property name="VisibleIndex">1</property>
+      <property name="Visible">true</property>
+      <property name="Width">61</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item3" isnull="true" iskey="true">
+      <property name="Name">gridColumn3</property>
+      <property name="OptionsFilter" isnull="true" iskey="true">
+        <property name="AllowAutoFilter">false</property>
+        <property name="FilterBySortField">False</property>
+      </property>
+      <property name="Caption">ETD</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Etd</property>
+      <property name="ColumnEditName" />
+      <property name="VisibleIndex">2</property>
+      <property name="Visible">true</property>
+      <property name="Width">97</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseForeColor">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="ForeColor">@Critical</property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item4" isnull="true" iskey="true">
+      <property name="Name">gridColumn4</property>
+      <property name="OptionsFilter" isnull="true" iskey="true">
+        <property name="AllowAutoFilter">false</property>
+        <property name="FilterBySortField">False</property>
+      </property>
+      <property name="Caption">SHIP</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Ship</property>
+      <property name="ColumnEditName" />
+      <property name="VisibleIndex">3</property>
+      <property name="Visible">true</property>
+      <property name="Width">50</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseForeColor">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="ForeColor">@Question</property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item5" isnull="true" iskey="true">
+      <property name="Name">gridColumn5</property>
+      <property name="OptionsFilter" isnull="true" iskey="true">
+        <property name="AllowAutoFilter">false</property>
+        <property name="FilterBySortField">False</property>
+      </property>
+      <property name="Caption">ZONE</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Zone</property>
+      <property name="ColumnEditName" />
+      <property name="VisibleIndex">4</property>
+      <property name="Visible">true</property>
+      <property name="Width">46</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseForeColor">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="ForeColor">@ControlText</property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item6" isnull="true" iskey="true">
+      <property name="Name">gridColumn6</property>
+      <property name="OptionsFilter" isnull="true" iskey="true">
+        <property name="AllowAutoFilter">false</property>
+        <property name="FilterBySortField">False</property>
+      </property>
+      <property name="Caption">AFFCODE</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Affcode</property>
+      <property name="ColumnEditName" />
+      <property name="VisibleIndex">5</property>
+      <property name="Visible">true</property>
+      <property name="Width">106</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item7" isnull="true" iskey="true">
+      <property name="Name">gridColumn7</property>
+      <property name="OptionsFilter" isnull="true" iskey="true">
+        <property name="AllowAutoFilter">false</property>
+        <property name="FilterBySortField">False</property>
+      </property>
+      <property name="Caption">CUSTCODE</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Custcode</property>
+      <property name="ColumnEditName" />
+      <property name="VisibleIndex">6</property>
+      <property name="Visible">true</property>
+      <property name="Width">106</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item8" isnull="true" iskey="true">
+      <property name="Name">gridColumn8</property>
+      <property name="OptionsFilter" isnull="true" iskey="true">
+        <property name="AllowAutoFilter">false</property>
+        <property name="FilterBySortField">False</property>
+      </property>
+      <property name="Caption">CUSTNAME</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Custname</property>
+      <property name="ColumnEditName" />
+      <property name="VisibleIndex">7</property>
+      <property name="Visible">true</property>
+      <property name="Width">106</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseForeColor">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="ForeColor">@Information</property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item9" isnull="true" iskey="true">
+      <property name="Name">gridColumn9</property>
+      <property name="OptionsFilter" isnull="true" iskey="true">
+        <property name="FilterBySortField">True</property>
+      </property>
+      <property name="Caption">CTN</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">OrderCtn</property>
+      <property name="ColumnEditName" />
+      <property name="VisibleIndex">10</property>
+      <property name="Visible">true</property>
+      <property name="Width">59</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseForeColor">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="ForeColor">192, 64, 0</property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item10" isnull="true" iskey="true">
+      <property name="Name">gridColumn10</property>
+      <property name="OptionsFilter" isnull="true" iskey="true">
+        <property name="FilterBySortField">True</property>
+      </property>
+      <property name="Caption">ITEM.</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">ItemCtn</property>
+      <property name="ColumnEditName" />
+      <property name="VisibleIndex">9</property>
+      <property name="Visible">true</property>
+      <property name="Width">48</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseForeColor">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="ForeColor">@Information</property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item11" isnull="true" iskey="true">
+      <property name="Name">gridColumn11</property>
+      <property name="Caption">REFINV.</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">RefInv</property>
+      <property name="ColumnEditName" />
+      <property name="Width">180</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseForeColor">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="ForeColor">@Question</property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item12" isnull="true" iskey="true">
+      <property name="Name">gridColumn12</property>
+      <property name="OptionsFilter" isnull="true" iskey="true">
+        <property name="AllowAutoFilter">false</property>
+        <property name="FilterBySortField">False</property>
+      </property>
+      <property name="Caption">STATUS</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Status</property>
+      <property name="ColumnEditName" />
+      <property name="VisibleIndex">12</property>
+      <property name="Visible">true</property>
+      <property name="Width">64</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseTextOptions">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="TextOptions" isnull="true" iskey="true">
+          <property name="HAlignment">Near</property>
+        </property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item13" isnull="true" iskey="true">
+      <property name="Name">colPoType</property>
+      <property name="OptionsFilter" isnull="true" iskey="true">
+        <property name="AllowAutoFilter">false</property>
+        <property name="FilterBySortField">False</property>
+      </property>
+      <property name="Caption">TYPE</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">PoType</property>
+      <property name="ColumnEditName" />
+      <property name="VisibleIndex">8</property>
+      <property name="Visible">true</property>
+      <property name="Width">49</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseForeColor">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="ForeColor">@Critical</property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item14" isnull="true" iskey="true">
+      <property name="Name">gridColumn13</property>
+      <property name="Caption">ORDER SPC.</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">CustPoType</property>
+      <property name="ColumnEditName" />
+      <property name="Width">75</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item15" isnull="true" iskey="true">
+      <property name="Name">gridColumn14</property>
+      <property name="OptionsFilter" isnull="true" iskey="true">
+        <property name="AllowAutoFilter">false</property>
+        <property name="FilterBySortField">False</property>
+      </property>
+      <property name="Caption">REWRITE</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">OrderRewrite</property>
+      <property name="ColumnEditName" />
+      <property name="VisibleIndex">11</property>
+      <property name="Visible">true</property>
+      <property name="Width">120</property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+    <property name="Item16" isnull="true" iskey="true">
+      <property name="Name">gridColumn15</property>
+      <property name="Caption">LASTUPDATE</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">LastUpdate</property>
+      <property name="ColumnEditName" />
+      <property name="VisibleIndex">13</property>
+      <property name="Visible">true</property>
+      <property name="Width">154</property>
+      <property name="DisplayFormat" isnull="true" iskey="true">
+        <property name="FormatString">dd/MM/yyyy HH:m:ss</property>
+        <property name="FormatType">DateTime</property>
+      </property>
+      <property name="MinWidth">20</property>
+      <property name="MaxWidth">0</property>
+    </property>
+  </property>
+  <property name="ViewCaption" />
+  <property name="BorderStyle">NoBorder</property>
+  <property name="SynchronizeClones">true</property>
+  <property name="DetailTabHeaderLocation">Top</property>
+  <property name="Name">gridView</property>
+  <property name="DetailHeight">350</property>
+  <property name="Tag" isnull="true" />
+  <property name="GroupSummary" iskey="true" value="0" />
+  <property name="ActiveFilterString" />
+  <property name="FormatRules" iskey="true" value="0" />
+  <property name="FormatConditions" iskey="true" value="0" />
+  <property name="GroupSummarySortInfoState" />
+  <property name="FindFilterText" />
+  <property name="FindPanelVisible">false</property>
+</XtraSerializer>

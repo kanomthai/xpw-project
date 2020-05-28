@@ -57,6 +57,7 @@
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.gridColumn9 = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -88,7 +89,7 @@
             this.ribbonPage1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.OfficeUniversal;
             this.ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
-            this.ribbonControl.Size = new System.Drawing.Size(855, 91);
+            this.ribbonControl.Size = new System.Drawing.Size(1187, 91);
             this.ribbonControl.StatusBar = this.ribbonStatusBar;
             this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
@@ -123,6 +124,7 @@
             // bbiDelete
             // 
             this.bbiDelete.Caption = "Cut Shorting";
+            this.bbiDelete.Enabled = false;
             this.bbiDelete.Id = 18;
             this.bbiDelete.ImageOptions.ImageUri.Uri = "Delete";
             this.bbiDelete.Name = "bbiDelete";
@@ -184,7 +186,7 @@
             this.ribbonStatusBar.Location = new System.Drawing.Point(0, 573);
             this.ribbonStatusBar.Name = "ribbonStatusBar";
             this.ribbonStatusBar.Ribbon = this.ribbonControl;
-            this.ribbonStatusBar.Size = new System.Drawing.Size(855, 26);
+            this.ribbonStatusBar.Size = new System.Drawing.Size(1187, 26);
             // 
             // layoutControl1
             // 
@@ -193,7 +195,7 @@
             this.layoutControl1.Location = new System.Drawing.Point(0, 91);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.Root = this.Root;
-            this.layoutControl1.Size = new System.Drawing.Size(855, 482);
+            this.layoutControl1.Size = new System.Drawing.Size(1187, 482);
             this.layoutControl1.TabIndex = 4;
             this.layoutControl1.Text = "layoutControl1";
             // 
@@ -203,7 +205,7 @@
             this.gridControl.MainView = this.gridView;
             this.gridControl.MenuManager = this.ribbonControl;
             this.gridControl.Name = "gridControl";
-            this.gridControl.Size = new System.Drawing.Size(831, 458);
+            this.gridControl.Size = new System.Drawing.Size(1163, 458);
             this.gridControl.TabIndex = 4;
             this.gridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -219,7 +221,8 @@
             this.gridColumn5,
             this.gridColumn6,
             this.gridColumn7,
-            this.gridColumn8});
+            this.gridColumn8,
+            this.gridColumn9});
             this.gridView.GridControl = this.gridControl;
             this.gridView.Name = "gridView";
             this.gridView.OptionsBehavior.Editable = false;
@@ -236,7 +239,7 @@
             this.gridColumn1.Name = "gridColumn1";
             this.gridColumn1.Visible = true;
             this.gridColumn1.VisibleIndex = 1;
-            this.gridColumn1.Width = 92;
+            this.gridColumn1.Width = 118;
             // 
             // gridColumn2
             // 
@@ -245,7 +248,7 @@
             this.gridColumn2.Name = "gridColumn2";
             this.gridColumn2.Visible = true;
             this.gridColumn2.VisibleIndex = 2;
-            this.gridColumn2.Width = 116;
+            this.gridColumn2.Width = 149;
             // 
             // gridColumn3
             // 
@@ -258,7 +261,7 @@
             this.gridColumn3.Name = "gridColumn3";
             this.gridColumn3.Visible = true;
             this.gridColumn3.VisibleIndex = 3;
-            this.gridColumn3.Width = 135;
+            this.gridColumn3.Width = 174;
             // 
             // gridColumn4
             // 
@@ -267,7 +270,7 @@
             this.gridColumn4.Name = "gridColumn4";
             this.gridColumn4.Visible = true;
             this.gridColumn4.VisibleIndex = 4;
-            this.gridColumn4.Width = 109;
+            this.gridColumn4.Width = 140;
             // 
             // gridColumn5
             // 
@@ -278,7 +281,7 @@
             this.gridColumn5.Name = "gridColumn5";
             this.gridColumn5.Visible = true;
             this.gridColumn5.VisibleIndex = 5;
-            this.gridColumn5.Width = 109;
+            this.gridColumn5.Width = 140;
             // 
             // gridColumn6
             // 
@@ -289,7 +292,7 @@
             this.gridColumn6.Name = "gridColumn6";
             this.gridColumn6.Visible = true;
             this.gridColumn6.VisibleIndex = 6;
-            this.gridColumn6.Width = 80;
+            this.gridColumn6.Width = 67;
             // 
             // gridColumn7
             // 
@@ -302,7 +305,7 @@
             this.gridColumn7.Name = "gridColumn7";
             this.gridColumn7.Visible = true;
             this.gridColumn7.VisibleIndex = 0;
-            this.gridColumn7.Width = 63;
+            this.gridColumn7.Width = 81;
             // 
             // gridColumn8
             // 
@@ -314,8 +317,8 @@
             this.gridColumn8.FieldName = "Status";
             this.gridColumn8.Name = "gridColumn8";
             this.gridColumn8.Visible = true;
-            this.gridColumn8.VisibleIndex = 7;
-            this.gridColumn8.Width = 102;
+            this.gridColumn8.VisibleIndex = 8;
+            this.gridColumn8.Width = 123;
             // 
             // Root
             // 
@@ -324,7 +327,7 @@
             this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem1});
             this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(855, 482);
+            this.Root.Size = new System.Drawing.Size(1187, 482);
             this.Root.TextVisible = false;
             // 
             // layoutControlItem1
@@ -332,7 +335,7 @@
             this.layoutControlItem1.Control = this.gridControl;
             this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(835, 462);
+            this.layoutControlItem1.Size = new System.Drawing.Size(1167, 462);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
@@ -344,11 +347,20 @@
             this.popupMenu1.Name = "popupMenu1";
             this.popupMenu1.Ribbon = this.ribbonControl;
             // 
+            // gridColumn9
+            // 
+            this.gridColumn9.Caption = "PLOUT";
+            this.gridColumn9.FieldName = "PlOutNo";
+            this.gridColumn9.Name = "gridColumn9";
+            this.gridColumn9.Visible = true;
+            this.gridColumn9.VisibleIndex = 7;
+            this.gridColumn9.Width = 146;
+            // 
             // InvoiceJobCardForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(855, 599);
+            this.ClientSize = new System.Drawing.Size(1187, 599);
             this.Controls.Add(this.layoutControl1);
             this.Controls.Add(this.ribbonStatusBar);
             this.Controls.Add(this.ribbonControl);
@@ -398,5 +410,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn7;
         private DevExpress.XtraBars.BarButtonItem bbiJobCardOnly;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn8;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn9;
     }
 }

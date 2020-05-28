@@ -22,7 +22,7 @@ namespace InvoiceApp
             InitializeComponent();
             ob = obj;
             this.Text = $"PRINT JOBCARD {obj.RefInv} WITH {obj.PartNo}";
-            string sql = $"SELECT d.PONO,d.PARTNO,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.ISSUINGSTATUS FROM TXP_ISSPACKDETAIL d " +
+            string sql = $"SELECT d.PONO,d.PARTNO,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,d.ISSUINGSTATUS FROM TXP_ISSPACKDETAIL d " +
                 "INNER JOIN TXP_ISSTRANSBODY b ON d.ISSUINGKEY = b.ISSUINGKEY AND b.PARTNO = d.PARTNO\n" +
                 $"WHERE d.PARTNO = '{obj.PartNo}' AND d.ISSUINGKEY = '{obj.RefInv}'\n" +
                 $"ORDER BY d.FTICKETNO ";
@@ -44,6 +44,7 @@ namespace InvoiceApp
                     OrderQty = int.Parse(r["orderqty"].ToString()),
                     SerialNo = r["ctnsn"].ToString(),
                     Unit = r["unit"].ToString(),
+                    PlOutNo = r["ploutno"].ToString(),
                     Status = int.Parse(r["issuingstatus"].ToString()),
                     PrintFTicket = false,
                 });

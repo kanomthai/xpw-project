@@ -638,7 +638,7 @@ namespace XPWLibrary.Controllers
         {
             string sql = $"SELECT p.PONO custpono,p.PARTNO,CASE WHEN p.FACTORY = 'INJ' THEN p.PARTNO ELSE p.PARTNAME END PARTNAME,p.LOTNO,p.BALQTY,round(p.BALQTY/p.BISTDP) orderctn,p.BIIVPX,p.BIOABT,p.COMMERCIAL,p.PC,p.UUID," +
                 $"p.BISTDP,p.BIWIDT,p.BILENG,p.BIHIGH,p.BIGRWT,p.BINEWT,p.ORDERTYPE,p.BICOMD,p.CURINV,e.refinvoice invoceno,p.ORDERSTATUS," +
-                $"CASE WHEN p.FACTORY = 'INJ' THEN substr(p.REASONCD, 1, 1) ELSE substr(p.REASONCD, 2, 1) END rewrite,p.upddte,p.bicomd FROM TXP_ORDERPLAN p\n" +
+                $"substr(p.REASONCD, 1, 1) rewrite,p.upddte,p.bicomd FROM TXP_ORDERPLAN p\n" +
                 "LEFT JOIN TXP_ISSTRANSENT e ON p.CURINV = e.ISSUINGKEY\n" +
                 "LEFT JOIN TXP_PART m ON p.FACTORY = m.VENDORCD AND p.PARTNO = m.PARTNO\n";
             List<OrderBody> obj = new List<OrderBody>();
@@ -661,9 +661,10 @@ namespace XPWLibrary.Controllers
         {
             string sql = $"SELECT p.PONO custpono,p.PARTNO,CASE WHEN p.FACTORY = 'INJ' THEN p.PARTNO ELSE p.PARTNAME END PARTNAME,p.LOTNO,p.BALQTY,round(p.BALQTY/p.BISTDP) orderctn,p.BIIVPX,p.BIOABT,p.COMMERCIAL,p.PC,p.UUID," +
                 $"p.BISTDP,p.BIWIDT,p.BILENG,p.BIHIGH,p.BIGRWT,p.BINEWT,p.ORDERTYPE,p.BICOMD,p.CURINV,e.refinvoice invoceno,p.ORDERSTATUS," +
-                $"CASE WHEN p.FACTORY = 'INJ' THEN substr(p.REASONCD, 1, 1) ELSE substr(p.REASONCD, 2, 1) END rewrite,p.upddte,p.bicomd FROM TXP_ORDERPLAN p\n" +
+                $"substr(p.REASONCD, 1, 1) rewrite,p.upddte,p.bicomd FROM TXP_ORDERPLAN p\n" +
                 "LEFT JOIN TXP_ISSTRANSENT e ON p.CURINV = e.ISSUINGKEY\n"+
                 "LEFT JOIN TXP_PART m ON p.FACTORY = m.VENDORCD AND p.PARTNO = m.PARTNO\n";
+            Console.WriteLine(sql);
             List<OrderBody> obj = new List<OrderBody>();
             sql += CheckOrderGroup(b);
             string ordby = "\nORDER BY p.PARTNO,round(p.BALQTY/p.BISTDP),p.PONO";
