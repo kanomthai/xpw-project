@@ -66,12 +66,18 @@ namespace XPWLibrary.Controllers
             {
                 etddate = $"t.ETDDTE BETWEEN (TRUNC(to_date('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy'), 'DY') + 0) AND (TRUNC(to_date('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy'), 'DY') + 7)";
             }
-            string sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate}";
+            string sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate}\n" +
+                $"ORDER BY t.ZNAME,t.AFFCODE,t.BISHPC,t.CUSTNAME,t.ORD,t.ISSUINGKEY,t.SHIPTYPE";
             Console.WriteLine(sql);
             List<InvoiceData> list = new List<InvoiceData>();
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow r in dr.Tables[0].Rows)
             {
+                int sh = (int.Parse(r["ctn"].ToString()) - int.Parse(r["issue"].ToString())) - int.Parse(r["shctn"].ToString());
+                if (sh < 0)
+                {
+                    sh = 0;
+                }
                 list.Add(new InvoiceData()
                 { 
                     Id = list.Count + 1,
@@ -90,7 +96,7 @@ namespace XPWLibrary.Controllers
                     Itm = int.Parse(r["itm"].ToString()),
                     Ctn = int.Parse(r["ctn"].ToString()),
                     Issue = int.Parse(r["issue"].ToString()),
-                    RmCtn = int.Parse(r["ctn"].ToString()) - int.Parse(r["issue"].ToString()),
+                    RmCtn = sh,
                     Pl = int.Parse(r["pl"].ToString()),
                     Plno = int.Parse(r["plno"].ToString()),
                     RmCon = int.Parse(r["pl"].ToString()) - int.Parse(r["plno"].ToString()),

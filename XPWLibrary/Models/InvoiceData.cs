@@ -39,7 +39,6 @@ namespace XPWLibrary.Models
         public int LotSeq { get; set; }
         public int BalQty { get; set; }
         public int BalCtn { get; set; }
-        public int ShCtn { get; set; }
         public int PartRmCtn { get; set; }
         public int StartFticket { get; set; }
     }

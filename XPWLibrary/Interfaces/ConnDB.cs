@@ -26,6 +26,7 @@ namespace XPWLibrary.Interfaces
             {
                 Console.WriteLine("ERROR ====>");
                 Console.WriteLine(sql);
+                Console.WriteLine(ex);
                 Console.WriteLine("END ====>");
                 //throw ex;
             }

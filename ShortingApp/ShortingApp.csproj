@@ -78,6 +78,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="ShortingForm.resx">
       <DependentUpon>ShortingForm.cs</DependentUpon>
@@ -103,6 +104,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icons8-delete-48.ico" />
+    <Content Include="Templates\current_shorting.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\apply_32x32.png" />
+    <None Include="Resources\apply_16x161.png" />
+    <None Include="Resources\cancel_16x16.png" />
+    <None Include="Resources\apply_16x16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

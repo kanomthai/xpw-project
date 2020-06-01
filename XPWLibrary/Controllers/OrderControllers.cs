@@ -724,5 +724,20 @@ namespace XPWLibrary.Controllers
             }
             return false;
         }
+
+        public int GetOrderNotCreateJobList(DateTime etd)
+        {
+            string sql = $"SELECT p.ORDERID FROM TXP_ORDERPLAN p WHERE p.FACTORY= '{StaticFunctionData.Factory}' AND" +
+                $" p.ETDTAP = to_date('{etd.ToString("dd/MM/yyyy")}', 'dd/MM/yyyy') AND " +
+                $"p.CURINV IS NULL\n" +
+                $"GROUP BY p.ORDERID";
+            int x = 0;
+            DataSet dr = new ConnDB().GetFill(sql);
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                return dr.Tables[0].Rows.Count;
+            }
+            return x;
+        }
     }
 }

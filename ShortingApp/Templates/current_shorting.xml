@@ -1,0 +1,403 @@
+﻿<XtraSerializer version="1.0" application="View">
+  <property name="#LayoutVersion" />
+  <property name="#LayoutScaleFactor">@1,Width=1@1,Height=1</property>
+  <property name="Columns" iskey="true" value="13">
+    <property name="Item1" isnull="true" iskey="true">
+      <property name="VisibleIndex">0</property>
+      <property name="Fixed">None</property>
+      <property name="Name">bandedGridColumn1</property>
+      <property name="OptionsEditForm" isnull="true" iskey="true">
+        <property name="UseEditorColRowSpan">false</property>
+      </property>
+      <property name="Caption">#</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Seq</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">27</property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item2" isnull="true" iskey="true">
+      <property name="VisibleIndex">1</property>
+      <property name="Fixed">None</property>
+      <property name="Name">bandedGridColumn2</property>
+      <property name="OptionsEditForm" isnull="true" iskey="true">
+        <property name="UseEditorColRowSpan">false</property>
+      </property>
+      <property name="Caption">ORDERNO.</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Pono</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">121</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseFont">true</property>
+        </property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item3" isnull="true" iskey="true">
+      <property name="VisibleIndex">2</property>
+      <property name="Fixed">None</property>
+      <property name="Name">bandedGridColumn3</property>
+      <property name="OptionsEditForm" isnull="true" iskey="true">
+        <property name="UseEditorColRowSpan">false</property>
+      </property>
+      <property name="Caption">PARTNO.</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">PartNo</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">154</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseFont">true</property>
+        </property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item4" isnull="true" iskey="true">
+      <property name="VisibleIndex">3</property>
+      <property name="Fixed">None</property>
+      <property name="Name">bandedGridColumn4</property>
+      <property name="OptionsEditForm" isnull="true" iskey="true">
+        <property name="UseEditorColRowSpan">false</property>
+      </property>
+      <property name="Caption">F-TICKET</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">FticketNo</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">173</property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item5" isnull="true" iskey="true">
+      <property name="VisibleIndex">6</property>
+      <property name="Fixed">None</property>
+      <property name="Name">bandedGridColumn5</property>
+      <property name="OptionsEditForm" isnull="true" iskey="true">
+        <property name="UseEditorColRowSpan">false</property>
+      </property>
+      <property name="Caption">QTY.</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">OrderQty</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">100</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseForeColor">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="ForeColor">@WindowText</property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="DisplayFormat" isnull="true" iskey="true">
+        <property name="FormatString">{0:n0}</property>
+        <property name="FormatType">Numeric</property>
+      </property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item6" isnull="true" iskey="true">
+      <property name="VisibleIndex">5</property>
+      <property name="Fixed">None</property>
+      <property name="Name">bandedGridColumn6</property>
+      <property name="OptionsEditForm" isnull="true" iskey="true">
+        <property name="UseEditorColRowSpan">false</property>
+      </property>
+      <property name="Caption">S/N</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">Sn</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">143</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseForeColor">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="ForeColor">@Question</property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item7" isnull="true" iskey="true">
+      <property name="VisibleIndex">7</property>
+      <property name="Fixed">None</property>
+      <property name="Name">bandedGridColumn7</property>
+      <property name="OptionsEditForm" isnull="true" iskey="true">
+        <property name="UseEditorColRowSpan">false</property>
+      </property>
+      <property name="Caption">CURRENT</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">CurStk</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">85</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseForeColor">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="ForeColor">@Information</property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="DisplayFormat" isnull="true" iskey="true">
+        <property name="FormatString">{0:n0}</property>
+        <property name="FormatType">Numeric</property>
+      </property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item8" isnull="true" iskey="true">
+      <property name="VisibleIndex">8</property>
+      <property name="Fixed">None</property>
+      <property name="Name">bandedGridColumn8</property>
+      <property name="OptionsEditForm" isnull="true" iskey="true">
+        <property name="UseEditorColRowSpan">false</property>
+      </property>
+      <property name="Caption">WAIT</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">WaitCtn</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">73</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseForeColor">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="ForeColor">@Warning</property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="DisplayFormat" isnull="true" iskey="true">
+        <property name="FormatString">{0:n0}</property>
+        <property name="FormatType">Numeric</property>
+      </property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item9" isnull="true" iskey="true">
+      <property name="VisibleIndex">9</property>
+      <property name="Fixed">None</property>
+      <property name="Name">bandedGridColumn9</property>
+      <property name="OptionsEditForm" isnull="true" iskey="true">
+        <property name="UseEditorColRowSpan">false</property>
+      </property>
+      <property name="Caption">PREPARED</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">PreCtn</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">76</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseForeColor">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="ForeColor">@Question</property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="DisplayFormat" isnull="true" iskey="true">
+        <property name="FormatString">{0:n0}</property>
+        <property name="FormatType">Numeric</property>
+      </property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item10" isnull="true" iskey="true">
+      <property name="VisibleIndex">10</property>
+      <property name="Fixed">None</property>
+      <property name="Name">bandedGridColumn10</property>
+      <property name="OptionsEditForm" isnull="true" iskey="true">
+        <property name="UseEditorColRowSpan">false</property>
+      </property>
+      <property name="Caption">QTY.</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">ShCtn</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">59</property>
+      <property name="AppearanceCell" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseForeColor">true</property>
+          <property name="UseFont">true</property>
+        </property>
+        <property name="ForeColor">Red</property>
+        <property name="FontStyleDelta">Bold</property>
+      </property>
+      <property name="DisplayFormat" isnull="true" iskey="true">
+        <property name="FormatString">{0:n0}</property>
+        <property name="FormatType">Numeric</property>
+      </property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item11" isnull="true" iskey="true">
+      <property name="VisibleIndex">11</property>
+      <property name="Fixed">None</property>
+      <property name="Name">bandedGridColumn11</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="ColumnEditName">bbiConfirm</property>
+      <property name="Visible">true</property>
+      <property name="Width">58</property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item12" isnull="true" iskey="true">
+      <property name="VisibleIndex">4</property>
+      <property name="Fixed">None</property>
+      <property name="Name">bandedGridColumn12</property>
+      <property name="OptionsEditForm" isnull="true" iskey="true">
+        <property name="UseEditorColRowSpan">false</property>
+      </property>
+      <property name="Caption">LOTNO.</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">LotNo</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">130</property>
+      <property name="MinWidth">20</property>
+    </property>
+    <property name="Item13" isnull="true" iskey="true">
+      <property name="VisibleIndex">100000</property>
+      <property name="Fixed">None</property>
+      <property name="Name">bandedGridColumn13</property>
+      <property name="OptionsEditForm" isnull="true" iskey="true">
+        <property name="StartNewRow">true</property>
+      </property>
+      <property name="Caption">STATUS</property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="FieldName">CmSh</property>
+      <property name="ColumnEditName" />
+      <property name="Visible">true</property>
+      <property name="Width">75</property>
+      <property name="MinWidth">20</property>
+    </property>
+  </property>
+  <property name="MinBandPanelRowCount">1</property>
+  <property name="OptionsView" isnull="true" iskey="true">
+    <property name="ShowFooter">true</property>
+    <property name="ShowGroupPanel">false</property>
+  </property>
+  <property name="BandPanelRowHeight">-1</property>
+  <property name="FixedLineWidth">2</property>
+  <property name="IndicatorWidth">-1</property>
+  <property name="ColumnPanelRowHeight">-1</property>
+  <property name="RowSeparatorHeight">0</property>
+  <property name="FooterPanelHeight">-1</property>
+  <property name="HorzScrollVisibility">Auto</property>
+  <property name="VertScrollVisibility">Auto</property>
+  <property name="RowHeight">-1</property>
+  <property name="GroupRowHeight">-1</property>
+  <property name="GroupFormat">{0}: [#image]{1} {2}</property>
+  <property name="ChildGridLevelName" />
+  <property name="VertScrollTipFieldName" />
+  <property name="PreviewFieldName" />
+  <property name="GroupPanelText" />
+  <property name="NewItemRowText" />
+  <property name="LevelIndent">-1</property>
+  <property name="PreviewIndent">-1</property>
+  <property name="PreviewLineCount">-1</property>
+  <property name="ScrollStyle">LiveVertScroll, LiveHorzScroll</property>
+  <property name="FocusRectStyle">CellFocus</property>
+  <property name="HorzScrollStep">0</property>
+  <property name="ActiveFilterEnabled">true</property>
+  <property name="ViewCaptionHeight">-1</property>
+  <property name="ViewCaption" />
+  <property name="BorderStyle">Default</property>
+  <property name="SynchronizeClones">true</property>
+  <property name="DetailTabHeaderLocation">Top</property>
+  <property name="Name">bandedGridView</property>
+  <property name="DetailHeight">350</property>
+  <property name="Tag" isnull="true" />
+  <property name="Bands" iskey="true" value="3">
+    <property name="Item1" isnull="true" iskey="true">
+      <property name="AppearanceHeader" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseTextOptions">true</property>
+        </property>
+        <property name="TextOptions" isnull="true" iskey="true">
+          <property name="HAlignment">Center</property>
+        </property>
+      </property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="Width">848</property>
+      <property name="MinWidth">10</property>
+      <property name="Columns" iskey="true" value="7">
+        <property name="Item1">bandedGridColumn1</property>
+        <property name="Item2">bandedGridColumn2</property>
+        <property name="Item3">bandedGridColumn3</property>
+        <property name="Item4">bandedGridColumn4</property>
+        <property name="Item5">bandedGridColumn12</property>
+        <property name="Item6">bandedGridColumn6</property>
+        <property name="Item7">bandedGridColumn5</property>
+      </property>
+      <property name="Children" iskey="true" value="0" />
+      <property name="Caption">INFOMATION</property>
+      <property name="Name">gridBand1</property>
+    </property>
+    <property name="Item2" isnull="true" iskey="true">
+      <property name="AppearanceHeader" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseTextOptions">true</property>
+        </property>
+        <property name="TextOptions" isnull="true" iskey="true">
+          <property name="HAlignment">Center</property>
+        </property>
+      </property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="Width">234</property>
+      <property name="MinWidth">10</property>
+      <property name="Columns" iskey="true" value="3">
+        <property name="Item1">bandedGridColumn7</property>
+        <property name="Item2">bandedGridColumn8</property>
+        <property name="Item3">bandedGridColumn9</property>
+      </property>
+      <property name="Children" iskey="true" value="0" />
+      <property name="Caption">STOCK&amp;PREPARE</property>
+      <property name="Name">gridBand2</property>
+    </property>
+    <property name="Item3" isnull="true" iskey="true">
+      <property name="AppearanceHeader" isnull="true" iskey="true">
+        <property name="Options" isnull="true" iskey="true">
+          <property name="UseTextOptions">true</property>
+        </property>
+        <property name="TextOptions" isnull="true" iskey="true">
+          <property name="HAlignment">Center</property>
+        </property>
+      </property>
+      <property name="ImageAlignment">Near</property>
+      <property name="ImageIndex">-1</property>
+      <property name="Width">117</property>
+      <property name="MinWidth">10</property>
+      <property name="Columns" iskey="true" value="2">
+        <property name="Item1">bandedGridColumn10</property>
+        <property name="Item2">bandedGridColumn11</property>
+      </property>
+      <property name="Children" iskey="true" value="0" />
+      <property name="Caption">CONFIRM SHORT</property>
+      <property name="Name">gridBand3</property>
+    </property>
+  </property>
+  <property name="GroupSummary" iskey="true" value="0" />
+  <property name="ActiveFilterString" />
+  <property name="FormatRules" iskey="true" value="0" />
+  <property name="FormatConditions" iskey="true" value="0" />
+  <property name="GroupSummarySortInfoState" />
+  <property name="FindFilterText" />
+  <property name="FindPanelVisible">false</property>
+</XtraSerializer>

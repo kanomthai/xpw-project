@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Drawing;
+using System.Threading;
 using System.Windows.Forms;
 using XPWLibrary.Controllers;
 using XPWLibrary.Interfaces;
@@ -23,6 +24,7 @@ namespace InvoiceApp
     public partial class InvoiceMainForm : DevExpress.XtraBars.Ribbon.RibbonForm
     {
         bool stload = true;
+        bool loadinv = false;
         string fileGridInvoiceName = $"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentInvoiceControl.xml";
         string fileGridOnWeek = $"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentOnWeek.xml";
         string fileGridForword = $"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentNextWeek.xml";
@@ -33,11 +35,36 @@ namespace InvoiceApp
             bbiFactory.EditValue = StaticFunctionData.Factory;
             bbiStVersion.Caption = StaticFunctionData.AppVersion;
             bbiDbName.Caption = StaticFunctionData.DBname;
+            bbiOrderStatus.Caption = "";
             //ReloadData();
         }
         void bbiPrintPreview_ItemClick(object sender, ItemClickEventArgs e)
         {
             gridControl.ShowRibbonPrintPreview();
+        }
+
+        void AfterFormLoad()
+        {
+            if (loadinv)
+            {
+                try
+                {
+                    Thread thr1 = new Thread(GetToWeek);
+                    Thread thr2 = new Thread(GetForwardWeek);
+                    Thread thorder = new Thread(GetOrderNotCreateJobList);
+                    thr1.Start();
+                    thr2.Start();
+                    thorder.Start();
+
+                    //After running
+                    thr1.Abort();
+                    thr2.Abort();
+                    thorder.Abort();
+                }
+                catch (Exception)
+                {
+                }
+            }
         }
 
         void ReloadData()
@@ -49,16 +76,31 @@ namespace InvoiceApp
                 gridControl.DataSource = obj;
                 bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
             }
-            GetToWeek();
-            GetForwardWeek();
+            AfterFormLoad();
+            //GetToWeek();
+            //GetForwardWeek();
             stload = false;
             SplashScreenManager.CloseDefaultWaitForm();
+        }
+
+        private void GetOrderNotCreateJobList()
+        {
+            DateTime d = DateTime.Parse(bbiEtd.EditValue.ToString());
+            this.Invoke(new MethodInvoker(delegate {
+                int x = new OrderControllers().GetOrderNotCreateJobList(d);
+                bbiOrderStatus.Caption = "              ";
+                if (x > 0)
+                {
+                    bbiOrderStatus.Caption = $"{x} PO NOT CREATE.";
+                } 
+            } ));
         }
 
         private void GetForwardWeek()
         {
             DateTime d = DateTime.Parse(bbiEtd.EditValue.ToString());
-            gridForwardControl.DataSource = GetMasterWeek(0, 7);
+            this.Invoke(new MethodInvoker(delegate { gridForwardControl.DataSource = GetMasterWeek(0, 7); }));
+            
         }
 
         private BindingList<InvoiceMasterData> GetMasterWeek(int b, int en)
@@ -71,7 +113,8 @@ namespace InvoiceApp
         private void GetToWeek()
         {
             DateTime d = DateTime.Parse(bbiEtd.EditValue.ToString());
-            gridWeekControl.DataSource = new InvoiceControllers().GetInvoiceToWeek(d) as BindingList<InvoiceMasterData>;
+            //gridWeekControl.DataSource = new InvoiceControllers().GetInvoiceToWeek(d) as BindingList<InvoiceMasterData>;
+            this.Invoke(new MethodInvoker(delegate { gridWeekControl.DataSource = new InvoiceControllers().GetInvoiceToWeek(d) as BindingList<InvoiceMasterData>; }));
         }
 
         private void gridView_MouseUp(object sender, MouseEventArgs e)
@@ -221,6 +264,8 @@ namespace InvoiceApp
             obj.Ship = ob[i].Ship;
             obj.PoType = ob[i].Potype;
             obj.CustPoType = ob[i].Ord;
+            obj.RefInv = ob[i].Invoice;
+            obj.RefNo = ob[i].RefInv;
 
             //OrderPartShortingForm frm = new OrderPartShortingForm(obj);
             ShortingForm frm = new ShortingForm(obj);
@@ -313,6 +358,8 @@ namespace InvoiceApp
             gridView.RestoreLayoutFromXml(fileGridInvoiceName);
             gridWeekView.RestoreLayoutFromXml(fileGridOnWeek);
             gridForwardView.RestoreLayoutFromXml(fileGridForword);
+            loadinv = true;
+            AfterFormLoad();
         }
 
         private void gridView_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
