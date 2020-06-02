@@ -20,9 +20,13 @@ namespace XPWLibrary.Controllers
             //    etddate = $"t.ETDDTE BETWEEN (TRUNC(to_date('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy'), 'DY') + 0) AND (TRUNC(to_date('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy'), 'DY') + 7)";
             //}
             string sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.ZNAME = '{zname}' AND t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate}";
-            if (zname == "AIR" || zname == "TRUCK")
+            if (zname == "AIR")
             {
-                sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.SHIPTYPE = '{zname.Substring(1, 1)}' AND t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate}";
+                sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.ZNAME = 'CK2' AND t.SHIPTYPE = 'A' AND t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate}";
+            }
+            else if (zname == "TRUCK")
+            {
+                sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.ZNAME = 'CK2' AND t.SHIPTYPE = 'T' AND t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate}";
             }
             Console.WriteLine(sql);
             List<InvoiceData> list = new List<InvoiceData>();
