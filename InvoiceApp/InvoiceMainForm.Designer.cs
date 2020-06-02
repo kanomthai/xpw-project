@@ -378,6 +378,7 @@
             this.bbiOrderStatus.ItemAppearance.Normal.Options.UseForeColor = true;
             this.bbiOrderStatus.Name = "bbiOrderStatus";
             this.bbiOrderStatus.TextAlignment = System.Drawing.StringAlignment.Center;
+            this.bbiOrderStatus.Width = 250;
             // 
             // ribbonPage1
             // 

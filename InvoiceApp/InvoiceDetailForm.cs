@@ -21,6 +21,7 @@ namespace InvoiceApp
     public partial class InvoiceDetailForm : DevExpress.XtraBars.Ribbon.RibbonForm
     {
         InvoiceData ob;
+        List<InvoiceBodyData> spobj = new List<InvoiceBodyData>();
         public InvoiceDetailForm(InvoiceData ord)
         {
             InitializeComponent();
@@ -44,6 +45,8 @@ namespace InvoiceApp
             bbiEtd.EditValue = ob.Etddte;
             bbiEtd.Enabled = false;
             bbiShip.Enabled = false;
+            bbiNewOrder.Enabled = false;
+            bbiSplitInvoice.Caption = "";
             List<InvoiceBodyData> obj = new InvoiceControllers().GetInvoiceBody(ob);
             gridControl.DataSource = obj;
             bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
@@ -247,6 +250,40 @@ namespace InvoiceApp
             {
                 Console.WriteLine(ex.ToString());
             }
+        }
+
+        private void bbiSplitPart_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            InvoiceBodyData obj = gridView.GetFocusedRow() as InvoiceBodyData;
+            DialogResult r;
+            if (obj.PartRmCtn < 1)
+            {
+                r = XtraMessageBox.Show($"ยืนยันคำสั่ง Split {obj.PartNo}", "XPW Alert!", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (r == DialogResult.OK)
+                {
+                    spobj.Add(obj);
+                    gridView.DeleteSelectedRows();
+                }
+            }
+            else
+            {
+                XtraMessageBox.Show($"ไม่สามารถ Split {obj.PartNo} ได้\nเนื่องจากทำการจัดเตรียมแล้ว", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            if (spobj.Count > 0)
+            {
+                bbiNewOrder.Enabled = true;
+                bbiSplitInvoice.Caption = $"Split {spobj.Count}";
+            }
+            else
+            {
+                bbiNewOrder.Enabled = false;
+                bbiSplitInvoice.Caption = $"";
+            }
+        }
+
+        private void bbiNewOrder_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
         }
     }
 }

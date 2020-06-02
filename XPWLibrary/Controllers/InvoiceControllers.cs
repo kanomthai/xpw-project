@@ -295,6 +295,7 @@ namespace XPWLibrary.Controllers
                     BalCtn = int.Parse(r["ctn"].ToString()),
                     ShCtn = int.Parse(r["shctn"].ToString()),
                     PartRmCtn = int.Parse(r["rm"].ToString()),
+                    RemCtn = int.Parse(r["ctn"].ToString()) - int.Parse(r["rm"].ToString()),
                     StartFticket = sctn
                 });
             }

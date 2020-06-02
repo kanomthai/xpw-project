@@ -40,6 +40,7 @@ namespace XPWLibrary.Models
         public int BalQty { get; set; }
         public int BalCtn { get; set; }
         public int PartRmCtn { get; set; }
+        public int RemCtn { get; set; }
         public int StartFticket { get; set; }
     }
 

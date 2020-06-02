@@ -45,6 +45,9 @@
             this.bbiSetMultiLot = new DevExpress.XtraBars.BarButtonItem();
             this.bbiShowLotDetail = new DevExpress.XtraBars.BarButtonItem();
             this.bbiPrintAllShipingLabel = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiSplitInvoice = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiSplitPart = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiNewOrder = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -96,6 +99,7 @@
             this.gridColumn11 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn12 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn13 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn14 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -163,15 +167,18 @@
             this.bbiEditOrder,
             this.bbiSetMultiLot,
             this.bbiShowLotDetail,
-            this.bbiPrintAllShipingLabel});
+            this.bbiPrintAllShipingLabel,
+            this.bbiSplitInvoice,
+            this.bbiSplitPart,
+            this.bbiNewOrder});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 28;
+            this.ribbonControl.MaxItemId = 31;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.OfficeUniversal;
             this.ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
-            this.ribbonControl.Size = new System.Drawing.Size(965, 91);
+            this.ribbonControl.Size = new System.Drawing.Size(965, 93);
             this.ribbonControl.StatusBar = this.ribbonStatusBar;
             this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
@@ -282,6 +289,31 @@
             this.bbiPrintAllShipingLabel.Name = "bbiPrintAllShipingLabel";
             this.bbiPrintAllShipingLabel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiPrintAllShipingLabel_ItemClick);
             // 
+            // bbiSplitInvoice
+            // 
+            this.bbiSplitInvoice.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.bbiSplitInvoice.Caption = "bbiSplitInvoice";
+            this.bbiSplitInvoice.Id = 28;
+            this.bbiSplitInvoice.Name = "bbiSplitInvoice";
+            // 
+            // bbiSplitPart
+            // 
+            this.bbiSplitPart.Caption = "Split Part";
+            this.bbiSplitPart.Id = 29;
+            this.bbiSplitPart.ImageOptions.Image = global::InvoiceApp.Properties.Resources.cut_16x16;
+            this.bbiSplitPart.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.cut_32x32;
+            this.bbiSplitPart.Name = "bbiSplitPart";
+            this.bbiSplitPart.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiSplitPart_ItemClick);
+            // 
+            // bbiNewOrder
+            // 
+            this.bbiNewOrder.Caption = "New Order";
+            this.bbiNewOrder.Id = 30;
+            this.bbiNewOrder.ImageOptions.Image = global::InvoiceApp.Properties.Resources.save_16x16;
+            this.bbiNewOrder.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.save_32x32;
+            this.bbiNewOrder.Name = "bbiNewOrder";
+            this.bbiNewOrder.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiNewOrder_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -294,6 +326,7 @@
             // ribbonPageGroup1
             // 
             this.ribbonPageGroup1.AllowTextClipping = false;
+            this.ribbonPageGroup1.ItemLinks.Add(this.bbiNewOrder);
             this.ribbonPageGroup1.ItemLinks.Add(this.bbiRefresh);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             this.ribbonPageGroup1.ShowCaptionButton = false;
@@ -310,10 +343,11 @@
             // ribbonStatusBar
             // 
             this.ribbonStatusBar.ItemLinks.Add(this.bsiRecordsCount);
-            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 674);
+            this.ribbonStatusBar.ItemLinks.Add(this.bbiSplitInvoice);
+            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 669);
             this.ribbonStatusBar.Name = "ribbonStatusBar";
             this.ribbonStatusBar.Ribbon = this.ribbonControl;
-            this.ribbonStatusBar.Size = new System.Drawing.Size(965, 26);
+            this.ribbonStatusBar.Size = new System.Drawing.Size(965, 31);
             // 
             // workspaceManager1
             // 
@@ -325,10 +359,10 @@
             this.layoutControl1.Controls.Add(this.groupControl2);
             this.layoutControl1.Controls.Add(this.groupControl1);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl1.Location = new System.Drawing.Point(0, 91);
+            this.layoutControl1.Location = new System.Drawing.Point(0, 93);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.Root = this.Root;
-            this.layoutControl1.Size = new System.Drawing.Size(965, 583);
+            this.layoutControl1.Size = new System.Drawing.Size(965, 576);
             this.layoutControl1.TabIndex = 4;
             this.layoutControl1.Text = "layoutControl1";
             // 
@@ -337,7 +371,7 @@
             this.groupControl2.Controls.Add(this.layoutControl2);
             this.groupControl2.Location = new System.Drawing.Point(12, 12);
             this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(941, 121);
+            this.groupControl2.Size = new System.Drawing.Size(941, 119);
             this.groupControl2.TabIndex = 16;
             this.groupControl2.Text = "INFOMATION";
             // 
@@ -357,10 +391,10 @@
             this.layoutControl2.Controls.Add(this.bbiInv);
             this.layoutControl2.Controls.Add(this.bbiRefInv);
             this.layoutControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl2.Location = new System.Drawing.Point(2, 27);
+            this.layoutControl2.Location = new System.Drawing.Point(2, 22);
             this.layoutControl2.Name = "layoutControl2";
             this.layoutControl2.Root = this.layoutControlGroup1;
-            this.layoutControl2.Size = new System.Drawing.Size(937, 92);
+            this.layoutControl2.Size = new System.Drawing.Size(937, 95);
             this.layoutControl2.TabIndex = 0;
             this.layoutControl2.Text = "layoutControl2";
             // 
@@ -368,7 +402,7 @@
             // 
             this.label5.Location = new System.Drawing.Point(689, 60);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(236, 20);
+            this.label5.Size = new System.Drawing.Size(236, 23);
             this.label5.TabIndex = 16;
             // 
             // label4
@@ -565,7 +599,7 @@
             this.layoutControlItem5,
             this.lbinv});
             this.layoutControlGroup1.Name = "layoutControlGroup1";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(937, 92);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(937, 95);
             this.layoutControlGroup1.TextVisible = false;
             // 
             // lbFactory
@@ -646,7 +680,7 @@
             this.lbOrder.CustomizationFormText = "ORDER BY:";
             this.lbOrder.Location = new System.Drawing.Point(0, 48);
             this.lbOrder.Name = "lbOrder";
-            this.lbOrder.Size = new System.Drawing.Size(156, 24);
+            this.lbOrder.Size = new System.Drawing.Size(156, 27);
             this.lbOrder.Text = "ORDER BY:";
             this.lbOrder.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.lbOrder.TextSize = new System.Drawing.Size(54, 13);
@@ -658,7 +692,7 @@
             this.lbref.CustomizationFormText = "REFNO.:";
             this.lbref.Location = new System.Drawing.Point(429, 48);
             this.lbref.Name = "lbref";
-            this.lbref.Size = new System.Drawing.Size(248, 24);
+            this.lbref.Size = new System.Drawing.Size(248, 27);
             this.lbref.Text = "REFNO.:";
             this.lbref.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.lbref.TextSize = new System.Drawing.Size(42, 13);
@@ -699,7 +733,7 @@
             this.layoutControlItem5.Control = this.label5;
             this.layoutControlItem5.Location = new System.Drawing.Point(677, 48);
             this.layoutControlItem5.Name = "layoutControlItem5";
-            this.layoutControlItem5.Size = new System.Drawing.Size(240, 24);
+            this.layoutControlItem5.Size = new System.Drawing.Size(240, 27);
             this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem5.TextVisible = false;
             // 
@@ -709,7 +743,7 @@
             this.lbinv.CustomizationFormText = "INVOICENO.:";
             this.lbinv.Location = new System.Drawing.Point(156, 48);
             this.lbinv.Name = "lbinv";
-            this.lbinv.Size = new System.Drawing.Size(273, 24);
+            this.lbinv.Size = new System.Drawing.Size(273, 27);
             this.lbinv.Text = "INVOICENO.:";
             this.lbinv.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.lbinv.TextSize = new System.Drawing.Size(65, 13);
@@ -718,16 +752,16 @@
             // groupControl1
             // 
             this.groupControl1.Controls.Add(this.gridControl);
-            this.groupControl1.Location = new System.Drawing.Point(12, 137);
+            this.groupControl1.Location = new System.Drawing.Point(12, 135);
             this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(941, 434);
+            this.groupControl1.Size = new System.Drawing.Size(941, 429);
             this.groupControl1.TabIndex = 15;
             // 
             // gridControl
             // 
             this.gridControl.Cursor = System.Windows.Forms.Cursors.Hand;
             this.gridControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridControl.Location = new System.Drawing.Point(2, 27);
+            this.gridControl.Location = new System.Drawing.Point(2, 22);
             this.gridControl.MainView = this.gridView;
             this.gridControl.MenuManager = this.ribbonControl;
             this.gridControl.Name = "gridControl";
@@ -751,7 +785,8 @@
             this.gridColumn10,
             this.gridColumn11,
             this.gridColumn12,
-            this.gridColumn13});
+            this.gridColumn13,
+            this.gridColumn14});
             this.gridView.CustomizationFormBounds = new System.Drawing.Rectangle(809, 490, 250, 280);
             this.gridView.GridControl = this.gridControl;
             this.gridView.Name = "gridView";
@@ -816,6 +851,8 @@
             // gridColumn5
             // 
             this.gridColumn5.Caption = "QTY.";
+            this.gridColumn5.DisplayFormat.FormatString = "{0:n0}";
+            this.gridColumn5.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.gridColumn5.FieldName = "BalQty";
             this.gridColumn5.Name = "gridColumn5";
             this.gridColumn5.OptionsColumn.AllowEdit = false;
@@ -831,6 +868,8 @@
             this.gridColumn6.AppearanceCell.Options.UseFont = true;
             this.gridColumn6.AppearanceCell.Options.UseForeColor = true;
             this.gridColumn6.Caption = "CTN.";
+            this.gridColumn6.DisplayFormat.FormatString = "{0:n0}";
+            this.gridColumn6.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.gridColumn6.FieldName = "BalCtn";
             this.gridColumn6.Name = "gridColumn6";
             this.gridColumn6.OptionsColumn.AllowEdit = false;
@@ -876,6 +915,8 @@
             this.gridColumn9.AppearanceCell.Options.UseFont = true;
             this.gridColumn9.AppearanceCell.Options.UseForeColor = true;
             this.gridColumn9.Caption = "SHORT";
+            this.gridColumn9.DisplayFormat.FormatString = "{0:n0}";
+            this.gridColumn9.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.gridColumn9.FieldName = "ShCtn";
             this.gridColumn9.Name = "gridColumn9";
             this.gridColumn9.OptionsEditForm.StartNewRow = true;
@@ -885,13 +926,19 @@
             // 
             // gridColumn10
             // 
+            this.gridColumn10.AppearanceCell.FontStyleDelta = System.Drawing.FontStyle.Bold;
+            this.gridColumn10.AppearanceCell.ForeColor = DevExpress.LookAndFeel.DXSkinColors.ForeColors.Critical;
+            this.gridColumn10.AppearanceCell.Options.UseFont = true;
+            this.gridColumn10.AppearanceCell.Options.UseForeColor = true;
             this.gridColumn10.Caption = "REMAIN";
-            this.gridColumn10.FieldName = "PartRmCtn";
+            this.gridColumn10.DisplayFormat.FormatString = "{0:n0}";
+            this.gridColumn10.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.gridColumn10.FieldName = "RemCtn";
             this.gridColumn10.Name = "gridColumn10";
             this.gridColumn10.OptionsColumn.AllowEdit = false;
             this.gridColumn10.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn10.Visible = true;
-            this.gridColumn10.VisibleIndex = 8;
+            this.gridColumn10.VisibleIndex = 9;
             this.gridColumn10.Width = 86;
             // 
             // gridColumn11
@@ -918,8 +965,18 @@
             this.gridColumn13.FieldName = "Status";
             this.gridColumn13.Name = "gridColumn13";
             this.gridColumn13.Visible = true;
-            this.gridColumn13.VisibleIndex = 9;
+            this.gridColumn13.VisibleIndex = 10;
             this.gridColumn13.Width = 111;
+            // 
+            // gridColumn14
+            // 
+            this.gridColumn14.Caption = "PREPARE";
+            this.gridColumn14.DisplayFormat.FormatString = "{0:n0}";
+            this.gridColumn14.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.gridColumn14.FieldName = "PartRmCtn";
+            this.gridColumn14.Name = "gridColumn14";
+            this.gridColumn14.Visible = true;
+            this.gridColumn14.VisibleIndex = 8;
             // 
             // Root
             // 
@@ -929,15 +986,15 @@
             this.layoutControlItem1,
             this.layoutControlItem2});
             this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(965, 583);
+            this.Root.Size = new System.Drawing.Size(965, 576);
             this.Root.TextVisible = false;
             // 
             // layoutControlItem1
             // 
             this.layoutControlItem1.Control = this.groupControl1;
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 125);
+            this.layoutControlItem1.Location = new System.Drawing.Point(0, 123);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(945, 438);
+            this.layoutControlItem1.Size = new System.Drawing.Size(945, 433);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
@@ -946,7 +1003,7 @@
             this.layoutControlItem2.Control = this.groupControl2;
             this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(945, 125);
+            this.layoutControlItem2.Size = new System.Drawing.Size(945, 123);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
             // 
@@ -981,7 +1038,8 @@
             this.ppMenu.ItemLinks.Add(this.bbiPrintJobList);
             this.ppMenu.ItemLinks.Add(this.bbiPrintCardBoard);
             this.ppMenu.ItemLinks.Add(this.bbiPrintAllShipingLabel);
-            this.ppMenu.ItemLinks.Add(this.bbiEditOrder, true);
+            this.ppMenu.ItemLinks.Add(this.bbiSplitPart, true);
+            this.ppMenu.ItemLinks.Add(this.bbiEditOrder);
             this.ppMenu.ItemLinks.Add(this.bbiSetMultiLot);
             this.ppMenu.ItemLinks.Add(this.bbiShowLotDetail, true);
             this.ppMenu.ItemLinks.Add(this.bbiRefresh);
@@ -1121,5 +1179,9 @@
         private DevExpress.XtraBars.BarButtonItem bbiShowLotDetail;
         private DevExpress.XtraBars.BarButtonItem bbiPrintAllShipingLabel;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn13;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn14;
+        private DevExpress.XtraBars.BarButtonItem bbiSplitInvoice;
+        private DevExpress.XtraBars.BarButtonItem bbiSplitPart;
+        private DevExpress.XtraBars.BarButtonItem bbiNewOrder;
     }
 }

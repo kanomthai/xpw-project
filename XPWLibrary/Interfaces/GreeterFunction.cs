@@ -728,7 +728,13 @@ namespace XPWLibrary.Interfaces
         {
             try
             {
-                SplashScreenManager.Default.SetWaitFormDescription($"SUMMARY PL.");
+                try
+                {
+                    SplashScreenManager.Default.SetWaitFormDescription($"SUMMARY PL.");
+                }
+                catch (Exception)
+                {
+                }
                 string fac = "AW";
                 if (inv.Substring(0, 1) == "I")
                 {
