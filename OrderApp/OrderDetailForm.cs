@@ -3,6 +3,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Forms;
 using XPWLibrary.Controllers;
 using XPWLibrary.Interfaces;
@@ -13,6 +14,7 @@ namespace OrderApp
     public partial class OrderDetailForm : DevExpress.XtraBars.Ribbon.RibbonForm
     {
         OrderData ord;
+        int ir = 0;
         public OrderDetailForm(OrderData obj)
         {
             InitializeComponent();
@@ -154,37 +156,40 @@ namespace OrderApp
         {
             try
             {
-                switch (e.Button.ToString())
+                List<OrderBody> ob = gridControl.DataSource as List<OrderBody>;
+                if (ob.Count < 0)
                 {
-                    case "Right":
-                        List<OrderBody> ob = gridControl.DataSource as List<OrderBody>;
-                        bbiPrintJobList.Enabled = false;
-                        bbiPartDetail.Enabled = false;
-                        bbiConfirmInvoice.Enabled = false;
-                        bbiSetMultiLot.Enabled = false;
-                        if (ob[0].Status > 0)
-                        {
-                            bbiCreateJobList.Caption = "Re-Create JobList";
-                            bbiPrintJobList.Enabled = true;
-                            bbiConfirmInvoice.Enabled = true;
-                            bbiSetMultiLot.Enabled = true;
-                            if (ob[0].Factory == "INJ")
-                            {
-                                bbiSetMultiLot.Enabled = false;
-                            }
-                        }
-                        bbiShipingLabel.Enabled = false;
-                        if (ob[0].Status > 1)
-                        {
-                            bbiPartDetail.Enabled = true;
-                            bbiShipingLabel.Enabled = true;
-                        }
-                        
-                        popupMenu1.ShowPopup(new System.Drawing.Point(MousePosition.X, MousePosition.Y));
-                        break;
-                    default:
-                        popupMenu1.HidePopup();
-                        break;
+                    switch (e.Button.ToString())
+                    {
+                        case "Right":
+                            bbiPrintJobList.Enabled = false;
+                            bbiPartDetail.Enabled = false;
+                            bbiConfirmInvoice.Enabled = false;
+                            bbiSetMultiLot.Enabled = false;
+                            //if (ob[0].Status > 0)
+                            //{
+                            //    bbiCreateJobList.Caption = "Re-Create JobList";
+                            //    bbiPrintJobList.Enabled = true;
+                            //    bbiConfirmInvoice.Enabled = true;
+                            //    bbiSetMultiLot.Enabled = true;
+                            //    if (ob[0].Factory == "INJ")
+                            //    {
+                            //        bbiSetMultiLot.Enabled = false;
+                            //    }
+                            //}
+                            //bbiShipingLabel.Enabled = false;
+                            //if (ob[0].Status > 1)
+                            //{
+                            //    bbiPartDetail.Enabled = true;
+                            //    bbiShipingLabel.Enabled = true;
+                            //}
+
+                            popupMenu1.ShowPopup(new System.Drawing.Point(MousePosition.X, MousePosition.Y));
+                            break;
+                        default:
+                            popupMenu1.HidePopup();
+                            break;
+                    }
                 }
             }
             catch (Exception)
@@ -286,6 +291,81 @@ namespace OrderApp
                 }
             }
             return;
+        }
+
+        private void gridView_RowClick(object sender, DevExpress.XtraGrid.Views.Grid.RowClickEventArgs e)
+        {
+            switch (e.Button.ToString())
+            {
+                case "Right":
+                    List<OrderBody> ob = gridControl.DataSource as List<OrderBody>;
+                    bbiPrintJobList.Enabled = false;
+                    bbiPartDetail.Enabled = false;
+                    bbiConfirmInvoice.Enabled = false;
+                    bbiSetMultiLot.Enabled = false;
+                    if (ob[0].Status > 0)
+                    {
+                        bbiCreateJobList.Caption = "Re-Create JobList";
+                        bbiPrintJobList.Enabled = true;
+                        bbiConfirmInvoice.Enabled = true;
+                        bbiSetMultiLot.Enabled = true;
+                        if (ob[0].Factory == "INJ")
+                        {
+                            bbiSetMultiLot.Enabled = false;
+                        }
+                    }
+                    bbiShipingLabel.Enabled = false;
+                    if (ob[0].Status > 1)
+                    {
+                        bbiPartDetail.Enabled = true;
+                        bbiShipingLabel.Enabled = true;
+                    }
+
+                    popupMenu1.ShowPopup(new System.Drawing.Point(MousePosition.X, MousePosition.Y));
+                    break;
+                default:
+                    popupMenu1.HidePopup();
+                    break;
+            }
+        }
+
+        private void OrderDetailForm_Load(object sender, EventArgs e)
+        {
+            timer1.Start();
+        }
+
+        private void OrderDetailForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            timer1.Stop();
+        }
+
+        void ReloadForm()
+        {
+            this.Invoke(new MethodInvoker(delegate {
+                bbiEtd.EditValue = ord.Etd;
+                bbiShip.EditValue = ord.Ship;
+                bbiZone.EditValue = ord.Zone;
+                bbiAffcode.EditValue = ord.Affcode;
+                bbiCustCode.EditValue = ord.Custcode;
+                bbiCustName.EditValue = ord.Custname;
+                bbiOrderBy.EditValue = ord.PoType;
+                bbiRefInv.EditValue = ord.RefNo;
+                List<OrderBody> ob = new OrderControllers().GetOrderDetail(ord);
+                bbiInvoice.EditValue = ob[0].RefInv;
+                gridControl.DataSource = ob;
+                bsiRecordsCount.Caption = "RECORDS : " + ob.Count;
+            }));
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            ir++;
+            if (ir > StaticFunctionData.ReloadGrid)
+            {
+                //Thread th = new Thread(ReloadForm);
+                //th.Start();
+                ir = 0;
+            }
         }
     }
 }

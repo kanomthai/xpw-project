@@ -17,4 +17,5 @@
   <editorder>false</editorder>
   <editship>false</editship>
   <pathexecute>\\192.168.101.217\\xpw</pathexecute>
+  <reloadgrid>15</reloadgrid>
 </data>

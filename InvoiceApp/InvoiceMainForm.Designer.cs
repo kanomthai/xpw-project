@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InvoiceMainForm));
             this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.bbiPrintPreview = new DevExpress.XtraBars.BarButtonItem();
@@ -120,6 +121,8 @@
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.ppMenu = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.bbiRunningReload = new DevExpress.XtraBars.BarStaticItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemRadioGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).BeginInit();
@@ -175,9 +178,10 @@
             this.skinPalette,
             this.skinDropDownButtonItem1,
             this.bbiRestoreLayOut,
-            this.bbiOrderStatus});
+            this.bbiOrderStatus,
+            this.bbiRunningReload});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 16;
+            this.ribbonControl.MaxItemId = 17;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.PageHeaderItemLinks.Add(this.skinDropDownButtonItem1);
             this.ribbonControl.PageHeaderItemLinks.Add(this.skinPalette);
@@ -432,6 +436,7 @@
             this.ribbonStatusBar.ItemLinks.Add(this.bsiRecordsCount);
             this.ribbonStatusBar.ItemLinks.Add(this.bbiDbName);
             this.ribbonStatusBar.ItemLinks.Add(this.bbiStVersion);
+            this.ribbonStatusBar.ItemLinks.Add(this.bbiRunningReload);
             this.ribbonStatusBar.Location = new System.Drawing.Point(0, 790);
             this.ribbonStatusBar.Name = "ribbonStatusBar";
             this.ribbonStatusBar.Ribbon = this.ribbonControl;
@@ -1141,6 +1146,18 @@
             this.ppMenu.Name = "ppMenu";
             this.ppMenu.Ribbon = this.ribbonControl;
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // bbiRunningReload
+            // 
+            this.bbiRunningReload.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.bbiRunningReload.Caption = "barStaticItem1";
+            this.bbiRunningReload.Id = 16;
+            this.bbiRunningReload.Name = "bbiRunningReload";
+            // 
             // InvoiceMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1281,5 +1298,7 @@
         private DevExpress.XtraBars.BarStaticItem bbiOrderStatus;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup5;
         private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn bandedGridColumn5;
+        private System.Windows.Forms.Timer timer1;
+        private DevExpress.XtraBars.BarStaticItem bbiRunningReload;
     }
 }

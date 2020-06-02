@@ -1,10 +1,13 @@
 ﻿using DevExpress.Accessibility;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
+using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraSplashScreen;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Threading;
+using System.Windows.Forms;
 using XPWLibrary.Controllers;
 using XPWLibrary.Interfaces;
 using XPWLibrary.Models;
@@ -14,9 +17,11 @@ namespace OrderApp
     public partial class OrderMainForm : DevExpress.XtraBars.Ribbon.RibbonForm
     {
         bool sload = false;
+        int irunning = 0;
         public OrderMainForm()
         {
             InitializeComponent();
+            bbiFooterRunning.Caption = "";
             this.Text = "ORDER CONTROL";
             bbiOrderId.EditValue = "";
             bbiEtd.EditValue = DateTime.Now;
@@ -177,6 +182,37 @@ namespace OrderApp
         {
             string fileGridInvoiceName = $"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentOrderEnt.xml";
             gridView.SaveLayoutToXml(fileGridInvoiceName);
+        }
+
+        void ReloadOrder()
+        {
+            this.Invoke(new MethodInvoker(delegate {
+                List<OrderData> obj = new OrderControllers().GetOrderData(bbiFactory.EditValue.ToString(), DateTime.Parse(bbiEtd.EditValue.ToString()), bool.Parse(bbiOnDay.EditValue.ToString()));
+                gridControl.DataSource = obj;
+                bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
+            }));
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            irunning++;
+            this.Invoke(new MethodInvoker(delegate { bbiFooterRunning.Caption = $"RELOAD AFTER: {irunning}"; }));
+            if (irunning > StaticFunctionData.ReloadGrid)
+            {
+                Thread th0 = new Thread(ReloadOrder);
+                th0.Start();
+                irunning = 0;
+            }
+        }
+
+        private void OrderMainForm_Load(object sender, EventArgs e)
+        {
+            timer1.Start();
+        }
+
+        private void OrderMainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            timer1.Stop();
         }
     }
 }

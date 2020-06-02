@@ -55,7 +55,8 @@ namespace XPWLibrary.Interfaces
                                        $"(CONNECT_DATA=(SERVICE_NAME={node[8].InnerText})));" +
                                        $"User Id={node[9].InnerText};Password={node[10].InnerText};Min Pool Size=50;Connection Lifetime = 120;" +
                                           "Connection Timeout = 60; Incr Pool Size=15;Decr Pool Size=12;";
-            StaticFunctionData.PathExcute = node[11].InnerText;
+            StaticFunctionData.PathExcute = node[16].InnerText;
+            StaticFunctionData.ReloadGrid = int.Parse(node[17].InnerText);
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
 
             if (node[9].InnerText.ToString() == "sktsys")

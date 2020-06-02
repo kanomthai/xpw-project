@@ -43,6 +43,7 @@
             this.bbiConfirmInvoice = new DevExpress.XtraBars.BarButtonItem();
             this.bbiShipingLabel = new DevExpress.XtraBars.BarButtonItem();
             this.bbiPartDetail = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiSetMultiLot = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -89,7 +90,7 @@
             this.layoutControlItem13 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
-            this.bbiSetMultiLot = new DevExpress.XtraBars.BarButtonItem();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -148,7 +149,7 @@
             this.ribbonPage1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.OfficeUniversal;
             this.ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
-            this.ribbonControl.Size = new System.Drawing.Size(1119, 91);
+            this.ribbonControl.Size = new System.Drawing.Size(1119, 93);
             this.ribbonControl.StatusBar = this.ribbonStatusBar;
             this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
@@ -248,6 +249,15 @@
             this.bbiPartDetail.Name = "bbiPartDetail";
             this.bbiPartDetail.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiPartDetail_ItemClick);
             // 
+            // bbiSetMultiLot
+            // 
+            this.bbiSetMultiLot.Caption = "Set Multi Lot";
+            this.bbiSetMultiLot.Id = 27;
+            this.bbiSetMultiLot.ImageOptions.Image = global::OrderApp.Properties.Resources.replace_16x16;
+            this.bbiSetMultiLot.ImageOptions.LargeImage = global::OrderApp.Properties.Resources.replace_32x32;
+            this.bbiSetMultiLot.Name = "bbiSetMultiLot";
+            this.bbiSetMultiLot.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiSetMultiLot_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -276,10 +286,10 @@
             // ribbonStatusBar
             // 
             this.ribbonStatusBar.ItemLinks.Add(this.bsiRecordsCount);
-            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 573);
+            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 568);
             this.ribbonStatusBar.Name = "ribbonStatusBar";
             this.ribbonStatusBar.Ribbon = this.ribbonControl;
-            this.ribbonStatusBar.Size = new System.Drawing.Size(1119, 26);
+            this.ribbonStatusBar.Size = new System.Drawing.Size(1119, 31);
             // 
             // layoutControl1
             // 
@@ -297,10 +307,10 @@
             this.layoutControl1.Controls.Add(this.bbiEtd);
             this.layoutControl1.Controls.Add(this.gridControl);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl1.Location = new System.Drawing.Point(0, 91);
+            this.layoutControl1.Location = new System.Drawing.Point(0, 93);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.Root = this.Root;
-            this.layoutControl1.Size = new System.Drawing.Size(1119, 482);
+            this.layoutControl1.Size = new System.Drawing.Size(1119, 475);
             this.layoutControl1.TabIndex = 4;
             this.layoutControl1.Text = "layoutControl1";
             // 
@@ -468,7 +478,7 @@
             this.gridControl.MainView = this.gridView;
             this.gridControl.MenuManager = this.ribbonControl;
             this.gridControl.Name = "gridControl";
-            this.gridControl.Size = new System.Drawing.Size(1095, 386);
+            this.gridControl.Size = new System.Drawing.Size(1095, 379);
             this.gridControl.TabIndex = 5;
             this.gridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -495,6 +505,7 @@
             this.gridView.OptionsBehavior.ReadOnly = true;
             this.gridView.OptionsView.ShowFooter = true;
             this.gridView.OptionsView.ShowGroupPanel = false;
+            this.gridView.RowClick += new DevExpress.XtraGrid.Views.Grid.RowClickEventHandler(this.gridView_RowClick);
             this.gridView.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gridView_CustomColumnDisplayText);
             this.gridView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gridView_MouseUp);
             // 
@@ -649,7 +660,7 @@
             this.layoutControlItem13,
             this.layoutControlItem9});
             this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(1119, 482);
+            this.Root.Size = new System.Drawing.Size(1119, 475);
             this.Root.TextVisible = false;
             // 
             // layoutControlItem1
@@ -657,7 +668,7 @@
             this.layoutControlItem1.Control = this.gridControl;
             this.layoutControlItem1.Location = new System.Drawing.Point(0, 72);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(1099, 390);
+            this.layoutControlItem1.Size = new System.Drawing.Size(1099, 383);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
@@ -798,14 +809,10 @@
             this.popupMenu1.Name = "popupMenu1";
             this.popupMenu1.Ribbon = this.ribbonControl;
             // 
-            // bbiSetMultiLot
+            // timer1
             // 
-            this.bbiSetMultiLot.Caption = "Set Multi Lot";
-            this.bbiSetMultiLot.Id = 27;
-            this.bbiSetMultiLot.ImageOptions.Image = global::OrderApp.Properties.Resources.replace_16x16;
-            this.bbiSetMultiLot.ImageOptions.LargeImage = global::OrderApp.Properties.Resources.replace_32x32;
-            this.bbiSetMultiLot.Name = "bbiSetMultiLot";
-            this.bbiSetMultiLot.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiSetMultiLot_ItemClick);
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // OrderDetailForm
             // 
@@ -820,6 +827,8 @@
             this.Ribbon = this.ribbonControl;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.StatusBar = this.ribbonStatusBar;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OrderDetailForm_FormClosing);
+            this.Load += new System.EventHandler(this.OrderDetailForm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);
@@ -916,5 +925,6 @@
         private DevExpress.XtraBars.BarButtonItem bbiShipingLabel;
         private DevExpress.XtraBars.BarButtonItem bbiPartDetail;
         private DevExpress.XtraBars.BarButtonItem bbiSetMultiLot;
+        private System.Windows.Forms.Timer timer1;
     }
 }

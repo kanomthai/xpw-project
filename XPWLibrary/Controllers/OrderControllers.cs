@@ -19,7 +19,13 @@ namespace XPWLibrary.Controllers
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow r in dr.Tables[0].Rows)
             {
-                SplashScreenManager.Default.SetWaitFormDescription($"{r["custpono"].ToString()} {r["item"].ToString()}");
+                try
+                {
+                    SplashScreenManager.Default.SetWaitFormDescription($"{r["custpono"].ToString()} {r["item"].ToString()}");
+                }
+                catch (Exception)
+                {
+                }
                 if (int.Parse(r["item"].ToString()) > 0)
                 {
                     obj.Add(new OrderData()
@@ -347,7 +353,13 @@ namespace XPWLibrary.Controllers
                         "GROUP BY p.FACTORY,p.ETDTAP,p.SHIPTYPE,p.BIOABT,p.AFFCODE,p.BISHPC,p.BISAFN,m.POTYPE\n" +
                         "ORDER BY p.ETDTAP,p.FACTORY,p.SHIPTYPE,p.BIOABT,p.AFFCODE,p.BISHPC,p.BISAFN,m.POTYPE";
             Console.WriteLine(sql);
-            SplashScreenManager.Default.SetWaitFormCaption("START ENT");
+            try
+            {
+                SplashScreenManager.Default.SetWaitFormCaption("START ENT");
+            }
+            catch (Exception)
+            {
+            }
             Console.WriteLine($"START ---> HEAD");
             DataSet dr = new ConnDB().GetFill(sql);
             int i = 0;
@@ -355,7 +367,13 @@ namespace XPWLibrary.Controllers
             {
                 //Console.WriteLine($"++++++++++++++++++++++++ START ++++++++++++++++++++++++++++++++");
                 DataRow r = dr.Tables[0].Rows[i];
-                SplashScreenManager.Default.SetWaitFormCaption($"{r["bisafn"]}");
+                try
+                {
+                    SplashScreenManager.Default.SetWaitFormCaption($"{r["bisafn"]}");
+                }
+                catch (Exception)
+                {
+                }
                 string sqlbody;
                 DateTime d = DateTime.Parse(r["etdtap"].ToString());
                 switch (r["potype"].ToString())
@@ -731,6 +749,7 @@ namespace XPWLibrary.Controllers
                 $" p.ETDTAP = to_date('{etd.ToString("dd/MM/yyyy")}', 'dd/MM/yyyy') AND " +
                 $"p.CURINV IS NULL\n" +
                 $"GROUP BY p.ORDERID";
+            Console.WriteLine(sql);
             int x = 0;
             DataSet dr = new ConnDB().GetFill(sql);
             if (dr.Tables[0].Rows.Count > 0)

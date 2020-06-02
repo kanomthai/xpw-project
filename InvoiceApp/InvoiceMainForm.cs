@@ -28,6 +28,7 @@ namespace InvoiceApp
         string fileGridInvoiceName = $"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentInvoiceControl.xml";
         string fileGridOnWeek = $"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentOnWeek.xml";
         string fileGridForword = $"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentNextWeek.xml";
+        int itick = 0;
         public InvoiceMainForm()
         {
             InitializeComponent();
@@ -36,6 +37,7 @@ namespace InvoiceApp
             bbiStVersion.Caption = StaticFunctionData.AppVersion;
             bbiDbName.Caption = StaticFunctionData.DBname;
             bbiOrderStatus.Caption = "";
+            bbiRunningReload.Caption = $"";
             //ReloadData();
         }
         void bbiPrintPreview_ItemClick(object sender, ItemClickEventArgs e)
@@ -43,19 +45,21 @@ namespace InvoiceApp
             gridControl.ShowRibbonPrintPreview();
         }
 
-        async void AfterFormLoad()
+        void AfterFormLoad()
         {
             if (loadinv)
             {
                 try
                 {
+                    Thread thr0 = new Thread(ReloadGridControl);
                     Thread thr1 = new Thread(GetToWeek);
                     Thread thr2 = new Thread(GetForwardWeek);
                     Thread thorder = new Thread(GetOrderNotCreateJobList);
                     thr1.Start();
                     thr2.Start();
                     thorder.Start();
-                    await new GreeterFunction().CheckGitHubVersionAsync();
+                    thr0.Start();
+                    //await new GreeterFunction().CheckGitHubVersionAsync();
 
                     //After running
                     thr1.Abort();
@@ -67,6 +71,15 @@ namespace InvoiceApp
                     Console.WriteLine(ex);
                 }
             }
+        }
+
+        void ReloadGridControl()
+        {
+            this.Invoke(new MethodInvoker(delegate {
+                List<InvoiceData> obj = new InvoiceControllers().GetInvoiceData(DateTime.Parse(bbiEtd.EditValue.ToString()));
+                gridControl.DataSource = obj;
+                bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
+            }));
         }
 
         void ReloadData()
@@ -362,6 +375,7 @@ namespace InvoiceApp
             gridForwardView.RestoreLayoutFromXml(fileGridForword);
             loadinv = true;
             AfterFormLoad();
+            timer1.Start();
         }
 
         private void gridView_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
@@ -385,6 +399,7 @@ namespace InvoiceApp
         {
             Settings.Default.ApplicationSkinName = UserLookAndFeel.Default.SkinName;
             Settings.Default.Save();
+            timer1.Stop();
         }
 
         private void gridWeekView_Layout(object sender, EventArgs e)
@@ -402,6 +417,17 @@ namespace InvoiceApp
             gridView.RestoreLayoutFromXml($"{AppDomain.CurrentDomain.BaseDirectory}Templates\\invoicecontrollayout.xml");
             gridWeekView.RestoreLayoutFromXml($"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentOnWeekBnk.xml");
             gridForwardView.RestoreLayoutFromXml($"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentNextWeekBnk.xml");
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            itick++;
+            this.Invoke(new MethodInvoker(delegate { bbiRunningReload.Caption = $"RUNNING AT: {itick}"; }));
+            if (itick > StaticFunctionData.ReloadGrid)
+            {
+                AfterFormLoad();
+                itick = 0;
+            }
         }
     }
 }
