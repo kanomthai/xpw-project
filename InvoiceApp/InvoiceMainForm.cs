@@ -43,7 +43,7 @@ namespace InvoiceApp
             gridControl.ShowRibbonPrintPreview();
         }
 
-        void AfterFormLoad()
+        async void AfterFormLoad()
         {
             if (loadinv)
             {
@@ -55,14 +55,16 @@ namespace InvoiceApp
                     thr1.Start();
                     thr2.Start();
                     thorder.Start();
+                    await new GreeterFunction().CheckGitHubVersionAsync();
 
                     //After running
                     thr1.Abort();
                     thr2.Abort();
                     thorder.Abort();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    Console.WriteLine(ex);
                 }
             }
         }

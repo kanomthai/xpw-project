@@ -13,6 +13,26 @@ namespace XPWLibrary.Interfaces
 {
     public class GreeterFunction
     {
+        public void CheckGitHubVersionAsync()
+        {
+            var currentVersion = Assembly.GetEntryAssembly().GetName().Version;
+            //var checker = new UpdateChecker("kanomthai", ""); // uses your Application.ProductVersion
+            //UpdateType update = await checker.CheckUpdate();
+            //if (update == UpdateType.None)
+            //{
+            //    // Up to date!
+            //}
+            //else
+            //{
+            //    // Ask the user if he wants to update
+            //    // You can use the prebuilt form for this if you want (it's really pretty!)
+            //    var result = new UpdateNotifyDialog(checker).ShowDialog();
+            //    if (result == DialogResult.Yes)
+            //    {
+            //        checker.DownloadAsset("Converter.zip"); // opens it in the user's browser
+            //    }
+            //}
+        }
         public bool BeginingLoadApp()
         {
             string docdir = $"{AppDomain.CurrentDomain.BaseDirectory}Configures\\settings.xml";
@@ -35,6 +55,7 @@ namespace XPWLibrary.Interfaces
                                        $"(CONNECT_DATA=(SERVICE_NAME={node[8].InnerText})));" +
                                        $"User Id={node[9].InnerText};Password={node[10].InnerText};Min Pool Size=50;Connection Lifetime = 120;" +
                                           "Connection Timeout = 60; Incr Pool Size=15;Decr Pool Size=12;";
+            StaticFunctionData.PathExcute = node[11].InnerText;
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
 
             if (node[9].InnerText.ToString() == "sktsys")

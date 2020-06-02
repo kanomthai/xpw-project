@@ -16,4 +16,5 @@
   <confirmlotno>true</confirmlotno>
   <editorder>false</editorder>
   <editship>false</editship>
+  <pathexecute>\\192.168.101.217\\xpw</pathexecute>
 </data>
