@@ -1,11 +1,8 @@
-﻿using DevExpress.XtraEditors.Filtering.Templates;
-using DevExpress.XtraSplashScreen;
+﻿using DevExpress.XtraSplashScreen;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using XPWLibrary.Interfaces;
 using XPWLibrary.Models;
 
@@ -16,6 +13,7 @@ namespace XPWLibrary.Controllers
         List<OrderData> AddOrderList(DataRow ob, string sql)
         {
             List<OrderData> obj = new List<OrderData>();
+            Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow r in dr.Tables[0].Rows)
             {
@@ -25,6 +23,11 @@ namespace XPWLibrary.Controllers
                 }
                 catch (Exception)
                 {
+                }
+                int st = int.Parse(r["orderstatus"].ToString());
+                if (int.Parse(r["orderctn"].ToString()) < 1)
+                {
+                    st = 10;
                 }
                 if (int.Parse(r["item"].ToString()) > 0)
                 {
@@ -45,7 +48,7 @@ namespace XPWLibrary.Controllers
                         RefInv = ob["invoceno"].ToString(),
                         RefNo = r["curinv"].ToString(),
                         OrderRewrite = r["rewrite"].ToString(),
-                        Status = int.Parse(r["orderstatus"].ToString()),
+                        Status = st,
                         Combinv = ob["combinv"].ToString(),
                         LastUpdate = DateTime.Parse(ob["upddte"].ToString())
                     });
@@ -72,10 +75,10 @@ namespace XPWLibrary.Controllers
                 DataRow r = dr.Tables[0].Rows[i];
                 string sqlbody;
                 DateTime d = DateTime.Parse(r["etdtap"].ToString());
-                switch (r["potype"].ToString())
+                switch (r["combinv"].ToString())
                 {
-                    case "3END":
-                        sqlbody = $"SELECT SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) custpono,count(p.PARTNO) item,sum(round(p.BALQTY/p.BISTDP)) orderctn ,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
+                    case "E":
+                        sqlbody = $"SELECT SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
                               "FROM TXP_ORDERPLAN p\n" +
                               $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                               $"p.AFFCODE = '{r["affcode"]}' AND " +
@@ -90,8 +93,8 @@ namespace XPWLibrary.Controllers
                             obj.Add(od);
                         }
                         break;
-                    case "3FRD":
-                        sqlbody = $"SELECT SUBSTR(p.orderid,1, 3) custpono,count(p.PARTNO) item,sum(round(p.BALQTY/p.BISTDP)) orderctn ,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
+                    case "F":
+                        sqlbody = $"SELECT SUBSTR(p.orderid,1, 3) custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
                               "FROM TXP_ORDERPLAN p\n" +
                               $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                               $"p.AFFCODE = '{r["affcode"]}' AND " +
@@ -106,39 +109,39 @@ namespace XPWLibrary.Controllers
                             obj.Add(od);
                         }
                         break;
-                    case "A_TMW":
-                        sqlbody = $"SELECT 'ALL' custpono,count(p.PARTNO) item,sum(round(p.BALQTY/p.BISTDP)) orderctn ,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
-                              "FROM TXP_ORDERPLAN p\n" +
-                              $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
-                              $"p.AFFCODE = '{r["affcode"]}' AND " +
-                              $"p.BISHPC = '{r["bishpc"]}' AND " +
-                              $"p.BISAFN = '{r["bisafn"]}' AND " +
-                              $"p.SHIPTYPE = '{r["shiptype"]}' AND p.BALQTY > 0 AND get_zone(p.FACTORY,p.BIOABT ) = '{r["zname"].ToString()}' AND \n" +
-                              $"SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) != 'TMW'";
-                        Console.WriteLine(sqlbody);
-                        foreach (OrderData od in AddOrderList(r, sqlbody))
-                        {
-                            od.Id = obj.Count + 1;
-                            obj.Add(od);
-                        }
+                    //case "A_TMW":
+                    //    sqlbody = $"SELECT 'ALL' custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
+                    //          "FROM TXP_ORDERPLAN p\n" +
+                    //          $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
+                    //          $"p.AFFCODE = '{r["affcode"]}' AND " +
+                    //          $"p.BISHPC = '{r["bishpc"]}' AND " +
+                    //          $"p.BISAFN = '{r["bisafn"]}' AND " +
+                    //          $"p.SHIPTYPE = '{r["shiptype"]}' AND p.BALQTY > 0 AND get_zone(p.FACTORY,p.BIOABT ) = '{r["zname"].ToString()}' AND \n" +
+                    //          $"SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) != 'TMW'";
+                    //    Console.WriteLine(sqlbody);
+                    //    foreach (OrderData od in AddOrderList(r, sqlbody))
+                    //    {
+                    //        od.Id = obj.Count + 1;
+                    //        obj.Add(od);
+                    //    }
 
-                        sqlbody = $"SELECT 'TMW' custpono,count(p.PARTNO) item,sum(round(p.BALQTY/p.BISTDP)) orderctn ,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
-                              "FROM TXP_ORDERPLAN p\n" +
-                              $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
-                              $"p.AFFCODE = '{r["affcode"]}' AND " +
-                              $"p.BISHPC = '{r["bishpc"]}' AND " +
-                              $"p.BISAFN = '{r["bisafn"]}' AND " +
-                              $"p.SHIPTYPE = '{r["shiptype"]}' AND p.BALQTY > 0 AND get_zone(p.FACTORY,p.BIOABT ) = '{r["zname"].ToString()}' AND\n" +
-                              $"SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) = 'TMW'";
-                        Console.WriteLine(sqlbody);
-                        foreach (OrderData od in AddOrderList(r, sqlbody))
-                        {
-                            od.Id = obj.Count + 1;
-                            obj.Add(od);
-                        }
-                        break;
-                    case "ALL":
-                        sqlbody = $"SELECT 'ALL' custpono,count(p.PARTNO) item,sum(round(p.BALQTY/p.BISTDP)) orderctn ,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
+                    //    sqlbody = $"SELECT 'TMW' custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
+                    //          "FROM TXP_ORDERPLAN p\n" +
+                    //          $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
+                    //          $"p.AFFCODE = '{r["affcode"]}' AND " +
+                    //          $"p.BISHPC = '{r["bishpc"]}' AND " +
+                    //          $"p.BISAFN = '{r["bisafn"]}' AND " +
+                    //          $"p.SHIPTYPE = '{r["shiptype"]}' AND p.BALQTY > 0 AND get_zone(p.FACTORY,p.BIOABT ) = '{r["zname"].ToString()}' AND\n" +
+                    //          $"SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) = 'TMW'";
+                    //    Console.WriteLine(sqlbody);
+                    //    foreach (OrderData od in AddOrderList(r, sqlbody))
+                    //    {
+                    //        od.Id = obj.Count + 1;
+                    //        obj.Add(od);
+                    //    }
+                    //    break;
+                    case "N":
+                        sqlbody = $"SELECT 'ALL' custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
                               "FROM TXP_ORDERPLAN p\n" +
                               $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                               $"p.AFFCODE = '{r["affcode"]}' AND " +
@@ -153,7 +156,7 @@ namespace XPWLibrary.Controllers
                         }
                         break;
                     default:
-                        sqlbody = $"SELECT p.PONO custpono,count(p.PARTNO) item,sum(round(p.BALQTY/p.BISTDP)) orderctn ,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
+                        sqlbody = $"SELECT p.PONO custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
                               "FROM TXP_ORDERPLAN p\n" +
                               $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                               $"p.AFFCODE = '{r["affcode"]}' AND " +
@@ -192,10 +195,10 @@ namespace XPWLibrary.Controllers
                 DataRow r = dr.Tables[0].Rows[i];
                 string sqlbody;
                 DateTime d = DateTime.Parse(r["etdtap"].ToString());
-                switch (r["potype"].ToString())
+                switch (r["combinv"].ToString())
                 {
-                    case "3END":
-                        sqlbody = $"SELECT SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) custpono,count(p.PARTNO) item,sum(round(p.BALQTY/p.BISTDP)) orderctn ,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
+                    case "E":
+                        sqlbody = $"SELECT SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
                               "FROM TXP_ORDERPLAN p\n" +
                               $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                               $"p.AFFCODE = '{r["affcode"]}' AND " +
@@ -210,8 +213,8 @@ namespace XPWLibrary.Controllers
                             obj.Add(od);
                         }
                         break;
-                    case "3FRD":
-                        sqlbody = $"SELECT SUBSTR(p.orderid,1, 3) custpono,count(p.PARTNO) item,sum(round(p.BALQTY/p.BISTDP)) orderctn ,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
+                    case "F":
+                        sqlbody = $"SELECT SUBSTR(p.orderid,1, 3) custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
                               "FROM TXP_ORDERPLAN p\n" +
                               $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                               $"p.AFFCODE = '{r["affcode"]}' AND " +
@@ -226,39 +229,39 @@ namespace XPWLibrary.Controllers
                             obj.Add(od);
                         }
                         break;
-                    case "A_TMW":
-                        sqlbody = $"SELECT 'ALL' custpono,count(p.PARTNO) item,sum(round(p.BALQTY/p.BISTDP)) orderctn ,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
-                              "FROM TXP_ORDERPLAN p\n" +
-                              $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
-                              $"p.AFFCODE = '{r["affcode"]}' AND " +
-                              $"p.BISHPC = '{r["bishpc"]}' AND " +
-                              $"p.BISAFN = '{r["bisafn"]}' AND " +
-                              $"p.SHIPTYPE = '{r["shiptype"]}' AND p.BALQTY > 0 AND get_zone(p.FACTORY,p.BIOABT ) = '{r["zname"].ToString()}' AND \n" +
-                              $"SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) != 'TMW'";
-                        Console.WriteLine(sqlbody);
-                        foreach (OrderData od in AddOrderList(r, sqlbody))
-                        {
-                            od.Id = obj.Count + 1;
-                            obj.Add(od);
-                        }
+                    //case "A_TMW":
+                    //    sqlbody = $"SELECT 'ALL' custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
+                    //          "FROM TXP_ORDERPLAN p\n" +
+                    //          $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
+                    //          $"p.AFFCODE = '{r["affcode"]}' AND " +
+                    //          $"p.BISHPC = '{r["bishpc"]}' AND " +
+                    //          $"p.BISAFN = '{r["bisafn"]}' AND " +
+                    //          $"p.SHIPTYPE = '{r["shiptype"]}' AND p.BALQTY > 0 AND get_zone(p.FACTORY,p.BIOABT ) = '{r["zname"].ToString()}' AND \n" +
+                    //          $"SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) != 'TMW'";
+                    //    Console.WriteLine(sqlbody);
+                    //    foreach (OrderData od in AddOrderList(r, sqlbody))
+                    //    {
+                    //        od.Id = obj.Count + 1;
+                    //        obj.Add(od);
+                    //    }
 
-                        sqlbody = $"SELECT 'TMW' custpono,count(p.PARTNO) item,sum(round(p.BALQTY/p.BISTDP)) orderctn ,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
-                              "FROM TXP_ORDERPLAN p\n" +
-                              $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
-                              $"p.AFFCODE = '{r["affcode"]}' AND " +
-                              $"p.BISHPC = '{r["bishpc"]}' AND " +
-                              $"p.BISAFN = '{r["bisafn"]}' AND " +
-                              $"p.SHIPTYPE = '{r["shiptype"]}' AND p.BALQTY > 0 AND get_zone(p.FACTORY,p.BIOABT ) = '{r["zname"].ToString()}' AND\n" +
-                              $"SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) = 'TMW'";
-                        Console.WriteLine(sqlbody);
-                        foreach (OrderData od in AddOrderList(r, sqlbody))
-                        {
-                            od.Id = obj.Count + 1;
-                            obj.Add(od);
-                        }
-                        break;
-                    case "ALL":
-                        sqlbody = $"SELECT 'ALL' custpono,count(p.PARTNO) item,sum(round(p.BALQTY/p.BISTDP)) orderctn ,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
+                    //    sqlbody = $"SELECT 'TMW' custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
+                    //          "FROM TXP_ORDERPLAN p\n" +
+                    //          $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
+                    //          $"p.AFFCODE = '{r["affcode"]}' AND " +
+                    //          $"p.BISHPC = '{r["bishpc"]}' AND " +
+                    //          $"p.BISAFN = '{r["bisafn"]}' AND " +
+                    //          $"p.SHIPTYPE = '{r["shiptype"]}' AND p.BALQTY > 0 AND get_zone(p.FACTORY,p.BIOABT ) = '{r["zname"].ToString()}' AND\n" +
+                    //          $"SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) = 'TMW'";
+                    //    Console.WriteLine(sqlbody);
+                    //    foreach (OrderData od in AddOrderList(r, sqlbody))
+                    //    {
+                    //        od.Id = obj.Count + 1;
+                    //        obj.Add(od);
+                    //    }
+                    //    break;
+                    case "N":
+                        sqlbody = $"SELECT 'ALL' custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
                               "FROM TXP_ORDERPLAN p\n" +
                               $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                               $"p.AFFCODE = '{r["affcode"]}' AND " +
@@ -273,7 +276,7 @@ namespace XPWLibrary.Controllers
                         }
                         break;
                     default:
-                        sqlbody = $"SELECT p.PONO custpono,count(p.PARTNO) item,sum(round(p.BALQTY/p.BISTDP)) orderctn ,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
+                        sqlbody = $"SELECT p.PONO custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
                               "FROM TXP_ORDERPLAN p\n" +
                               $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                               $"p.AFFCODE = '{r["affcode"]}' AND " +
@@ -465,7 +468,7 @@ namespace XPWLibrary.Controllers
             {
                 fdte = $"AND p.ETDTAP between TRUNC(to_date('{dte}', 'ddMMyyyy') - 1, 'DY') AND(TRUNC(to_date('{dte}', 'ddMMyyyy'), 'DY') + {wnum})";
             }
-            string sql = $"SELECT p.FACTORY,p.ETDTAP,p.SHIPTYPE,get_zone(p.FACTORY, p.BIOABT) zname,p.AFFCODE,p.BISHPC,p.BISAFN,'' custpono,m.POTYPE,0 item,0 orderctn ,min(p.CURINV) CURINV,max(e.refinvoice) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,max(m.combinv) combinv,max(p.REASONCD) rewrite,max(p.upddte) upddte\n" +
+            string sql = $"SELECT p.FACTORY,p.ETDTAP,p.SHIPTYPE,get_zone(p.FACTORY, p.BIOABT) zname,p.AFFCODE,p.BISHPC,p.BISAFN,'' custpono,m.POTYPE,0 item,0 orderctn ,min(p.CURINV) CURINV,max(e.refinvoice) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,max(m.combinv) combinv,max(p.REASONCD) rewrite,max(p.upddte) upddte\n" +
                         "FROM TXP_ORDERPLAN p\n" +
                         "INNER JOIN TXM_CUSTOMER m ON p.FACTORY = m.FACTORY  AND p.AFFCODE = m.AFFCODE AND p.BISHPC = m.BISHPC AND p.BISAFN = m.CUSTNM AND m.POTYPE IS NOT NULL\n" +
                         "LEFT JOIN TXP_ISSTRANSENT e ON p.CURINV = e.ISSUINGKEY\n"+
@@ -496,100 +499,125 @@ namespace XPWLibrary.Controllers
                 }
                 string sqlbody;
                 DateTime d = DateTime.Parse(r["etdtap"].ToString());
-                switch (r["potype"].ToString())
+                List<OrderData> obb;
+                switch (r["combinv"].ToString())
                 {
-                    case "3END":
-                        sqlbody = $"SELECT SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) custpono,count(p.PARTNO) item,sum(round(p.BALQTY/p.BISTDP)) orderctn ,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
+                    case "E":
+                        sqlbody = $"SELECT SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
                               "FROM TXP_ORDERPLAN p\n" +
                               $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                               $"p.AFFCODE = '{r["affcode"]}' AND " +
                               $"p.BISHPC = '{r["bishpc"]}' AND " +
                               $"p.BISAFN = '{r["bisafn"]}' AND " +
-                              $"p.SHIPTYPE = '{r["shiptype"]}' AND p.BALQTY > 0 AND get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}'\n" +
+                              $"p.SHIPTYPE = '{r["shiptype"]}' AND get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}'\n" +
                               $"GROUP BY SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3)";
                         //Console.WriteLine(sqlbody);
-                        foreach (OrderData od in AddOrderList(r, sqlbody))
+                        obb = AddOrderList(r, sqlbody);
+                        if (obb.Count > 0)
                         {
-                            od.Id = obj.Count + 1;
-                            obj.Add(od);
+                            foreach (OrderData od in obb)
+                            {
+                                od.Id = obj.Count + 1;
+                                obj.Add(od);
+                            }
                         }
                         break;
-                    case "3FRD":
-                        sqlbody = $"SELECT SUBSTR(p.orderid,1, 3) custpono,count(p.PARTNO) item,sum(round(p.BALQTY/p.BISTDP)) orderctn ,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
+                    case "F":
+                        sqlbody = $"SELECT SUBSTR(p.orderid,1, 3) custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
                               "FROM TXP_ORDERPLAN p\n" +
                               $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                               $"p.AFFCODE = '{r["affcode"]}' AND " +
                               $"p.BISHPC = '{r["bishpc"]}' AND " +
                               $"p.BISAFN = '{r["bisafn"]}' AND " +
-                              $"p.SHIPTYPE = '{r["shiptype"]}' AND p.BALQTY > 0 AND get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}'\n" +
+                              $"p.SHIPTYPE = '{r["shiptype"]}' AND get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}'\n" +
                               $"GROUP BY SUBSTR(p.orderid,1, 3)";
                         //Console.WriteLine(sqlbody);
-                        foreach (OrderData od in AddOrderList(r, sqlbody))
+                        obb = AddOrderList(r, sqlbody);
+                        if (obb.Count > 0)
                         {
-                            od.Id = obj.Count + 1;
-                            obj.Add(od);
+                            foreach (OrderData od in obb)
+                            {
+                                od.Id = obj.Count + 1;
+                                obj.Add(od);
+                            }
                         }
                         break;
-                    case "A_TMW":
-                        sqlbody = $"SELECT 'ALL' custpono,count(p.PARTNO) item,sum(round(p.BALQTY/p.BISTDP)) orderctn ,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
-                              "FROM TXP_ORDERPLAN p\n" +
-                              $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
-                              $"p.AFFCODE = '{r["affcode"]}' AND " +
-                              $"p.BISHPC = '{r["bishpc"]}' AND " +
-                              $"p.BISAFN = '{r["bisafn"]}' AND " +
-                              $"p.SHIPTYPE = '{r["shiptype"]}' AND p.BALQTY > 0 AND get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}' AND \n" +
-                              $"SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) != 'TMW'";
-                        //Console.WriteLine(sqlbody);
-                        foreach (OrderData od in AddOrderList(r, sqlbody))
-                        {
-                            od.Id = obj.Count + 1;
-                            obj.Add(od);
-                        }
+                    //case "A_TMW":
+                    //    sqlbody = $"SELECT 'ALL' custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
+                    //          "FROM TXP_ORDERPLAN p\n" +
+                    //          $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
+                    //          $"p.AFFCODE = '{r["affcode"]}' AND " +
+                    //          $"p.BISHPC = '{r["bishpc"]}' AND " +
+                    //          $"p.BISAFN = '{r["bisafn"]}' AND " +
+                    //          $"p.SHIPTYPE = '{r["shiptype"]}' AND get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}' AND \n" +
+                    //          $"SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) != 'TMW'";
+                    //    //Console.WriteLine(sqlbody);
+                    //    obb = AddOrderList(r, sqlbody);
+                    //    if (obb.Count > 0)
+                    //    {
+                    //        foreach (OrderData od in obb)
+                    //        {
+                    //            od.Id = obj.Count + 1;
+                    //            obj.Add(od);
+                    //        }
+                    //    }
 
-                        sqlbody = $"SELECT 'TMW' custpono,count(p.PARTNO) item,sum(round(p.BALQTY/p.BISTDP)) orderctn ,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
+                    //    sqlbody = $"SELECT 'TMW' custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
+                    //          "FROM TXP_ORDERPLAN p\n" +
+                    //          $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
+                    //          $"p.AFFCODE = '{r["affcode"]}' AND " +
+                    //          $"p.BISHPC = '{r["bishpc"]}' AND " +
+                    //          $"p.BISAFN = '{r["bisafn"]}' AND " +
+                    //          $"p.SHIPTYPE = '{r["shiptype"]}' AND get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}' AND\n" +
+                    //          $"SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) = 'TMW'";
+                    //    //Console.WriteLine(sqlbody);
+                    //    obb = AddOrderList(r, sqlbody);
+                    //    if (obb.Count > 0)
+                    //    {
+                    //        foreach (OrderData od in obb)
+                    //        {
+                    //            od.Id = obj.Count + 1;
+                    //            obj.Add(od);
+                    //        }
+                    //    }
+                    //    break;
+                    case "N":
+                        sqlbody = $"SELECT 'ALL' custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
                               "FROM TXP_ORDERPLAN p\n" +
                               $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                               $"p.AFFCODE = '{r["affcode"]}' AND " +
                               $"p.BISHPC = '{r["bishpc"]}' AND " +
                               $"p.BISAFN = '{r["bisafn"]}' AND " +
-                              $"p.SHIPTYPE = '{r["shiptype"]}' AND p.BALQTY > 0 AND get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}' AND\n" +
-                              $"SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) = 'TMW'";
+                              $"p.SHIPTYPE = '{r["shiptype"]}' AND get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}'";
                         //Console.WriteLine(sqlbody);
-                        foreach (OrderData od in AddOrderList(r, sqlbody))
+                        obb = AddOrderList(r, sqlbody);
+                        if (obb.Count > 0)
                         {
-                            od.Id = obj.Count + 1;
-                            obj.Add(od);
-                        }
-                        break;
-                    case "ALL":
-                        sqlbody = $"SELECT 'ALL' custpono,count(p.PARTNO) item,sum(round(p.BALQTY/p.BISTDP)) orderctn ,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
-                              "FROM TXP_ORDERPLAN p\n" +
-                              $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
-                              $"p.AFFCODE = '{r["affcode"]}' AND " +
-                              $"p.BISHPC = '{r["bishpc"]}' AND " +
-                              $"p.BISAFN = '{r["bisafn"]}' AND " +
-                              $"p.SHIPTYPE = '{r["shiptype"]}' AND p.BALQTY > 0 AND get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}'";
-                        //Console.WriteLine(sqlbody);
-                        foreach (OrderData od in AddOrderList(r, sqlbody))
-                        {
-                            od.Id = obj.Count + 1;
-                            obj.Add(od);
+                            foreach (OrderData od in obb)
+                            {
+                                od.Id = obj.Count + 1;
+                                obj.Add(od);
+                            }
                         }
                         break;
                     default:
-                        sqlbody = $"SELECT p.PONO custpono,count(p.PARTNO) item,sum(round(p.BALQTY/p.BISTDP)) orderctn ,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,max(p.ORDERSTATUS) ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
+                        sqlbody = $"SELECT p.PONO custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite\n" +
                               "FROM TXP_ORDERPLAN p\n" +
                               $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                               $"p.AFFCODE = '{r["affcode"]}' AND " +
                               $"p.BISHPC = '{r["bishpc"]}' AND " +
                               $"p.BISAFN = '{r["bisafn"]}' AND " +
-                              $"p.SHIPTYPE = '{r["shiptype"]}' AND p.BALQTY > 0 AND get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}'\n" +
+                              $"p.SHIPTYPE = '{r["shiptype"]}' AND get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}'\n" +
                               $"GROUP BY p.PONO";
                         //Console.WriteLine(sqlbody);
-                        foreach (OrderData od in AddOrderList(r, sqlbody))
+                        obb = AddOrderList(r, sqlbody);
+                        if (obb.Count > 0)
                         {
-                            od.Id = obj.Count + 1;
-                            obj.Add(od);
+                            foreach (OrderData od in obb)
+                            {
+                                od.Id = obj.Count + 1;
+                                obj.Add(od);
+                            }
                         }
                         break;
                 }
@@ -713,9 +741,9 @@ namespace XPWLibrary.Controllers
         string CheckOrderGroup(OrderData b)
         {
             string sql;
-            switch (b.CustPoType.ToString())
+            switch (b.Combinv.ToString())
             {
-                case "3END":
+                case "E":
                     sql = $"WHERE p.STATUS = 1 AND p.FACTORY = '{b.Factory}' AND p.ETDTAP = to_date('{b.Etd.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                           $"p.AFFCODE = '{b.Affcode}' AND " +
                           $"p.BISHPC = '{b.Custcode}' AND " +
@@ -723,7 +751,7 @@ namespace XPWLibrary.Controllers
                           $"p.SHIPTYPE = '{b.Ship}' AND " +
                           $"SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) = '{b.PoType}' AND get_zone(p.FACTORY,p.BIOABT) = '{b.Zone}'";
                     break;
-                case "3FRD":
+                case "F":
                     sql = $"WHERE p.STATUS = 1 AND p.FACTORY = '{b.Factory}' AND p.ETDTAP = to_date('{b.Etd.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                           $"p.AFFCODE = '{b.Affcode}' AND " +
                           $"p.BISHPC = '{b.Custcode}' AND " +
@@ -731,28 +759,28 @@ namespace XPWLibrary.Controllers
                           $"p.SHIPTYPE = '{b.Ship}' AND " +
                           $"SUBSTR(p.orderid,1, 3) = '{b.PoType}' AND get_zone(p.FACTORY,p.BIOABT) = '{b.Zone}'";
                     break;
-                case "A_TMW":
-                    if (b.PoType.ToString() == "ALL")
-                    {
-                        sql = $"WHERE p.STATUS = 1 AND p.FACTORY = '{b.Factory}' AND p.ETDTAP = to_date('{b.Etd.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
-                          $"p.AFFCODE = '{b.Affcode}' AND " +
-                          $"p.BISHPC = '{b.Custcode}' AND " +
-                          $"p.BISAFN = '{b.Custname}' AND " +
-                          $"p.SHIPTYPE = '{b.Ship}' AND " +
-                          $"SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) != 'TMW' AND get_zone(p.FACTORY,p.BIOABT) = '{b.Zone}'";
-                    }
-                    else
-                    {
-                        sql = $"WHERE p.STATUS = 1 AND p.FACTORY = '{b.Factory}' AND p.ETDTAP = to_date('{b.Etd.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
-                          $"p.AFFCODE = '{b.Affcode}' AND " +
-                          $"p.BISHPC = '{b.Custcode}' AND " +
-                          $"p.BISAFN = '{b.Custname}' AND " +
-                          $"p.SHIPTYPE = '{b.Ship}' AND " +
-                          $"SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) = 'TMW' AND get_zone(p.FACTORY,p.BIOABT) = '{b.Zone}'";
-                    }
-                    break;
+                //case "A_TMW":
+                //    if (b.PoType.ToString() == "ALL")
+                //    {
+                //        sql = $"WHERE p.STATUS = 1 AND p.FACTORY = '{b.Factory}' AND p.ETDTAP = to_date('{b.Etd.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
+                //          $"p.AFFCODE = '{b.Affcode}' AND " +
+                //          $"p.BISHPC = '{b.Custcode}' AND " +
+                //          $"p.BISAFN = '{b.Custname}' AND " +
+                //          $"p.SHIPTYPE = '{b.Ship}' AND " +
+                //          $"SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) != 'TMW' AND get_zone(p.FACTORY,p.BIOABT) = '{b.Zone}'";
+                //    }
+                //    else
+                //    {
+                //        sql = $"WHERE p.STATUS = 1 AND p.FACTORY = '{b.Factory}' AND p.ETDTAP = to_date('{b.Etd.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
+                //          $"p.AFFCODE = '{b.Affcode}' AND " +
+                //          $"p.BISHPC = '{b.Custcode}' AND " +
+                //          $"p.BISAFN = '{b.Custname}' AND " +
+                //          $"p.SHIPTYPE = '{b.Ship}' AND " +
+                //          $"SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) = 'TMW' AND get_zone(p.FACTORY,p.BIOABT) = '{b.Zone}'";
+                //    }
+                //    break;
 
-                case "ALL":
+                case "N":
                     sql = $"WHERE p.STATUS = 1 AND p.FACTORY = '{b.Factory}' AND p.ETDTAP = to_date('{b.Etd.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                           $"p.AFFCODE = '{b.Affcode}' AND " +
                           $"p.BISHPC = '{b.Custcode}' AND " +
@@ -867,7 +895,7 @@ namespace XPWLibrary.Controllers
         {
             string sql = $"SELECT p.ORDERID FROM TXP_ORDERPLAN p WHERE p.FACTORY= '{StaticFunctionData.Factory}' AND" +
                 $" p.ETDTAP = to_date('{etd.ToString("dd/MM/yyyy")}', 'dd/MM/yyyy') AND " +
-                $"p.CURINV IS NULL\n" +
+                $"p.CURINV IS NULL AND p.CURINV IS NULL AND p.BALQTY > 0\n" +
                 $"GROUP BY p.ORDERID";
             Console.WriteLine(sql);
             int x = 0;

@@ -3,7 +3,6 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Windows.Forms;
 using XPWLibrary.Controllers;
 using XPWLibrary.Interfaces;
@@ -47,7 +46,11 @@ namespace OrderApp
             bbiOrderBy.EditValue = ord.PoType;
             bbiRefInv.EditValue = ord.RefNo;
             List<OrderBody> ob = new OrderControllers().GetOrderDetail(ord);
-            bbiInvoice.EditValue = ob[0].RefInv;
+            bbiInvoice.EditValue = "";
+            if (ob.Count > 0)
+            {
+                bbiInvoice.EditValue = ob[0].RefInv;
+            }
             gridControl.DataSource = ob;
             bsiRecordsCount.Caption = "RECORDS : " + ob.Count;
         }

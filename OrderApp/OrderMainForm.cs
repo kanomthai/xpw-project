@@ -1,12 +1,9 @@
-﻿using DevExpress.Accessibility;
-using DevExpress.XtraBars;
+﻿using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
-using DevExpress.XtraGrid.Views.Base;
 using DevExpress.XtraSplashScreen;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Threading;
 using System.Windows.Forms;
 using XPWLibrary.Controllers;
 using XPWLibrary.Interfaces;
@@ -130,6 +127,9 @@ namespace OrderApp
                         case "8":
                             break;
                         case "9":
+                            break;
+                        case "10":
+                            e.DisplayText = "Cancel";
                             break;
                         default:
                             break;
