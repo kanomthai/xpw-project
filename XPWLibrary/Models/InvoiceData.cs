@@ -10,6 +10,7 @@ namespace XPWLibrary.Models
         public DateTime Etddte { get; set; }
         public string Affcode { get; set; }
         public string Bishpc { get; set; }
+        public string Combinv { get; set; }
         public string Custname { get; set; }
         public string Ship { get; set; }
         public string RefInv { get; set; }

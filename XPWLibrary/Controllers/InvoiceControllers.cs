@@ -91,6 +91,7 @@ namespace XPWLibrary.Controllers
                     Affcode = r["affcode"].ToString(),
                     Bishpc = r["bishpc"].ToString(),
                     Custname = r["custname"].ToString(),
+                    Combinv = r["combinv"].ToString(),
                     Ship = r["shiptype"].ToString(),
                     RefInv = r["issuingkey"].ToString(),
                     Invoice = r["refinvoice"].ToString(),

@@ -263,6 +263,26 @@ namespace InvoiceApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap contentarrangeinrows_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("contentarrangeinrows_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap contentarrangeinrows_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("contentarrangeinrows_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap cut_16x16 {
             get {
                 object obj = ResourceManager.GetObject("cut_16x16", resourceCulture);
@@ -296,6 +316,26 @@ namespace InvoiceApp.Properties {
         internal static System.Drawing.Bitmap edit_32x32 {
             get {
                 object obj = ResourceManager.GetObject("edit_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folderpanel_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("folderpanel_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap folderpanel_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("folderpanel_32x32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -383,6 +423,26 @@ namespace InvoiceApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap print_16x166 {
+            get {
+                object obj = ResourceManager.GetObject("print_16x166", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap print_16x167 {
+            get {
+                object obj = ResourceManager.GetObject("print_16x167", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap print_32x32 {
             get {
                 object obj = ResourceManager.GetObject("print_32x32", resourceCulture);
@@ -443,6 +503,26 @@ namespace InvoiceApp.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap print_32x326 {
+            get {
+                object obj = ResourceManager.GetObject("print_32x326", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap print_32x327 {
+            get {
+                object obj = ResourceManager.GetObject("print_32x327", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap recurrence_16x16 {
             get {
                 object obj = ResourceManager.GetObject("recurrence_16x16", resourceCulture);
@@ -496,6 +576,26 @@ namespace InvoiceApp.Properties {
         internal static System.Drawing.Bitmap save_32x32 {
             get {
                 object obj = ResourceManager.GetObject("save_32x32", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap shortdate_16x16 {
+            get {
+                object obj = ResourceManager.GetObject("shortdate_16x16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap shortdate_32x32 {
+            get {
+                object obj = ResourceManager.GetObject("shortdate_32x32", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

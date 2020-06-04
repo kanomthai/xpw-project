@@ -182,6 +182,16 @@
     <None Include="Resources\cut_32x32.png" />
     <None Include="Resources\save_16x16.png" />
     <None Include="Resources\save_32x32.png" />
+    <None Include="Resources\folderpanel_16x16.png" />
+    <None Include="Resources\folderpanel_32x32.png" />
+    <None Include="Resources\print_16x166.png" />
+    <None Include="Resources\print_32x326.png" />
+    <None Include="Resources\print_16x167.png" />
+    <None Include="Resources\print_32x327.png" />
+    <None Include="Resources\contentarrangeinrows_16x16.png" />
+    <None Include="Resources\contentarrangeinrows_32x32.png" />
+    <None Include="Resources\shortdate_16x16.png" />
+    <None Include="Resources\shortdate_32x32.png" />
     <Content Include="Templates\CurrentInvoiceControl.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

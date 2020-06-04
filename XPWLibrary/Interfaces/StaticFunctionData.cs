@@ -20,5 +20,20 @@
         public static bool EditOrder { get; set; }
         public static string PathExcute { get; set; }
         public static int ReloadGrid { get; set; }
+
+        //add Langures
+        public static string JobListTilte { get; internal set; }
+        public static string JobListInformation { get; internal set; }
+        public static string JoblistConfirmInv { get; set; }
+        public static string JoblistPrintJobList { get; set; }
+        public static string JoblistLabelShort { get; set; }
+        public static string JoblistShippingList { get; set; }
+        public static string JoblistShippingListByPart { get; set; }
+        public static string JoblistShippingListByAll { get; set; }
+        public static string JoblistPalletList { get; set; }
+        public static string JoblistSplitPart { get; set; }
+        public static string JoblistEditOrder { get; set; }
+        public static string JoblistSetMultiLot { get; set; }
+        public static string JoblistPartShort { get; set; }
     }
 }

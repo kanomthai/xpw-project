@@ -33,6 +33,27 @@ namespace XPWLibrary.Interfaces
             //    }
             //}
         }
+
+        private void GetLangure()
+        {
+            string docdir = $"{AppDomain.CurrentDomain.BaseDirectory}Configures\\invoicedetail.xml";
+            XmlDocument doc = new XmlDocument();
+            doc.Load(docdir);
+            XmlNodeList node = doc.DocumentElement.ChildNodes;
+            StaticFunctionData.JobListTilte = node[0].InnerText;
+            StaticFunctionData.JobListInformation = node[1].InnerText;
+            StaticFunctionData.JoblistConfirmInv = node[2].InnerText;
+            StaticFunctionData.JoblistPrintJobList = node[3].InnerText;
+            StaticFunctionData.JoblistLabelShort = node[4].InnerText;
+            StaticFunctionData.JoblistShippingList = node[5].InnerText;
+            StaticFunctionData.JoblistShippingListByPart = node[6].InnerText;
+            StaticFunctionData.JoblistShippingListByAll = node[7].InnerText;
+            StaticFunctionData.JoblistPalletList = node[8].InnerText;
+            StaticFunctionData.JoblistSplitPart = node[9].InnerText;
+            StaticFunctionData.JoblistEditOrder = node[10].InnerText;
+            StaticFunctionData.JoblistSetMultiLot = node[11].InnerText;
+            StaticFunctionData.JoblistPartShort = node[12].InnerText;
+        }
         public bool BeginingLoadApp()
         {
             string docdir = $"{AppDomain.CurrentDomain.BaseDirectory}Configures\\settings.xml";
@@ -74,6 +95,7 @@ namespace XPWLibrary.Interfaces
                 StaticFunctionData.DBname = "unknow";
                 StaticFunctionData.AppVersion = $"XPW UNKNOW V.{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
             }
+            GetLangure();
             return true;
         }
 

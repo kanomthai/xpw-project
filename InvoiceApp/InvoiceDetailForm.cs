@@ -32,7 +32,21 @@ namespace InvoiceApp
         void ReloadData()
         {
             SplashScreenManager.ShowDefaultWaitForm();
-            this.Text = $"{ob.RefInv} DETAIL";
+            this.Text = StaticFunctionData.JobListTilte;
+            groupControl2.Text = StaticFunctionData.JobListInformation;
+
+
+            bbiPlConfirm.Caption = StaticFunctionData.JoblistConfirmInv;
+            bbiPrintJobList.Caption = StaticFunctionData.JoblistPrintJobList;
+            bbiShippingList.Caption = StaticFunctionData.JoblistShippingList;
+            bbiShipingPart.Caption = StaticFunctionData.JoblistShippingListByPart;
+            bbiShippingAll.Caption = StaticFunctionData.JoblistShippingListByAll;
+            bbiPalletList.Caption = StaticFunctionData.JoblistPalletList;
+            bbiSplitPart.Caption = StaticFunctionData.JoblistSplitPart;
+            bbiSetMultiLot.Caption = StaticFunctionData.JoblistSetMultiLot;
+            bbiPartShort.Caption = StaticFunctionData.JoblistPartShort;
+
+
             bbiFactory.EditValue = ob.Factory;
             bbiShip.EditValue = ob.Ship;
             bbiZone.EditValue = ob.Zname;
@@ -91,14 +105,38 @@ namespace InvoiceApp
 
         private void bbiPlConfirm_ItemClick(object sender, ItemClickEventArgs e)
         {
-            InvoiceConfirmInvForm frm = new InvoiceConfirmInvForm(ob.RefInv);
-            frm.ShowDialog();
+            //InvoiceConfirmInvForm frm = new InvoiceConfirmInvForm(ob.RefInv);
+            //frm.ShowDialog();
+            string invno = bbiRefInv.EditValue.ToString();
+            string invoiceno = new GreeterFunction().GetLastInvoice(invno);
+            var result = XtraInputBox.Show("ระบุเลขที่เอกสาร", "ยืนยันการสร้าง Invoice", invoiceno);
+            if (result.Length > 0)
+            {
+                string sql = $"UPDATE TXP_ISSTRANSENT e SET e.REFINVOICE = '{result}' WHERE e.ISSUINGKEY = '{invno}'";
+                if (new ConnDB().ExcuteSQL(sql))
+                {
+                    XtraMessageBox.Show("บันทึกข้อมูลเสร็จแล้ว");
+                }
+            }
         }
 
         private void bbiPrintJobList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //OrderJobListPreviewForm frm = new OrderJobListPreviewForm(ob);
-            //frm.ShowDialog();
+            OrderData obj = new OrderData();
+            obj.Factory = ob.Factory;
+            obj.Etd = ob.Etddte;
+            obj.Ship = ob.Ship;
+            obj.Affcode = ob.Affcode;
+            obj.Custcode = ob.Bishpc;
+            obj.Custname = ob.Custname;
+            obj.CustPoType = ob.Ord;
+            obj.PoType = ob.Potype;
+            obj.Zone = ob.Zname;
+            obj.Combinv = ob.Combinv;
+            obj.RefNo = ob.RefInv;
+            obj.RefInv = ob.Invoice;
+            OrderJobListPreviewForm frm = new OrderJobListPreviewForm(obj);
+            frm.ShowDialog();
         }
 
         private void bbiPrintCardBoard_ItemClick(object sender, ItemClickEventArgs e)
@@ -106,7 +144,7 @@ namespace InvoiceApp
             try
             {
                 InvoiceBodyData obj = gridView.GetFocusedRow() as InvoiceBodyData;
-                InvoiceJobCardForm frm = new InvoiceJobCardForm(obj);
+                InvoiceJobCardForm frm = new InvoiceJobCardForm(obj, false);
                 frm.ShowDialog();
                 ReloadData();
             }
@@ -250,7 +288,7 @@ namespace InvoiceApp
             try
             {
                 InvoiceBodyData obj = gridView.GetFocusedRow() as InvoiceBodyData;
-                InvoiceJobCardForm frm = new InvoiceJobCardForm(obj);
+                InvoiceJobCardForm frm = new InvoiceJobCardForm(obj, true);
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -291,6 +329,27 @@ namespace InvoiceApp
         private void bbiNewOrder_ItemClick(object sender, ItemClickEventArgs e)
         {
 
+        }
+
+        private void bbiPalletList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            InvoiceConfirmInvForm frm = new InvoiceConfirmInvForm(ob.RefInv);
+            frm.ShowDialog();
+        }
+
+        private void bbiShipingPart_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            try
+            {
+                InvoiceBodyData obj = gridView.GetFocusedRow() as InvoiceBodyData;
+                InvoiceJobCardForm frm = new InvoiceJobCardForm(obj, true);
+                frm.ShowDialog();
+                ReloadData();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
         }
     }
 }
