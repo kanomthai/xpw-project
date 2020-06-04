@@ -47,10 +47,12 @@
             this.repositoryItemTextEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemTextEdit();
             this.bbiSearch = new DevExpress.XtraBars.BarButtonItem();
             this.bbiInvoiceControl = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiFooterRunning = new DevExpress.XtraBars.BarStaticItem();
+            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.ribbOrderId = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
@@ -75,8 +77,8 @@
             this.gridColumn15 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.bbiFooterRunning = new DevExpress.XtraBars.BarStaticItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.ppMenu = new DevExpress.XtraBars.PopupMenu(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1.CalendarTimeProperties)).BeginInit();
@@ -89,6 +91,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ppMenu)).BeginInit();
             this.SuspendLayout();
             // 
             // ribbonControl
@@ -109,9 +112,11 @@
             this.bbiOrderId,
             this.bbiSearch,
             this.bbiInvoiceControl,
-            this.bbiFooterRunning});
+            this.bbiFooterRunning,
+            this.barButtonItem1,
+            this.barButtonItem2});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 29;
+            this.ribbonControl.MaxItemId = 31;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -248,12 +253,36 @@
             this.bbiInvoiceControl.Id = 26;
             this.bbiInvoiceControl.Name = "bbiInvoiceControl";
             // 
+            // bbiFooterRunning
+            // 
+            this.bbiFooterRunning.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.bbiFooterRunning.Caption = "barStaticItem1";
+            this.bbiFooterRunning.Id = 28;
+            this.bbiFooterRunning.Name = "bbiFooterRunning";
+            // 
+            // barButtonItem1
+            // 
+            this.barButtonItem1.Caption = "Search By Order";
+            this.barButtonItem1.Id = 29;
+            this.barButtonItem1.ImageOptions.Image = global::OrderApp.Properties.Resources.opendoc_16x161;
+            this.barButtonItem1.ImageOptions.LargeImage = global::OrderApp.Properties.Resources.opendoc_32x321;
+            this.barButtonItem1.Name = "barButtonItem1";
+            this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+            // 
+            // barButtonItem2
+            // 
+            this.barButtonItem2.Caption = "Search By Lot";
+            this.barButtonItem2.Id = 30;
+            this.barButtonItem2.ImageOptions.Image = global::OrderApp.Properties.Resources.opendoc_16x16;
+            this.barButtonItem2.ImageOptions.LargeImage = global::OrderApp.Properties.Resources.opendoc_32x32;
+            this.barButtonItem2.Name = "barButtonItem2";
+            this.barButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem2_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup4,
             this.ribbonPageGroup3,
-            this.ribbOrderId,
             this.ribbonPageGroup1,
             this.ribbonPageGroup2});
             this.ribbonPage1.MergeOrder = 0;
@@ -272,13 +301,6 @@
             this.ribbonPageGroup3.ItemLinks.Add(this.bbiOnDay);
             this.ribbonPageGroup3.Name = "ribbonPageGroup3";
             this.ribbonPageGroup3.Text = "ribbonPageGroup3";
-            // 
-            // ribbOrderId
-            // 
-            this.ribbOrderId.ItemLinks.Add(this.bbiOrderId);
-            this.ribbOrderId.ItemLinks.Add(this.bbiSearch);
-            this.ribbOrderId.Name = "ribbOrderId";
-            this.ribbOrderId.Text = "ribbonPageGroup5";
             // 
             // ribbonPageGroup1
             // 
@@ -362,13 +384,17 @@
             this.gridView.OptionsPrint.PrintSelectedRowsOnly = true;
             this.gridView.OptionsView.ShowFooter = true;
             this.gridView.OptionsView.ShowGroupPanel = false;
+            this.gridView.RowClick += new DevExpress.XtraGrid.Views.Grid.RowClickEventHandler(this.gridView_RowClick);
             this.gridView.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gridView_CustomColumnDisplayText);
+            this.gridView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gridView_MouseUp);
             this.gridView.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
             this.gridView.Layout += new System.EventHandler(this.gridView_Layout);
             // 
             // gridColumn1
             // 
             this.gridColumn1.Caption = "#";
+            this.gridColumn1.DisplayFormat.FormatString = "{0:n0}";
+            this.gridColumn1.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.gridColumn1.FieldName = "Id";
             this.gridColumn1.Name = "gridColumn1";
             this.gridColumn1.Visible = true;
@@ -583,17 +609,18 @@
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
-            // bbiFooterRunning
-            // 
-            this.bbiFooterRunning.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-            this.bbiFooterRunning.Caption = "barStaticItem1";
-            this.bbiFooterRunning.Id = 28;
-            this.bbiFooterRunning.Name = "bbiFooterRunning";
-            // 
             // timer1
             // 
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // ppMenu
+            // 
+            this.ppMenu.ItemLinks.Add(this.barButtonItem1);
+            this.ppMenu.ItemLinks.Add(this.barButtonItem2);
+            this.ppMenu.ItemLinks.Add(this.bbiRefresh, true);
+            this.ppMenu.Name = "ppMenu";
+            this.ppMenu.Ribbon = this.ribbonControl;
             // 
             // OrderMainForm
             // 
@@ -622,6 +649,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.gridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ppMenu)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -669,11 +697,13 @@
         private DevExpress.XtraBars.BarEditItem bbiOrderId;
         private DevExpress.XtraEditors.Repository.RepositoryItemTextEdit repositoryItemTextEdit1;
         private DevExpress.XtraBars.BarButtonItem bbiSearch;
-        private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbOrderId;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn14;
         private DevExpress.XtraBars.BarButtonItem bbiInvoiceControl;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn15;
         private DevExpress.XtraBars.BarStaticItem bbiFooterRunning;
         private System.Windows.Forms.Timer timer1;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
+        private DevExpress.XtraBars.PopupMenu ppMenu;
     }
 }

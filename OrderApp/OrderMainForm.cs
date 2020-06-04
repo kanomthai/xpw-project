@@ -199,8 +199,8 @@ namespace OrderApp
             this.Invoke(new MethodInvoker(delegate { bbiFooterRunning.Caption = $"RELOAD AFTER: {irunning}"; }));
             if (irunning > StaticFunctionData.ReloadGrid)
             {
-                Thread th0 = new Thread(ReloadOrder);
-                th0.Start();
+                //Thread th0 = new Thread(ReloadOrder);
+                //th0.Start();
                 irunning = 0;
             }
         }
@@ -213,6 +213,86 @@ namespace OrderApp
         private void OrderMainForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             timer1.Stop();
+        }
+
+        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var result = XtraInputBox.Show("ระบุเลขที่ออร์เดอร์ที่ต้องการค้นหา", "ค้นหาข้อมูล", null);
+            Console.WriteLine(result);
+            try
+            {
+                SplashScreenManager.ShowDefaultWaitForm();
+                if (result != null)
+                {
+                    if (result.ToString() != "")
+                    {
+                        List<OrderData> obj = new OrderControllers().GetOrderData(result.ToString());
+                        gridControl.DataSource = obj;
+                        bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
+                    }
+                    //else
+                    //{
+                    //    XtraMessageBox.Show("กรุณาระบุเลขที่ออร์เดอร์ที่ต้องการค้นหาด้วย");
+                    //}
+                }
+                SplashScreenManager.CloseDefaultWaitForm();
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message);
+            }
+        }
+
+        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var result = XtraInputBox.Show("ระบุเลขที่ LOTNO ที่ต้องการค้นหา", "ค้นหาข้อมูล", null);
+            Console.WriteLine(result);
+            try
+            {
+                SplashScreenManager.ShowDefaultWaitForm();
+                if (result != null)
+                {
+                    if (result.ToString() != "")
+                    {
+                        List<OrderData> obj = new OrderControllers().GetLotNoData(result.ToString());
+                        gridControl.DataSource = obj;
+                        bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
+                    }
+                    //else
+                    //{
+                    //    XtraMessageBox.Show("กรุณาระบุเลขที่ LOTNO ที่ต้องการค้นหาด้วย");
+                    //}
+                }
+                SplashScreenManager.CloseDefaultWaitForm();
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message);
+            }
+        }
+
+        private void gridView_RowClick(object sender, DevExpress.XtraGrid.Views.Grid.RowClickEventArgs e)
+        {
+            if (e.Button.ToString() == "Right")
+            {
+                ppMenu.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
+            }
+            else
+            {
+                ppMenu.HidePopup();
+            }
+        }
+
+        private void gridView_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button.ToString() == "Right")
+            {
+                List<OrderData> db = gridControl.DataSource as List<OrderData>;
+                if (db.Count < 1)
+                {
+                    ppMenu.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
+                }
+            }
         }
     }
 }

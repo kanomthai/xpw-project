@@ -157,12 +157,18 @@ namespace InvoiceApp
                 case "BalQty":
                 case "BalCtn":
                 case "ShCtn":
+                case "RemCtn":
+                case "LotSeq":
                 case "PartRmCtn":
                     if (e.Value.ToString() == "0")
                     {
                         e.DisplayText = "";
                     }
-                    else 
+                    else if (int.Parse(e.Value.ToString()) < 1)
+                    {
+                        e.DisplayText = "";
+                    }
+                    else
                     {
                         e.DisplayText = string.Format("{0:n0}", int.Parse(e.Value.ToString()));
                     }
@@ -172,12 +178,13 @@ namespace InvoiceApp
                     switch (e.Value.ToString())
                     {
                         case "0":
+                            e.DisplayText = "None";
                             break;
                         case "1":
-                            e.DisplayText = "JobList";
+                            e.DisplayText = "Remain";
                             break;
                         case "2":
-                            e.DisplayText = "Invoice";
+                            e.DisplayText = "Prepare";
                             break;
                         case "3":
                             e.DisplayText = "Shorted";

@@ -9,13 +9,13 @@
   <aw_netweight>1000</aw_netweight>
   <ipaddress>192.168.101.215</ipaddress>
   <dbname>RMW</dbname>
-  <user>sktsys</user>
-  <passwd>sktsys</passwd>
+  <user>expsys</user>
+  <passwd>expsys</passwd>
   <aw_plprinter>POSTEKI300</aw_plprinter>
   <inj_plprinter>POSTEKI300</inj_plprinter>
   <confirmlotno>true</confirmlotno>
   <editorder>false</editorder>
   <editship>false</editship>
   <pathexecute>\\192.168.101.217\\xpw</pathexecute>
-  <reloadgrid>15</reloadgrid>
+  <reloadgrid>295</reloadgrid>
 </data>

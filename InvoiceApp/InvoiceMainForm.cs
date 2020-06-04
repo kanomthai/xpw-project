@@ -199,24 +199,28 @@ namespace InvoiceApp
                     switch (e.Value.ToString())
                     {
                         case "0":
-                            e.DisplayText = "";
-                            break;
-                        case "1":
                             e.DisplayText = "JobList";
                             break;
-                        case "2":
+                        case "1":
                             e.DisplayText = "Invoice";
                             break;
-                        case "3":
+                        case "2":
                             e.DisplayText = "Prepare";
                             break;
-                        case "5":
+                        case "3":
                             e.DisplayText = "Booking";
+                            break;
+                        case "4":
+                            e.DisplayText = "Closed";
+                            break;
+                        case "5":
+                            e.DisplayText = "Closed";
                             break;
                         case "6":
                             e.DisplayText = "Closed";
                             break;
                         default:
+                            e.DisplayText = "";
                             break;
                     }
                     break;

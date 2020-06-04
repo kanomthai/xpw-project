@@ -180,6 +180,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="icons8-new-property-48.ico" />
+    <None Include="Resources\database_16x163.png" />
+    <None Include="Resources\database_32x323.png" />
+    <None Include="Resources\opendoc_16x16.png" />
+    <None Include="Resources\opendoc_32x32.png" />
+    <None Include="Resources\opendoc_16x161.png" />
+    <None Include="Resources\opendoc_32x321.png" />
     <Content Include="Templates\CurrentOrderEnt.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

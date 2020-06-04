@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InvoiceMainForm));
             this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.bbiPrintPreview = new DevExpress.XtraBars.BarButtonItem();
@@ -55,6 +54,7 @@
             this.skinDropDownButtonItem1 = new DevExpress.XtraBars.SkinDropDownButtonItem();
             this.bbiRestoreLayOut = new DevExpress.XtraBars.BarButtonItem();
             this.bbiOrderStatus = new DevExpress.XtraBars.BarStaticItem();
+            this.bbiRunningReload = new DevExpress.XtraBars.BarStaticItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -122,7 +122,6 @@
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.ppMenu = new DevExpress.XtraBars.PopupMenu(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.bbiRunningReload = new DevExpress.XtraBars.BarStaticItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemRadioGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).BeginInit();
@@ -383,6 +382,13 @@
             this.bbiOrderStatus.Name = "bbiOrderStatus";
             this.bbiOrderStatus.TextAlignment = System.Drawing.StringAlignment.Center;
             this.bbiOrderStatus.Width = 250;
+            // 
+            // bbiRunningReload
+            // 
+            this.bbiRunningReload.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
+            this.bbiRunningReload.Caption = "barStaticItem1";
+            this.bbiRunningReload.Id = 16;
+            this.bbiRunningReload.Name = "bbiRunningReload";
             // 
             // ribbonPage1
             // 
@@ -842,7 +848,10 @@
             // 
             // gridColumn1
             // 
+            this.gridColumn1.AutoFillDown = true;
             this.gridColumn1.Caption = "#";
+            this.gridColumn1.DisplayFormat.FormatString = "{0:n0}";
+            this.gridColumn1.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.gridColumn1.FieldName = "Id";
             this.gridColumn1.Name = "gridColumn1";
             this.gridColumn1.Visible = true;
@@ -1150,13 +1159,6 @@
             // 
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // bbiRunningReload
-            // 
-            this.bbiRunningReload.Alignment = DevExpress.XtraBars.BarItemLinkAlignment.Right;
-            this.bbiRunningReload.Caption = "barStaticItem1";
-            this.bbiRunningReload.Id = 16;
-            this.bbiRunningReload.Name = "bbiRunningReload";
             // 
             // InvoiceMainForm
             // 
