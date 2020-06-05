@@ -53,6 +53,8 @@
             this.bbiShippingAll = new DevExpress.XtraBars.BarButtonItem();
             this.bbiPalletList = new DevExpress.XtraBars.BarButtonItem();
             this.bbiPartShort = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiReviseOrder = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiCancelOrder = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -112,8 +114,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.ppMenu = new DevExpress.XtraBars.PopupMenu(this.components);
-            this.bbiReviseOrder = new DevExpress.XtraBars.BarButtonItem();
-            this.bbiCancelOrder = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -368,6 +368,24 @@
             this.bbiPartShort.ImageOptions.Image = global::InvoiceApp.Properties.Resources.shortdate_16x16;
             this.bbiPartShort.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.shortdate_32x32;
             this.bbiPartShort.Name = "bbiPartShort";
+            // 
+            // bbiReviseOrder
+            // 
+            this.bbiReviseOrder.Caption = "Revise ";
+            this.bbiReviseOrder.Enabled = false;
+            this.bbiReviseOrder.Id = 36;
+            this.bbiReviseOrder.ImageOptions.Image = global::InvoiceApp.Properties.Resources.deletelist_16x16;
+            this.bbiReviseOrder.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.deletelist_32x32;
+            this.bbiReviseOrder.Name = "bbiReviseOrder";
+            // 
+            // bbiCancelOrder
+            // 
+            this.bbiCancelOrder.Caption = "Cancel";
+            this.bbiCancelOrder.Enabled = false;
+            this.bbiCancelOrder.Id = 37;
+            this.bbiCancelOrder.ImageOptions.Image = global::InvoiceApp.Properties.Resources.close_16x16;
+            this.bbiCancelOrder.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.close_32x32;
+            this.bbiCancelOrder.Name = "bbiCancelOrder";
             // 
             // ribbonPage1
             // 
@@ -1103,39 +1121,20 @@
             // 
             // ppMenu
             // 
-            this.ppMenu.ItemLinks.Add(this.bbiPlConfirm);
             this.ppMenu.ItemLinks.Add(this.bbiPrintJobList);
             this.ppMenu.ItemLinks.Add(this.bbiPalletList);
             this.ppMenu.ItemLinks.Add(this.bbiShipingPart);
-            this.ppMenu.ItemLinks.Add(this.bbiEditOrder, true);
+            this.ppMenu.ItemLinks.Add(this.bbiPlConfirm, true);
+            this.ppMenu.ItemLinks.Add(this.bbiEditOrder);
             this.ppMenu.ItemLinks.Add(this.bbiReviseOrder);
             this.ppMenu.ItemLinks.Add(this.bbiCancelOrder);
-            this.ppMenu.ItemLinks.Add(this.bbiSplitPart, true);
-            this.ppMenu.ItemLinks.Add(this.bbiSetMultiLot);
-            this.ppMenu.ItemLinks.Add(this.bbiPartShort);
+            this.ppMenu.ItemLinks.Add(this.bbiSetMultiLot, true);
+            this.ppMenu.ItemLinks.Add(this.bbiSplitPart);
             this.ppMenu.ItemLinks.Add(this.bbiRefresh, true);
             this.ppMenu.Name = "ppMenu";
             this.ppMenu.Ribbon = this.ribbonControl;
             this.ppMenu.ShowCaption = true;
             this.ppMenu.ShowNavigationHeader = DevExpress.Utils.DefaultBoolean.True;
-            // 
-            // bbiReviseOrder
-            // 
-            this.bbiReviseOrder.Caption = "Revise ";
-            this.bbiReviseOrder.Enabled = false;
-            this.bbiReviseOrder.Id = 36;
-            this.bbiReviseOrder.ImageOptions.Image = global::InvoiceApp.Properties.Resources.deletelist_16x16;
-            this.bbiReviseOrder.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.deletelist_32x32;
-            this.bbiReviseOrder.Name = "bbiReviseOrder";
-            // 
-            // bbiCancelOrder
-            // 
-            this.bbiCancelOrder.Caption = "Cancel";
-            this.bbiCancelOrder.Enabled = false;
-            this.bbiCancelOrder.Id = 37;
-            this.bbiCancelOrder.ImageOptions.Image = global::InvoiceApp.Properties.Resources.close_16x16;
-            this.bbiCancelOrder.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.close_32x32;
-            this.bbiCancelOrder.Name = "bbiCancelOrder";
             // 
             // InvoiceDetailForm
             // 

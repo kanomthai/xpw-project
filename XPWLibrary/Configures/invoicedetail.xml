@@ -2,16 +2,16 @@
 <data>
   <joborder>JOB ORDER LIST</joborder>
   <joborder>JOB ORDER LIST</joborder>
-  <joborder>Confirm Invoice No.</joborder>
-  <joborder>Print Job Order List</joborder>
+  <joborder>W1: Confirm Invoice No.</joborder>
+  <joborder>W2: Print Job Order List</joborder>
   <joborder>Label/Short</joborder>
   <joborder>Shipping List</joborder>
-  <joborder>Shipping Label</joborder>
+  <joborder>W2: Shipping Label</joborder>
   <joborder>Shipping List All</joborder>
-  <joborder>Pallet List</joborder>
-  <joborder>Split Part</joborder>
+  <joborder>W2: Pallet List</joborder>
+  <joborder>W: Split Part</joborder>
   <joborder>Revise Order </joborder>
-  <joborder>Set Multi Lot</joborder>
+  <joborder>W: Set Multi Lot</joborder>
   <joborder>Part Short</joborder>
   <joborder>Hold Order</joborder>
   <joborder>Cancel Order</joborder>
