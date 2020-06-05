@@ -116,6 +116,7 @@ namespace InvoiceApp
                 if (new ConnDB().ExcuteSQL(sql))
                 {
                     XtraMessageBox.Show("บันทึกข้อมูลเสร็จแล้ว");
+                    bbiInv.EditValue = invoiceno;
                 }
             }
         }

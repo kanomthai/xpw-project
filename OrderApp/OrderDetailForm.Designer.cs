@@ -538,7 +538,7 @@
             this.gridColumn3.Name = "gridColumn3";
             this.gridColumn3.Visible = true;
             this.gridColumn3.VisibleIndex = 3;
-            this.gridColumn3.Width = 142;
+            this.gridColumn3.Width = 178;
             // 
             // gridColumn4
             // 
@@ -547,7 +547,7 @@
             this.gridColumn4.Name = "gridColumn4";
             this.gridColumn4.Visible = true;
             this.gridColumn4.VisibleIndex = 4;
-            this.gridColumn4.Width = 83;
+            this.gridColumn4.Width = 92;
             // 
             // gridColumn5
             // 
@@ -556,11 +556,15 @@
             this.gridColumn5.AppearanceCell.Options.UseFont = true;
             this.gridColumn5.AppearanceCell.Options.UseForeColor = true;
             this.gridColumn5.Caption = "QTY.";
+            this.gridColumn5.DisplayFormat.FormatString = "{0:n0}";
+            this.gridColumn5.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.gridColumn5.FieldName = "BalQty";
             this.gridColumn5.Name = "gridColumn5";
+            this.gridColumn5.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "BalQty", "{0:n0}")});
             this.gridColumn5.Visible = true;
             this.gridColumn5.VisibleIndex = 5;
-            this.gridColumn5.Width = 58;
+            this.gridColumn5.Width = 86;
             // 
             // gridColumn6
             // 
@@ -569,13 +573,15 @@
             this.gridColumn6.AppearanceCell.Options.UseFont = true;
             this.gridColumn6.AppearanceCell.Options.UseForeColor = true;
             this.gridColumn6.Caption = "CTN.";
+            this.gridColumn6.DisplayFormat.FormatString = "{0:n0}";
+            this.gridColumn6.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.gridColumn6.FieldName = "Ctn";
             this.gridColumn6.Name = "gridColumn6";
             this.gridColumn6.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Ctn", "{0:0.##}")});
             this.gridColumn6.Visible = true;
             this.gridColumn6.VisibleIndex = 6;
-            this.gridColumn6.Width = 54;
+            this.gridColumn6.Width = 42;
             // 
             // gridColumn7
             // 
@@ -588,7 +594,7 @@
             this.gridColumn7.Name = "gridColumn7";
             this.gridColumn7.Visible = true;
             this.gridColumn7.VisibleIndex = 8;
-            this.gridColumn7.Width = 120;
+            this.gridColumn7.Width = 89;
             // 
             // gridColumn8
             // 
@@ -619,7 +625,7 @@
             this.gridColumn10.Name = "gridColumn10";
             this.gridColumn10.Visible = true;
             this.gridColumn10.VisibleIndex = 9;
-            this.gridColumn10.Width = 79;
+            this.gridColumn10.Width = 59;
             // 
             // gridColumn11
             // 
@@ -628,7 +634,7 @@
             this.gridColumn11.Name = "gridColumn11";
             this.gridColumn11.Visible = true;
             this.gridColumn11.VisibleIndex = 7;
-            this.gridColumn11.Width = 118;
+            this.gridColumn11.Width = 121;
             // 
             // gridColumn12
             // 
@@ -639,7 +645,7 @@
             this.gridColumn12.Name = "gridColumn12";
             this.gridColumn12.Visible = true;
             this.gridColumn12.VisibleIndex = 10;
-            this.gridColumn12.Width = 122;
+            this.gridColumn12.Width = 109;
             // 
             // Root
             // 

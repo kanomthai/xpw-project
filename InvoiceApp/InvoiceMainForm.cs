@@ -136,7 +136,8 @@ namespace InvoiceApp
         {
             if (e.Button.ToString() == "Right")
             {
-                if (gridControl.DataSource == null)
+                List<InvoiceData> obj = gridControl.DataSource as List<InvoiceData>;
+                if (obj.Count < 1)
                 {
                     ppMenu.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
                 }
@@ -296,6 +297,8 @@ namespace InvoiceApp
             OrderMainForm frm = new OrderMainForm();
             frm.Show();
             bbiFactory.EditValue = StaticFunctionData.Factory;
+            stload = true;
+            ReloadData();
         }
 
         private void bbiBookingControl_ItemClick(object sender, ItemClickEventArgs e)
