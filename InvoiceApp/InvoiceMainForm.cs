@@ -180,6 +180,7 @@ namespace InvoiceApp
                 case "Pl":
                 case "Plno":
                 case "RmCon":
+                case "ShCtn":
                 case "Conn":
                     try
                     {
@@ -432,7 +433,7 @@ namespace InvoiceApp
             this.Invoke(new MethodInvoker(delegate { bbiRunningReload.Caption = $"RUNNING AT: {itick}"; }));
             if (itick > StaticFunctionData.ReloadGrid)
             {
-                AfterFormLoad();
+                //AfterFormLoad();
                 itick = 0;
             }
         }
