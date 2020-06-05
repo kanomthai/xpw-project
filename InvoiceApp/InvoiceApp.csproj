@@ -192,6 +192,12 @@
     <None Include="Resources\contentarrangeinrows_32x32.png" />
     <None Include="Resources\shortdate_16x16.png" />
     <None Include="Resources\shortdate_32x32.png" />
+    <None Include="Resources\cancel_16x16.png" />
+    <None Include="Resources\cancel_32x32.png" />
+    <None Include="Resources\close_16x16.png" />
+    <None Include="Resources\close_32x32.png" />
+    <None Include="Resources\deletelist_16x16.png" />
+    <None Include="Resources\deletelist_32x32.png" />
     <Content Include="Templates\CurrentInvoiceControl.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

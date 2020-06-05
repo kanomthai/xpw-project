@@ -112,6 +112,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.ppMenu = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.bbiReviseOrder = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiCancelOrder = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -180,9 +182,11 @@
             this.bbiShipingPart,
             this.bbiShippingAll,
             this.bbiPalletList,
-            this.bbiPartShort});
+            this.bbiPartShort,
+            this.bbiReviseOrder,
+            this.bbiCancelOrder});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 36;
+            this.ribbonControl.MaxItemId = 38;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -265,7 +269,6 @@
             // bbiEditOrder
             // 
             this.bbiEditOrder.Caption = "Edit Order";
-            this.bbiEditOrder.Enabled = false;
             this.bbiEditOrder.Id = 24;
             this.bbiEditOrder.ImageOptions.Image = global::InvoiceApp.Properties.Resources.edit_16x16;
             this.bbiEditOrder.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.edit_32x32;
@@ -1104,6 +1107,9 @@
             this.ppMenu.ItemLinks.Add(this.bbiPrintJobList);
             this.ppMenu.ItemLinks.Add(this.bbiPalletList);
             this.ppMenu.ItemLinks.Add(this.bbiShipingPart);
+            this.ppMenu.ItemLinks.Add(this.bbiEditOrder, true);
+            this.ppMenu.ItemLinks.Add(this.bbiReviseOrder);
+            this.ppMenu.ItemLinks.Add(this.bbiCancelOrder);
             this.ppMenu.ItemLinks.Add(this.bbiSplitPart, true);
             this.ppMenu.ItemLinks.Add(this.bbiSetMultiLot);
             this.ppMenu.ItemLinks.Add(this.bbiPartShort);
@@ -1112,6 +1118,24 @@
             this.ppMenu.Ribbon = this.ribbonControl;
             this.ppMenu.ShowCaption = true;
             this.ppMenu.ShowNavigationHeader = DevExpress.Utils.DefaultBoolean.True;
+            // 
+            // bbiReviseOrder
+            // 
+            this.bbiReviseOrder.Caption = "Revise ";
+            this.bbiReviseOrder.Enabled = false;
+            this.bbiReviseOrder.Id = 36;
+            this.bbiReviseOrder.ImageOptions.Image = global::InvoiceApp.Properties.Resources.deletelist_16x16;
+            this.bbiReviseOrder.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.deletelist_32x32;
+            this.bbiReviseOrder.Name = "bbiReviseOrder";
+            // 
+            // bbiCancelOrder
+            // 
+            this.bbiCancelOrder.Caption = "Cancel";
+            this.bbiCancelOrder.Enabled = false;
+            this.bbiCancelOrder.Id = 37;
+            this.bbiCancelOrder.ImageOptions.Image = global::InvoiceApp.Properties.Resources.close_16x16;
+            this.bbiCancelOrder.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.close_32x32;
+            this.bbiCancelOrder.Name = "bbiCancelOrder";
             // 
             // InvoiceDetailForm
             // 
@@ -1253,5 +1277,7 @@
         private DevExpress.XtraBars.BarButtonItem bbiPalletList;
         private DevExpress.XtraBars.BarButtonItem bbiPartShort;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
+        private DevExpress.XtraBars.BarButtonItem bbiReviseOrder;
+        private DevExpress.XtraBars.BarButtonItem bbiCancelOrder;
     }
 }

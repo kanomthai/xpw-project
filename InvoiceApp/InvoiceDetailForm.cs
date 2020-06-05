@@ -45,6 +45,9 @@ namespace InvoiceApp
             bbiSplitPart.Caption = StaticFunctionData.JoblistSplitPart;
             bbiSetMultiLot.Caption = StaticFunctionData.JoblistSetMultiLot;
             bbiPartShort.Caption = StaticFunctionData.JoblistPartShort;
+            bbiEditOrder.Caption = StaticFunctionData.JoblistEditOrder;
+            bbiReviseOrder.Caption = StaticFunctionData.JoblistOrderHold;
+            bbiCancelOrder.Caption = StaticFunctionData.JoblistOrderCancel;
 
 
             bbiFactory.EditValue = ob.Factory;

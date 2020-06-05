@@ -53,6 +53,8 @@ namespace XPWLibrary.Interfaces
             StaticFunctionData.JoblistEditOrder = node[10].InnerText;
             StaticFunctionData.JoblistSetMultiLot = node[11].InnerText;
             StaticFunctionData.JoblistPartShort = node[12].InnerText;
+            StaticFunctionData.JoblistOrderHold = node[13].InnerText;
+            StaticFunctionData.JoblistOrderCancel = node[14].InnerText;
         }
         public bool BeginingLoadApp()
         {

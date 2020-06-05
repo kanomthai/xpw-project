@@ -10,7 +10,9 @@
   <joborder>Shipping List All</joborder>
   <joborder>Pallet List</joborder>
   <joborder>Split Part</joborder>
-  <joborder>Edit Order</joborder>
+  <joborder>Revise Order </joborder>
   <joborder>Set Multi Lot</joborder>
   <joborder>Part Short</joborder>
+  <joborder>Hold Order</joborder>
+  <joborder>Cancel Order</joborder>
 </data>

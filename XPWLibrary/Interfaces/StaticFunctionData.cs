@@ -35,5 +35,7 @@
         public static string JoblistEditOrder { get; set; }
         public static string JoblistSetMultiLot { get; set; }
         public static string JoblistPartShort { get; set; }
+        public static string JoblistOrderHold { get; set; }
+        public static string JoblistOrderCancel { get; set; }
     }
 }
