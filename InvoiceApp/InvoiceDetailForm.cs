@@ -134,11 +134,14 @@ namespace InvoiceApp
             obj.Custcode = ob.Bishpc;
             obj.Custname = ob.Custname;
             obj.CustPoType = ob.Ord;
-            obj.PoType = ob.Potype;
+            obj.PoType = ob.Ord;
             obj.Zone = ob.Zname;
             obj.Combinv = ob.Combinv;
             obj.RefNo = ob.RefInv;
             obj.RefInv = ob.Invoice;
+            obj.Commercial = ob.Commercial;
+            obj.BioABT = ob.BioABT;
+            obj.Pc = ob.Pc;
             OrderJobListPreviewForm frm = new OrderJobListPreviewForm(obj);
             frm.ShowDialog();
         }

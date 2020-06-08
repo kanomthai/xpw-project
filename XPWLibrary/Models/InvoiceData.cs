@@ -2,7 +2,7 @@
 
 namespace XPWLibrary.Models
 {
-    public class InvoiceData
+    public class InvoiceData: OrderData
     {
         public int Id { get; set; }
         public string Factory { get; set; }
@@ -27,7 +27,6 @@ namespace XPWLibrary.Models
         public int Plno { get; set; }
         public int RmCon { get; internal set; }
         public int Conn { get; set; }
-        public int Status { get; set; }
         public DateTime Upddte { get; set; }
     }
 
