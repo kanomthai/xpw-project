@@ -18,4 +18,6 @@
   <editship>false</editship>
   <pathexecute>\\192.168.101.217\\xpw</pathexecute>
   <reloadgrid>295</reloadgrid>
+  <onweek>0</onweek>
+  <nextweek>14</nextweek>
 </data>

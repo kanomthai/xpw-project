@@ -80,6 +80,9 @@ namespace XPWLibrary.Interfaces
                                           "Connection Timeout = 60; Incr Pool Size=15;Decr Pool Size=12;";
             StaticFunctionData.PathExcute = node[16].InnerText;
             StaticFunctionData.ReloadGrid = int.Parse(node[17].InnerText);
+            StaticFunctionData.onWeek = int.Parse(node[18].InnerText);
+            StaticFunctionData.nextWeek = int.Parse(node[19].InnerText);
+
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
 
             if (node[9].InnerText.ToString() == "sktsys")
@@ -99,6 +102,20 @@ namespace XPWLibrary.Interfaces
             }
             GetLangure();
             return true;
+        }
+
+        public bool CheckUpdateInvoice(DateTime etd)
+        {
+            bool x = true;
+            string sql = $"SELECT nextweek FROM (" +
+                $"SELECT(TRUNC(SYSDATE, 'DY') + {StaticFunctionData.onWeek}) onweek,(TRUNC(SYSDATE, 'DY') + {StaticFunctionData.nextWeek}) nextweek FROM dual" +
+                $") WHERE nextweek >= TO_DATE('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy')";
+            DataSet dr = new ConnDB().GetFill(sql);
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                x = false;
+            }
+            return x;
         }
 
         public string GetLastInvoice(string refinv)

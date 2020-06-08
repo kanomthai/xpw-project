@@ -98,6 +98,8 @@ namespace InvoiceApp
                     bbiShowLotDetail.Caption = $"{gridView.GetFocusedRowCellValue("LotNo").ToString()} Detail";
                 }
                 bbiEditOrder.Enabled = StaticFunctionData.EditOrder;
+                bool chinvconfirm = new GreeterFunction().CheckUpdateInvoice(DateTime.Parse(bbiEtd.EditValue.ToString()));
+                bbiPlConfirm.Enabled = !chinvconfirm;
                 ppMenu.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
             }
             else
@@ -110,6 +112,22 @@ namespace InvoiceApp
         {
             //InvoiceConfirmInvForm frm = new InvoiceConfirmInvForm(ob.RefInv);
             //frm.ShowDialog();
+            //bool chinvconfirm = new GreeterFunction().CheckUpdateInvoice(DateTime.Parse(bbiEtd.EditValue.ToString()));
+            //if (chinvconfirm)
+            //{
+            //    string invno = bbiRefInv.EditValue.ToString();
+            //    string invoiceno = new GreeterFunction().GetLastInvoice(invno);
+            //    var result = XtraInputBox.Show("ระบุเลขที่เอกสาร", "ยืนยันการสร้าง Invoice", invoiceno);
+            //    if (result.Length > 0)
+            //    {
+            //        string sql = $"UPDATE TXP_ISSTRANSENT e SET e.REFINVOICE = '{result}' WHERE e.ISSUINGKEY = '{invno}'";
+            //        if (new ConnDB().ExcuteSQL(sql))
+            //        {
+            //            XtraMessageBox.Show("บันทึกข้อมูลเสร็จแล้ว");
+            //            bbiInv.EditValue = invoiceno;
+            //        }
+            //    }
+            //}
             string invno = bbiRefInv.EditValue.ToString();
             string invoiceno = new GreeterFunction().GetLastInvoice(invno);
             var result = XtraInputBox.Show("ระบุเลขที่เอกสาร", "ยืนยันการสร้าง Invoice", invoiceno);

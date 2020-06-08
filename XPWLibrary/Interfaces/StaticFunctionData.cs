@@ -1,7 +1,7 @@
 ﻿namespace XPWLibrary.Interfaces
 {
     public class StaticFunctionData
-    {
+    { 
         public static string fticketprinter { get; set; }
         public static string cartonticketprinter { get; set; }
         public static int aw_totalpallet { get; set; }
@@ -20,6 +20,9 @@
         public static bool EditOrder { get; set; }
         public static string PathExcute { get; set; }
         public static int ReloadGrid { get; set; }
+
+        public static int onWeek { get; set; }
+        public static int nextWeek { get; set; }
 
         //add Langures
         public static string JobListTilte { get; internal set; }

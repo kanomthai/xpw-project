@@ -1,9 +1,6 @@
 ﻿using BookingApp;
 using DevExpress.LookAndFeel;
-using DevExpress.Skins;
 using DevExpress.XtraBars;
-using DevExpress.XtraBars.Helpers;
-using DevExpress.XtraBars.Ribbon;
 using DevExpress.XtraSplashScreen;
 using InvoiceApp.Properties;
 using OrderApp;
@@ -11,7 +8,6 @@ using ShortingApp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
@@ -271,22 +267,23 @@ namespace InvoiceApp
 
         private void bbiPartShorting_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var id = gridView.GetFocusedRowCellValue("Id").ToString();
-            int i = (int.Parse(id) - 1);
-            Console.WriteLine(id);
-            List<InvoiceData> ob = gridControl.DataSource as List<InvoiceData>;
+            //var id = gridView.GetFocusedRowCellValue("Id").ToString();
+            //int i = (int.Parse(id) - 1);
+            //Console.WriteLine(id);
+            //List<InvoiceData> ob = gridControl.DataSource as List<InvoiceData>;
+            InvoiceData ob = gridView.GetFocusedRow() as InvoiceData;
             OrderData obj = new OrderData();
-            obj.Factory = ob[i].Factory;
-            obj.Zone = ob[i].Zname;
-            obj.Etd = ob[i].Etddte;
-            obj.Affcode = ob[i].Affcode;
-            obj.Custcode = ob[i].Bishpc;
-            obj.Custname = ob[i].Custname;
-            obj.Ship = ob[i].Ship;
-            obj.PoType = ob[i].Potype;
-            obj.CustPoType = ob[i].Ord;
-            obj.RefInv = ob[i].Invoice;
-            obj.RefNo = ob[i].RefInv;
+            obj.Factory = ob.Factory;
+            obj.Zone = ob.Zname;
+            obj.Etd = ob.Etddte;
+            obj.Affcode = ob.Affcode;
+            obj.Custcode = ob.Bishpc;
+            obj.Custname = ob.Custname;
+            obj.Ship = ob.Ship;
+            obj.PoType = ob.Potype;
+            obj.CustPoType = ob.Ord;
+            obj.RefInv = ob.Invoice;
+            obj.RefNo = ob.RefInv;
 
             //OrderPartShortingForm frm = new OrderPartShortingForm(obj);
             ShortingForm frm = new ShortingForm(obj);
