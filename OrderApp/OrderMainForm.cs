@@ -227,13 +227,17 @@ namespace OrderApp
                     if (result.ToString() != "")
                     {
                         List<OrderData> obj = new OrderControllers().GetOrderData(result.ToString());
-                        gridControl.DataSource = obj;
-                        bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
+                        if (obj.Count > 0)
+                        {
+                            gridControl.DataSource = obj;
+                            bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
+                        }
+                        else
+                        {
+                            new GreeterFunction().CreateLogSearch(result.ToString());
+                            XtraMessageBox.Show("ไม่พบข้อมูลที่ต้องการค้นหา");
+                        }
                     }
-                    //else
-                    //{
-                    //    XtraMessageBox.Show("กรุณาระบุเลขที่ออร์เดอร์ที่ต้องการค้นหาด้วย");
-                    //}
                 }
                 SplashScreenManager.CloseDefaultWaitForm();
             }
@@ -255,13 +259,17 @@ namespace OrderApp
                     if (result.ToString() != "")
                     {
                         List<OrderData> obj = new OrderControllers().GetLotNoData(result.ToString());
-                        gridControl.DataSource = obj;
-                        bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
+                        if (obj.Count > 0)
+                        {
+                            gridControl.DataSource = obj;
+                            bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
+                        }
+                        else
+                        {
+                            new GreeterFunction().CreateLogSearch(result.ToString());
+                            XtraMessageBox.Show("ไม่พบข้อมูลที่ต้องการค้นหา");
+                        }
                     }
-                    //else
-                    //{
-                    //    XtraMessageBox.Show("กรุณาระบุเลขที่ LOTNO ที่ต้องการค้นหาด้วย");
-                    //}
                 }
                 SplashScreenManager.CloseDefaultWaitForm();
             }
