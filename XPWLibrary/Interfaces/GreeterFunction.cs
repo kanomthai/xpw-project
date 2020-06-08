@@ -103,7 +103,7 @@ namespace XPWLibrary.Interfaces
 
         public string GetLastInvoice(string refinv)
         {
-            string txt = "TO";
+            string txt = "TW";
             string sql = "SELECT e.FACTORY,e.AFFCODE,e.BISHPC,e.CUSTNAME,TO_NUMBER(SUBSTR(max(e.REFINVOICE), 5, 5)) + 1 rnum FROM TXP_ISSTRANSENT e  \n" +
                 $"WHERE SUBSTR(e.ISSUINGKEY, 1, 3) = '{refinv.Substring(0, 3)}' AND TO_CHAR(e.ETDDTE, 'yyyy') = TO_CHAR(SYSDATE, 'yyyy') AND LENGTH(e.REFINVOICE) = 10\n" +
                 "GROUP BY e.FACTORY,e.AFFCODE,e.BISHPC,e.CUSTNAME\n" +
