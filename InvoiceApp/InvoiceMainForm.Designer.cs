@@ -894,7 +894,7 @@
             // 
             // gridColumn6
             // 
-            this.gridColumn6.Caption = "CODE";
+            this.gridColumn6.Caption = "SHIPTO";
             this.gridColumn6.FieldName = "Bishpc";
             this.gridColumn6.Name = "gridColumn6";
             this.gridColumn6.Visible = true;

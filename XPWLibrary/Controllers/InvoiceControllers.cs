@@ -71,7 +71,7 @@ namespace XPWLibrary.Controllers
                 etddate = $"t.ETDDTE BETWEEN (TRUNC(to_date('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy'), 'DY') + 0) AND (TRUNC(to_date('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy'), 'DY') + 7)";
             }
             string sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate}\n" +
-                $"ORDER BY t.ZNAME,t.AFFCODE,t.BISHPC,t.CUSTNAME,t.SHIPTYPE,t.ORD";
+                $"ORDER BY t.ZNAME,t.AFFCODE,t.CUSTNAME,t.BISHPC,t.SHIPTYPE,t.ORD";
             Console.WriteLine(sql);
             List<InvoiceData> list = new List<InvoiceData>();
             DataSet dr = new ConnDB().GetFill(sql);

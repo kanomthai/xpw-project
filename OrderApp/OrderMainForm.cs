@@ -232,18 +232,14 @@ namespace OrderApp
                             gridControl.DataSource = obj;
                             bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
                         }
-                        else
-                        {
-                            new GreeterFunction().CreateLogSearch(result.ToString());
-                            XtraMessageBox.Show("ไม่พบข้อมูลที่ต้องการค้นหา");
-                        }
                     }
                 }
                 SplashScreenManager.CloseDefaultWaitForm();
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show(ex.Message);
+                new GreeterFunction().CreateLogSearch(result.ToString());
+                XtraMessageBox.Show("ไม่พบข้อมูลที่ต้องการค้นหา");
             }
         }
 
@@ -264,18 +260,14 @@ namespace OrderApp
                             gridControl.DataSource = obj;
                             bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
                         }
-                        else
-                        {
-                            new GreeterFunction().CreateLogSearch(result.ToString());
-                            XtraMessageBox.Show("ไม่พบข้อมูลที่ต้องการค้นหา");
-                        }
                     }
                 }
                 SplashScreenManager.CloseDefaultWaitForm();
             }
             catch (Exception ex)
             {
-                XtraMessageBox.Show(ex.Message);
+                new GreeterFunction().CreateLogSearch(result.ToString());
+                XtraMessageBox.Show("ไม่พบข้อมูลที่ต้องการค้นหา");
             }
         }
 
