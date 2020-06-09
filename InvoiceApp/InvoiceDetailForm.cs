@@ -490,7 +490,7 @@ namespace InvoiceApp
         {
             if (shlist.Count > 0)
             {
-                DialogResult r = XtraMessageBox.Show("คุณยังไม่ได้บันทึกข้อมูลตัด Short เลย\nคุณต้องการที่จะบันทึกข้อมูลนี้ไหม", "XPW Alert!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult r = XtraMessageBox.Show("คุณยังไม่ได้บันทึกข้อมูลตัด Short\nคุณต้องการที่จะบันทึกข้อมูลนี้ไหม", "XPW Alert!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (r == DialogResult.Yes)
                 {
                     //save short
@@ -515,12 +515,12 @@ namespace InvoiceApp
                 var remctn = gridView.GetFocusedRowCellValue("RemCtn").ToString();
                 var oldctn = gridView.GetFocusedRowCellValue("ShCtn").ToString();
                 int shctn = int.Parse(result) + int.Parse(oldctn);
-                if (shctn > int.Parse(remctn))
+                if (int.Parse(result) > int.Parse(remctn))
                 {
                     XtraMessageBox.Show("กรุณาระบุจำนวนให้น้อยกว่าหรือเท่ากับ REMAIN", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                else if (shctn <= 0)
+                else if (int.Parse(result) <= 0)
                 {
                     XtraMessageBox.Show("ระบุจำนวนให้ถูกต้องด้วย", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -530,7 +530,7 @@ namespace InvoiceApp
                     InvoiceBodyData o = gridView.GetFocusedRow() as InvoiceBodyData;
                     o.ShCtn = shctn;
                     shlist.Add(o);
-                    gridView.SetFocusedRowCellValue("RemCtn", (int.Parse(remctn) - shctn));
+                    gridView.SetFocusedRowCellValue("RemCtn", (int.Parse(remctn) - int.Parse(result)));
                     gridView.RefreshData();
                 }
             }
