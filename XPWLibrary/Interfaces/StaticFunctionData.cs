@@ -40,5 +40,6 @@
         public static string JoblistPartShort { get; set; }
         public static string JoblistOrderHold { get; set; }
         public static string JoblistOrderCancel { get; set; }
+        public static string JoblistOrderShorting { get; set; }
     }
 }

@@ -158,5 +158,18 @@ namespace InvoiceApp
             InvoicePalletDetailForm frm = new InvoicePalletDetailForm(plout.ToString());
             frm.ShowDialog();
         }
+
+        private void gridView_DoubleClick(object sender, System.EventArgs e)
+        {
+            try
+            {
+                var plout = gridView.GetFocusedRowCellValue("PlOut");
+                InvoicePalletDetailForm frm = new InvoicePalletDetailForm(plout.ToString());
+                frm.ShowDialog();
+            }
+            catch (System.Exception)
+            {
+            }
+        }
     }
 }

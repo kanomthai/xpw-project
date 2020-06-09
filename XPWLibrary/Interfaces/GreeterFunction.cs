@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
@@ -55,6 +56,7 @@ namespace XPWLibrary.Interfaces
             StaticFunctionData.JoblistPartShort = node[12].InnerText;
             StaticFunctionData.JoblistOrderHold = node[13].InnerText;
             StaticFunctionData.JoblistOrderCancel = node[14].InnerText;
+            StaticFunctionData.JoblistOrderShorting = node[15].InnerText;
         }
         public bool BeginingLoadApp()
         {
@@ -101,7 +103,48 @@ namespace XPWLibrary.Interfaces
                 StaticFunctionData.AppVersion = $"XPW UNKNOW V.{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
             }
             GetLangure();
+            CopyTemplateFile();
             return true;
+        }
+
+        public void RestoreTemplate()
+        {
+            try
+            {
+                string fromdir = @"\\192.168.101.150\\Sharefull_SKT\\XPW-CK2\\XPW-Update\\xpw-templates";
+                string targetdir = $"{AppDomain.CurrentDomain.BaseDirectory}Templates";
+                foreach (string file in Directory.GetFiles(fromdir))
+                {
+                    string fname = Path.GetFileName(file);
+                    Console.WriteLine(fromdir + "\\" + fname);
+                    Console.WriteLine(targetdir + "\\" + fname);
+                    File.Copy(fromdir + "\\" + fname, targetdir + "\\" + fname, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        public void CopyTemplateFile()
+        {
+            try
+            {
+                string fromdir = @"\\192.168.101.150\\Sharefull_SKT\\XPW-CK2\\XPW-Update\\xpw-templates";
+                string targetdir = $"{AppDomain.CurrentDomain.BaseDirectory}Configures\\xpw-templates";
+                foreach (string file in Directory.GetFiles(fromdir))
+                {
+                    string fname = Path.GetFileName(file);
+                    Console.WriteLine(fromdir + "\\" + fname);
+                    Console.WriteLine(targetdir + "\\" + fname);
+                    File.Copy(fromdir + "\\" + fname, targetdir + "\\" + fname, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
         public bool CheckUpdateInvoice(DateTime etd)

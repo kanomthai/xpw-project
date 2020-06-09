@@ -55,6 +55,8 @@
             this.bbiPartShort = new DevExpress.XtraBars.BarButtonItem();
             this.bbiReviseOrder = new DevExpress.XtraBars.BarButtonItem();
             this.bbiCancelOrder = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiConfirmShort = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiAddShorting = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -184,9 +186,11 @@
             this.bbiPalletList,
             this.bbiPartShort,
             this.bbiReviseOrder,
-            this.bbiCancelOrder});
+            this.bbiCancelOrder,
+            this.bbiConfirmShort,
+            this.bbiAddShorting});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 38;
+            this.ribbonControl.MaxItemId = 40;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -387,6 +391,26 @@
             this.bbiCancelOrder.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.close_32x32;
             this.bbiCancelOrder.Name = "bbiCancelOrder";
             // 
+            // bbiConfirmShort
+            // 
+            this.bbiConfirmShort.Caption = "Confirm Short";
+            this.bbiConfirmShort.Id = 38;
+            this.bbiConfirmShort.ImageOptions.Image = global::InvoiceApp.Properties.Resources.apply_16x16;
+            this.bbiConfirmShort.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.apply_32x32;
+            this.bbiConfirmShort.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+                | System.Windows.Forms.Keys.S));
+            this.bbiConfirmShort.Name = "bbiConfirmShort";
+            this.bbiConfirmShort.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiConfirmShort_ItemClick);
+            // 
+            // bbiAddShorting
+            // 
+            this.bbiAddShorting.Caption = "Shorting";
+            this.bbiAddShorting.Id = 39;
+            this.bbiAddShorting.ImageOptions.Image = global::InvoiceApp.Properties.Resources.apply_16x161;
+            this.bbiAddShorting.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.apply_32x321;
+            this.bbiAddShorting.Name = "bbiAddShorting";
+            this.bbiAddShorting.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiAddShorting_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -400,6 +424,7 @@
             // 
             this.ribbonPageGroup1.AllowTextClipping = false;
             this.ribbonPageGroup1.ItemLinks.Add(this.bbiNewOrder);
+            this.ribbonPageGroup1.ItemLinks.Add(this.bbiConfirmShort);
             this.ribbonPageGroup1.ItemLinks.Add(this.bbiRefresh);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             this.ribbonPageGroup1.ShowCaptionButton = false;
@@ -835,6 +860,7 @@
             // 
             this.gridControl.Cursor = System.Windows.Forms.Cursors.Hand;
             this.gridControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.gridControl.EmbeddedNavigator.Buttons.Edit.Enabled = false;
             this.gridControl.Location = new System.Drawing.Point(2, 22);
             this.gridControl.MainView = this.gridView;
             this.gridControl.MenuManager = this.ribbonControl;
@@ -864,10 +890,14 @@
             this.gridView.CustomizationFormBounds = new System.Drawing.Rectangle(809, 490, 250, 280);
             this.gridView.GridControl = this.gridControl;
             this.gridView.Name = "gridView";
+            this.gridView.OptionsBehavior.Editable = false;
+            this.gridView.OptionsBehavior.EditingMode = DevExpress.XtraGrid.Views.Grid.GridEditingMode.Inplace;
             this.gridView.OptionsSelection.CheckBoxSelectorField = "Selector";
             this.gridView.OptionsSelection.MultiSelect = true;
             this.gridView.OptionsView.ShowFooter = true;
             this.gridView.OptionsView.ShowGroupPanel = false;
+            this.gridView.CellValueChanged += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gridView_CellValueChanged);
+            this.gridView.CellValueChanging += new DevExpress.XtraGrid.Views.Base.CellValueChangedEventHandler(this.gridView_CellValueChanging);
             this.gridView.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gridView_CustomColumnDisplayText);
             this.gridView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gridView_MouseUp);
             this.gridView.DoubleClick += new System.EventHandler(this.gridView_DoubleClick);
@@ -999,7 +1029,7 @@
             this.gridColumn9.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.gridColumn9.FieldName = "ShCtn";
             this.gridColumn9.Name = "gridColumn9";
-            this.gridColumn9.OptionsEditForm.StartNewRow = true;
+            this.gridColumn9.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn9.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ShCtn", "{0:n0}")});
             this.gridColumn9.Visible = true;
@@ -1030,6 +1060,7 @@
             this.gridColumn11.Caption = "STDPACK";
             this.gridColumn11.FieldName = "StdCtn";
             this.gridColumn11.Name = "gridColumn11";
+            this.gridColumn11.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             // 
             // gridColumn12
             // 
@@ -1048,6 +1079,7 @@
             this.gridColumn13.Caption = "STATUS";
             this.gridColumn13.FieldName = "Status";
             this.gridColumn13.Name = "gridColumn13";
+            this.gridColumn13.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn13.Visible = true;
             this.gridColumn13.VisibleIndex = 10;
             this.gridColumn13.Width = 124;
@@ -1059,6 +1091,8 @@
             this.gridColumn14.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
             this.gridColumn14.FieldName = "PartRmCtn";
             this.gridColumn14.Name = "gridColumn14";
+            this.gridColumn14.OptionsColumn.AllowEdit = false;
+            this.gridColumn14.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn14.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PartRmCtn", "{0:n0}")});
             this.gridColumn14.Visible = true;
@@ -1130,6 +1164,7 @@
             this.ppMenu.ItemLinks.Add(this.bbiCancelOrder);
             this.ppMenu.ItemLinks.Add(this.bbiSetMultiLot, true);
             this.ppMenu.ItemLinks.Add(this.bbiSplitPart);
+            this.ppMenu.ItemLinks.Add(this.bbiAddShorting, true);
             this.ppMenu.ItemLinks.Add(this.bbiRefresh, true);
             this.ppMenu.Name = "ppMenu";
             this.ppMenu.Ribbon = this.ribbonControl;
@@ -1149,6 +1184,7 @@
             this.Ribbon = this.ribbonControl;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.StatusBar = this.ribbonStatusBar;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.InvoiceDetailForm_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);
@@ -1278,5 +1314,7 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem1;
         private DevExpress.XtraBars.BarButtonItem bbiReviseOrder;
         private DevExpress.XtraBars.BarButtonItem bbiCancelOrder;
+        private DevExpress.XtraBars.BarButtonItem bbiConfirmShort;
+        private DevExpress.XtraBars.BarButtonItem bbiAddShorting;
     }
 }

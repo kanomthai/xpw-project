@@ -198,6 +198,10 @@
     <None Include="Resources\close_32x32.png" />
     <None Include="Resources\deletelist_16x16.png" />
     <None Include="Resources\deletelist_32x32.png" />
+    <None Include="Resources\apply_16x16.png" />
+    <None Include="Resources\apply_32x32.png" />
+    <None Include="Resources\apply_16x161.png" />
+    <None Include="Resources\apply_32x321.png" />
     <Content Include="Templates\CurrentInvoiceControl.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

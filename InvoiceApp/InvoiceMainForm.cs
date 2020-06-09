@@ -1,6 +1,7 @@
 ﻿using BookingApp;
 using DevExpress.LookAndFeel;
 using DevExpress.XtraBars;
+using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
 using InvoiceApp.Properties;
 using OrderApp;
@@ -21,9 +22,9 @@ namespace InvoiceApp
     {
         bool stload = true;
         bool loadinv = false;
-        string fileGridInvoiceName = $"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentInvoiceControl.xml";
-        string fileGridOnWeek = $"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentOnWeek.xml";
-        string fileGridForword = $"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentNextWeek.xml";
+        string fileGridInvoiceName = $"{AppDomain.CurrentDomain.BaseDirectory}Templates\\invoice_controller.xml";
+        string fileGridOnWeek = $"{AppDomain.CurrentDomain.BaseDirectory}Templates\\invoice_onweek_controller.xml";
+        string fileGridForword = $"{AppDomain.CurrentDomain.BaseDirectory}Templates\\invoice_nextweek_controller.xml";
         int itick = 0;
         public InvoiceMainForm()
         {
@@ -238,6 +239,11 @@ namespace InvoiceApp
                 List<InvoiceData> obj = gridControl.DataSource as List<InvoiceData>;
                 InvoiceDetailForm frm = new InvoiceDetailForm(obj[i]);
                 frm.ShowDialog();
+                if (bbiAllWeek.Checked != true)
+                {
+                    Thread th = new Thread(ReloadGridControl);
+                    th.Start();
+                }
             }
             catch (Exception)
             {
@@ -369,15 +375,29 @@ namespace InvoiceApp
 
         private void InvoiceMainForm_Load(object sender, EventArgs e)
         {
-            //SkinHelper.InitSkinGallery(skinPaletteRibbonGalleryBarItem1);
-            //UserLookAndFeel.Default.SkinName = Settings.Default["ApplicationSkinName"].ToString();
             if (Settings.Default.ApplicationSkinName.ToString().Length > 0)
             {
                 UserLookAndFeel.Default.SetSkinStyle(Settings.Default.ApplicationSkinName.ToString());
             }
-            gridView.RestoreLayoutFromXml(fileGridInvoiceName);
-            gridWeekView.RestoreLayoutFromXml(fileGridOnWeek);
-            gridForwardView.RestoreLayoutFromXml(fileGridForword);
+            try
+            {
+                gridView.RestoreLayoutFromXml(fileGridInvoiceName);
+                gridWeekView.RestoreLayoutFromXml(fileGridOnWeek);
+                gridForwardView.RestoreLayoutFromXml(fileGridForword);
+            }
+            catch (Exception)
+            {
+                try
+                {
+                    gridView.RestoreLayoutFromXml($"{AppDomain.CurrentDomain.BaseDirectory}Configures\\xpw-templates\\invoice_controller.xml");
+                    gridWeekView.RestoreLayoutFromXml($"{AppDomain.CurrentDomain.BaseDirectory}Configures\\xpw-templates\\invoice_onweek_controller.xml");
+                    gridForwardView.RestoreLayoutFromXml($"{AppDomain.CurrentDomain.BaseDirectory}Configures\\xpw-templates\\invoice_nextweek_controller.xml");
+                }
+                catch (Exception ex)
+                {
+                    XtraMessageBox.Show(ex.Message, "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
             loadinv = true;
             AfterFormLoad();
             timer1.Start();
@@ -419,9 +439,17 @@ namespace InvoiceApp
 
         private void bbiRestoreLayOut_ItemClick(object sender, ItemClickEventArgs e)
         {
-            gridView.RestoreLayoutFromXml($"{AppDomain.CurrentDomain.BaseDirectory}Templates\\invoicecontrollayout.xml");
-            gridWeekView.RestoreLayoutFromXml($"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentOnWeekBnk.xml");
-            gridForwardView.RestoreLayoutFromXml($"{AppDomain.CurrentDomain.BaseDirectory}Templates\\CurrentNextWeekBnk.xml");
+            try
+            {
+                new GreeterFunction().RestoreTemplate();
+                gridView.RestoreLayoutFromXml($"{AppDomain.CurrentDomain.BaseDirectory}Configures\\xpw-templates\\invoice_controller.xml");
+                gridWeekView.RestoreLayoutFromXml($"{AppDomain.CurrentDomain.BaseDirectory}Configures\\xpw-templates\\invoice_onweek_controller.xml");
+                gridForwardView.RestoreLayoutFromXml($"{AppDomain.CurrentDomain.BaseDirectory}Configures\\xpw-templates\\invoice_nextweek_controller.xml");
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message, "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void timer1_Tick(object sender, EventArgs e)

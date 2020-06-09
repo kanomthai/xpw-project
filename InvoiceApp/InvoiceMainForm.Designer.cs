@@ -191,7 +191,7 @@
             this.repositoryItemDateEdit1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.OfficeUniversal;
             this.ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
-            this.ribbonControl.Size = new System.Drawing.Size(1755, 93);
+            this.ribbonControl.Size = new System.Drawing.Size(1623, 93);
             this.ribbonControl.StatusBar = this.ribbonStatusBar;
             this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
@@ -446,7 +446,7 @@
             this.ribbonStatusBar.Location = new System.Drawing.Point(0, 790);
             this.ribbonStatusBar.Name = "ribbonStatusBar";
             this.ribbonStatusBar.Ribbon = this.ribbonControl;
-            this.ribbonStatusBar.Size = new System.Drawing.Size(1755, 31);
+            this.ribbonStatusBar.Size = new System.Drawing.Size(1623, 31);
             // 
             // layoutControl1
             // 
@@ -456,16 +456,16 @@
             this.layoutControl1.Location = new System.Drawing.Point(0, 93);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.Root = this.Root;
-            this.layoutControl1.Size = new System.Drawing.Size(1755, 697);
+            this.layoutControl1.Size = new System.Drawing.Size(1623, 697);
             this.layoutControl1.TabIndex = 4;
             this.layoutControl1.Text = "layoutControl1";
             // 
             // groupControl1
             // 
             this.groupControl1.Controls.Add(this.layoutControl2);
-            this.groupControl1.Location = new System.Drawing.Point(1301, 12);
+            this.groupControl1.Location = new System.Drawing.Point(1240, 12);
             this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(442, 673);
+            this.groupControl1.Size = new System.Drawing.Size(371, 673);
             this.groupControl1.TabIndex = 5;
             this.groupControl1.Text = "Navigator";
             // 
@@ -477,7 +477,7 @@
             this.layoutControl2.Location = new System.Drawing.Point(2, 22);
             this.layoutControl2.Name = "layoutControl2";
             this.layoutControl2.Root = this.layoutControlGroup1;
-            this.layoutControl2.Size = new System.Drawing.Size(438, 649);
+            this.layoutControl2.Size = new System.Drawing.Size(367, 649);
             this.layoutControl2.TabIndex = 0;
             this.layoutControl2.Text = "layoutControl2";
             // 
@@ -486,7 +486,7 @@
             this.groupControlForword.Controls.Add(this.gridForwardControl);
             this.groupControlForword.Location = new System.Drawing.Point(12, 298);
             this.groupControlForword.Name = "groupControlForword";
-            this.groupControlForword.Size = new System.Drawing.Size(414, 339);
+            this.groupControlForword.Size = new System.Drawing.Size(343, 339);
             this.groupControlForword.TabIndex = 5;
             this.groupControlForword.Text = "WEEK ล่วงหน้า(งานสำหรับสัปดาห์หน้า)";
             // 
@@ -498,7 +498,7 @@
             this.gridForwardControl.MainView = this.gridForwardView;
             this.gridForwardControl.MenuManager = this.ribbonControl;
             this.gridForwardControl.Name = "gridForwardControl";
-            this.gridForwardControl.Size = new System.Drawing.Size(410, 315);
+            this.gridForwardControl.Size = new System.Drawing.Size(339, 315);
             this.gridForwardControl.TabIndex = 0;
             this.gridForwardControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridForwardView});
@@ -616,7 +616,7 @@
             this.groupControlWeek.Controls.Add(this.gridWeekControl);
             this.groupControlWeek.Location = new System.Drawing.Point(12, 12);
             this.groupControlWeek.Name = "groupControlWeek";
-            this.groupControlWeek.Size = new System.Drawing.Size(414, 282);
+            this.groupControlWeek.Size = new System.Drawing.Size(343, 282);
             this.groupControlWeek.TabIndex = 4;
             this.groupControlWeek.Text = "WEEK ปัจจุบัน(งานที่จะต้องโหลดขึ้นตู้)";
             // 
@@ -628,7 +628,7 @@
             this.gridWeekControl.MainView = this.gridWeekView;
             this.gridWeekControl.MenuManager = this.ribbonControl;
             this.gridWeekControl.Name = "gridWeekControl";
-            this.gridWeekControl.Size = new System.Drawing.Size(410, 258);
+            this.gridWeekControl.Size = new System.Drawing.Size(339, 258);
             this.gridWeekControl.TabIndex = 0;
             this.gridWeekControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridWeekView});
@@ -751,7 +751,7 @@
             this.layoutControlItem3,
             this.layoutControlItem4});
             this.layoutControlGroup1.Name = "layoutControlGroup1";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(438, 649);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(367, 649);
             this.layoutControlGroup1.TextVisible = false;
             // 
             // layoutControlItem3
@@ -759,7 +759,7 @@
             this.layoutControlItem3.Control = this.groupControlWeek;
             this.layoutControlItem3.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(418, 286);
+            this.layoutControlItem3.Size = new System.Drawing.Size(347, 286);
             this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem3.TextVisible = false;
             // 
@@ -768,7 +768,7 @@
             this.layoutControlItem4.Control = this.groupControlForword;
             this.layoutControlItem4.Location = new System.Drawing.Point(0, 286);
             this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(418, 343);
+            this.layoutControlItem4.Size = new System.Drawing.Size(347, 343);
             this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem4.TextVisible = false;
             // 
@@ -779,7 +779,7 @@
             this.gridControl.MainView = this.gridView;
             this.gridControl.MenuManager = this.ribbonControl;
             this.gridControl.Name = "gridControl";
-            this.gridControl.Size = new System.Drawing.Size(1285, 673);
+            this.gridControl.Size = new System.Drawing.Size(1224, 673);
             this.gridControl.TabIndex = 4;
             this.gridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -844,7 +844,7 @@
             this.gridBand1.Columns.Add(this.gridColumn8);
             this.gridBand1.Name = "gridBand1";
             this.gridBand1.VisibleIndex = 0;
-            this.gridBand1.Width = 501;
+            this.gridBand1.Width = 487;
             // 
             // gridColumn1
             // 
@@ -855,7 +855,7 @@
             this.gridColumn1.FieldName = "Id";
             this.gridColumn1.Name = "gridColumn1";
             this.gridColumn1.Visible = true;
-            this.gridColumn1.Width = 48;
+            this.gridColumn1.Width = 40;
             // 
             // gridColumn2
             // 
@@ -863,7 +863,7 @@
             this.gridColumn2.FieldName = "Factory";
             this.gridColumn2.Name = "gridColumn2";
             this.gridColumn2.Visible = true;
-            this.gridColumn2.Width = 47;
+            this.gridColumn2.Width = 39;
             // 
             // gridColumn3
             // 
@@ -873,7 +873,7 @@
             this.gridColumn3.FieldName = "Zname";
             this.gridColumn3.Name = "gridColumn3";
             this.gridColumn3.Visible = true;
-            this.gridColumn3.Width = 55;
+            this.gridColumn3.Width = 47;
             // 
             // gridColumn4
             // 
@@ -883,7 +883,7 @@
             this.gridColumn4.FieldName = "Etddte";
             this.gridColumn4.Name = "gridColumn4";
             this.gridColumn4.Visible = true;
-            this.gridColumn4.Width = 98;
+            this.gridColumn4.Width = 85;
             // 
             // gridColumn5
             // 
@@ -898,7 +898,7 @@
             this.gridColumn6.FieldName = "Bishpc";
             this.gridColumn6.Name = "gridColumn6";
             this.gridColumn6.Visible = true;
-            this.gridColumn6.Width = 56;
+            this.gridColumn6.Width = 47;
             // 
             // gridColumn7
             // 
@@ -908,7 +908,7 @@
             this.gridColumn7.FieldName = "Custname";
             this.gridColumn7.Name = "gridColumn7";
             this.gridColumn7.Visible = true;
-            this.gridColumn7.Width = 114;
+            this.gridColumn7.Width = 181;
             // 
             // gridColumn8
             // 
@@ -916,7 +916,7 @@
             this.gridColumn8.FieldName = "Ship";
             this.gridColumn8.Name = "gridColumn8";
             this.gridColumn8.Visible = true;
-            this.gridColumn8.Width = 83;
+            this.gridColumn8.Width = 48;
             // 
             // gridBand4
             // 
@@ -931,7 +931,7 @@
             this.gridBand4.Columns.Add(this.gridColumn17);
             this.gridBand4.Name = "gridBand4";
             this.gridBand4.VisibleIndex = 1;
-            this.gridBand4.Width = 410;
+            this.gridBand4.Width = 386;
             // 
             // gridColumn9
             // 
@@ -943,7 +943,7 @@
             this.gridColumn9.FieldName = "Invoice";
             this.gridColumn9.Name = "gridColumn9";
             this.gridColumn9.Visible = true;
-            this.gridColumn9.Width = 148;
+            this.gridColumn9.Width = 163;
             // 
             // gridColumn10
             // 
@@ -958,7 +958,7 @@
             this.gridColumn11.FieldName = "Ord";
             this.gridColumn11.Name = "gridColumn11";
             this.gridColumn11.Visible = true;
-            this.gridColumn11.Width = 61;
+            this.gridColumn11.Width = 65;
             // 
             // gridColumn12
             // 
@@ -966,7 +966,7 @@
             this.gridColumn12.FieldName = "Itm";
             this.gridColumn12.Name = "gridColumn12";
             this.gridColumn12.Visible = true;
-            this.gridColumn12.Width = 70;
+            this.gridColumn12.Width = 50;
             // 
             // gridColumn13
             // 
@@ -974,7 +974,7 @@
             this.gridColumn13.FieldName = "Ctn";
             this.gridColumn13.Name = "gridColumn13";
             this.gridColumn13.Visible = true;
-            this.gridColumn13.Width = 63;
+            this.gridColumn13.Width = 50;
             // 
             // gridColumn17
             // 
@@ -986,7 +986,7 @@
             this.gridColumn17.FieldName = "Pl";
             this.gridColumn17.Name = "gridColumn17";
             this.gridColumn17.Visible = true;
-            this.gridColumn17.Width = 68;
+            this.gridColumn17.Width = 58;
             // 
             // gridBand2
             // 
@@ -994,13 +994,13 @@
             this.gridBand2.AppearanceHeader.Options.UseBackColor = true;
             this.gridBand2.AppearanceHeader.Options.UseTextOptions = true;
             this.gridBand2.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridBand2.Caption = "PREPARE CATON";
+            this.gridBand2.Caption = "PREPARE (CTN)";
             this.gridBand2.Columns.Add(this.bandedGridColumn3);
             this.gridBand2.Columns.Add(this.gridColumn16);
             this.gridBand2.Columns.Add(this.gridColumn15);
             this.gridBand2.Name = "gridBand2";
             this.gridBand2.VisibleIndex = 2;
-            this.gridBand2.Width = 152;
+            this.gridBand2.Width = 118;
             // 
             // bandedGridColumn3
             // 
@@ -1013,7 +1013,7 @@
             this.bandedGridColumn3.Name = "bandedGridColumn3";
             this.bandedGridColumn3.ToolTip = "งานตัด Short";
             this.bandedGridColumn3.Visible = true;
-            this.bandedGridColumn3.Width = 72;
+            this.bandedGridColumn3.Width = 57;
             // 
             // gridColumn16
             // 
@@ -1025,11 +1025,11 @@
             this.gridColumn16.AppearanceCell.Options.UseForeColor = true;
             this.gridColumn16.AppearanceHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
             this.gridColumn16.AppearanceHeader.Options.UseBackColor = true;
-            this.gridColumn16.Caption = "ค้างจัด(CTN)";
+            this.gridColumn16.Caption = "ค้างจัด";
             this.gridColumn16.FieldName = "RmCtn";
             this.gridColumn16.Name = "gridColumn16";
             this.gridColumn16.Visible = true;
-            this.gridColumn16.Width = 80;
+            this.gridColumn16.Width = 61;
             // 
             // gridColumn15
             // 
@@ -1043,13 +1043,13 @@
             this.gridBand3.AppearanceHeader.Options.UseBackColor = true;
             this.gridBand3.AppearanceHeader.Options.UseTextOptions = true;
             this.gridBand3.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
-            this.gridBand3.Caption = "LOADING CONTAINER";
+            this.gridBand3.Caption = "LOAD CONTAINER(PL)";
             this.gridBand3.Columns.Add(this.gridColumn14);
             this.gridBand3.Columns.Add(this.bandedGridColumn2);
             this.gridBand3.Columns.Add(this.gridColumn18);
             this.gridBand3.Name = "gridBand3";
             this.gridBand3.VisibleIndex = 3;
-            this.gridBand3.Width = 204;
+            this.gridBand3.Width = 278;
             // 
             // gridColumn14
             // 
@@ -1061,7 +1061,7 @@
             this.gridColumn14.FieldName = "Plno";
             this.gridColumn14.Name = "gridColumn14";
             this.gridColumn14.Visible = true;
-            this.gridColumn14.Width = 69;
+            this.gridColumn14.Width = 55;
             // 
             // bandedGridColumn2
             // 
@@ -1077,7 +1077,7 @@
             this.bandedGridColumn2.FieldName = "RmCon";
             this.bandedGridColumn2.Name = "bandedGridColumn2";
             this.bandedGridColumn2.Visible = true;
-            this.bandedGridColumn2.Width = 58;
+            this.bandedGridColumn2.Width = 55;
             // 
             // gridColumn18
             // 
@@ -1091,7 +1091,7 @@
             this.gridColumn18.FieldName = "Status";
             this.gridColumn18.Name = "gridColumn18";
             this.gridColumn18.Visible = true;
-            this.gridColumn18.Width = 77;
+            this.gridColumn18.Width = 168;
             // 
             // gridBand5
             // 
@@ -1123,7 +1123,7 @@
             this.layoutControlItem1,
             this.layoutControlItem2});
             this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(1755, 697);
+            this.Root.Size = new System.Drawing.Size(1623, 697);
             this.Root.TextVisible = false;
             // 
             // layoutControlItem1
@@ -1131,16 +1131,16 @@
             this.layoutControlItem1.Control = this.gridControl;
             this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(1289, 677);
+            this.layoutControlItem1.Size = new System.Drawing.Size(1228, 677);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
             // layoutControlItem2
             // 
             this.layoutControlItem2.Control = this.groupControl1;
-            this.layoutControlItem2.Location = new System.Drawing.Point(1289, 0);
+            this.layoutControlItem2.Location = new System.Drawing.Point(1228, 0);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(446, 677);
+            this.layoutControlItem2.Size = new System.Drawing.Size(375, 677);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
             // 
@@ -1164,7 +1164,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1755, 821);
+            this.ClientSize = new System.Drawing.Size(1623, 821);
             this.Controls.Add(this.layoutControl1);
             this.Controls.Add(this.ribbonStatusBar);
             this.Controls.Add(this.ribbonControl);

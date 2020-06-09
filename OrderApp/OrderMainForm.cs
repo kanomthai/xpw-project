@@ -115,6 +115,7 @@ namespace OrderApp
                             e.DisplayText = "Invoice";
                             break;
                         case "3":
+                            e.DisplayText = "Shorted";
                             break;
                         case "4":
                             break;

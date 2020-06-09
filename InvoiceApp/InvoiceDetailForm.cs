@@ -22,6 +22,7 @@ namespace InvoiceApp
     {
         InvoiceData ob;
         List<InvoiceBodyData> spobj = new List<InvoiceBodyData>();
+        List<InvoiceBodyData> shlist = new List<InvoiceBodyData>();
         public InvoiceDetailForm(InvoiceData ord)
         {
             InitializeComponent();
@@ -48,12 +49,13 @@ namespace InvoiceApp
             bbiEditOrder.Caption = StaticFunctionData.JoblistEditOrder;
             bbiReviseOrder.Caption = StaticFunctionData.JoblistOrderHold;
             bbiCancelOrder.Caption = StaticFunctionData.JoblistOrderCancel;
-
+            bbiAddShorting.Caption = StaticFunctionData.JoblistPartShort;
+            bbiConfirmShort.Caption = StaticFunctionData.JoblistOrderShorting;
 
             bbiFactory.EditValue = ob.Factory;
             bbiShip.EditValue = ob.Ship;
             bbiZone.EditValue = ob.Zname;
-            bbiOrderBy.EditValue = ob.Potype;
+            bbiOrderBy.EditValue = ob.Ord;
             bbiInv.EditValue = ob.Invoice;
             bbiRefInv.EditValue = ob.RefInv;
             bbiAff.EditValue = ob.Affcode;
@@ -63,11 +65,16 @@ namespace InvoiceApp
             bbiEtd.Enabled = false;
             bbiShip.Enabled = false;
             bbiNewOrder.Enabled = false;
+            bbiConfirmShort.Enabled = false;
             bbiSplitInvoice.Caption = "";
             List<InvoiceBodyData> obj = new InvoiceControllers().GetInvoiceBody(ob);
             gridControl.DataSource = obj;
             bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
             SplashScreenManager.CloseDefaultWaitForm();
+            if (shlist.Count > 0)
+            {
+                bbiConfirmShort.Enabled = true;
+            }
         }
 
         void bbiPrintPreview_ItemClick(object sender, ItemClickEventArgs e)
@@ -77,6 +84,8 @@ namespace InvoiceApp
 
         private void bbiRefresh_ItemClick(object sender, ItemClickEventArgs e)
         {
+            shlist.Clear();
+            spobj.Clear();
             ReloadData();
         }
 
@@ -214,7 +223,7 @@ namespace InvoiceApp
 
         private void gridView_CustomColumnDisplayText(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs e)
         {
-            gridView.BeginUpdate();
+            //gridView.BeginUpdate();
             switch (e.Column.FieldName.ToString())
             {
                 case "BalQty":
@@ -271,7 +280,7 @@ namespace InvoiceApp
                 default:
                     break;
             }
-            gridView.EndUpdate();
+            //gridView.EndUpdate();
         }
 
         private void bbiShowLotDetail_ItemClick(object sender, ItemClickEventArgs e)
@@ -374,6 +383,165 @@ namespace InvoiceApp
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+            }
+        }
+
+        private void gridView_CellValueChanged(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+            if (shlist.Count > 0)
+            {
+                bbiConfirmShort.Enabled = true;
+            }
+        }
+
+        private void gridView_CellValueChanging(object sender, DevExpress.XtraGrid.Views.Base.CellValueChangedEventArgs e)
+        {
+            switch (e.Column.FieldName.ToString())
+            {
+                case "ShCtn":
+                    var remctn = gridView.GetFocusedRowCellValue("RemCtn").ToString();
+                    Console.WriteLine(e.Value.ToString());
+                    if (int.Parse(e.Value.ToString()) > int.Parse(remctn))
+                    {
+                        XtraMessageBox.Show("กรุณาระบุจำนวนให้น้อยกว่าหรือเท่ากับ REMAIN", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        gridView.SetRowCellValue(e.RowHandle, "ShCtn", 0);
+                        return;
+                    }
+                    else if (int.Parse(e.Value.ToString()) <= 0)
+                    {
+                        XtraMessageBox.Show("ระบุจำนวนให้ถูกต้องด้วย", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        gridView.SetRowCellValue(e.RowHandle, "ShCtn", 0);
+                        return;
+                    }
+                    else
+                    {
+                        //add to list
+                        DialogResult r = XtraMessageBox.Show("ยืนยันคำสั่งตัด Short", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        if (r == DialogResult.OK)
+                        {
+                            List<InvoiceBodyData> o = gridControl.DataSource as List<InvoiceBodyData>;
+                            o[e.RowHandle].ShCtn = int.Parse(e.Value.ToString());
+                            shlist.Add(o[e.RowHandle]);
+                        }
+                    }
+                    break;
+                default:
+                    break;
+            }
+            if (shlist.Count > 0)
+            {
+                bbiConfirmShort.Enabled = true;
+            }
+        }
+
+        bool SaveShorting()
+        {
+            bool x = false;
+            SplashScreenManager.ShowDefaultWaitForm();
+            try
+            {
+                int i = 0;
+                while (i < shlist.Count)
+                {
+                    var ob = shlist[i];
+                    //update issbody
+                    string refinv = ob.RefInv;
+                    string orderno = ob.OrderNo;
+                    string partno = ob.PartNo;
+                    int shctn = ob.ShCtn;
+                    //update body 
+                    int tctn = ob.BalCtn - ob.ShCtn;
+                    while (tctn < ob.BalCtn)
+                    {
+                        tctn++;
+                        string updetail = $"UPDATE TXP_ISSPACKDETAIL d SET d.ISSUINGSTATUS=1,d.UPDDTE=SYSDATE WHERE d.ISSUINGKEY = '{refinv}' AND d.PONO = '{orderno}' AND d.PARTNO = '{partno}' AND d.ITEM = '{tctn}'";
+                        new ConnDB().ExcuteSQL(updetail);
+                    }
+                    string upbody = $"UPDATE TXP_ISSTRANSBODY b SET b.SHORDERQTY={shctn}*b.STDPACK,b.UPDDTE = sysdate WHERE b.ISSUINGKEY = '{refinv}' AND b.PONO = '{orderno}' AND b.PARTNO = '{partno}'";
+                    string uporder = $"UPDATE TXP_ORDERPLAN p SET p.CURINV='',p.BALQTY={shctn}*p.BISTDP,p.ORDERSTATUS=3,p.UPDDTE=SYSDATE WHERE p.CURINV = '{refinv}' AND p.ORDERID = '{orderno}' AND p.PARTNO = '{partno}'";
+                    new ConnDB().ExcuteSQL(upbody);
+                    new ConnDB().ExcuteSQL(uporder);
+                    i++;
+                }
+                shlist.Clear();
+                x = true;
+            }
+            catch (Exception)
+            {
+               x = false;
+            }
+            SplashScreenManager.CloseDefaultWaitForm();
+            return x;
+        }
+
+        private void bbiConfirmShort_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            if (SaveShorting())
+            {
+                DialogResult r = XtraMessageBox.Show("บันทึกข้อมูลเสร็จแล้ว", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                if (r == DialogResult.OK)
+                {
+                    //save split order
+                }
+            }
+        }
+
+        private void InvoiceDetailForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (shlist.Count > 0)
+            {
+                DialogResult r = XtraMessageBox.Show("คุณยังไม่ได้บันทึกข้อมูลตัด Short เลย\nคุณต้องการที่จะบันทึกข้อมูลนี้ไหม", "XPW Alert!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (r == DialogResult.Yes)
+                {
+                    //save short
+                    SaveShorting();
+                }
+            }
+            else if (spobj.Count > 0)
+            {
+                DialogResult r = XtraMessageBox.Show("คุณยังไม่ได้บันทึกข้อมูล Split Order\nคุณต้องการที่จะบันทึกข้อมูลนี้ก่อนไหม", "XPW Alert!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (r == DialogResult.Yes)
+                {
+                    //save split order
+                }
+            }
+        }
+
+        private void bbiAddShorting_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var result = XtraInputBox.Show("ระบุจำนวนที่ต้องการตัด Short", "Comfirm Shorting", "0");
+            try
+            {
+                var remctn = gridView.GetFocusedRowCellValue("RemCtn").ToString();
+                var oldctn = gridView.GetFocusedRowCellValue("ShCtn").ToString();
+                int shctn = int.Parse(result) + int.Parse(oldctn);
+                if (shctn > int.Parse(remctn))
+                {
+                    XtraMessageBox.Show("กรุณาระบุจำนวนให้น้อยกว่าหรือเท่ากับ REMAIN", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else if (shctn <= 0)
+                {
+                    XtraMessageBox.Show("ระบุจำนวนให้ถูกต้องด้วย", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                else
+                {
+                    InvoiceBodyData o = gridView.GetFocusedRow() as InvoiceBodyData;
+                    o.ShCtn = shctn;
+                    shlist.Add(o);
+                    gridView.SetFocusedRowCellValue("RemCtn", (int.Parse(remctn) - shctn));
+                    gridView.RefreshData();
+                }
+            }
+            catch (Exception)
+            {
+                XtraMessageBox.Show("ระบุจำนวนให้ถูกต้องด้วย", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (shlist.Count > 0)
+            {
+                bbiConfirmShort.Enabled = true;
             }
         }
     }

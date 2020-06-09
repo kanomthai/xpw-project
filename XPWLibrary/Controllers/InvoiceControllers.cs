@@ -12,78 +12,14 @@ namespace XPWLibrary.Controllers
 {
     public class InvoiceControllers
     {
-        public List<InvoiceData> GetInvoiceData(DateTime etd, string zname)
+        List<InvoiceData> AppendInvoiceDetail(string sql)
         {
-            string etddate = $"t.ETDDTE = to_date('{etd.ToString("dd/MM/yyyy")}', 'dd/MM/yyyy')";
-            //if (StaticFunctionData.AllWeek)
-            //{
-            //    etddate = $"t.ETDDTE BETWEEN (TRUNC(to_date('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy'), 'DY') + 0) AND (TRUNC(to_date('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy'), 'DY') + 7)";
-            //}
-            string sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.ZNAME = '{zname}' AND t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate}";
-            if (zname == "AIR")
-            {
-                sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.ZNAME = 'CK2' AND t.SHIPTYPE = 'A' AND t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate}";
-            }
-            else if (zname == "TRUCK")
-            {
-                sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.ZNAME = 'CK2' AND t.SHIPTYPE = 'T' AND t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate}";
-            }
-            Console.WriteLine(sql);
             List<InvoiceData> list = new List<InvoiceData>();
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow r in dr.Tables[0].Rows)
             {
                 list.Add(new InvoiceData()
                 {
-                    Id = list.Count + 1,
-                    Factory = r["factory"].ToString(),
-                    Zname = r["zname"].ToString(),
-                    Etddte = DateTime.Parse(r["etddte"].ToString()),
-                    Affcode = r["affcode"].ToString(),
-                    Bishpc = r["bishpc"].ToString(),
-                    Custname = r["custname"].ToString(),
-                    Ship = r["shiptype"].ToString(),
-                    RefInv = r["issuingkey"].ToString(),
-                    Invoice = r["refinvoice"].ToString(),
-                    Zoneid = int.Parse(r["zoneid"].ToString()),
-                    Ord = r["ord"].ToString(),
-                    Potype = r["potype"].ToString(),
-                    Itm = int.Parse(r["itm"].ToString()),
-                    Ctn = int.Parse(r["ctn"].ToString()),
-                    Issue = int.Parse(r["issue"].ToString()),
-                    RmCtn = int.Parse(r["ctn"].ToString()) - int.Parse(r["issue"].ToString()),
-                    Pl = int.Parse(r["pl"].ToString()),
-                    Plno = int.Parse(r["plno"].ToString()),
-                    RmCon = int.Parse(r["pl"].ToString()) - int.Parse(r["plno"].ToString()),
-                    ShCtn = int.Parse(r["shctn"].ToString()),
-                    Conn = int.Parse(r["conn"].ToString()),
-                    Status = int.Parse(r["status"].ToString()),
-                    Upddte = DateTime.Parse(r["upddte"].ToString()),
-                });
-            }
-            return list;
-        }
-        public List<InvoiceData> GetInvoiceData(DateTime etd)
-        {
-            string etddate = $"t.ETDDTE = to_date('{etd.ToString("dd/MM/yyyy")}', 'dd/MM/yyyy')";
-            if (StaticFunctionData.AllWeek)
-            {
-                etddate = $"t.ETDDTE BETWEEN (TRUNC(to_date('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy'), 'DY') + 0) AND (TRUNC(to_date('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy'), 'DY') + 7)";
-            }
-            string sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate}\n" +
-                $"ORDER BY t.ZNAME,t.AFFCODE,t.CUSTNAME,t.BISHPC,t.SHIPTYPE,t.ORD";
-            Console.WriteLine(sql);
-            List<InvoiceData> list = new List<InvoiceData>();
-            DataSet dr = new ConnDB().GetFill(sql);
-            foreach (DataRow r in dr.Tables[0].Rows)
-            {
-                int sh = (int.Parse(r["ctn"].ToString()) - int.Parse(r["issue"].ToString())) - int.Parse(r["shctn"].ToString());
-                if (sh < 0)
-                {
-                    sh = 0;
-                }
-                list.Add(new InvoiceData()
-                { 
                     Id = list.Count + 1,
                     Factory = r["factory"].ToString(),
                     Zname = r["zname"].ToString(),
@@ -107,12 +43,61 @@ namespace XPWLibrary.Controllers
                     Issue = int.Parse(r["issue"].ToString()),
                     RmCtn = int.Parse(r["waitctn"].ToString()),
                     Pl = int.Parse(r["pl"].ToString()),
-                    Plno = int.Parse(r["plno"].ToString()),
+                    Plno = int.Parse(r["prepl"].ToString()),
                     RmCon = int.Parse(r["waitpl"].ToString()),
                     ShCtn = int.Parse(r["shctn"].ToString()),
                     Conn = int.Parse(r["conn"].ToString()),
                     Status = int.Parse(r["status"].ToString()),
                     Upddte = DateTime.Parse(r["upddte"].ToString()),
+                });
+            }
+            return list;
+        }
+        public List<InvoiceData> GetInvoiceData(DateTime etd, string zname)
+        {
+            string etddate = $"t.ETDDTE = to_date('{etd.ToString("dd/MM/yyyy")}', 'dd/MM/yyyy')";
+            string sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.ZNAME = '{zname}' AND t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate}";
+            if (zname == "AIR")
+            {
+                sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.ZNAME = 'CK2' AND t.SHIPTYPE = 'A' AND t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate}";
+            }
+            else if (zname == "TRUCK")
+            {
+                sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.ZNAME = 'CK2' AND t.SHIPTYPE = 'T' AND t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate}";
+            }
+            Console.WriteLine(sql);
+            return AppendInvoiceDetail(sql);
+        }
+
+        public List<InvoiceData> GetInvoiceData(DateTime etd)
+        {
+            string etddate = $"t.ETDDTE = to_date('{etd.ToString("dd/MM/yyyy")}', 'dd/MM/yyyy')";
+            if (StaticFunctionData.AllWeek)
+            {
+                etddate = $"t.ETDDTE BETWEEN (TRUNC(to_date('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy'), 'DY') + 0) AND (TRUNC(to_date('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy'), 'DY') + 7)";
+            }
+            string sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate}\n" +
+                $"ORDER BY t.ZNAME,t.AFFCODE,t.CUSTNAME,t.BISHPC,t.SHIPTYPE,t.ORD";
+            Console.WriteLine(sql);
+            return AppendInvoiceDetail(sql);
+        }
+
+        BindingList<InvoiceMasterData> AppendListWeek(string sql)
+        {
+            DataSet dr = new ConnDB().GetFill(sql);
+            BindingList<InvoiceMasterData> list = new BindingList<InvoiceMasterData>();
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                list.Add(new InvoiceMasterData()
+                {
+                    Id = list.Count + 1,
+                    Etd = DateTime.Parse(r["etd"].ToString()),
+                    Ck2 = int.Parse(r["ck2"].ToString()),
+                    Ness = int.Parse(r["ness"].ToString()),
+                    Icam = int.Parse(r["icam"].ToString()),
+                    Ck1 = int.Parse(r["ck1"].ToString()),
+                    Truck = int.Parse(r["truck"].ToString()),
+                    Air = int.Parse(r["air"].ToString()),
                 });
             }
             return list;
@@ -156,23 +141,7 @@ namespace XPWLibrary.Controllers
                         "order by PP.ETD");
             }
             Console.WriteLine(sql);
-            DataSet dr = new ConnDB().GetFill(sql);
-            BindingList<InvoiceMasterData> list = new BindingList<InvoiceMasterData>();
-            foreach (DataRow r in dr.Tables[0].Rows)
-            {
-                list.Add(new InvoiceMasterData()
-                {
-                    Id = list.Count + 1,
-                    Etd = DateTime.Parse(r["etd"].ToString()),
-                    Ck2 = int.Parse(r["ck2"].ToString()),
-                    Ness = int.Parse(r["ness"].ToString()),
-                    Icam = int.Parse(r["icam"].ToString()),
-                    Ck1 = int.Parse(r["ck1"].ToString()),
-                    Truck = int.Parse(r["truck"].ToString()),
-                    Air = int.Parse(r["air"].ToString()),
-                });
-            }
-            return list;
+            return AppendListWeek(sql);
         }
 
         public BindingList<InvoiceMasterData> GetInvoiceToWeek(DateTime d)
@@ -213,24 +182,7 @@ namespace XPWLibrary.Controllers
                         "order by PP.ETD");
             }
             Console.WriteLine(sql);
-            DataSet dr = new ConnDB().GetFill(sql);
-            BindingList<InvoiceMasterData> list = new BindingList<InvoiceMasterData>();
-            foreach (DataRow r in dr.Tables[0].Rows)
-            {
-                Console.WriteLine(r["etd"].ToString());
-                list.Add(new InvoiceMasterData()
-                {
-                    Id = list.Count + 1,
-                    Etd = DateTime.Parse(r["etd"].ToString()),
-                    Ck2 = int.Parse(r["ck2"].ToString()),
-                    Ness = int.Parse(r["ness"].ToString()),
-                    Icam = int.Parse(r["icam"].ToString()),
-                    Ck1 = int.Parse(r["ck1"].ToString()),
-                    Truck = int.Parse(r["truck"].ToString()),
-                    Air = int.Parse(r["air"].ToString()),
-                });
-            }
-            return list;
+            return AppendListWeek(sql);
         }
 
         public bool CheckInvoiceStatus(string refInv)
