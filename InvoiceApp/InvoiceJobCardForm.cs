@@ -22,9 +22,11 @@ namespace InvoiceApp
         {
             InitializeComponent();
             ob = obj;
+            bbiJobCardOnly.Enabled = true;
             if (StaticFunctionData.Factory == "AW")
             {
                 gridView.OptionsSelection.MultiSelect = false;
+                bbiJobCardOnly.Enabled = false;
             }
             if (all)
             {
@@ -208,7 +210,7 @@ namespace InvoiceApp
                 while (i < x.Count)
                 {
                     FTicketData o = x[i];
-                    if (o.Status < 1)
+                    if (o.Status < StaticFunctionData.StatusFTicket)
                     {
                         if (o.PrintFTicket)
                         {
@@ -257,7 +259,7 @@ namespace InvoiceApp
             if (StaticFunctionData.Factory != "AW")
             {
                 FTicketData f = gridView.GetFocusedRow() as FTicketData;
-                if (f.Status > 0)
+                if (f.Status >= StaticFunctionData.StatusFTicket)
                 {
                     XtraMessageBox.Show("Label นี้ปริ้น/จัดเตรียมไปแล้ว", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     gridView.SetRowCellValue(e.RowHandle, "PrintFTicket", false);
