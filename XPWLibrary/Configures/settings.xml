@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <data>
   <factory>AW</factory>
-  <fticket>POSTEKI300</fticket>
+  <fticket>Microsoft Print to PDF</fticket>
   <cartonprinter>POSTEKI300</cartonprinter>
   <aw_totalpallet>45</aw_totalpallet>
   <aw_palletlimit>17</aw_palletlimit>
