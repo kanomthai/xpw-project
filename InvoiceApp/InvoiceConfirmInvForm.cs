@@ -4,6 +4,7 @@ using DevExpress.XtraSplashScreen;
 using OrderApp;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Windows.Forms;
 using XPWLibrary.Controllers;
 using XPWLibrary.Interfaces;
 using XPWLibrary.Models;
@@ -186,6 +187,24 @@ namespace InvoiceApp
             }
             catch (System.Exception)
             {
+            }
+        }
+
+        private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var plout = gridView.GetFocusedRowCellValue("PlOut");
+            if (plout != null)
+            {
+                DialogResult r = XtraMessageBox.Show("ยืนยันคำสั่ง Reprint Palet", "XPW Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                if (r == DialogResult.OK)
+                {
+                    string sql = $"UPDATE TXP_LOADPALLET l SET l.PLOUTSTS = 0,l.PRINTDATE=sysdate,l.UPDDTE=sysdate WHERE l.PLOUTNO = '{plout}'";
+                    if (new ConnDB().ExcuteSQL(sql))
+                    {
+                        gridView.SetFocusedRowCellValue("PlOut", 1);
+                        XtraMessageBox.Show("อัพเดทข้อมูลเสร็จแล้ว");
+                    }
+                }
             }
         }
     }

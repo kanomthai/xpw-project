@@ -42,6 +42,7 @@
             this.bbiPlDetail = new DevExpress.XtraBars.BarButtonItem();
             this.bbiContainerDetail = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -86,10 +87,12 @@
             this.bbiRebuildPallet,
             this.bbiPlDetail,
             this.bbiContainerDetail,
-            this.barButtonItem3});
+            this.barButtonItem3,
+            this.barButtonItem1});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 25;
+            this.ribbonControl.MaxItemId = 26;
             this.ribbonControl.Name = "ribbonControl";
+            this.ribbonControl.PageHeaderItemLinks.Add(this.barButtonItem1, "RE PRINT PALLET");
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.OfficeUniversal;
@@ -185,6 +188,17 @@
             this.barButtonItem3.Caption = "barButtonItem3";
             this.barButtonItem3.Id = 24;
             this.barButtonItem3.Name = "barButtonItem3";
+            // 
+            // barButtonItem1
+            // 
+            this.barButtonItem1.Caption = "RE-PRINT PALLET";
+            this.barButtonItem1.Id = 25;
+            this.barButtonItem1.ImageOptions.Image = global::InvoiceApp.Properties.Resources.viewsetting_16x16;
+            this.barButtonItem1.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.viewsetting_32x32;
+            this.barButtonItem1.ItemShortcut = new DevExpress.XtraBars.BarShortcut(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift) 
+                | System.Windows.Forms.Keys.R));
+            this.barButtonItem1.Name = "barButtonItem1";
+            this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -447,5 +461,6 @@
         private DevExpress.XtraBars.BarButtonItem bbiPlDetail;
         private DevExpress.XtraBars.BarButtonItem bbiContainerDetail;
         private DevExpress.XtraBars.BarButtonItem barButtonItem3;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
     }
 }
