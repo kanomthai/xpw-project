@@ -327,6 +327,7 @@ namespace XPWLibrary.Controllers
                                     NL_Label.Variables["PREFIX"].SetValue("P01");
                                     NL_Label.PrintSettings.PrinterName = prname;// GetPrinterName(r["factory"].ToString());
                                     NL_Label.PrintSettings.JobName = $"NiceLabel Printing {r[i]["issuingkey"].ToString()}";
+                                    SplashScreenManager.Default.SetWaitFormDescription($"F_Ticket {invno}");
                                     //update detail
                                     new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPACKDETAIL d SET d.ISSUINGSTATUS = '1' WHERE d.FTICKETNO = '{r[i]["fticketno"].ToString()}'");
                                     NL_Label.Print(1);
@@ -348,11 +349,11 @@ namespace XPWLibrary.Controllers
                                     NL_Label.Variables["PREFIX"].SetValue("P01");
                                     NL_Label.PrintSettings.PrinterName = prname;// GetPrinterName(r["factory"].ToString());
                                     NL_Label.PrintSettings.JobName = $"NiceLabel Printing {r[i]["issuingkey"].ToString()}";
+                                    SplashScreenManager.Default.SetWaitFormDescription($"F_Ticket {invno}");
                                     //update detail
                                     new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPACKDETAIL d SET d.ISSUINGSTATUS = '1' WHERE d.FTICKETNO = '{r[i]["fticketno"].ToString()}'");
                                     NL_Label.Print(1);
                                 }
-                                SplashScreenManager.Default.SetWaitFormDescription($"F_Ticket {invno}");
                             }
                             i++;
                         }

@@ -201,9 +201,9 @@ namespace InvoiceApp
         private void bbiJobCardOnly_ItemClick(object sender, ItemClickEventArgs e)
         {
             bool checkinv = new InvoiceControllers().CheckInvoiceStatus(ob.RefInv);
+            SplashScreenManager.ShowDefaultWaitForm();
             if (checkinv)
             {
-                SplashScreenManager.ShowDefaultWaitForm();
                 List<FTicketData> f = gridControl.DataSource as List<FTicketData>;
                 var x = f.OrderByDescending(j => j.PrintFTicket).ToList();
                 int i = 0;
@@ -232,6 +232,13 @@ namespace InvoiceApp
             else
             {
                 XtraMessageBox.Show("กรุณาทำการยืนยัน Invoice ก่อน", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            try
+            {
+                SplashScreenManager.CloseDefaultWaitForm();
+            }
+            catch (Exception)
+            {
             }
         }
 
