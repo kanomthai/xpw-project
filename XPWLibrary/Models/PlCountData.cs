@@ -10,5 +10,6 @@ namespace XPWLibrary.Models
     {
         public string pltype { get; set; }
         public int plcount { get; set; }
+        public int status { get; set; }
     }
 }

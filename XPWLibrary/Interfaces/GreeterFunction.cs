@@ -880,7 +880,7 @@ namespace XPWLibrary.Interfaces
                                 string ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}', '{pltypename}',45,sysdate,sysdate)";
                                 if (plnokey != null)
                                 {
-                                    ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno,containerno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}','{plnokey.PlKey}', '{plnokey.ContNo}', '{pltypename}',45,sysdate,sysdate)";
+                                    ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno,containerno,Pltype,pltotal,ploutsts,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}','{plnokey.PlKey}', '{plnokey.ContNo}', '{pltypename}',45,{plnokey.PlStatus},sysdate,sysdate)";
                                 }
                                 bool xup = new ConnDB().ExcuteSQL(ins_pl);
                                 if (xup)
@@ -905,7 +905,7 @@ namespace XPWLibrary.Interfaces
                                 string ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}', '{pltypename}',{int.Parse(r["seqctn"].ToString())},sysdate,sysdate)";
                                 if (plnokey != null)
                                 {
-                                    ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno, containerno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}','{plnokey.PlKey}', '{plnokey.ContNo}', '{pltypename}',{int.Parse(r["seqctn"].ToString())},sysdate,sysdate)";
+                                    ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno, containerno,Pltype,pltotal,ploutsts,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}','{plnokey.PlKey}', '{plnokey.ContNo}', '{pltypename}',{int.Parse(r["seqctn"].ToString())},{plnokey.PlStatus},sysdate,sysdate)";
                                 }
                                 new ConnDB().ExcuteSQL(ins_pl);
                                 final = pl_total[0];
@@ -962,7 +962,7 @@ namespace XPWLibrary.Interfaces
                         string ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}', '{pltypename}',{tt},sysdate,sysdate)";
                         if (plnokey != null)
                         {
-                            ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno,containerno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}','{plnokey.PlKey}','{plnokey.ContNo}', '{pltypename}',{tt},sysdate,sysdate)";
+                            ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno,containerno,Pltype,pltotal,ploutsts,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}','{plnokey.PlKey}','{plnokey.ContNo}', '{pltypename}',{tt},{plnokey.PlStatus},sysdate,sysdate)";
                         }
                         bool xup = new ConnDB().ExcuteSQL(ins_pl);
                         //bool xup = new ConnDB().ExcuteSQL($"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '1P{(xpl).ToString("D3")}', '{pltypename}',{tt},sysdate,sysdate)");
@@ -981,7 +981,7 @@ namespace XPWLibrary.Interfaces
                         string ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}', 'MIX',{xmix[1]},sysdate,sysdate)";
                         if (plnokey != null)
                         {
-                            ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno,containerno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}','{plnokey.PlKey}','{plnokey.ContNo}', 'MIX',{xmix[1]},sysdate,sysdate)";
+                            ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno,containerno,Pltype,pltotal,ploutsts,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}','{plnokey.PlKey}','{plnokey.ContNo}', 'MIX',{xmix[1]}, {plnokey.PlStatus},sysdate,sysdate)";
                         }
                         bool xup = new ConnDB().ExcuteSQL(ins_pl);
                         //bool xup = new ConnDB().ExcuteSQL($"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '1P{(xpl + 1).ToString("D3")}', 'MIX',{xmix[1]},sysdate,sysdate)");
@@ -1022,7 +1022,7 @@ namespace XPWLibrary.Interfaces
         private BindingList<PlListData> GetPlData(string inv)
         {
             BindingList<PlListData> list = new BindingList<PlListData>();
-            string sql = $"select l.palletno,l.ploutno,l.containerno from txp_isspallet l where l.issuingkey = '{inv}' and l.ploutno is not null";
+            string sql = $"select l.palletno,l.ploutno,l.containerno,CASE WHEN l.PLOUTSTS IS NULL THEN '0' ELSE l.PLOUTSTS END PLOUTSTS from txp_isspallet l where l.issuingkey = '{inv}' and l.ploutno is not null";
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow i in dr.Tables[0].Rows)
             {
@@ -1031,6 +1031,7 @@ namespace XPWLibrary.Interfaces
                     PlNo = i["palletno"].ToString(),
                     PlKey = i["ploutno"].ToString(),
                     ContNo = i["containerno"].ToString(),
+                    PlStatus = int.Parse(i["ploutsts"].ToString()),
                 });
             }
             return list;

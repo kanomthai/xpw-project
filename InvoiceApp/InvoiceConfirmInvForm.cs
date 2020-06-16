@@ -91,7 +91,7 @@ namespace InvoiceApp
 
         private void gridView_CustomColumnDisplayText(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs e)
         {
-            gridView.BeginUpdate();
+            //gridView.BeginUpdate();
             switch (e.Column.FieldName.ToString())
             {
                 case "PlSize":
@@ -110,7 +110,24 @@ namespace InvoiceApp
                     {
                         case "0":
                             e.DisplayText = "NONE";
-                            e.Column.AppearanceCell.ForeColor = Color.Red;
+                            break;
+                        case "1":
+                            e.DisplayText = "Invoice";
+                            break;
+                        case "2":
+                            e.DisplayText = "Prepare";
+                            break;
+                        case "3":
+                            e.DisplayText = "Booking";
+                            break;
+                        case "4":
+                            e.DisplayText = "Send GEDI";
+                            break;
+                        case "5":
+                            e.DisplayText = "Closed";
+                            break;
+                        case "6":
+                            e.DisplayText = "Completed";
                             break;
                         default:
                             break;
@@ -119,7 +136,7 @@ namespace InvoiceApp
                 default:
                     break;
             }
-            gridView.EndUpdate();
+            //gridView.EndUpdate();
         }
 
         private void gridView_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
