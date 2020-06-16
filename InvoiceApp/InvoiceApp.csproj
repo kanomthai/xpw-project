@@ -202,6 +202,8 @@
     <None Include="Resources\apply_32x32.png" />
     <None Include="Resources\apply_16x161.png" />
     <None Include="Resources\apply_32x321.png" />
+    <None Include="Resources\send_16x16.png" />
+    <None Include="Resources\send_32x32.png" />
     <Content Include="Templates\CurrentInvoiceControl.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

@@ -85,6 +85,7 @@ namespace XPWLibrary.Interfaces
             StaticFunctionData.onWeek = int.Parse(node[18].InnerText);
             StaticFunctionData.nextWeek = int.Parse(node[19].InnerText);
             StaticFunctionData.StatusFTicket = int.Parse(node[20].InnerText);
+            StaticFunctionData.StatusSendGEDI = int.Parse(node[21].InnerText);
 
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
 

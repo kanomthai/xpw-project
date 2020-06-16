@@ -35,6 +35,7 @@ namespace InvoiceApp
             bbiDbName.Caption = StaticFunctionData.DBname;
             bbiOrderStatus.Caption = "";
             bbiRunningReload.Caption = $"";
+            bbiSendGedi.Enabled = false;
             //ReloadData();
         }
         void bbiPrintPreview_ItemClick(object sender, ItemClickEventArgs e)
@@ -136,6 +137,7 @@ namespace InvoiceApp
                 List<InvoiceData> obj = gridControl.DataSource as List<InvoiceData>;
                 if (obj.Count < 1)
                 {
+                    bbiSendGedi.Enabled = false;
                     ppMenu.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
                 }
             }
@@ -195,32 +197,39 @@ namespace InvoiceApp
                     }
                     break;
                 case "Status":
-                    switch (e.Value.ToString())
+                    if (int.Parse(e.Value.ToString()) == StaticFunctionData.StatusSendGEDI)
                     {
-                        case "0":
-                            e.DisplayText = "JobList";
-                            break;
-                        case "1":
-                            e.DisplayText = "Invoice";
-                            break;
-                        case "2":
-                            e.DisplayText = "Prepare";
-                            break;
-                        case "3":
-                            e.DisplayText = "Booking";
-                            break;
-                        case "4":
-                            e.DisplayText = "Closed";
-                            break;
-                        case "5":
-                            e.DisplayText = "Closed";
-                            break;
-                        case "6":
-                            e.DisplayText = "Closed";
-                            break;
-                        default:
-                            e.DisplayText = "";
-                            break;
+                        e.DisplayText = "Send GEDI";
+                    }
+                    else
+                    {
+                        switch (e.Value.ToString())
+                        {
+                            case "0":
+                                e.DisplayText = "JobList";
+                                break;
+                            case "1":
+                                e.DisplayText = "Invoice";
+                                break;
+                            case "2":
+                                e.DisplayText = "Prepare";
+                                break;
+                            case "3":
+                                e.DisplayText = "Booking";
+                                break;
+                            case "4":
+                                e.DisplayText = "Send GEDI";
+                                break;
+                            case "5":
+                                e.DisplayText = "Closed";
+                                break;
+                            case "6":
+                                e.DisplayText = "Closed";
+                                break;
+                            default:
+                                e.DisplayText = "";
+                                break;
+                        }
                     }
                     break;
                 case "Invoice":
@@ -410,8 +419,28 @@ namespace InvoiceApp
 
         private void gridView_RowClick(object sender, DevExpress.XtraGrid.Views.Grid.RowClickEventArgs e)
         {
+            
             if (e.Button.ToString() == "Right")
             {
+                bbiSendGedi.Enabled = false;
+                var rmctn = gridView.GetFocusedRowCellValue("RmCtn").ToString();
+                bbiSendGedi.Caption = $"Send To GEDI";
+                if (int.Parse(rmctn) <= 0)
+                {
+                    string ikey = gridView.GetFocusedRowCellValue("Invoice").ToString();
+                    bbiSendGedi.Caption = $"Send {ikey} To GEDI";
+                    var st = gridView.GetFocusedRowCellValue("Status").ToString();
+                    switch (st)
+                    {
+                        case "4":
+                        case "5":
+                        case "6":
+                            break;
+                        default:
+                            bbiSendGedi.Enabled = true;
+                            break;
+                    }
+                }
                 ppMenu.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
             }
             else
@@ -460,6 +489,26 @@ namespace InvoiceApp
             {
                 //AfterFormLoad();
                 itick = 0;
+            }
+        }
+
+        private void bbiSendGedi_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            DialogResult r = XtraMessageBox.Show("ยืนยันคำสั่งส่งข้อมูล GEDI", "XPW Confirm!", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            if (r == DialogResult.OK)
+            {
+                //update status iss
+                string ikey = gridView.GetFocusedRowCellValue("RefInv").ToString();
+                string sql = $"UPDATE TXP_ISSTRANSENT e SET e.ISSUINGSTATUS = {StaticFunctionData.StatusSendGEDI},e.UPDDTE =sysdate WHERE e.ISSUINGKEY = '{ikey}'";
+                if (new ConnDB().ExcuteSQL(sql))
+                {
+                    gridView.SetFocusedRowCellValue("Status", StaticFunctionData.StatusSendGEDI);
+                    XtraMessageBox.Show("บันทึกข้อมูล GEDI เสร็จแล้ว");
+                }
+                else
+                {
+                    XtraMessageBox.Show("ไม่สามารถอัพโหลดข้อมูลได้", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
     }

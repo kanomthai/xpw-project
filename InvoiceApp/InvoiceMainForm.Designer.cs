@@ -55,6 +55,7 @@
             this.bbiRestoreLayOut = new DevExpress.XtraBars.BarButtonItem();
             this.bbiOrderStatus = new DevExpress.XtraBars.BarStaticItem();
             this.bbiRunningReload = new DevExpress.XtraBars.BarStaticItem();
+            this.bbiSendGedi = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -178,9 +179,10 @@
             this.skinDropDownButtonItem1,
             this.bbiRestoreLayOut,
             this.bbiOrderStatus,
-            this.bbiRunningReload});
+            this.bbiRunningReload,
+            this.bbiSendGedi});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 17;
+            this.ribbonControl.MaxItemId = 18;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.PageHeaderItemLinks.Add(this.skinDropDownButtonItem1);
             this.ribbonControl.PageHeaderItemLinks.Add(this.skinPalette);
@@ -389,6 +391,15 @@
             this.bbiRunningReload.Caption = "barStaticItem1";
             this.bbiRunningReload.Id = 16;
             this.bbiRunningReload.Name = "bbiRunningReload";
+            // 
+            // bbiSendGedi
+            // 
+            this.bbiSendGedi.Caption = "Send To GEDI";
+            this.bbiSendGedi.Id = 17;
+            this.bbiSendGedi.ImageOptions.Image = global::InvoiceApp.Properties.Resources.send_16x16;
+            this.bbiSendGedi.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.send_32x32;
+            this.bbiSendGedi.Name = "bbiSendGedi";
+            this.bbiSendGedi.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiSendGedi_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -1150,6 +1161,7 @@
             this.ppMenu.ItemLinks.Add(this.bbiPartShorting, true);
             this.ppMenu.ItemLinks.Add(this.bbiOrderControl);
             this.ppMenu.ItemLinks.Add(this.bbiBookingControl);
+            this.ppMenu.ItemLinks.Add(this.bbiSendGedi, true);
             this.ppMenu.ItemLinks.Add(this.bbiRefresh, true);
             this.ppMenu.ItemLinks.Add(this.bbiRestoreLayOut);
             this.ppMenu.Name = "ppMenu";
@@ -1302,5 +1314,6 @@
         private DevExpress.XtraGrid.Views.BandedGrid.BandedGridColumn bandedGridColumn5;
         private System.Windows.Forms.Timer timer1;
         private DevExpress.XtraBars.BarStaticItem bbiRunningReload;
+        private DevExpress.XtraBars.BarButtonItem bbiSendGedi;
     }
 }
