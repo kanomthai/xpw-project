@@ -196,15 +196,18 @@ namespace XPWLibrary.Controllers
                             int nums = (rn + 1);
                             string sqldetail = $"SELECT count(*) ctn FROM TXP_ISSPACKDETAIL d WHERE d.PARTNO = '{r.PartNo}' AND d.ITEM = '{nums}' AND d.ISSUINGKEY IN ({refkey})";
                             dr = new ConnDB().GetFill(sqldetail);
-                            if (dr.Tables[0].Rows.Count < 1)
+                            if (dr.Tables[0].Rows.Count > 0)
                             {
-                                Guid gid = Guid.NewGuid();
-                                string fkey = new GreeterFunction().getFTicket(r.Factory);
-                                SplashScreenManager.Default.SetWaitFormDescription(fkey);
-                                string insql = $"insert into txp_isspackdetail(issuingkey,pono,tagrp,partno,fticketno,orderqty,issuedqty,unit,issuingstatus,upddte,sysdte,uuid,createdby,modifedby,ITEM,splorder)\n" +
-                                    $"values('{refinvoice}','{r.OrderNo}','C','{r.PartNo}','{fkey}','{r.BiSTDP}',0,'PCS',0,sysdate,sysdate,'{gid.ToString()}','SYS','SYS',{nums},'{g.ToString()}')";
-                                new ConnDB().ExcuteSQL(insql);
-                                GreeterFunction.updateFTicket(r.Factory);
+                                if (int.Parse((dr.Tables[0].Rows[0][0]).ToString()) <= 0)
+                                {
+                                    Guid gid = Guid.NewGuid();
+                                    string fkey = new GreeterFunction().getFTicket(r.Factory);
+                                    SplashScreenManager.Default.SetWaitFormDescription(fkey);
+                                    string insql = $"insert into txp_isspackdetail(issuingkey,pono,tagrp,partno,fticketno,orderqty,issuedqty,unit,issuingstatus,upddte,sysdte,uuid,createdby,modifedby,ITEM,splorder)\n" +
+                                        $"values('{refinvoice}','{r.OrderNo}','C','{r.PartNo}','{fkey}','{r.BiSTDP}',0,'PCS',0,sysdate,sysdate,'{gid.ToString()}','SYS','SYS',{nums},'{g.ToString()}')";
+                                    new ConnDB().ExcuteSQL(insql);
+                                    GreeterFunction.updateFTicket(r.Factory);
+                                }
                             }
                             rn++;
                         }
