@@ -250,18 +250,19 @@ namespace InvoiceApp
                     switch (e.Value.ToString())
                     {
                         case "0":
-                            e.DisplayText = "None";
+                            e.DisplayText = "Wait";
                             break;
                         case "1":
-                            e.DisplayText = "Remain";
+                            e.DisplayText = "None";
                             break;
                         case "2":
-                            e.DisplayText = "Prepare";
+                            e.DisplayText = "Remain";
                             break;
                         case "3":
-                            e.DisplayText = "Shorted";
+                            e.DisplayText = "Prepare";
                             break;
                         case "4":
+                            e.DisplayText = "Completed";
                             break;
                         case "5":
                             break;

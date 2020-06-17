@@ -18,6 +18,7 @@ namespace InvoiceApp
         {
             InitializeComponent();
             invno = refinv;
+            this.Text = $"Pallet List({invno})";
             ReBuildingPallet();
         }
 
@@ -113,16 +114,16 @@ namespace InvoiceApp
                             e.DisplayText = "NONE";
                             break;
                         case "1":
-                            e.DisplayText = "Invoice";
+                            e.DisplayText = "Wait Printing";
                             break;
                         case "2":
-                            e.DisplayText = "Prepare";
+                            e.DisplayText = "Wait Loading";
                             break;
                         case "3":
-                            e.DisplayText = "Booking";
+                            e.DisplayText = "Cancel";
                             break;
                         case "4":
-                            e.DisplayText = "Send GEDI";
+                            e.DisplayText = "Loading";
                             break;
                         case "5":
                             e.DisplayText = "Closed";

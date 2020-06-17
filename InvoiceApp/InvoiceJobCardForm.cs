@@ -81,7 +81,7 @@ namespace InvoiceApp
 
         void ShowFTicketAll()
         {
-            this.Text = $"PRINT JOBCARD {ob.RefInv}";
+            this.Text = $"Packing List({ob.RefInv})";
             string sql = $"SELECT d.PONO,d.PARTNO,p.PARTNAME,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,CASE WHEN d.PLOUTNO IS NULL THEN '' ELSE max(l.PALLETNO) END PALLETNO,c.SHELVE ,d.ISSUINGSTATUS FROM TXP_ISSPACKDETAIL d  \n" +
                  "INNER JOIN TXP_ISSTRANSBODY b ON d.ISSUINGKEY = b.ISSUINGKEY AND b.PARTNO = d.PARTNO\n" +
                  "LEFT JOIN TXP_ISSPALLET l ON b.ISSUINGKEY = l.ISSUINGKEY\n" +
@@ -183,10 +183,13 @@ namespace InvoiceApp
                             e.DisplayText = "Printed";
                             break;
                         case "2":
-                            e.DisplayText = "Prepare";
+                            e.DisplayText = "";
                             break;
                         case "3":
                             e.DisplayText = "Shorting";
+                            break;
+                        case "4":
+                            e.DisplayText = "Prepare";
                             break;
                         default:
                             e.DisplayText = "Unkonw";
