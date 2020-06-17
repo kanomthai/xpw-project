@@ -9,8 +9,8 @@
   <aw_netweight>1000</aw_netweight>
   <ipaddress>192.168.101.215</ipaddress>
   <dbname>RMW</dbname>
-  <user>sktsys</user>
-  <passwd>sktsys</passwd>
+  <user>expsys</user>
+  <passwd>expsys</passwd>
   <aw_plprinter>POSTEKI300</aw_plprinter>
   <inj_plprinter>POSTEKI300</inj_plprinter>
   <confirmlotno>true</confirmlotno>
@@ -22,4 +22,6 @@
   <nextweek>14</nextweek>
   <statusfticket>2</statusfticket>
   <statussendgedi>4</statussendgedi>
+  <pathsource>\\192.168.101.150\\Sharefull_SKT\\XPW-CK2\\XPW-Update\\xpw-app</pathsource>
+  <pathtemplate>\\192.168.101.150\\Sharefull_SKT\\XPW-CK2\\XPW-Update\\xpw-templates</pathtemplate>
 </data>

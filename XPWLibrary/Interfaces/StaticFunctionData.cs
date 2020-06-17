@@ -43,5 +43,7 @@
         public static string JoblistOrderShorting { get; set; }
         public static int StatusFTicket { get; set; }
         public static int StatusSendGEDI { get; set; }
+        public static string PathSource { get; set; }
+        public static string PathTemplate { get; set; }
     }
 }

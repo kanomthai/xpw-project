@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InvoiceMainForm));
             this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.bbiPrintPreview = new DevExpress.XtraBars.BarButtonItem();
@@ -56,6 +57,9 @@
             this.bbiOrderStatus = new DevExpress.XtraBars.BarStaticItem();
             this.bbiRunningReload = new DevExpress.XtraBars.BarStaticItem();
             this.bbiSendGedi = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiUpdateApp = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiShowMe = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiExitMe = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -123,6 +127,10 @@
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.ppMenu = new DevExpress.XtraBars.PopupMenu(this.components);
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemRadioGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).BeginInit();
@@ -150,6 +158,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ppMenu)).BeginInit();
+            this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // ribbonControl
@@ -180,12 +189,16 @@
             this.bbiRestoreLayOut,
             this.bbiOrderStatus,
             this.bbiRunningReload,
-            this.bbiSendGedi});
+            this.bbiSendGedi,
+            this.bbiUpdateApp,
+            this.bbiShowMe,
+            this.bbiExitMe});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 18;
+            this.ribbonControl.MaxItemId = 23;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.PageHeaderItemLinks.Add(this.skinDropDownButtonItem1);
             this.ribbonControl.PageHeaderItemLinks.Add(this.skinPalette);
+            this.ribbonControl.PageHeaderItemLinks.Add(this.bbiUpdateApp);
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
             this.ribbonControl.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
@@ -400,6 +413,31 @@
             this.bbiSendGedi.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.send_32x32;
             this.bbiSendGedi.Name = "bbiSendGedi";
             this.bbiSendGedi.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiSendGedi_ItemClick);
+            // 
+            // bbiUpdateApp
+            // 
+            this.bbiUpdateApp.Caption = "Check Update";
+            this.bbiUpdateApp.Id = 20;
+            this.bbiUpdateApp.ImageOptions.Image = global::InvoiceApp.Properties.Resources.recurrence_16x161;
+            this.bbiUpdateApp.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.recurrence_32x321;
+            this.bbiUpdateApp.Name = "bbiUpdateApp";
+            this.bbiUpdateApp.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiUpdateApp_ItemClick);
+            // 
+            // bbiShowMe
+            // 
+            this.bbiShowMe.Caption = "Show";
+            this.bbiShowMe.Id = 21;
+            this.bbiShowMe.ImageOptions.Image = global::InvoiceApp.Properties.Resources.window_16x16;
+            this.bbiShowMe.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.window_32x32;
+            this.bbiShowMe.Name = "bbiShowMe";
+            // 
+            // bbiExitMe
+            // 
+            this.bbiExitMe.Caption = "Exit";
+            this.bbiExitMe.Id = 22;
+            this.bbiExitMe.ImageOptions.Image = global::InvoiceApp.Properties.Resources.delete_16x16;
+            this.bbiExitMe.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.delete_32x32;
+            this.bbiExitMe.Name = "bbiExitMe";
             // 
             // ribbonPage1
             // 
@@ -1172,6 +1210,37 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.ContextMenuStrip = this.contextMenuStrip1;
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "XPW App";
+            this.notifyIcon1.Visible = true;
+            // 
+            // contextMenuStrip1
+            // 
+            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.showToolStripMenuItem,
+            this.exitToolStripMenuItem});
+            this.contextMenuStrip1.Name = "contextMenuStrip1";
+            this.contextMenuStrip1.Size = new System.Drawing.Size(104, 48);
+            // 
+            // showToolStripMenuItem
+            // 
+            this.showToolStripMenuItem.Image = global::InvoiceApp.Properties.Resources.window_16x16;
+            this.showToolStripMenuItem.Name = "showToolStripMenuItem";
+            this.showToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.showToolStripMenuItem.Text = "Show";
+            this.showToolStripMenuItem.Click += new System.EventHandler(this.showToolStripMenuItem_Click);
+            // 
+            // exitToolStripMenuItem
+            // 
+            this.exitToolStripMenuItem.Image = global::InvoiceApp.Properties.Resources.delete_16x16;
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
             // InvoiceMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1216,6 +1285,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ppMenu)).EndInit();
+            this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1315,5 +1385,12 @@
         private System.Windows.Forms.Timer timer1;
         private DevExpress.XtraBars.BarStaticItem bbiRunningReload;
         private DevExpress.XtraBars.BarButtonItem bbiSendGedi;
+        private DevExpress.XtraBars.BarButtonItem bbiUpdateApp;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private DevExpress.XtraBars.BarButtonItem bbiShowMe;
+        private DevExpress.XtraBars.BarButtonItem bbiExitMe;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
     }
 }

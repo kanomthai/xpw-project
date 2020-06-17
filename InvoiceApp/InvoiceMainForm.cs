@@ -49,14 +49,16 @@ namespace InvoiceApp
             {
                 try
                 {
-                    Thread thr0 = new Thread(ReloadGridControl);
+                    //Thread thr0 = new Thread(ReloadGridControl);
                     Thread thr1 = new Thread(GetToWeek);
                     Thread thr2 = new Thread(GetForwardWeek);
                     Thread thorder = new Thread(GetOrderNotCreateJobList);
+                    Thread thcheck = new Thread(CheckVerSion);
                     thr1.Start();
                     thr2.Start();
                     thorder.Start();
-                    thr0.Start();
+                    //thr0.Start();
+                    thcheck.Start();
                     //await new GreeterFunction().CheckGitHubVersionAsync();
 
                     //After running
@@ -69,6 +71,18 @@ namespace InvoiceApp
                     Console.WriteLine(ex);
                 }
             }
+        }
+
+        void CheckVerSion()
+        {
+            this.Invoke(new MethodInvoker(delegate {
+                bool x = new GreeterFunction().CheckVersionAsync();
+                if (x)
+                {
+                    this.notifyIcon1.ShowBalloonTip(100, "Notify Message", "อัพเดทโปรแกรมด้วย", ToolTipIcon.Info);
+                    new GreeterFunction().CheckGitHubVersionAsync();
+                }
+            }));
         }
 
         void ReloadGridControl()
@@ -487,7 +501,7 @@ namespace InvoiceApp
             this.Invoke(new MethodInvoker(delegate { bbiRunningReload.Caption = $"RUNNING AT: {itick}"; }));
             if (itick > StaticFunctionData.ReloadGrid)
             {
-                //AfterFormLoad();
+                AfterFormLoad();
                 itick = 0;
             }
         }
@@ -510,6 +524,31 @@ namespace InvoiceApp
                     XtraMessageBox.Show("ไม่สามารถอัพโหลดข้อมูลได้", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void bbiUpdateApp_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            DialogResult r = XtraMessageBox.Show("ยืนยันคำสั่งอัพเดทโปรแกรม", "XPW Alert!", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+            if (r == DialogResult.OK)
+            {
+                SplashScreenManager.ShowDefaultWaitForm();
+                new GreeterFunction().CheckGitHubVersionAsync();
+                SplashScreenManager.CloseDefaultWaitForm();
+                XtraMessageBox.Show("อัพเดทโปรแกรมเสร็จแล้ว", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void showToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.Show();
+            }
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

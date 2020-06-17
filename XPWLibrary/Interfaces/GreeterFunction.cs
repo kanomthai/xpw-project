@@ -16,24 +16,95 @@ namespace XPWLibrary.Interfaces
     {
         public void CheckGitHubVersionAsync()
         {
-            var currentVersion = Assembly.GetEntryAssembly().GetName().Version;
-            //var checker = new UpdateChecker("kanomthai", ""); // uses your Application.ProductVersion
-            //UpdateType update = await checker.CheckUpdate();
-            //if (update == UpdateType.None)
-            //{
-            //    // Up to date!
-            //}
-            //else
-            //{
-            //    // Ask the user if he wants to update
-            //    // You can use the prebuilt form for this if you want (it's really pretty!)
-            //    var result = new UpdateNotifyDialog(checker).ShowDialog();
-            //    if (result == DialogResult.Yes)
-            //    {
-            //        checker.DownloadAsset("Converter.zip"); // opens it in the user's browser
-            //    }
-            //}
+            try
+            {
+                string fromdir = StaticFunctionData.PathSource;
+                string targetdir = $"{AppDomain.CurrentDomain.BaseDirectory}";
+                foreach (string f in Directory.GetFiles(targetdir))
+                {
+                    string fn = Path.GetFileName(f);
+                    DateTime modification = File.GetLastWriteTime(fn);
+                    string adate = modification.ToString("ddMMyyyyHHmmss");
+                    LoopCheckFileDiff(fromdir, targetdir, fn, adate);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
+
+        public bool CheckVersionAsync()
+        {
+            try
+            {
+                string fromdir = StaticFunctionData.PathSource;
+                string targetdir = $"{AppDomain.CurrentDomain.BaseDirectory}";
+                foreach (string f in Directory.GetFiles(targetdir))
+                {
+                    string fn = Path.GetFileName(f);
+                    DateTime modification = File.GetLastWriteTime(fn);
+                    string adate = modification.ToString("ddMMyyyyHHmmss");
+                    return LoopCheckDiff(fromdir, targetdir, fn, adate);
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return false;
+        }
+
+        bool LoopCheckDiff(string fromdir, string targetdir, string fn, string adate)
+        {
+            foreach (string file in Directory.GetFiles(fromdir))
+            {
+                string fname = Path.GetFileName(file);
+                DateTime modif = File.GetCreationTime(fname);
+                string bdate = modif.ToString("ddMMyyyyHHmmss");
+                if (fname == fn)
+                {
+                    Console.WriteLine($"MATCH  A: {fn} B: {fname}");
+                    Console.WriteLine($"A: {adate} B: {bdate}");
+                    if (adate != bdate)
+                    {
+                        Console.WriteLine($"COPY B TO A");
+                        File.Copy(fromdir + "\\" + fname, targetdir + "\\" + fname, true);
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        void LoopCheckFileDiff(string fromdir, string targetdir, string fn, string adate)
+        {
+            foreach (string file in Directory.GetFiles(fromdir))
+            {
+                string fname = Path.GetFileName(file);
+                DateTime modif = File.GetLastWriteTime(fname);
+                string bdate = modif.ToString("ddMMyyyyHHmmss");
+                if (fname == fn)
+                {
+                    try
+                    {
+                        SplashScreenManager.Default.SetWaitFormDescription($"{fname}");
+                    }
+                    catch (Exception)
+                    {
+                    }
+                    Console.WriteLine($"MATCH  A: {fn} B: {fname}");
+                    Console.WriteLine($"A: {adate} B: {bdate}");
+                    if (adate != bdate)
+                    {
+                        Console.WriteLine($"COPY B TO A");
+                        File.Copy(fromdir + "\\" + fname, targetdir + "\\" + fname, true);
+                        return;
+                    }
+                }
+            }
+        }
+
 
         private void GetLangure()
         {
@@ -86,6 +157,8 @@ namespace XPWLibrary.Interfaces
             StaticFunctionData.nextWeek = int.Parse(node[19].InnerText);
             StaticFunctionData.StatusFTicket = int.Parse(node[20].InnerText);
             StaticFunctionData.StatusSendGEDI = int.Parse(node[21].InnerText);
+            StaticFunctionData.PathSource = node[22].InnerText;
+            StaticFunctionData.PathTemplate = node[23].InnerText;
 
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
 
@@ -113,7 +186,7 @@ namespace XPWLibrary.Interfaces
         {
             try
             {
-                string fromdir = @"\\192.168.101.150\\Sharefull_SKT\\XPW-CK2\\XPW-Update\\xpw-templates";
+                string fromdir = StaticFunctionData.PathTemplate;
                 string targetdir = $"{AppDomain.CurrentDomain.BaseDirectory}Templates";
                 foreach (string file in Directory.GetFiles(fromdir))
                 {
@@ -133,7 +206,7 @@ namespace XPWLibrary.Interfaces
         {
             try
             {
-                string fromdir = @"\\192.168.101.150\\Sharefull_SKT\\XPW-CK2\\XPW-Update\\xpw-templates";
+                string fromdir = StaticFunctionData.PathTemplate;
                 string targetdir = $"{AppDomain.CurrentDomain.BaseDirectory}Configures\\xpw-templates";
                 foreach (string file in Directory.GetFiles(fromdir))
                 {

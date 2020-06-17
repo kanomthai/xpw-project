@@ -206,6 +206,12 @@
     <None Include="Resources\send_32x32.png" />
     <None Include="Resources\viewsetting_16x16.png" />
     <None Include="Resources\viewsetting_32x32.png" />
+    <None Include="Resources\recurrence_16x161.png" />
+    <None Include="Resources\recurrence_32x321.png" />
+    <None Include="Resources\delete_16x16.png" />
+    <None Include="Resources\delete_32x32.png" />
+    <None Include="Resources\window_16x16.png" />
+    <None Include="Resources\window_32x32.png" />
     <Content Include="Templates\CurrentInvoiceControl.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
