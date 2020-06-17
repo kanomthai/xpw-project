@@ -545,5 +545,10 @@ namespace InvoiceApp
                 bbiConfirmShort.Enabled = true;
             }
         }
+
+        private void bbiEditCustomer_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
     }
 }

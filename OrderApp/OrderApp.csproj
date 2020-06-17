@@ -83,6 +83,12 @@
     <Compile Include="OrderAddNewPalletForm.Designer.cs">
       <DependentUpon>OrderAddNewPalletForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="OrderEditCustomerOrderType.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OrderEditCustomerOrderType.Designer.cs">
+      <DependentUpon>OrderEditCustomerOrderType.cs</DependentUpon>
+    </Compile>
     <Compile Include="OrderJobListPreviewForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,6 +138,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="OrderDetailForm.resx">
       <DependentUpon>OrderDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OrderEditCustomerOrderType.resx">
+      <DependentUpon>OrderEditCustomerOrderType.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OrderJobListPreviewForm.resx">
       <DependentUpon>OrderJobListPreviewForm.cs</DependentUpon>

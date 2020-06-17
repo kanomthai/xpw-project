@@ -57,6 +57,7 @@
             this.bbiCancelOrder = new DevExpress.XtraBars.BarButtonItem();
             this.bbiConfirmShort = new DevExpress.XtraBars.BarButtonItem();
             this.bbiAddShorting = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiEditCustomer = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -188,10 +189,12 @@
             this.bbiReviseOrder,
             this.bbiCancelOrder,
             this.bbiConfirmShort,
-            this.bbiAddShorting});
+            this.bbiAddShorting,
+            this.bbiEditCustomer});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 40;
+            this.ribbonControl.MaxItemId = 41;
             this.ribbonControl.Name = "ribbonControl";
+            this.ribbonControl.PageHeaderItemLinks.Add(this.bbiEditCustomer);
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.OfficeUniversal;
@@ -410,6 +413,15 @@
             this.bbiAddShorting.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.apply_32x321;
             this.bbiAddShorting.Name = "bbiAddShorting";
             this.bbiAddShorting.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiAddShorting_ItemClick);
+            // 
+            // bbiEditCustomer
+            // 
+            this.bbiEditCustomer.Caption = "Edit Customer";
+            this.bbiEditCustomer.Id = 40;
+            this.bbiEditCustomer.ImageOptions.Image = global::InvoiceApp.Properties.Resources.customer_16x16;
+            this.bbiEditCustomer.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.customer_32x32;
+            this.bbiEditCustomer.Name = "bbiEditCustomer";
+            this.bbiEditCustomer.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiEditCustomer_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -1316,5 +1328,6 @@
         private DevExpress.XtraBars.BarButtonItem bbiCancelOrder;
         private DevExpress.XtraBars.BarButtonItem bbiConfirmShort;
         private DevExpress.XtraBars.BarButtonItem bbiAddShorting;
+        private DevExpress.XtraBars.BarButtonItem bbiEditCustomer;
     }
 }
