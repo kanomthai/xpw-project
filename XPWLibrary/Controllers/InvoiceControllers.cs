@@ -84,21 +84,25 @@ namespace XPWLibrary.Controllers
 
         BindingList<InvoiceMasterData> AppendListWeek(string sql)
         {
+            Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
             BindingList<InvoiceMasterData> list = new BindingList<InvoiceMasterData>();
-            foreach (DataRow r in dr.Tables[0].Rows)
+            if (dr.Tables.Count > 0)
             {
-                list.Add(new InvoiceMasterData()
+                foreach (DataRow r in dr.Tables[0].Rows)
                 {
-                    Id = list.Count + 1,
-                    Etd = DateTime.Parse(r["etd"].ToString()),
-                    Ck2 = int.Parse(r["ck2"].ToString()),
-                    Ness = int.Parse(r["ness"].ToString()),
-                    Icam = int.Parse(r["icam"].ToString()),
-                    Ck1 = int.Parse(r["ck1"].ToString()),
-                    Truck = int.Parse(r["truck"].ToString()),
-                    Air = int.Parse(r["air"].ToString()),
-                });
+                    list.Add(new InvoiceMasterData()
+                    {
+                        Id = list.Count + 1,
+                        Etd = DateTime.Parse(r["etd"].ToString()),
+                        Ck2 = int.Parse(r["ck2"].ToString()),
+                        Ness = int.Parse(r["ness"].ToString()),
+                        Icam = int.Parse(r["icam"].ToString()),
+                        Ck1 = int.Parse(r["ck1"].ToString()),
+                        Truck = int.Parse(r["truck"].ToString()),
+                        Air = int.Parse(r["air"].ToString()),
+                    });
+                }
             }
             return list;
         }
@@ -106,36 +110,36 @@ namespace XPWLibrary.Controllers
         public object GetInvoiceWeek(DateTime d, int bweek, int eweek)
         {
             string sql = "SELECT to_char(pp.ETD, 'DD/MM/YYYY')ETD,\n" +
-                        "         SUM(CASE WHEN PP.zoneid = '1' AND PP.shiptype = 'B'  THEN 1 else 0 END) CK2,\n" +
-                        "         SUM(CASE WHEN PP.zoneid = '2'                         THEN 1 else 0 END) NESS,\n" +
-                        "         SUM(CASE WHEN PP.zoneid = '3'                         THEN 1 else 0 END) ICAM,\n" +
-                        "         SUM(CASE WHEN PP.zoneid = '4'                         THEN 1 else 0 END) CK1,\n" +
-                        "         SUM(CASE WHEN PP.zoneid = '1' AND PP.shiptype = 'T'  THEN 1 else 0 END) TRUCK,\n" +
-                        "         SUM(CASE WHEN PP.zoneid = '1' AND PP.shiptype = 'A'  THEN 1 else 0 END) AIR\n" +
+                        "         SUM(CASE WHEN PP.zoneid = '1' AND PP.shiptype = 'B'  THEN '1' else '0' END) CK2,\n" +
+                        "         SUM(CASE WHEN PP.zoneid = '2'                        THEN '1' else '0' END) NESS,\n" +
+                        "         SUM(CASE WHEN PP.zoneid = '3'                        THEN '1' else '0' END) ICAM,\n" +
+                        "         SUM(CASE WHEN PP.zoneid = '4'                        THEN '1' else '0' END) CK1,\n" +
+                        "         SUM(CASE WHEN PP.zoneid = '1' AND PP.shiptype = 'T'  THEN '1' else '0' END) TRUCK,\n" +
+                        "         SUM(CASE WHEN PP.zoneid = '1' AND PP.shiptype = 'A'  THEN '1' else '0' END) AIR\n" +
                         "FROM(\n" +
                         "       select  e.etddte ETD, to_number(to_char(e.etddte, 'WW'))  WEEK, e.FACTORY, e.affcode, e.shiptype, e.zoneid\n" +
                         "        from txp_isstransent e\n" +
                         $"       WHERE  e.FACTORY = '{StaticFunctionData.Factory.ToUpper()}' and " +
-                        $"e.etddte between next_day(to_date('{d.ToString("dd-MM-yyyy")}','DD-MM-YYYY') + {bweek}, 'SUNDAY') and " +
-                        $"next_day(to_date('{d.ToString("dd-MM-yyyy")}','DD-MM-YYYY') + {eweek}, 'SUNDAY')\n" +
+                        $"e.etddte between (TRUNC(to_date('{d.ToString("dd-MM-yyyy")}','DD-MM-YYYY'), 'DY') + {bweek}) and " +
+                        $" (TRUNC(to_date('{d.ToString("dd-MM-yyyy")}','DD-MM-YYYY'), 'DY') + {eweek})\n" +
                         "    )  PP\n" +
                         "GROUP BY pp.ETD\n" +
                         "order by PP.ETD";
             if (StaticFunctionData.Factory.ToUpper() != "AW")
             {
                 sql = ("SELECT to_char(pp.ETD, 'DD/MM/YYYY')ETD,\n" +
-                       "          SUM(CASE WHEN PP.zoneid = '4' AND PP.shiptype = 'B'  THEN 1 else 0 END) CK2,\n" +
-                       "          SUM(CASE WHEN PP.zoneid = '2'                         THEN 1 else 0 END) NESS,\n" +
-                       "          SUM(CASE WHEN PP.zoneid = '3'                         THEN 1 else 0 END) ICAM,\n" +
-                       "          SUM(CASE WHEN PP.zoneid = '1'                         THEN 1 else 0 END) CK1,\n" +
-                       "          SUM(CASE WHEN PP.zoneid = '4' AND PP.shiptype = 'T'  THEN 1 else 0 END) TRUCK,\n" +
-                       "          SUM(CASE WHEN PP.zoneid = '4' AND PP.shiptype = 'A'  THEN 1 else 0 END) AIR\n" +
+                       "          SUM(CASE WHEN PP.zoneid = '4' AND PP.shiptype = 'B'  THEN '1' else '0' END) CK2,\n" +
+                       "          SUM(CASE WHEN PP.zoneid = '2'                        THEN '1' else '0' END) NESS,\n" +
+                       "          SUM(CASE WHEN PP.zoneid = '3'                        THEN '1' else '0' END) ICAM,\n" +
+                       "          SUM(CASE WHEN PP.zoneid = '1'                        THEN '1' else '0' END) CK1,\n" +
+                       "          SUM(CASE WHEN PP.zoneid = '4' AND PP.shiptype = 'T'  THEN '1' else '0' END) TRUCK,\n" +
+                       "          SUM(CASE WHEN PP.zoneid = '4' AND PP.shiptype = 'A'  THEN '1' else '0' END) AIR\n" +
                        "FROM(\n" +
                         "       select  e.etddte ETD, to_number(to_char(e.etddte, 'WW'))  WEEK, e.FACTORY, e.affcode, e.shiptype, e.zoneid\n" +
                         "        from txp_isstransent e\n" +
                         $"       WHERE  e.FACTORY = '{StaticFunctionData.Factory.ToUpper()}' and " +
-                        $"e.etddte between next_day(to_date('{d.ToString("dd-MM-yyyy")}','DD-MM-YYYY') + {bweek}, 'SUNDAY') and " +
-                        $"next_day(to_date('{d.ToString("dd-MM-yyyy")}','DD-MM-YYYY') + {eweek}, 'SUNDAY')\n" +
+                        $"e.etddte between (TRUNC(to_date('{d.ToString("dd-MM-yyyy")}','DD-MM-YYYY'), 'DY') + {bweek}) and " +
+                        $" (TRUNC(to_date('{d.ToString("dd-MM-yyyy")}','DD-MM-YYYY'), 'DY') + {eweek})\n" +
                         "    )  PP\n" +
                         "GROUP BY pp.ETD\n" +
                         "order by PP.ETD");
@@ -147,36 +151,36 @@ namespace XPWLibrary.Controllers
         public BindingList<InvoiceMasterData> GetInvoiceToWeek(DateTime d)
         {
             string sql = "SELECT to_char(pp.ETD, 'DD/MM/YYYY')ETD,\n" +
-                        "         SUM(CASE WHEN PP.zoneid = '1' AND PP.shiptype = 'B'  THEN 1 else 0 END) CK2,\n" +
-                        "         SUM(CASE WHEN PP.zoneid = '2'                         THEN 1 else 0 END) NESS,\n" +
-                        "         SUM(CASE WHEN PP.zoneid = '3'                         THEN 1 else 0 END) ICAM,\n" +
-                        "         SUM(CASE WHEN PP.zoneid = '4'                         THEN 1 else 0 END) CK1,\n" +
-                        "         SUM(CASE WHEN PP.zoneid = '1' AND PP.shiptype = 'T'  THEN 1 else 0 END) TRUCK,\n" +
-                        "         SUM(CASE WHEN PP.zoneid = '1' AND PP.shiptype = 'A'  THEN 1 else 0 END) AIR\n" +
+                        "         SUM(CASE WHEN PP.zoneid = '1' AND PP.shiptype = 'B'  THEN '1' else '0' END) CK2,\n" +
+                        "         SUM(CASE WHEN PP.zoneid = '2'                        THEN '1' else '0' END) NESS,\n" +
+                        "         SUM(CASE WHEN PP.zoneid = '3'                        THEN '1' else '0' END) ICAM,\n" +
+                        "         SUM(CASE WHEN PP.zoneid = '4'                        THEN '1' else '0' END) CK1,\n" +
+                        "         SUM(CASE WHEN PP.zoneid = '1' AND PP.shiptype = 'T'  THEN '1' else '0' END) TRUCK,\n" +
+                        "         SUM(CASE WHEN PP.zoneid = '1' AND PP.shiptype = 'A'  THEN '1' else '0' END) AIR\n" +
                         "FROM(\n" +
                         "       select  e.etddte ETD, to_number(to_char(e.etddte, 'WW'))  WEEK, e.FACTORY, e.affcode, e.shiptype, e.zoneid\n" +
                         "        from txp_isstransent e\n" +
                         $"       WHERE  e.FACTORY = '{StaticFunctionData.Factory.ToUpper()}' and " +
-                        $"e.etddte between next_day(to_date('{d.ToString("dd-MM-yyyy")}','DD-MM-YYYY') - 7, 'SUNDAY') and " +
-                        $"next_day(to_date('{d.ToString("dd-MM-yyyy")}','DD-MM-YYYY'), 'SUNDAY')\n" +
+                        $"e.etddte between (TRUNC(to_date('{d.ToString("dd-MM-yyyy")}','DD-MM-YYYY'), 'DY') + 0) and " +
+                        $" (TRUNC(to_date('{d.ToString("dd-MM-yyyy")}','DD-MM-YYYY'), 'DY') + 7)\n" +
                         "    )  PP\n" +
                         "GROUP BY pp.ETD\n" +
                         "order by PP.ETD";
             if (StaticFunctionData.Factory.ToUpper() != "AW")
             {
                 sql = ("SELECT    pp.ETD,\n" +
-                       "          SUM(CASE WHEN PP.zoneid = '4' AND PP.shiptype = 'B'  THEN 1 else 0 END) CK2,\n" +
-                       "          SUM(CASE WHEN PP.zoneid = '2'                         THEN 1 else 0 END) NESS,\n" +
-                       "          SUM(CASE WHEN PP.zoneid = '3'                         THEN 1 else 0 END) ICAM,\n" +
-                       "          SUM(CASE WHEN PP.zoneid = '1'                         THEN 1 else 0 END) CK1,\n" +
-                       "          SUM(CASE WHEN PP.zoneid = '4' AND PP.shiptype = 'T'  THEN 1 else 0 END) TRUCK,\n" +
-                       "          SUM(CASE WHEN PP.zoneid = '4' AND PP.shiptype = 'A'  THEN 1 else 0 END) AIR\n" +
+                       "          SUM(CASE WHEN PP.zoneid = '4' AND PP.shiptype = 'B'  THEN '1' else '0' END) CK2,\n" +
+                       "          SUM(CASE WHEN PP.zoneid = '2'                        THEN '1' else '0' END) NESS,\n" +
+                       "          SUM(CASE WHEN PP.zoneid = '3'                        THEN '1' else '0' END) ICAM,\n" +
+                       "          SUM(CASE WHEN PP.zoneid = '1'                        THEN '1' else '0' END) CK1,\n" +
+                       "          SUM(CASE WHEN PP.zoneid = '4' AND PP.shiptype = 'T'  THEN '1' else '0' END) TRUCK,\n" +
+                       "          SUM(CASE WHEN PP.zoneid = '4' AND PP.shiptype = 'A'  THEN '1' else '0' END) AIR\n" +
                        "FROM(\n" +
                         "       select  e.etddte ETD, to_number(to_char(e.etddte, 'WW'))  WEEK, e.FACTORY, e.affcode, e.shiptype, e.zoneid\n" +
                         "        from txp_isstransent e\n" +
                         $"       WHERE  e.FACTORY = '{StaticFunctionData.Factory.ToUpper()}' and " +
-                        $"e.etddte between next_day(to_date('{d.ToString("dd-MM-yyyy")}','DD-MM-YYYY') - 7, 'SUNDAY') and " +
-                        $"next_day(to_date('{d.ToString("dd-MM-yyyy")}','DD-MM-YYYY'), 'SUNDAY')\n" +
+                        $"e.etddte between (TRUNC(to_date('{d.ToString("dd-MM-yyyy")}','DD-MM-YYYY'), 'DY') + 0) and " +
+                        $" (TRUNC(to_date('{d.ToString("dd-MM-yyyy")}','DD-MM-YYYY'), 'DY') + 7)\n" +
                         "    )  PP\n" +
                         "GROUP BY pp.ETD\n" +
                         "order by PP.ETD");

@@ -180,19 +180,19 @@ namespace InvoiceApp
                             e.DisplayText = "None";
                             break;
                         case "1":
-                            e.DisplayText = "Printed";
+                            e.DisplayText = "Print F-Ticket";
                             break;
-                        case "2":
-                            e.DisplayText = "";
-                            break;
+                        //case "2":
+                        //    e.DisplayText = "";
+                        //    break;
                         case "3":
-                            e.DisplayText = "Shorting";
+                            e.DisplayText = "Cut Short";
                             break;
                         case "4":
-                            e.DisplayText = "Prepare";
+                            e.DisplayText = "Prepared";
                             break;
                         default:
-                            e.DisplayText = "Unkonw";
+                            //e.DisplayText = "Unkonw";
                             break;
                     }
                     break;

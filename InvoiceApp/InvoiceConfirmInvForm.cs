@@ -114,7 +114,7 @@ namespace InvoiceApp
                             e.DisplayText = "NONE";
                             break;
                         case "1":
-                            e.DisplayText = "Wait Printing";
+                            e.DisplayText = "Wait Print";
                             break;
                         case "2":
                             e.DisplayText = "Wait Loading";
@@ -123,14 +123,14 @@ namespace InvoiceApp
                             e.DisplayText = "Cancel";
                             break;
                         case "4":
-                            e.DisplayText = "Loading";
+                            e.DisplayText = "Loaded";
                             break;
-                        case "5":
-                            e.DisplayText = "Closed";
-                            break;
-                        case "6":
-                            e.DisplayText = "Completed";
-                            break;
+                        //case "5":
+                        //    e.DisplayText = "Closed";
+                        //    break;
+                        //case "6":
+                        //    e.DisplayText = "Completed";
+                        //    break;
                         default:
                             break;
                     }

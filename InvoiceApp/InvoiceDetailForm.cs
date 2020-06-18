@@ -252,29 +252,30 @@ namespace InvoiceApp
                         case "0":
                             e.DisplayText = "Wait";
                             break;
-                        case "1":
-                            e.DisplayText = "None";
-                            break;
+                        //case "1":
+                        //    e.DisplayText = "1";
+                        //    break;
                         case "2":
-                            e.DisplayText = "Remain";
+                            e.DisplayText = "On Procress";
                             break;
-                        case "3":
-                            e.DisplayText = "Prepare";
-                            break;
+                        //case "3":
+                        //    e.DisplayText = "3";
+                        //    break;
                         case "4":
                             e.DisplayText = "Completed";
                             break;
-                        case "5":
-                            break;
-                        case "6":
-                            break;
-                        case "7":
-                            break;
-                        case "8":
-                            break;
-                        case "9":
-                            break;
+                        //case "5":
+                        //    break;
+                        //case "6":
+                        //    break;
+                        //case "7":
+                        //    break;
+                        //case "8":
+                        //    break;
+                        //case "9":
+                        //    break;
                         default:
+                            e.DisplayText = e.Value.ToString();
                             break;
                     }
                     break;
