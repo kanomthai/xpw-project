@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using DevExpress.XtraBars;
+using System;
 using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using DevExpress.XtraEditors;
-using DevExpress.XtraBars;
 using System.ComponentModel.DataAnnotations;
 
 namespace BookingApp
@@ -64,6 +56,14 @@ namespace BookingApp
             [Display(Name = "Zip Code")]
             public string ZipCode { get; set; }
             public string Phone { get; set; }
+        }
+
+        private void bbiNew_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            DateTime etd = DateTime.Now;
+            string conno = null;
+            BookingAddForm frm = new BookingAddForm(etd, conno);
+            frm.ShowDialog();
         }
     }
 }

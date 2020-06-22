@@ -75,14 +75,14 @@ namespace InvoiceApp
 
         void CheckVerSion()
         {
-            this.Invoke(new MethodInvoker(delegate {
-                bool x = new GreeterFunction().CheckVersionAsync();
-                if (x)
-                {
-                    this.notifyIcon1.ShowBalloonTip(100, "Notify Message", "อัพเดทโปรแกรมด้วย", ToolTipIcon.Info);
-                    new GreeterFunction().CheckGitHubVersionAsync();
-                }
-            }));
+            //this.Invoke(new MethodInvoker(delegate {
+            //    bool x = new GreeterFunction().CheckVersionAsync();
+            //    if (x)
+            //    {
+            //        this.notifyIcon1.ShowBalloonTip(100, "Notify Message", "อัพเดทโปรแกรมด้วย", ToolTipIcon.Info);
+            //        new GreeterFunction().CheckGitHubVersionAsync();
+            //    }
+            //}));
         }
 
         void ReloadGridControl()

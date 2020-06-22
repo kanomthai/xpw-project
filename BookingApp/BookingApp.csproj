@@ -70,6 +70,15 @@
     <Compile Include="BookingForm.Designer.cs">
       <DependentUpon>BookingForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="BookingAddForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BookingAddForm.Designer.cs">
+      <DependentUpon>BookingAddForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="BookingAddForm.resx">
+      <DependentUpon>BookingAddForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="BookingForm.resx">
       <DependentUpon>BookingForm.cs</DependentUpon>
     </EmbeddedResource>

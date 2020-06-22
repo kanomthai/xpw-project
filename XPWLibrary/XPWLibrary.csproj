@@ -99,11 +99,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\BookingControllers.cs" />
     <Compile Include="Controllers\InvoiceControllers.cs" />
     <Compile Include="Controllers\OrderControllers.cs" />
     <Compile Include="Controllers\ShortingControllers.cs" />
     <Compile Include="Interfaces\ConnDB.cs" />
     <Compile Include="Interfaces\GreeterFunction.cs" />
+    <Compile Include="Models\BookingCustomerData.cs" />
     <Compile Include="Models\JSONClass.cs" />
     <Compile Include="Interfaces\StaticFunctionData.cs" />
     <Compile Include="Main.cs" />
