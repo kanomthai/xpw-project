@@ -126,7 +126,7 @@ namespace InvoiceApp
         private void GetForwardWeek()
         {
             DateTime d = DateTime.Parse(bbiEtd.EditValue.ToString());
-            this.Invoke(new MethodInvoker(delegate { gridForwardControl.DataSource = GetMasterWeek(0, 7); }));
+            this.Invoke(new MethodInvoker(delegate { gridForwardControl.DataSource = GetMasterWeek(7, 14); }));
             
         }
 

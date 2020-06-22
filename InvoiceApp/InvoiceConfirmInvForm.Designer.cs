@@ -396,10 +396,8 @@
             // 
             // ppMenu
             // 
-            this.ppMenu.ItemLinks.Add(this.bbiConfirm);
             this.ppMenu.ItemLinks.Add(this.bbiRebuildPallet);
             this.ppMenu.ItemLinks.Add(this.bbiPlDetail, true);
-            this.ppMenu.ItemLinks.Add(this.bbiContainerDetail);
             this.ppMenu.ItemLinks.Add(this.bbiRefresh, true);
             this.ppMenu.Name = "ppMenu";
             this.ppMenu.Ribbon = this.ribbonControl;

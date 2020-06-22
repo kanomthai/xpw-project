@@ -96,7 +96,9 @@ namespace InvoiceApp
             {
                 ppMenu.MenuCaption = gridView.GetFocusedRowCellValue("PartNo").ToString();
                 bbiShowLotDetail.Enabled = false;
+                bbiPlConfirm.Enabled = false;
                 bbiSetMultiLot.Enabled = true;
+                bbiAddShorting.Enabled = true;
                 if (StaticFunctionData.Factory == "INJ")
                 {
                     bbiSetMultiLot.Enabled = false;
@@ -106,9 +108,15 @@ namespace InvoiceApp
                 {
                     bbiShowLotDetail.Caption = $"{gridView.GetFocusedRowCellValue("LotNo").ToString()} Detail";
                 }
+                if (gridView.GetFocusedRowCellValue("RemCtn").ToString() == "0")
+                {
+                    bbiAddShorting.Enabled = false;
+                }
                 bbiEditOrder.Enabled = StaticFunctionData.EditOrder;
-                bool chinvconfirm = new GreeterFunction().CheckUpdateInvoice(DateTime.Parse(bbiEtd.EditValue.ToString()));
-                bbiPlConfirm.Enabled = !chinvconfirm;
+                if (bbiInv.EditValue.ToString().Length > 10)
+                {
+                    bbiPlConfirm.Enabled = true;
+                }
                 ppMenu.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
             }
             else
