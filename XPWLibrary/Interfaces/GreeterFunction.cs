@@ -6,6 +6,7 @@ using System.Data;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Web.Script.Serialization;
 using System.Windows.Forms;
 using System.Xml;
 using XPWLibrary.Models;
@@ -14,6 +15,26 @@ namespace XPWLibrary.Interfaces
 {
     public class GreeterFunction
     {
+        public string GetStatus(int x, int status)
+        {
+            string txtpath = "";
+            string txt = status.ToString();
+            switch (x)
+            {
+                case 1:
+                    txtpath = $"{AppDomain.CurrentDomain.BaseDirectory}Configures\\invoice.json";
+                    using (StreamReader r = new StreamReader(txtpath))
+                    {
+                        string json = r.ReadToEnd();
+                        JavaScriptSerializer jss = new JavaScriptSerializer();
+                        var Items = jss.Deserialize<JSONClass>(json);
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return txt;
+        }
         public void CheckGitHubVersionAsync()
         {
             try

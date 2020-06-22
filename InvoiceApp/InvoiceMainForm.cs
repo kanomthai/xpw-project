@@ -211,6 +211,7 @@ namespace InvoiceApp
                     }
                     break;
                 case "Status":
+                    //new GreeterFunction().GetStatus(1, int.Parse(e.Value.ToString()));
                     if (int.Parse(e.Value.ToString()) == StaticFunctionData.StatusSendGEDI)
                     {
                         e.DisplayText = "Send GEDI";

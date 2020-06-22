@@ -1,0 +1,30 @@
+[
+  {
+    "value": "0",
+    "name": "JobList"
+  },
+  {
+    "value": "1",
+    "name": "Invoice"
+  },
+  {
+    "value": "2",
+    "name": "Prepare"
+  },
+  {
+    "value": "3",
+    "name": "Booking"
+  },
+  {
+    "value": "4",
+    "name": "Send GEDI"
+  },
+  {
+    "value": "5",
+    "name": "Closed"
+  },
+  {
+    "value": "6",
+    "name": "Closed"
+  }
+]

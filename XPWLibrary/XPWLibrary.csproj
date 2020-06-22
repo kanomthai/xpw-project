@@ -89,6 +89,7 @@
       <HintPath>..\packages\System.IO.Abstractions.11.0.15\lib\net461\System.IO.Abstractions.dll</HintPath>
     </Reference>
     <Reference Include="System.Net" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -103,6 +104,7 @@
     <Compile Include="Controllers\ShortingControllers.cs" />
     <Compile Include="Interfaces\ConnDB.cs" />
     <Compile Include="Interfaces\GreeterFunction.cs" />
+    <Compile Include="Models\JSONClass.cs" />
     <Compile Include="Interfaces\StaticFunctionData.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Models\FTicketData.cs" />
@@ -119,6 +121,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Configures\invoice.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Labels\CK2_1DCTN.nlbl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
