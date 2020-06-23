@@ -377,8 +377,16 @@ namespace InvoiceApp
 
         private void bbiPalletList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            InvoiceConfirmInvForm frm = new InvoiceConfirmInvForm(ob.RefInv);
-            frm.ShowDialog();
+            if (ob.RefInv.Substring(0, 1) == "A")
+            {
+                InvoiceConfirmInvForm frm = new InvoiceConfirmInvForm(ob.RefInv);
+                frm.ShowDialog();
+            }
+            else
+            {
+                InvoiceSetPalletForm frm = new InvoiceSetPalletForm(ob.RefInv);
+                frm.ShowDialog();
+            }
         }
 
         private void bbiShipingPart_ItemClick(object sender, ItemClickEventArgs e)

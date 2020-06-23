@@ -143,6 +143,12 @@
     <Compile Include="InvoiceJobCardForm.Designer.cs">
       <DependentUpon>InvoiceJobCardForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="InvoiceSetPalletForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InvoiceSetPalletForm.Designer.cs">
+      <DependentUpon>InvoiceSetPalletForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="InvoiceAddNewPalletForm.resx">
       <DependentUpon>InvoiceAddNewPalletForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -160,6 +166,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="InvoicePalletDetailForm.resx">
       <DependentUpon>InvoicePalletDetailForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InvoiceSetPalletForm.resx">
+      <DependentUpon>InvoiceSetPalletForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">

@@ -4,16 +4,9 @@ namespace XPWLibrary.Models
 {
     public class InvoiceData: OrderData
     {
-        public int Id { get; set; }
-        public string Factory { get; set; }
         public string Zname { get; set; }
         public DateTime Etddte { get; set; }
-        public string Affcode { get; set; }
         public string Bishpc { get; set; }
-        public string Combinv { get; set; }
-        public string Custname { get; set; }
-        public string Ship { get; set; }
-        public string RefInv { get; set; }
         public string Invoice { get; set; }
         public int Zoneid { get; set; }
         public string Ord { get; set; }

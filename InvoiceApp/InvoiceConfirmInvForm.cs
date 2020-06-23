@@ -68,7 +68,7 @@ namespace InvoiceApp
         {
             if (invno.Substring(0, 1) == "I")
             {
-                new GreeterFunction().SumPlInj(invno);
+                //new GreeterFunction().SumPlInj(invno);
             }
             else
             {

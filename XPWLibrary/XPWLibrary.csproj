@@ -102,6 +102,7 @@
     <Compile Include="Controllers\BookingControllers.cs" />
     <Compile Include="Controllers\InvoiceControllers.cs" />
     <Compile Include="Controllers\OrderControllers.cs" />
+    <Compile Include="Controllers\SelPlControllers.cs" />
     <Compile Include="Controllers\ShortingControllers.cs" />
     <Compile Include="Interfaces\ConnDB.cs" />
     <Compile Include="Interfaces\GreeterFunction.cs" />
@@ -118,6 +119,7 @@
     <Compile Include="Models\PalletData.cs" />
     <Compile Include="Models\PlCountData.cs" />
     <Compile Include="Models\PlListData.cs" />
+    <Compile Include="Models\SetPlData.cs" />
     <Compile Include="Models\ShortData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

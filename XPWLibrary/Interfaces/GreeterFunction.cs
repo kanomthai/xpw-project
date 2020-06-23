@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -310,6 +311,106 @@ namespace XPWLibrary.Interfaces
             return txt;
         }
 
+        public string GetPlSize(string partsize, int ctn)
+        {
+            string PlSize ="";
+            switch (partsize)
+            {
+                case "63x64x15":
+                case "63x64x18":
+                case "63x64x17":
+                    if (ctn < 20 && ctn >= 16)
+                    {
+                        PlSize = "65x129x159";
+
+                    }
+                    else if (ctn >= 20)//20
+                    {
+                        PlSize = "65x129x195";
+                    }
+                    else
+                    {
+                        //PlSize = "BOX";
+                        PlSize = "65x129x159";
+                    }
+                    break;
+                case "27x27x50":
+                case "27x27x51":
+                    //if (ctn >= 24)
+                    //{
+                    //    PlSize = "111x115x94";
+                    //}
+                    //else
+                    //{
+                    //    PlSize = "BOX";
+                    //}
+                    PlSize = "111x115x94";
+                    break;
+                case "43x27x14":
+                case "26x43x14":
+                case "27x43x14":
+                    //if (ctn >= 64)
+                    //{
+                    //    PlSize = "111x115x125";
+                    //}
+                    //else
+                    //{
+                    //    PlSize = "BOX";
+                    //}
+                    PlSize = "111x115x125";
+                    break;
+                case "38x56x39":
+                case "56x38x39":
+                case "39x56x40":
+                    if (ctn < 18)
+                    {
+                        //PlSize = "BOX";
+                        PlSize = "111x115x133";
+                    }
+                    else if (ctn < 24 && ctn > 17)//18
+                    {
+                        PlSize = "111x115x133";
+                    }
+                    else if (ctn < 30 && ctn > 23)//24
+                    {
+                        PlSize = "111x115x213";
+                    }
+                    else if (ctn >= 30)
+                    {
+                        PlSize = "111x115x213";
+                    }
+                    break;
+                case "36x54x24":
+                case "37x54x24":
+                case "38x56x23":
+                    //if (ctn < 36)
+                    //{
+                    //    PlSize = "BOX";
+                    //}
+                    //else
+                    //{
+                    //    PlSize = "111x115x163";
+                    //}
+                    PlSize = "111x115x163";
+                    break;
+                case "36x55x39":
+                    //if (ctn < 30)
+                    //{
+                    //    PlSize = "BOX";
+                    //}
+                    //else
+                    //{
+                    //    PlSize = "111x115x130";
+                    //}
+                    PlSize = "111x115x130";
+                    break;
+                default:
+                    PlSize = "MIX";
+                    break;
+            }
+            return PlSize;
+        }
+
         List<INJPlData> PlInjSize(string partsize, int ctn)
         {
             string plgroup;
@@ -605,6 +706,46 @@ namespace XPWLibrary.Interfaces
         public void CreateLogSearch(string v)
         {
             throw new NotImplementedException();
+        }
+
+        public bool CheckPlDuplicate(string refno, string plnum)
+        {
+            bool x = false;
+            string sql = $"SELECT * FROM TXP_ISSPALLET l WHERE l.PALLETNO = '{plnum}' AND l.ISSUINGKEY = '{refno}'";
+            DataSet dr = new ConnDB().GetFill(sql);
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                x = true;
+            }
+            return x;
+        }
+
+        public int GetPlQty(string refno, string plno)
+        {
+            string sql = $"SELECT l.PLTOTAL  FROM TXP_ISSPALLET l \n" +
+                $"WHERE l.ISSUINGKEY = '{refno}' AND l.PALLETNO = '{plno}'";
+            Console.WriteLine(sql);
+            int x = 0;
+            DataSet dr = new ConnDB().GetFill(sql);
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                x = int.Parse(dr.Tables[0].Rows[0]["pltotal"].ToString());
+            }
+            return x;
+        }
+
+        public string GetPlList(string refno, string pltype)
+        {
+            string sql = $"SELECT \n" +
+                $"CASE WHEN min(l.PALLETNO) = max(l.PALLETNO) THEN min(l.PALLETNO) ELSE min(l.PALLETNO)||'-'||max(l.PALLETNO) END  plno,l.PLTYPE \n" +
+                $"FROM TXP_ISSPALLET l WHERE l.ISSUINGKEY = '{refno}' AND l.PLTYPE = '{pltype}' GROUP BY l.PLTYPE";
+            string x = "";
+            DataSet dr = new ConnDB().GetFill(sql);
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                x = dr.Tables[0].Rows[0]["plno"].ToString();
+            }
+            return x;
         }
 
         public int GetInvoiceStatus(string refNo)
