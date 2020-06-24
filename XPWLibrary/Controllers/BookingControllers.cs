@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,110 @@ namespace XPWLibrary.Controllers
                 });
             }
             return obj;
+        }
+
+        public List<Bookings> GetContainerList(DateTime d)
+        {
+            string sql = $"select c.custname,c.etddte,c.containerno,c.sealno,c.containersize,l.ISSUINGKEY invoice,0 grossweight,0 netweight,0 plcount," +
+                $"l.PLOUTSTS loadsts,0 closed,c.RELEASEDTE from txp_loadcontainer c\n" +
+                "INNER JOIN TXP_ISSPALLET l ON c.CONTAINERNO = l.CONTAINERNO \n" +
+                $"where c.etddte = to_date('{d.ToString("dd/MM/yyyy")}', 'dd/MM/yyyy')";
+            DataSet dr = new ConnDB().GetFill(sql);
+            Console.WriteLine(sql);
+            Console.WriteLine("========== GetLoadContainer ===========");
+            List<Bookings> list = new List<Bookings>();
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                list.Add(new Bookings()
+                {
+                    Id = list.Count + 1,
+                    ContainerNo = r["containerno"].ToString(),
+                    ContainerSize = r["containersize"].ToString(),
+                    Invoice = r["invoice"].ToString(),
+                    SealNo = r["sealno"].ToString(),
+                    Custname = r["custname"].ToString(),
+                    Pallet = GetCountContainer(r["containerno"].ToString()),
+                    LoadStatus = int.Parse(r["loadsts"].ToString()),
+                    CloseStatus = int.Parse(r["closed"].ToString()),
+                    GrossWeight = int.Parse(r["grossweight"].ToString()),
+                    NetWeight = int.Parse(r["netweight"].ToString()),
+                    Etd = DateTime.Parse(r["etddte"].ToString()),
+                    ReleaseDate = DateTime.Parse(r["releasedte"].ToString()),
+                });
+            }
+            return list;
+        }
+
+        private int GetCountContainer(string v)
+        {
+            string sql = $"SELECT count(*) ponocount FROM TXP_ISSPALLET l WHERE l.CONTAINERNO = '{v}'";
+            Console.WriteLine(sql);
+            Console.WriteLine($"============ GetCountContainer(string {v}) ==================");
+            DataSet dr = new ConnDB().GetFill(sql);
+            int x = 0;
+            if (dr.Tables.Count < 1)
+            {
+                return x;
+            }
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                x = int.Parse(dr.Tables[0].Rows[0]["ponocount"].ToString());
+            }
+            return x;
+        }
+
+        public List<Bookings> GetContainerListDetail(string containerno)
+        {
+            string sql = $"SELECT l.PALLETNO,l.PLOUTNO,c.etddte,l.issuingkey,l.custname,c.containersize FROM TXP_LOADCONTAINER c\n" +
+                        $"INNER JOIN TXP_ISSPALLET l ON c.CONTAINERNO = l.CONTAINERNO\n" +
+                        $"WHERE l.containerno = '{containerno}' and l.booked = 6\n" +
+                        $"ORDER BY l.custname,l.issuingkey,l.PALLETNO";
+            Console.WriteLine(sql);
+            DataSet dr = new ConnDB().GetFill(sql);
+            List<Bookings> list = new List<Bookings>();
+            List<string> cust = new List<string>();
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                List<string> x = GetPonoListByPl(r["ploutno"].ToString());
+                string l = string.Join(",", x);
+                if (l.Length > 50)
+                {
+                    l = l.Substring(0, 20) + "....";
+                }
+                list.Add(new Bookings()
+                {
+                    Id = list.Count + 1,
+                    Etd = DateTime.Parse(r["etddte"].ToString()),
+                    Invoice = r["issuingkey"].ToString(),
+                    ContainerSize = r["containersize"].ToString(),
+                    Custname = r["custname"].ToString(),
+                    PlNo = r["palletno"].ToString(),
+                    PlOutNo = r["ploutno"].ToString(),
+                    OrderNo = l,
+                });
+                var c = cust.FindAll(i => i.Contains(r["custname"].ToString()));
+                if (c.Count < 1)
+                {
+                    cust.Add(r["custname"].ToString());
+                }
+            }
+            list[0].Custname = string.Join(",", cust);
+            return list;
+        }
+
+        private List<string> GetPonoListByPl(string plno)
+        {
+            string sql = $"SELECT pono FROM TXP_CARTONDETAILS c WHERE c.PLOUTNO = '{plno}' GROUP BY pono ORDER BY pono";
+            DataSet dr = new ConnDB().GetFill(sql);
+            List<string> x = new List<string>();
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                //x[i] = r["orderid"].ToString();
+                //i++;
+                Console.WriteLine(r["pono"].ToString());
+                x.Add(r["pono"].ToString());
+            }
+            return x;
         }
 
         public List<BookingPlData> GetPalletInvoice(DateTime etd, string custname)
@@ -61,6 +166,7 @@ namespace XPWLibrary.Controllers
                     plctn = int.Parse(r["pl"].ToString()),
                     booked = int.Parse(r["booked"].ToString()),
                     ubook = int.Parse(r["pl"].ToString()) - int.Parse(r["booked"].ToString()),
+                    custname = custname,
                 });
             }
             return obj;
@@ -68,7 +174,7 @@ namespace XPWLibrary.Controllers
 
         public List<BookingInvoicePallet> GetInvoicePl(string issuekey)
         {
-            string sql = $"SELECT l.ISSUINGKEY,l.PLTYPE,l.PALLETNO,l.PLTOTAL,l.PLOUTNO,l.PLOUTSTS FROM TXP_ISSPALLET l WHERE l.ISSUINGKEY = '{issuekey}'";
+            string sql = $"SELECT l.* FROM TXP_ISSPALLET l WHERE l.ISSUINGKEY = '{issuekey}' AND l.BOOKED < 4";
             List<BookingInvoicePallet> obj = new List<BookingInvoicePallet>();
             Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
@@ -83,6 +189,30 @@ namespace XPWLibrary.Controllers
                     pltotal = int.Parse(r["pltotal"].ToString()),
                     ploutno = r["ploutno"].ToString(),
                     plstatus = int.Parse(r["ploutsts"].ToString()),
+                    custname = r["custname"].ToString(),
+                });
+            }
+            return obj;
+        }
+
+        public List<BookingInvoicePallet> GetInvoicePlBooked(string issuekey)
+        {
+            string sql = $"SELECT l.* FROM TXP_ISSPALLET l WHERE l.ISSUINGKEY = '{issuekey}' AND l.BOOKED > 3";
+            List<BookingInvoicePallet> obj = new List<BookingInvoicePallet>();
+            Console.WriteLine(sql);
+            DataSet dr = new ConnDB().GetFill(sql);
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                obj.Add(new BookingInvoicePallet()
+                {
+                    id = obj.Count + 1,
+                    issuekey = r["issuingkey"].ToString(),
+                    pltype = r["pltype"].ToString(),
+                    plno = r["palletno"].ToString(),
+                    pltotal = int.Parse(r["pltotal"].ToString()),
+                    ploutno = r["ploutno"].ToString(),
+                    plstatus = int.Parse(r["ploutsts"].ToString()),
+                    custname = r["custname"].ToString(),
                 });
             }
             return obj;
@@ -91,6 +221,31 @@ namespace XPWLibrary.Controllers
         public bool AddBooking(BookingInvoicePallet obj)
         {
             return true;
+        }
+
+        public List<BookingInvoicePallet> GetContainerDeaitl(string conns)
+        {
+            List<BookingInvoicePallet> list = new List<BookingInvoicePallet>();
+            string sql = $"SELECT l.*,e.refinvoice FROM txp_isspallet l\n" +
+                        $"INNER JOIN TXP_ISSTRANSENT e ON l.ISSUINGKEY = e.ISSUINGKEY WHERE l.containerno = '{conns}'";
+            Console.WriteLine(sql);
+            DataSet dr = new ConnDB().GetFill(sql);
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                list.Add(new BookingInvoicePallet()
+                {
+                    id = list.Count + 1,
+                    issuekey = r["issuingkey"].ToString(),
+                    refinv = r["refinvoice"].ToString(),
+                    pltype = r["pltype"].ToString(),
+                    plno = r["palletno"].ToString(),
+                    pltotal = int.Parse(r["pltotal"].ToString()),
+                    ploutno = r["ploutno"].ToString(),
+                    plstatus = int.Parse(r["ploutsts"].ToString()),
+                    custname = r["custname"].ToString(),
+                });
+            }
+            return list;
         }
     }
 }

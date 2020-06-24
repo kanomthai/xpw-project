@@ -1,7 +1,10 @@
 ﻿using DevExpress.XtraBars;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using XPWLibrary.Controllers;
+using XPWLibrary.Models;
 
 namespace BookingApp
 {
@@ -10,60 +13,62 @@ namespace BookingApp
         public BookingForm()
         {
             InitializeComponent();
-            gridControl.DataSource = GetDataSource();
-            BindingList<Customer> dataSource = GetDataSource();
-            gridControl.DataSource = dataSource;
-            bsiRecordsCount.Caption = "RECORDS : " + dataSource.Count;
+            bbiEtdDate.EditValue = DateTime.Now;
         }
         void bbiPrintPreview_ItemClick(object sender, ItemClickEventArgs e)
         {
             gridControl.ShowRibbonPrintPreview();
         }
-        public BindingList<Customer> GetDataSource()
-        {
-            BindingList<Customer> result = new BindingList<Customer>();
-            result.Add(new Customer()
-            {
-                ID = 1,
-                Name = "ACME",
-                Address = "2525 E El Segundo Blvd",
-                City = "El Segundo",
-                State = "CA",
-                ZipCode = "90245",
-                Phone = "(310) 536-0611"
-            });
-            result.Add(new Customer()
-            {
-                ID = 2,
-                Name = "Electronics Depot",
-                Address = "2455 Paces Ferry Road NW",
-                City = "Atlanta",
-                State = "GA",
-                ZipCode = "30339",
-                Phone = "(800) 595-3232"
-            });
-            return result;
-        }
-        public class Customer
-        {
-            [Key, Display(AutoGenerateField = false)]
-            public int ID { get; set; }
-            [Required]
-            public string Name { get; set; }
-            public string Address { get; set; }
-            public string City { get; set; }
-            public string State { get; set; }
-            [Display(Name = "Zip Code")]
-            public string ZipCode { get; set; }
-            public string Phone { get; set; }
-        }
 
         private void bbiNew_ItemClick(object sender, ItemClickEventArgs e)
         {
-            DateTime etd = DateTime.Now;
-            string conno = null;
-            BookingAddForm frm = new BookingAddForm(etd, conno);
+            BookingAddForm frm = new BookingAddForm(null);
             frm.ShowDialog();
+        }
+
+        void Reload()
+        {
+            DateTime d = DateTime.Parse(bbiEtdDate.EditValue.ToString());
+            List<Bookings> obj = new BookingControllers().GetContainerList(d);
+            gridControl.DataSource = obj;
+            bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
+        }
+
+        private void bbiEtdDate_EditValueChanged(object sender, EventArgs e)
+        {
+            Reload();
+        }
+
+        private void gridView_DoubleClick(object sender, EventArgs e)
+        {
+            Bookings obj = gridView.GetFocusedRow() as Bookings;
+            BookingAddForm frm = new BookingAddForm(obj);
+            frm.ShowDialog();
+        }
+
+        private void gridView_CustomColumnDisplayText(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs e)
+        {
+            try
+            {
+                switch (e.Column.FieldName.ToString())
+                {
+                    case "LoadStatus":
+                    case "CloseStatus":
+                    case "GrossWeight":
+                    case "NetWeight":
+                    case "Pallet":
+                        if (e.Value.ToString() == "0")
+                        {
+                            e.DisplayText = "";
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 }
