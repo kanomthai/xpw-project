@@ -475,7 +475,8 @@ namespace InvoiceApp
                         string updetail = $"UPDATE TXP_ISSPACKDETAIL d SET d.ISSUINGSTATUS=1,d.UPDDTE=SYSDATE WHERE d.ISSUINGKEY = '{refinv}' AND d.PONO = '{orderno}' AND d.PARTNO = '{partno}' AND d.ITEM = '{tctn}'";
                         new ConnDB().ExcuteSQL(updetail);
                     }
-                    string upbody = $"UPDATE TXP_ISSTRANSBODY b SET b.SHORDERQTY={shctn}*b.STDPACK,b.UPDDTE = sysdate WHERE b.ISSUINGKEY = '{refinv}' AND b.PONO = '{orderno}' AND b.PARTNO = '{partno}'";
+                    //string upbody = $"UPDATE TXP_ISSTRANSBODY b SET b.ORDERQTY={(ob.BalCtn - ob.ShCtn)}*b.STDPACK,b.SHORDERQTY={shctn}*b.STDPACK,b.UPDDTE = sysdate WHERE b.ISSUINGKEY = '{refinv}' AND b.PONO = '{orderno}' AND b.PARTNO = '{partno}'";
+                    string upbody = $"UPDATE TXP_ISSTRANSBODY b SET b.ORDERQTY={(ob.BalCtn - ob.ShCtn)}*b.STDPACK,b.SHORDERQTY=0,b.UPDDTE = sysdate WHERE b.ISSUINGKEY = '{refinv}' AND b.PONO = '{orderno}' AND b.PARTNO = '{partno}'";
                     string uporder = $"UPDATE TXP_ORDERPLAN p SET p.CURINV='',p.BALQTY={shctn}*p.BISTDP,p.ORDERSTATUS=3,p.UPDDTE=SYSDATE WHERE p.CURINV = '{refinv}' AND p.ORDERID = '{orderno}' AND p.PARTNO = '{partno}'";
                     new ConnDB().ExcuteSQL(upbody);
                     new ConnDB().ExcuteSQL(uporder);
@@ -494,12 +495,17 @@ namespace InvoiceApp
 
         private void bbiConfirmShort_ItemClick(object sender, ItemClickEventArgs e)
         {
-            if (SaveShorting())
+            DialogResult r = XtraMessageBox.Show("ยืนยันคำสั่งตัด Short", "XPW Alert!", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            if (r == DialogResult.OK)
             {
-                DialogResult r = XtraMessageBox.Show("บันทึกข้อมูลเสร็จแล้ว", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                if (r == DialogResult.OK)
+                if (SaveShorting())
                 {
-                    //save split order
+                    r = XtraMessageBox.Show("บันทึกข้อมูลเสร็จแล้ว", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    if (r == DialogResult.OK)
+                    {
+                        //save split order
+                        ReloadData();
+                    }
                 }
             }
         }
@@ -547,6 +553,8 @@ namespace InvoiceApp
                 {
                     InvoiceBodyData o = gridView.GetFocusedRow() as InvoiceBodyData;
                     o.ShCtn = shctn;
+                    string upbody = $"UPDATE TXP_ISSTRANSBODY b SET b.SHORDERQTY={shctn}*b.STDPACK,b.UPDDTE = sysdate " +
+                        $"WHERE b.ISSUINGKEY = '{o.RefNo}' AND b.PONO = '{o.OrderNo}' AND b.PARTNO = '{o.PartNo}'";
                     shlist.Add(o);
                     gridView.SetFocusedRowCellValue("RemCtn", (int.Parse(remctn) - int.Parse(result)));
                     gridView.RefreshData();
