@@ -103,6 +103,7 @@
     <Compile Include="Controllers\InvoiceControllers.cs" />
     <Compile Include="Controllers\OrderControllers.cs" />
     <Compile Include="Controllers\SelPlControllers.cs" />
+    <Compile Include="Controllers\SetPalletControllers.cs" />
     <Compile Include="Controllers\ShortingControllers.cs" />
     <Compile Include="Interfaces\ConnDB.cs" />
     <Compile Include="Interfaces\GreeterFunction.cs" />

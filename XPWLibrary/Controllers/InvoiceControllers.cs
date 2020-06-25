@@ -76,7 +76,7 @@ namespace XPWLibrary.Controllers
             {
                 etddate = $"t.ETDDTE BETWEEN (TRUNC(to_date('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy'), 'DY') + 0) AND (TRUNC(to_date('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy'), 'DY') + 7)";
             }
-            string sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate}\n" +
+            string sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate} AND t.CTN > 0\n" +
                 $"ORDER BY t.ZNAME,t.AFFCODE,t.CUSTNAME,t.BISHPC,t.SHIPTYPE,t.ORD";
             Console.WriteLine(sql);
             return AppendInvoiceDetail(sql);
@@ -260,7 +260,7 @@ namespace XPWLibrary.Controllers
                     BalCtn = int.Parse(r["ctn"].ToString()),
                     ShCtn = int.Parse(r["shctn"].ToString()),
                     PartRmCtn = int.Parse(r["rm"].ToString()),
-                    RemCtn = int.Parse(r["ctn"].ToString()) - int.Parse(r["rm"].ToString()),
+                    RemCtn = int.Parse(r["ctn"].ToString()) - (int.Parse(r["shctn"].ToString()) + int.Parse(r["rm"].ToString())),
                     StartFticket = sctn
                 });
             }

@@ -15,6 +15,7 @@ using XPWLibrary.Controllers;
 using DevExpress.XtraSplashScreen;
 using XPWLibrary.Interfaces;
 using OrderApp;
+using SetPalletApp;
 
 namespace InvoiceApp
 {
@@ -384,7 +385,7 @@ namespace InvoiceApp
             }
             else
             {
-                InvoiceSetPalletForm frm = new InvoiceSetPalletForm(ob.RefInv);
+                SetPalletForm frm = new SetPalletForm(ob.RefInv);
                 frm.ShowDialog();
             }
         }
@@ -476,7 +477,7 @@ namespace InvoiceApp
                         new ConnDB().ExcuteSQL(updetail);
                     }
                     //string upbody = $"UPDATE TXP_ISSTRANSBODY b SET b.ORDERQTY={(ob.BalCtn - ob.ShCtn)}*b.STDPACK,b.SHORDERQTY={shctn}*b.STDPACK,b.UPDDTE = sysdate WHERE b.ISSUINGKEY = '{refinv}' AND b.PONO = '{orderno}' AND b.PARTNO = '{partno}'";
-                    string upbody = $"UPDATE TXP_ISSTRANSBODY b SET b.ORDERQTY={(ob.BalCtn - ob.ShCtn)}*b.STDPACK,b.SHORDERQTY=0,b.UPDDTE = sysdate WHERE b.ISSUINGKEY = '{refinv}' AND b.PONO = '{orderno}' AND b.PARTNO = '{partno}'";
+                    string upbody = $"UPDATE TXP_ISSTRANSBODY b SET b.SHORDERQTY={shctn}*b.STDPACK,b.UPDDTE = sysdate WHERE b.ISSUINGKEY = '{refinv}' AND b.PONO = '{orderno}' AND b.PARTNO = '{partno}'";
                     string uporder = $"UPDATE TXP_ORDERPLAN p SET p.CURINV='',p.BALQTY={shctn}*p.BISTDP,p.ORDERSTATUS=3,p.UPDDTE=SYSDATE WHERE p.CURINV = '{refinv}' AND p.ORDERID = '{orderno}' AND p.PARTNO = '{partno}'";
                     new ConnDB().ExcuteSQL(upbody);
                     new ConnDB().ExcuteSQL(uporder);

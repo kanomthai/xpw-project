@@ -274,6 +274,11 @@ namespace InvoiceApp
                     XtraMessageBox.Show("Label นี้ปริ้น/จัดเตรียมไปแล้ว", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     gridView.SetRowCellValue(e.RowHandle, "PrintFTicket", false);
                 }
+                else if (f.PlNo == "")
+                {
+                    XtraMessageBox.Show("ไม่สามารถปริ้น FTicket ได้\nเนื่องจากยังไม่ระบุเลขที่พาเลท", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    gridView.SetRowCellValue(e.RowHandle, "PrintFTicket", false);
+                }
             }
         }
 

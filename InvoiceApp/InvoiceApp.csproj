@@ -308,6 +308,10 @@
       <Project>{E1C7E0A1-B6B8-43BB-B13B-4E0E3018DD3A}</Project>
       <Name>OrderApp</Name>
     </ProjectReference>
+    <ProjectReference Include="..\SetPalletApp\SetPalletApp.csproj">
+      <Project>{89DBB9E9-9275-4040-B119-267BF2E52E17}</Project>
+      <Name>SetPalletApp</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ShortingApp\ShortingApp.csproj">
       <Project>{9F624496-0EC0-4BEF-ABB7-67EFF8C34E20}</Project>
       <Name>ShortingApp</Name>

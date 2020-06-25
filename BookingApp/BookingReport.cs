@@ -19,7 +19,7 @@ namespace BookingApp
         internal void initData(string containerno)
         {
             List<Bookings> list = new BookingControllers().GetContainerListDetail(containerno) as List<Bookings>;
-            objectDataSource1.DataSource = list;
+            objectDataSource1.DataSource = null;
             if (list.Count > 0)
             {
                 DateTime d = DateTime.Parse(list[0].Etd.ToString());

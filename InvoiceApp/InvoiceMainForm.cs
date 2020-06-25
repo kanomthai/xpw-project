@@ -269,8 +269,9 @@ namespace InvoiceApp
                     th.Start();
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
             }
         }
 
