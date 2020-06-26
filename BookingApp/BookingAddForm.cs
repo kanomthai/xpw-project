@@ -191,26 +191,32 @@ namespace BookingApp
         void UpdateContainer(BookingInvoicePallet pl)
         {
             string sql = $"select * from txp_loadcontainer where containerno = '{bbiContainer.EditValue.ToString().ToUpper()}'";
+            DateTime d = DateTime.Parse(bbiRelDate.EditValue.ToString());
+            string txttime = $"{d.ToString("dd/MM/yyyy")} {bbiRelTimer.EditValue.ToString().Substring(10, 9).Trim()}";
+            DateTime dx = DateTime.Parse(bbiEtd.EditValue.ToString());
+            string containersize = "20F";
+            if (bbi4oFt.Checked)
+            {
+                containersize = "40F";
+            }
             DataSet dr = new ConnDB().GetFill(sql);
+            string sqlupdate = $"update txp_loadcontainer set etddte=to_date('{dx.ToString("dd/MM/yyyy")}', 'DD/MM/YYYY')," +
+                                $"sealno='{bbiSealNo.EditValue.ToString().ToUpper()}',containersize='{containersize}'," +
+                                $"receivedte=to_date('{d.ToString("dd/MM/yyyy")}', 'DD/MM/YYYY')," +
+                                $"releasedte=to_date('{txttime}', 'DD/MM/YYYY HH24:MI:SS'),upddte=sysdate\n" +
+                                $"where containerno='{bbiContainer.EditValue.ToString().ToUpper()}'";
             if (dr.Tables[0].Rows.Count <= 0)
             {
-                DateTime d = DateTime.Parse(bbiRelDate.EditValue.ToString());
-                string txttime = $"{d.ToString("dd/MM/yyyy")} {bbiRelTimer.EditValue.ToString().Substring(10, 9).Trim()}";
-                DateTime dx = DateTime.Parse(bbiEtd.EditValue.ToString());
-                string containersize = "20F";
-                if (bbi4oFt.Checked)
-                {
-                    containersize = "40F";
-                }
-                string sqlupdate = "insert into txp_loadcontainer(containerno,custname,etddte,sealno,containersize,receivedte,releasedte,sysdte,upddte) \n" +
+                sqlupdate = "insert into txp_loadcontainer(containerno,custname,etddte,sealno,containersize,receivedte,releasedte,sysdte,upddte) \n" +
                                "values \n" +
                                $"('{bbiContainer.EditValue.ToString().ToUpper()}', " +
                                $"'{pl.custname.Trim().ToUpper()}', " +
                                $"to_date('{dx.ToString("dd/MM/yyyy")}', 'DD/MM/YYYY'), '{bbiSealNo.EditValue.ToString().ToUpper()}', " +
                                $"'{containersize}', to_date('{d.ToString("dd/MM/yyyy")}', 'DD/MM/YYYY'), " +
                                $"to_date('{txttime}', 'DD/MM/YYYY HH24:MI:SS'), sysdate, sysdate)";
-                new ConnDB().ExcuteSQL(sqlupdate);
+                
             }
+            new ConnDB().ExcuteSQL(sqlupdate);
         }
 
         bool UpdatePallet(BookingInvoicePallet pl, int sl)
@@ -354,7 +360,19 @@ namespace BookingApp
 
         private void bbiNew_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            UpdateContainer(null);
+            XtraMessageBox.Show("บันทึกข้อมูลเสร็จแล้ว", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            try
+            {
+                if (bbiContainer.EditValue.ToString() != "")
+                {
+                    BookingPreviewForm frm = new BookingPreviewForm(bbiContainer.EditValue.ToString());
+                    frm.ShowDialog();
+                }
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void gridContainerView_Click(object sender, EventArgs e)
