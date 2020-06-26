@@ -46,7 +46,7 @@ namespace XPWLibrary.Controllers
         public List<SetPallatData> GetPartListCompletedDetail(string issuekey)
         {
             List<SetPallatData> obj = new List<SetPallatData>();
-            string sql = $"SELECT l.PALLETNO,l.PLTOTAL FROM TXP_ISSPALLET l WHERE l.ISSUINGKEY = '{issuekey}' AND l.PALLETNO LIKE '%P%'\n"+
+            string sql = $"SELECT l.PALLETNO,l.PLTOTAL,l.PLTYPE FROM TXP_ISSPALLET l WHERE l.ISSUINGKEY = '{issuekey}' AND l.PALLETNO LIKE '%P%'\n"+
                            "ORDER BY l.PALLETNO ";
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow r in dr.Tables[0].Rows)
@@ -68,7 +68,7 @@ namespace XPWLibrary.Controllers
                     //PName = r["pname"].ToString(),//PNAME
                     //PartNo = r["partno"].ToString(),//PARTNO
                     //PartName = r["partname"].ToString(),//PARTNAME
-                    //PlSize = r["plsize"].ToString(),//PLSIZE
+                    PlSize = r["pltype"].ToString(),//PLSIZE
                     Ctn = int.Parse(r["pltotal"].ToString()),//CTN
                     ShipPlNo = r["palletno"].ToString(),//SHIPPLNO
                 });

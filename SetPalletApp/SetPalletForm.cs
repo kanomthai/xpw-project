@@ -153,7 +153,7 @@ namespace SetPalletApp
                     if (i.MgrPl)
                     {
                         c = true;
-                        x += i.Ctn;
+                        x += i.CtnQty;
                     }
                 });
                 if (c)
@@ -256,7 +256,9 @@ namespace SetPalletApp
 
         private void gridPalletView_Click(object sender, EventArgs e)
         {
-            List<SetPallatData> l = gridPalletControl.DataSource as List<SetPallatData>;
+            List<SetPallatData> l = new List<SetPallatData>();
+            SetPallatData x = gridPalletView.GetFocusedRow() as SetPallatData;
+            l.Add(x);
             gridPalleteDetailControl.DataSource = l;
         }
 
