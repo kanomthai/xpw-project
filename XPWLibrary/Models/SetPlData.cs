@@ -35,6 +35,7 @@ namespace XPWLibrary.Models
         public string PartNo { get; set; }//PARTNO
         public string PartName { get; set; }//PARTNAME
         public string PlSize { get; set; }//PLSIZE
+        public int CtnQty { get; set; }//CTN
         public int Ctn { get; set; }//CTN
         public string ShipPlNo { get; set; }//SHIPPLNO
         public bool MgrPl { get; set; }

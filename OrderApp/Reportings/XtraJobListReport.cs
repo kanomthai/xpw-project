@@ -21,7 +21,7 @@ namespace OrderApp.Reportings
 
         internal void InitData(OrderData obj)
         {
-            List<OrderBody> ob = new OrderControllers().GetOrderJobList(obj);
+            List<OrderBody> ob = new OrderControllers().GetReportJobList(obj);
             int ctn = 0;
             int xqty = 0;
             ob.ForEach(i => {

@@ -588,7 +588,7 @@ namespace XPWLibrary.Controllers
             return sql;
         }
 
-        public List<OrderBody> GetOrderJobList(OrderData b)
+        public List<OrderBody> GetReportJobList(OrderData b)
         {
             string sql = $"SELECT p.PONO custpono,p.PARTNO,CASE WHEN p.FACTORY = 'INJ' THEN p.PARTNO ELSE p.PARTNAME END PARTNAME,p.LOTNO,b.ORDERQTY BALQTY,round(b.ORDERQTY/b.STDPACK) orderctn,p.BIIVPX,p.BIOABT,p.COMMERCIAL,p.PC,p.UUID," +
                 $"p.BISTDP,p.BIWIDT,p.BILENG,p.BIHIGH,p.BIGRWT,p.BINEWT,p.ORDERTYPE,p.CURINV,e.refinvoice invoceno,p.ORDERSTATUS," +
@@ -612,15 +612,38 @@ namespace XPWLibrary.Controllers
             return obj;
         }
 
-        public List<OrderBody> GetOrderDetail(OrderData b)
+        public List<OrderBody> GetOrderJobList(OrderData b)
         {
-            string sql = $"SELECT p.PONO custpono,p.PARTNO,CASE WHEN p.FACTORY = 'INJ' THEN p.PARTNO ELSE p.PARTNAME END PARTNAME,p.LOTNO,b.ORDERQTY BALQTY,round(b.ORDERQTY/b.STDPACK) orderctn,p.BIIVPX,p.BIOABT,p.COMMERCIAL,p.PC,p.UUID," +
+            string sql = $"SELECT p.PONO custpono,p.PARTNO,CASE WHEN p.FACTORY = 'INJ' THEN p.PARTNO ELSE p.PARTNAME END PARTNAME,p.LOTNO,p.BALQTY,round(p.BALQTY/p.BISTDP) orderctn,p.BIIVPX,p.BIOABT,p.COMMERCIAL,p.PC,p.UUID," +
                 $"p.BISTDP,p.BIWIDT,p.BILENG,p.BIHIGH,p.BIGRWT,p.BINEWT,p.ORDERTYPE,p.CURINV,e.refinvoice invoceno,p.ORDERSTATUS," +
                 $"substr(p.REASONCD, 1, 1) rewrite,p.upddte,p.bicomd FROM TXP_ORDERPLAN p\n" +
-                "INNER JOIN TXP_ISSTRANSBODY b ON p.ORDERID = b.PONO AND p.PARTNO = b.PARTNO\n" +
+                "LEFT JOIN TXP_ISSTRANSBODY b ON p.ORDERID = b.PONO AND p.PARTNO = b.PARTNO\n" +
                 "LEFT JOIN TXP_ISSTRANSENT e ON p.CURINV = e.ISSUINGKEY\n" +
                 "LEFT JOIN TXP_PART m ON p.FACTORY = m.VENDORCD AND p.PARTNO = m.PARTNO\n";
-            Console.WriteLine(sql);
+            List<OrderBody> obj = new List<OrderBody>();
+            sql += CheckOrderGroup(b);
+            string ordby = "\nORDER BY p.PARTNO,round(p.BALQTY/p.BISTDP),p.PONO";
+            if (b.Factory == "AW")
+            {
+                ordby = "\nORDER BY m.KIDS,m.SIZES ,p.ORDERID,p.LOTNO,round(p.BALQTY/p.BISTDP)";
+            }
+            sql += ordby;
+            foreach (OrderBody od in AddOrderJobList(b, sql))
+            {
+                od.Id = obj.Count + 1;
+                obj.Add(od);
+            }
+            return obj;
+        }
+
+        public List<OrderBody> GetOrderDetail(OrderData b)
+        {
+            string sql = $"SELECT p.PONO custpono,p.PARTNO,CASE WHEN p.FACTORY = 'INJ' THEN p.PARTNO ELSE p.PARTNAME END PARTNAME,p.LOTNO,p.BALQTY,round(p.BALQTY/p.BISTDP) orderctn,p.BIIVPX,p.BIOABT,p.COMMERCIAL,p.PC,p.UUID," +
+                $"p.BISTDP,p.BIWIDT,p.BILENG,p.BIHIGH,p.BIGRWT,p.BINEWT,p.ORDERTYPE,p.CURINV,e.refinvoice invoceno,p.ORDERSTATUS," +
+                $"substr(p.REASONCD, 1, 1) rewrite,p.upddte,p.bicomd FROM TXP_ORDERPLAN p\n" +
+                "LEFT JOIN TXP_ISSTRANSBODY b ON p.ORDERID = b.PONO AND p.PARTNO = b.PARTNO\n" +
+                "LEFT JOIN TXP_ISSTRANSENT e ON p.CURINV = e.ISSUINGKEY\n" +
+                "LEFT JOIN TXP_PART m ON p.FACTORY = m.VENDORCD AND p.PARTNO = m.PARTNO\n";
             List<OrderBody> obj = new List<OrderBody>();
             sql += CheckOrderGroup(b);
             string ordby = "\nORDER BY p.PARTNO,round(p.BALQTY/p.BISTDP),p.PONO";

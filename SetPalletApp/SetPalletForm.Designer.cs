@@ -45,6 +45,8 @@
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
             this.layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
+            this.gridPalleteDetailControl = new DevExpress.XtraGrid.GridControl();
+            this.gridPalleteDetailView = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.layoutControl3 = new DevExpress.XtraLayout.LayoutControl();
             this.groupControl4 = new DevExpress.XtraEditors.GroupControl();
@@ -89,6 +91,7 @@
             this.gridColumn20 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn21 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn22 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn37 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.layoutControlGroup2 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -120,9 +123,11 @@
             this.lbinv = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.bbiResetQty = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -130,6 +135,8 @@
             this.groupControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).BeginInit();
             this.layoutControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.gridPalleteDetailControl)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridPalleteDetailView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl3)).BeginInit();
@@ -171,6 +178,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.lbinv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).BeginInit();
@@ -188,15 +196,16 @@
             this.bbiEdit,
             this.bbiDelete,
             this.bbiRefresh,
-            this.bbiSetPallet});
+            this.bbiSetPallet,
+            this.bbiResetQty});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 21;
+            this.ribbonControl.MaxItemId = 22;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.OfficeUniversal;
             this.ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
-            this.ribbonControl.Size = new System.Drawing.Size(1014, 93);
+            this.ribbonControl.Size = new System.Drawing.Size(1014, 91);
             this.ribbonControl.StatusBar = this.ribbonStatusBar;
             this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
@@ -282,19 +291,19 @@
             // ribbonStatusBar
             // 
             this.ribbonStatusBar.ItemLinks.Add(this.bsiRecordsCount);
-            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 668);
+            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 673);
             this.ribbonStatusBar.Name = "ribbonStatusBar";
             this.ribbonStatusBar.Ribbon = this.ribbonControl;
-            this.ribbonStatusBar.Size = new System.Drawing.Size(1014, 31);
+            this.ribbonStatusBar.Size = new System.Drawing.Size(1014, 26);
             // 
             // layoutControl1
             // 
             this.layoutControl1.Controls.Add(this.groupControl2);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl1.Location = new System.Drawing.Point(0, 93);
+            this.layoutControl1.Location = new System.Drawing.Point(0, 91);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.Root = this.Root;
-            this.layoutControl1.Size = new System.Drawing.Size(1014, 575);
+            this.layoutControl1.Size = new System.Drawing.Size(1014, 582);
             this.layoutControl1.TabIndex = 4;
             this.layoutControl1.Text = "layoutControl1";
             // 
@@ -303,12 +312,13 @@
             this.groupControl2.Controls.Add(this.layoutControl2);
             this.groupControl2.Location = new System.Drawing.Point(12, 12);
             this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(990, 551);
+            this.groupControl2.Size = new System.Drawing.Size(990, 558);
             this.groupControl2.TabIndex = 17;
             this.groupControl2.Text = "JOB ORDER LIST";
             // 
             // layoutControl2
             // 
+            this.layoutControl2.Controls.Add(this.gridPalleteDetailControl);
             this.layoutControl2.Controls.Add(this.groupControl1);
             this.layoutControl2.Controls.Add(this.label5);
             this.layoutControl2.Controls.Add(this.label4);
@@ -324,19 +334,38 @@
             this.layoutControl2.Controls.Add(this.bbiInv);
             this.layoutControl2.Controls.Add(this.bbiRefInv);
             this.layoutControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl2.Location = new System.Drawing.Point(2, 22);
+            this.layoutControl2.Location = new System.Drawing.Point(2, 27);
             this.layoutControl2.Name = "layoutControl2";
             this.layoutControl2.Root = this.layoutControlGroup1;
-            this.layoutControl2.Size = new System.Drawing.Size(986, 527);
+            this.layoutControl2.Size = new System.Drawing.Size(986, 529);
             this.layoutControl2.TabIndex = 0;
             this.layoutControl2.Text = "layoutControl2";
+            // 
+            // gridPalleteDetailControl
+            // 
+            this.gridPalleteDetailControl.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.gridPalleteDetailControl.Location = new System.Drawing.Point(12, 310);
+            this.gridPalleteDetailControl.MainView = this.gridPalleteDetailView;
+            this.gridPalleteDetailControl.MenuManager = this.ribbonControl;
+            this.gridPalleteDetailControl.Name = "gridPalleteDetailControl";
+            this.gridPalleteDetailControl.Size = new System.Drawing.Size(962, 207);
+            this.gridPalleteDetailControl.TabIndex = 18;
+            this.gridPalleteDetailControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
+            this.gridPalleteDetailView});
+            // 
+            // gridPalleteDetailView
+            // 
+            this.gridPalleteDetailView.GridControl = this.gridPalleteDetailControl;
+            this.gridPalleteDetailView.Name = "gridPalleteDetailView";
+            this.gridPalleteDetailView.OptionsView.ShowFooter = true;
+            this.gridPalleteDetailView.OptionsView.ShowGroupPanel = false;
             // 
             // groupControl1
             // 
             this.groupControl1.Controls.Add(this.layoutControl3);
             this.groupControl1.Location = new System.Drawing.Point(12, 84);
             this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(962, 431);
+            this.groupControl1.Size = new System.Drawing.Size(962, 222);
             this.groupControl1.TabIndex = 17;
             this.groupControl1.Text = "PART DETAIL";
             // 
@@ -345,10 +374,10 @@
             this.layoutControl3.Controls.Add(this.groupControl4);
             this.layoutControl3.Controls.Add(this.groupControl3);
             this.layoutControl3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl3.Location = new System.Drawing.Point(2, 22);
+            this.layoutControl3.Location = new System.Drawing.Point(2, 27);
             this.layoutControl3.Name = "layoutControl3";
             this.layoutControl3.Root = this.layoutControlGroup2;
-            this.layoutControl3.Size = new System.Drawing.Size(958, 407);
+            this.layoutControl3.Size = new System.Drawing.Size(958, 193);
             this.layoutControl3.TabIndex = 0;
             this.layoutControl3.Text = "layoutControl3";
             // 
@@ -358,18 +387,19 @@
             this.groupControl4.GroupStyle = DevExpress.Utils.GroupStyle.Card;
             this.groupControl4.Location = new System.Drawing.Point(527, 12);
             this.groupControl4.Name = "groupControl4";
-            this.groupControl4.Size = new System.Drawing.Size(419, 383);
+            this.groupControl4.Size = new System.Drawing.Size(419, 169);
             this.groupControl4.TabIndex = 7;
-            this.groupControl4.Text = "PALLTED";
+            this.groupControl4.Text = "PALLATED";
             // 
             // gridPalletControl
             // 
+            this.gridPalletControl.Cursor = System.Windows.Forms.Cursors.Hand;
             this.gridPalletControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridPalletControl.Location = new System.Drawing.Point(2, 22);
+            this.gridPalletControl.Location = new System.Drawing.Point(2, 27);
             this.gridPalletControl.MainView = this.gridPalletView;
             this.gridPalletControl.MenuManager = this.ribbonControl;
             this.gridPalletControl.Name = "gridPalletControl";
-            this.gridPalletControl.Size = new System.Drawing.Size(415, 359);
+            this.gridPalletControl.Size = new System.Drawing.Size(415, 140);
             this.gridPalletControl.TabIndex = 6;
             this.gridPalletControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridPalletView});
@@ -400,6 +430,7 @@
             this.gridPalletView.OptionsBehavior.Editable = false;
             this.gridPalletView.OptionsView.ShowFooter = true;
             this.gridPalletView.OptionsView.ShowGroupPanel = false;
+            this.gridPalletView.Click += new System.EventHandler(this.gridPalletView_Click);
             // 
             // gridColumn6
             // 
@@ -408,7 +439,7 @@
             this.gridColumn6.Name = "gridColumn6";
             this.gridColumn6.Visible = true;
             this.gridColumn6.VisibleIndex = 0;
-            this.gridColumn6.Width = 38;
+            this.gridColumn6.Width = 56;
             // 
             // gridColumn7
             // 
@@ -512,6 +543,9 @@
             this.gridColumn34.Caption = "PALLET SIZE";
             this.gridColumn34.FieldName = "PlSize";
             this.gridColumn34.Name = "gridColumn34";
+            this.gridColumn34.Visible = true;
+            this.gridColumn34.VisibleIndex = 2;
+            this.gridColumn34.Width = 163;
             // 
             // gridColumn35
             // 
@@ -519,7 +553,8 @@
             this.gridColumn35.FieldName = "Ctn";
             this.gridColumn35.Name = "gridColumn35";
             this.gridColumn35.Visible = true;
-            this.gridColumn35.VisibleIndex = 2;
+            this.gridColumn35.VisibleIndex = 3;
+            this.gridColumn35.Width = 60;
             // 
             // gridColumn36
             // 
@@ -532,6 +567,7 @@
             this.gridColumn36.Name = "gridColumn36";
             this.gridColumn36.Visible = true;
             this.gridColumn36.VisibleIndex = 1;
+            this.gridColumn36.Width = 111;
             // 
             // groupControl3
             // 
@@ -539,7 +575,7 @@
             this.groupControl3.GroupStyle = DevExpress.Utils.GroupStyle.Card;
             this.groupControl3.Location = new System.Drawing.Point(12, 12);
             this.groupControl3.Name = "groupControl3";
-            this.groupControl3.Size = new System.Drawing.Size(511, 383);
+            this.groupControl3.Size = new System.Drawing.Size(511, 169);
             this.groupControl3.TabIndex = 6;
             this.groupControl3.Text = "NO SET PALLET";
             // 
@@ -547,11 +583,11 @@
             // 
             this.gridPartControl.Cursor = System.Windows.Forms.Cursors.Hand;
             this.gridPartControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridPartControl.Location = new System.Drawing.Point(2, 22);
+            this.gridPartControl.Location = new System.Drawing.Point(2, 27);
             this.gridPartControl.MainView = this.gridPartView;
             this.gridPartControl.MenuManager = this.ribbonControl;
             this.gridPartControl.Name = "gridPartControl";
-            this.gridPartControl.Size = new System.Drawing.Size(507, 359);
+            this.gridPartControl.Size = new System.Drawing.Size(507, 140);
             this.gridPartControl.TabIndex = 5;
             this.gridPartControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridPartView});
@@ -576,7 +612,8 @@
             this.gridColumn19,
             this.gridColumn20,
             this.gridColumn21,
-            this.gridColumn22});
+            this.gridColumn22,
+            this.gridColumn37});
             this.gridPartView.GridControl = this.gridPartControl;
             this.gridPartView.Name = "gridPartView";
             this.gridPartView.OptionsBehavior.Editable = false;
@@ -585,6 +622,8 @@
             this.gridPartView.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
             this.gridPartView.OptionsView.ShowFooter = true;
             this.gridPartView.OptionsView.ShowGroupPanel = false;
+            this.gridPartView.RowCellClick += new DevExpress.XtraGrid.Views.Grid.RowCellClickEventHandler(this.gridPartView_RowCellClick);
+            this.gridPartView.CustomColumnDisplayText += new DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventHandler(this.gridPartView_CustomColumnDisplayText);
             this.gridPartView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gridPartView_MouseUp);
             this.gridPartView.DoubleClick += new System.EventHandler(this.gridPartView_DoubleClick);
             // 
@@ -721,7 +760,7 @@
             this.gridColumn21.AppearanceCell.ForeColor = DevExpress.LookAndFeel.DXSkinColors.ForeColors.Critical;
             this.gridColumn21.AppearanceCell.Options.UseFont = true;
             this.gridColumn21.AppearanceCell.Options.UseForeColor = true;
-            this.gridColumn21.Caption = "CTN.";
+            this.gridColumn21.Caption = "ORD.";
             this.gridColumn21.FieldName = "Ctn";
             this.gridColumn21.Name = "gridColumn21";
             this.gridColumn21.Visible = true;
@@ -734,6 +773,14 @@
             this.gridColumn22.FieldName = "ShipPlNo";
             this.gridColumn22.Name = "gridColumn22";
             // 
+            // gridColumn37
+            // 
+            this.gridColumn37.Caption = "CTN";
+            this.gridColumn37.FieldName = "CtnQty";
+            this.gridColumn37.Name = "gridColumn37";
+            this.gridColumn37.Visible = true;
+            this.gridColumn37.VisibleIndex = 5;
+            // 
             // layoutControlGroup2
             // 
             this.layoutControlGroup2.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
@@ -742,7 +789,7 @@
             this.layoutControlItem6,
             this.layoutControlItem7});
             this.layoutControlGroup2.Name = "layoutControlGroup2";
-            this.layoutControlGroup2.Size = new System.Drawing.Size(958, 407);
+            this.layoutControlGroup2.Size = new System.Drawing.Size(958, 193);
             this.layoutControlGroup2.TextVisible = false;
             // 
             // layoutControlItem6
@@ -750,7 +797,7 @@
             this.layoutControlItem6.Control = this.groupControl3;
             this.layoutControlItem6.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem6.Name = "layoutControlItem6";
-            this.layoutControlItem6.Size = new System.Drawing.Size(515, 387);
+            this.layoutControlItem6.Size = new System.Drawing.Size(515, 173);
             this.layoutControlItem6.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem6.TextVisible = false;
             // 
@@ -759,7 +806,7 @@
             this.layoutControlItem7.Control = this.groupControl4;
             this.layoutControlItem7.Location = new System.Drawing.Point(515, 0);
             this.layoutControlItem7.Name = "layoutControlItem7";
-            this.layoutControlItem7.Size = new System.Drawing.Size(423, 387);
+            this.layoutControlItem7.Size = new System.Drawing.Size(423, 173);
             this.layoutControlItem7.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem7.TextVisible = false;
             // 
@@ -963,10 +1010,11 @@
             this.layoutControlItem4,
             this.lbinv,
             this.layoutControlItem5,
-            this.layoutControlItem2});
+            this.layoutControlItem2,
+            this.layoutControlItem8});
             this.layoutControlGroup1.Name = "layoutControlGroup1";
             this.layoutControlGroup1.OptionsItemText.TextAlignMode = DevExpress.XtraLayout.TextAlignModeGroup.AutoSize;
-            this.layoutControlGroup1.Size = new System.Drawing.Size(986, 527);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(986, 529);
             this.layoutControlGroup1.TextVisible = false;
             // 
             // lbFactory
@@ -1121,9 +1169,18 @@
             this.layoutControlItem2.Control = this.groupControl1;
             this.layoutControlItem2.Location = new System.Drawing.Point(0, 72);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(966, 435);
+            this.layoutControlItem2.Size = new System.Drawing.Size(966, 226);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
+            // 
+            // layoutControlItem8
+            // 
+            this.layoutControlItem8.Control = this.gridPalleteDetailControl;
+            this.layoutControlItem8.Location = new System.Drawing.Point(0, 298);
+            this.layoutControlItem8.Name = "layoutControlItem8";
+            this.layoutControlItem8.Size = new System.Drawing.Size(966, 211);
+            this.layoutControlItem8.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem8.TextVisible = false;
             // 
             // Root
             // 
@@ -1132,7 +1189,7 @@
             this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem1});
             this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(1014, 575);
+            this.Root.Size = new System.Drawing.Size(1014, 582);
             this.Root.TextVisible = false;
             // 
             // layoutControlItem1
@@ -1140,15 +1197,25 @@
             this.layoutControlItem1.Control = this.groupControl2;
             this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(994, 555);
+            this.layoutControlItem1.Size = new System.Drawing.Size(994, 562);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
             // popupMenu1
             // 
             this.popupMenu1.ItemLinks.Add(this.bbiSetPallet);
+            this.popupMenu1.ItemLinks.Add(this.bbiResetQty);
             this.popupMenu1.Name = "popupMenu1";
             this.popupMenu1.Ribbon = this.ribbonControl;
+            // 
+            // bbiResetQty
+            // 
+            this.bbiResetQty.Caption = "Reset";
+            this.bbiResetQty.Id = 21;
+            this.bbiResetQty.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiResetQty.ImageOptions.Image")));
+            this.bbiResetQty.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiResetQty.ImageOptions.LargeImage")));
+            this.bbiResetQty.Name = "bbiResetQty";
+            this.bbiResetQty.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiResetQty_ItemClick);
             // 
             // SetPalletForm
             // 
@@ -1163,6 +1230,7 @@
             this.Ribbon = this.ribbonControl;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.StatusBar = this.ribbonStatusBar;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).EndInit();
             this.layoutControl1.ResumeLayout(false);
@@ -1170,6 +1238,8 @@
             this.groupControl2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).EndInit();
             this.layoutControl2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.gridPalleteDetailControl)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gridPalleteDetailView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.groupControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl3)).EndInit();
@@ -1211,6 +1281,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.lbinv)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.popupMenu1)).EndInit();
@@ -1313,5 +1384,10 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn36;
         private DevExpress.XtraBars.BarButtonItem bbiSetPallet;
         private DevExpress.XtraBars.PopupMenu popupMenu1;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn37;
+        private DevExpress.XtraGrid.GridControl gridPalleteDetailControl;
+        private DevExpress.XtraGrid.Views.Grid.GridView gridPalleteDetailView;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
+        private DevExpress.XtraBars.BarButtonItem bbiResetQty;
     }
 }

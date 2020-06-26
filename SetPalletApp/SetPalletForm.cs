@@ -32,6 +32,7 @@ namespace SetPalletApp
         {
             gridPartControl.DataSource = null;
             gridPalletControl.DataSource = null;
+            gridPalleteDetailControl.DataSource = null;
             List<SetPallatData> list = new SetPalletControllers().GetPartListDetail(inv);
             gridPartControl.DataSource = list;
             if (list.Count > 0)
@@ -57,8 +58,8 @@ namespace SetPalletApp
         {
             if (p > 0)
             {
+                obj.PlSize = new GreeterFunction().GetPlSize(obj.PlSize, p);
                 string plno = $"1P{(npl.Count + 1).ToString("D3")}";
-
                 string sql = $"SELECT * FROM TXP_ISSPALLET l WHERE l.ISSUINGKEY = '{obj.RefNo}' AND l.PALLETNO = '{plno}'";
                 DataSet dr = new ConnDB().GetFill(sql);
                 if (dr.Tables[0].Rows.Count < 1)
@@ -108,22 +109,24 @@ namespace SetPalletApp
                                 XtraMessageBox.Show("กรุณาระบุจำนวนให้ถูกต้องด้วย", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 return;
                             }
-                            if ((obj.Ctn - p) <= 0)
-                            {
-                                gridPartView.DeleteRow(gridPartView.FocusedRowHandle);
-                            }
-                            else
-                            {
-                                gridPartView.SetFocusedRowCellValue("Ctn", (obj.Ctn - p));
-                            }
-                            //update issuepack
-                            string plno = ReloadPlSet(obj, p);
-                            int seq = 0;
-                            while (seq < p)
-                            {
-                                InsertPalletToPackingDetail(obj, plno);
-                                seq++;
-                            }
+                            gridPartView.SetFocusedRowCellValue("Ctn", (obj.Ctn - p));
+                            gridPartView.SetFocusedRowCellValue("CtnQty", (obj.CtnQty + p));
+                            //if ((obj.Ctn - p) <= 0)
+                            //{
+                            //    gridPartView.DeleteRow(gridPartView.FocusedRowHandle);
+                            //}
+                            //else
+                            //{
+                            //    gridPartView.SetFocusedRowCellValue("Ctn", (obj.Ctn - p));
+                            //}
+                            ////update issuepack
+                            //string plno = ReloadPlSet(obj, p);
+                            //int seq = 0;
+                            //while (seq < p)
+                            //{
+                            //    InsertPalletToPackingDetail(obj, plno);
+                            //    seq++;
+                            //}
                         }
                     }
                 }
@@ -176,7 +179,7 @@ namespace SetPalletApp
             {
                 if (r.MgrPl)
                 {
-                    x += r.Ctn;
+                    x += r.CtnQty;
                     obj = r;
                     n.Add(r);
                 }
@@ -208,6 +211,60 @@ namespace SetPalletApp
             string sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plno}'\n" +
                         $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{obj.RefNo}' AND PONO = '{obj.OrderNo}' AND PARTNO = '{obj.PartNo}'";
             new ConnDB().ExcuteSQL(sql);
+        }
+
+        private void gridPartView_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
+        {
+            //switch (e.Column.FieldName)
+            //{
+            //    case "CtnQty":
+            //        var x = XtraInputBox.Show("กรุณาระบุจำนวนที่ต้องการ", "ยืนยันจำนวนต่อพาเลท", "");
+            //        if (x != "")
+            //        {
+            //            SetPallatData obj = gridPartView.GetFocusedRow() as SetPallatData;
+            //            int p = int.Parse(x);
+            //            if (p <= obj.Ctn)
+            //            {
+            //                gridPartView.SetFocusedRowCellValue("CtnQty", p);
+            //            }
+            //            else {
+            //                XtraMessageBox.Show("กรุณาระบุจำนวนให้ถูกต้องด้วย", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //                return;
+            //            }
+            //        }
+            //        break;
+            //    default:
+            //        break;
+            //}
+        }
+
+        private void gridPartView_CustomColumnDisplayText(object sender, DevExpress.XtraGrid.Views.Base.CustomColumnDisplayTextEventArgs e)
+        {
+            switch (e.Column.FieldName)
+            {
+                case "Ctn":
+                case "CtnQty":
+                    if (e.Value.ToString() == "0")
+                    {
+                        e.DisplayText = "";
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void gridPalletView_Click(object sender, EventArgs e)
+        {
+            List<SetPallatData> l = gridPalletControl.DataSource as List<SetPallatData>;
+            gridPalleteDetailControl.DataSource = l;
+        }
+
+        private void bbiResetQty_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SetPallatData obj = gridPartView.GetFocusedRow() as SetPallatData;
+            gridPartView.SetFocusedRowCellValue("Ctn", (obj.Ctn + obj.CtnQty));
+            gridPartView.SetFocusedRowCellValue("CtnQty", 0);
         }
     }
 }
