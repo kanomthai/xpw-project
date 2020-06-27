@@ -80,15 +80,16 @@ namespace SetPalletApp
 
         void bbiPrintPreview_ItemClick(object sender, ItemClickEventArgs e)
         {
-            //gridControl.ShowRibbonPrintPreview();
+            SetPalletReportJobOrderPreview frm = new SetPalletReportJobOrderPreview(inv);
+            frm.ShowDialog();
         }
 
-        void InsertPalletToPackingDetail(SetPallatData obj, string plno)
-        {
-            string sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plno}'\n"+
-                        $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{obj.RefNo}' AND PONO = '{obj.OrderNo}' AND PARTNO = '{obj.PartNo}' AND ROWNUM< 2";
-            new ConnDB().ExcuteSQL(sql);
-        }
+        //void InsertPalletToPackingDetail(SetPallatData obj, string plno)
+        //{
+        //    string sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plno}'\n"+
+        //                $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{obj.RefNo}' AND PONO = '{obj.OrderNo}' AND PARTNO = '{obj.PartNo}' AND ROWNUM< 2";
+        //    new ConnDB().ExcuteSQL(sql);
+        //}
 
         private void gridPartView_DoubleClick(object sender, EventArgs e)
         {
@@ -98,7 +99,7 @@ namespace SetPalletApp
                 int p = 0;
                 if (obj.Ctn > 0)
                 {
-                    var x = XtraInputBox.Show("กรุณาระบุจำนวนต่อ 1 พาเลท", "XPW Alert!", "");
+                    var x = XtraInputBox.Show("กรุณาระบุจำนวนต่อ 1 พาเลท", "XPW Alert!", $"{obj.Ctn}");
                     if (x != "")
                     {
                         p = int.Parse(x);
@@ -111,22 +112,6 @@ namespace SetPalletApp
                             }
                             gridPartView.SetFocusedRowCellValue("Ctn", (obj.Ctn - p));
                             gridPartView.SetFocusedRowCellValue("CtnQty", (obj.CtnQty + p));
-                            //if ((obj.Ctn - p) <= 0)
-                            //{
-                            //    gridPartView.DeleteRow(gridPartView.FocusedRowHandle);
-                            //}
-                            //else
-                            //{
-                            //    gridPartView.SetFocusedRowCellValue("Ctn", (obj.Ctn - p));
-                            //}
-                            ////update issuepack
-                            //string plno = ReloadPlSet(obj, p);
-                            //int seq = 0;
-                            //while (seq < p)
-                            //{
-                            //    InsertPalletToPackingDetail(obj, plno);
-                            //    seq++;
-                            //}
                         }
                     }
                 }
@@ -134,6 +119,8 @@ namespace SetPalletApp
                 {
                     XtraMessageBox.Show("ไม่สามารถดำเนินการต่อได้\nเนื่องจากจำนวนเป็น 0", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+                gridPartView.UpdateCurrentRow();
+                gridPartView.UpdateSummary();
             }
             catch (Exception)
             {
@@ -148,19 +135,14 @@ namespace SetPalletApp
             {
                 bool c = false;
                 int x = 0;
-                List<SetPallatData> list = gridPartControl.DataSource as List<SetPallatData>;
+                List<SetPallatData> list = gridPartView.DataSource as List<SetPallatData>;
                 list.ForEach(i => {
-                    if (i.MgrPl)
-                    {
-                        c = true;
-                        x += i.CtnQty;
-                    }
+                    c = true;
+                    x += i.CtnQty;
                 });
-                if (c)
-                {
-                    bbiSetPallet.Caption = $"Set Pallet({x})";
-                    popupMenu1.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
-                }
+                bbiSetPallet.Enabled = c;
+                bbiSetPallet.Caption = $"Set Pallet({x})";
+                popupMenu1.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
             }
             else
             {
@@ -177,40 +159,56 @@ namespace SetPalletApp
             int x = 0;
             foreach (var r in list)
             {
-                if (r.MgrPl)
+                if (r.CtnQty > 0)
                 {
                     x += r.CtnQty;
                     obj = r;
                     n.Add(r);
+                    if (r.Ctn > 0)
+                    {
+                        ob.Add(r);
+                    }
                 }
                 else
                 {
                     ob.Add(r);
                 }
             }
-
-            if (obj != null)
+            if (x > 0)
             {
-                string plno  = ReloadPlSet(obj, x);
-                int ix = 1;
-                ob.ForEach(i => {
-                    i.Id = ix;
-                    ix++;
-                });
-
-                foreach (var j in n)
+                if (obj != null)
                 {
-                    InsertPalletToPackingDetailAll(j, plno);
+                    string plno = ReloadPlSet(obj, x);
+                    foreach (var j in n)
+                    {
+                        InsertPalletToPackingDetailAll(j, plno);
+                    }
+                    int ix = 1;
+                    ob.ForEach(i =>
+                    {
+                        i.Id = ix;
+                        i.CtnQty = 0;
+                        ix++;
+                    });
+                    gridPartControl.DataSource = ob;
                 }
-                gridPartControl.DataSource = ob;
+            }
+            else
+            {
+                XtraMessageBox.Show("กรุณาระบุจำนวนที่ต้องการด้วย", "ข้อความแจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void InsertPalletToPackingDetailAll(SetPallatData obj, string plno)
         {
-            string sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plno}'\n" +
-                        $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{obj.RefNo}' AND PONO = '{obj.OrderNo}' AND PARTNO = '{obj.PartNo}'";
-            new ConnDB().ExcuteSQL(sql);
+            int i = 0;
+            while (i < obj.CtnQty)
+            {
+                string sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plno}'\n" +
+                        $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{obj.RefNo}' AND PONO = '{obj.OrderNo}' AND PARTNO = '{obj.PartNo}' AND ROWNUM < 2";
+                new ConnDB().ExcuteSQL(sql);
+                i++;
+            }
         }
 
         private void gridPartView_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
@@ -256,10 +254,8 @@ namespace SetPalletApp
 
         private void gridPalletView_Click(object sender, EventArgs e)
         {
-            List<SetPallatData> l = new List<SetPallatData>();
             SetPallatData x = gridPalletView.GetFocusedRow() as SetPallatData;
-            l.Add(x);
-            gridPalleteDetailControl.DataSource = l;
+            gridPalleteDetailControl.DataSource = new SetPalletControllers().GetPallatePartList(x);
         }
 
         private void bbiResetQty_ItemClick(object sender, ItemClickEventArgs e)
@@ -267,6 +263,60 @@ namespace SetPalletApp
             SetPallatData obj = gridPartView.GetFocusedRow() as SetPallatData;
             gridPartView.SetFocusedRowCellValue("Ctn", (obj.Ctn + obj.CtnQty));
             gridPartView.SetFocusedRowCellValue("CtnQty", 0);
+        }
+
+        private void gridPalletView_DoubleClick(object sender, EventArgs e)
+        {
+            SetPallatData x = gridPalletView.GetFocusedRow() as SetPallatData;
+            var pl = XtraInputBox.Show("แก้ไขข้อมูลประเภทพาเลท", "ข้อความแจ้งเตือน", x.PlSize);
+            if (pl != "")
+            {
+                x.PlSize = pl;
+                if (new SetPalletControllers().UpdatePalletSize(x))
+                {
+                    XtraMessageBox.Show("บันทึกข้อมูลเสร็จแล้ว");
+                    gridPalleteDetailControl.DataSource = new SetPalletControllers().GetPallatePartList(x);
+                }
+                else
+                {
+                    XtraMessageBox.Show("เกิดข้อผิดพลาดในการบันทึกข้อมูล", "ข้อความแจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void gridPartView_Click(object sender, EventArgs e)
+        {
+            gridPartView.UpdateSummary();
+        }
+
+        private void gridPalletView_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button.ToString() == "Right")
+            {
+                popupMenu2.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
+            }
+            else
+            {
+                popupMenu2.HidePopup();
+            }
+        }
+
+        private void bbiDeletePallet_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SetPallatData x = gridPalletView.GetFocusedRow() as SetPallatData;
+            DialogResult r = XtraMessageBox.Show($"คุณต้องการที่จะลบพาเลท {x.ShipPlNo} ใช่หรือไม่?", "ข้อความแจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (r == DialogResult.Yes)
+            {
+                if (new SetPalletControllers().UpdatePallet(x))
+                {
+                    XtraMessageBox.Show("บันทึกข้อมูลเสร็จแล้ว");
+                }
+                else
+                {
+                    XtraMessageBox.Show("เกิดข้อผิดพลาดในการบันทึกข้อมูล", "ข้อความแจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            Reload();
         }
     }
 }

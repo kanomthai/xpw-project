@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DevExpress.XtraEditors.Filtering.Templates;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace XPWLibrary.Controllers
         public List<SetPallatData> GetPartListDetail(string issuekey)
         {
             List<SetPallatData> obj = new List<SetPallatData>();
-            string sql = $"SELECT * FROM TBT_SETPALLET l WHERE l.ISSUINGKEY = '{issuekey}' ORDER BY PLSIZE ";
+            string sql = $"SELECT * FROM TBT_SETPALLET l WHERE l.ISSUINGKEY = '{issuekey}' AND CTN > 0 ORDER BY PLSIZE ";
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow r in dr.Tables[0].Rows)
             {
@@ -37,6 +38,7 @@ namespace XPWLibrary.Controllers
                     PartName = r["partname"].ToString(),//PARTNAME
                     PlSize = r["plsize"].ToString(),//PLSIZE
                     Ctn = int.Parse(r["ctn"].ToString()),//CTN
+                    CtnQty = 0,
                     ShipPlNo = r["shipplno"].ToString(),//SHIPPLNO
                 });
             }
@@ -46,7 +48,7 @@ namespace XPWLibrary.Controllers
         public List<SetPallatData> GetPartListCompletedDetail(string issuekey)
         {
             List<SetPallatData> obj = new List<SetPallatData>();
-            string sql = $"SELECT l.PALLETNO,l.PLTOTAL,l.PLTYPE FROM TXP_ISSPALLET l WHERE l.ISSUINGKEY = '{issuekey}' AND l.PALLETNO LIKE '%P%'\n"+
+            string sql = $"SELECT * FROM TXP_ISSPALLET l WHERE l.ISSUINGKEY = '{issuekey}' AND l.PALLETNO LIKE '%P%'\n"+
                            "ORDER BY l.PALLETNO ";
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow r in dr.Tables[0].Rows)
@@ -63,7 +65,7 @@ namespace XPWLibrary.Controllers
                     //CustName = r["custname"].ToString(),//CUSTNAME
                     //CombInv = r["combinv"].ToString(),//COMBINV
                     //RefInv = r["refinvoice"].ToString(),//REFINVOICE
-                    //RefNo = r["issuingkey"].ToString(),//ISSUINGKEY
+                    RefNo = r["issuingkey"].ToString(),//ISSUINGKEY
                     //OrderNo = r["orderno"].ToString(),//ORDERNO
                     //PName = r["pname"].ToString(),//PNAME
                     //PartNo = r["partno"].ToString(),//PARTNO
@@ -74,6 +76,72 @@ namespace XPWLibrary.Controllers
                 });
             }
             return obj;
+        }
+
+        public List<SetPalletListData> GetPallatePartList(SetPallatData x)
+        {
+            List<SetPalletListData> obj = new List<SetPalletListData>();
+            string sql = $"SELECT * FROM TBT_PALLETVIEWER p WHERE p.ISSUINGKEY = '{x.RefNo}' AND p.SHIPPLNO = '{x.ShipPlNo}'";
+            DataSet dr = new ConnDB().GetFill(sql);
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                obj.Add(new SetPalletListData()
+                {
+                    Id = obj.Count + 1,
+                    Factory = r["factory"].ToString(),
+                    ShipType = r["shiptype"].ToString(),
+                    ZName = r["zname"].ToString(),
+                    EtdDte = DateTime.Parse(r["etddte"].ToString()),
+                    AffCode = r["affcode"].ToString(),
+                    CustCode = r["custcode"].ToString(),
+                    CustName = r["custname"].ToString(),
+                    CombInv = r["combinv"].ToString(),
+                    RefInv = r["refinvoice"].ToString(),
+                    RefNo = r["issuingkey"].ToString(),
+                    OrderNo = r["orderno"].ToString(),
+                    PName = r["pname"].ToString(),
+                    ShipPlNo = r["shipplno"].ToString(),
+                    PlOutNo = r["ploutno"].ToString(),
+                    PlSize = r["plsize"].ToString(),
+                    PartNo = r["partno"].ToString(),
+                    PartName = r["partname"].ToString(),
+                    FTicket = r["fticketno"].ToString(),
+                    SerialNo = r["ctnsn"].ToString(),
+                    LotNo = r["lotno"].ToString(),
+                    Qty = int.Parse(r["orderqty"].ToString()),
+                    StdPack = int.Parse(r["stdpack"].ToString()),
+                    Ctn = int.Parse(r["ctn"].ToString()),
+                    PrePareCtn = int.Parse(r["preparectn"].ToString()),
+                    ShCtn = int.Parse(r["shctn"].ToString()),
+                    WaitCtn = int.Parse(r["waitctn"].ToString()),
+                    ITem = int.Parse(r["item"].ToString()),
+                    Status = int.Parse(r["ploutsts"].ToString()),
+                });
+            }
+            return obj;
+        }
+
+        public bool UpdatePalletSize(SetPallatData obj)
+        {
+            string sql = $"UPDATE TXP_ISSPALLET l SET l.PLTYPE='{obj.PlSize}' WHERE l.ISSUINGKEY = '{obj.RefNo}' AND l.PALLETNO = '{obj.ShipPlNo}'";
+            return new ConnDB().ExcuteSQL(sql);
+        }
+
+        public bool UpdatePallet(SetPallatData obj)
+        {
+            bool x = false;
+            string ssql = $"SELECT PLOUTSTS status FROM TXP_ISSPALLET WHERE ISSUINGKEY = '{obj.RefNo}' AND PALLETNO = '{obj.ShipPlNo}' AND BOOKED = 0";
+            DataSet dr = new ConnDB().GetFill(ssql);
+            if (dr.Tables.Count > 0)
+            {
+                if (dr.Tables[0].Rows[0]["status"].ToString() == "0")
+                {
+                    string sql = $"DELETE TXP_ISSPALLET l  WHERE l.ISSUINGKEY = '{obj.RefNo}' AND l.PALLETNO = '{obj.ShipPlNo}'";
+                    new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPACKDETAIL d SET d.SHIPPLNO = '' WHERE d.ISSUINGKEY ='{obj.RefNo}' AND d.SHIPPLNO = '{obj.ShipPlNo}'");
+                    x = new ConnDB().ExcuteSQL(sql);
+                }
+            }
+            return x;
         }
     }
 }

@@ -328,7 +328,7 @@ namespace XPWLibrary.Controllers
                                     NL_Label.Variables["BARCODE"].SetValue($"{r[i]["fticketno"].ToString().ToUpper()}");
                                     NL_Label.Variables["txtbarcode"].SetValue($"*{r[i]["fticketno"].ToString().ToUpper()}*");
                                     NL_Label.Variables["QRCODE"].SetValue($"06P{r[i]["partno"].ToString().ToUpper()};17Q{r[i]["qty"].ToString().ToUpper()};30T{r[i]["pono"].ToString().ToUpper()};32T{r[i]["fticketno"].ToString().ToUpper()};");
-                                    NL_Label.Variables["PREFIX"].SetValue("P01");
+                                    NL_Label.Variables["PREFIX"].SetValue(r[i]["shipplno"].ToString().ToUpper());
                                     NL_Label.PrintSettings.PrinterName = prname;// GetPrinterName(r["factory"].ToString());
                                     NL_Label.PrintSettings.JobName = $"NiceLabel Printing {r[i]["issuingkey"].ToString()}";
                                     SplashScreenManager.Default.SetWaitFormDescription($"F_Ticket {invno}");
@@ -350,7 +350,7 @@ namespace XPWLibrary.Controllers
                                     NL_Label.Variables["BARCODE"].SetValue($"{r[i]["fticketno"].ToString().ToUpper()}");
                                     NL_Label.Variables["txtbarcode"].SetValue($"*{r[i]["fticketno"].ToString().ToUpper()}*");
                                     NL_Label.Variables["QRCODE"].SetValue($"06P{r[i]["partno"].ToString().ToUpper()};17Q{r[i]["qty"].ToString().ToUpper()};30T{r[i]["pono"].ToString().ToUpper()};32T{r[i]["fticketno"].ToString().ToUpper()};");
-                                    NL_Label.Variables["PREFIX"].SetValue("P01");
+                                    NL_Label.Variables["PREFIX"].SetValue(r[i]["shipplno"].ToString().ToUpper());
                                     NL_Label.PrintSettings.PrinterName = prname;// GetPrinterName(r["factory"].ToString());
                                     NL_Label.PrintSettings.JobName = $"NiceLabel Printing {r[i]["issuingkey"].ToString()}";
                                     SplashScreenManager.Default.SetWaitFormDescription($"F_Ticket {invno}");
@@ -381,7 +381,7 @@ namespace XPWLibrary.Controllers
 
         private DataSet GetFTicker(string inv, string partno, string pono)
         {
-            string sql = $"SELECT d.partno,d.pono,e.refinvoice issuingkey,e.custname,d.fticketno,d.orderqty,d.orderqty qty FROM TXP_ISSPACKDETAIL d\n" +
+            string sql = $"SELECT d.partno,d.pono,e.refinvoice issuingkey,e.custname,d.fticketno,d.orderqty,d.orderqty qty,d.SHIPPLNO FROM TXP_ISSPACKDETAIL d\n" +
                         $"inner join txp_isstransent e on d.ISSUINGKEY = e.issuingkey\n" +
                         $"WHERE d.ISSUINGKEY = '{inv}' AND d.partno = '{partno}' AND d.PONO = '{pono}'\n" +
                         $"order by d.fticketno";

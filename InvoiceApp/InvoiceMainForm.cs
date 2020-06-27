@@ -271,7 +271,7 @@ namespace InvoiceApp
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                XtraMessageBox.Show(ex.Message, "ข้อความแจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
