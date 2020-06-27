@@ -17,6 +17,19 @@ namespace SetPalletApp
         {
             InitializeComponent();
             this.Text = $"{refinv} REPORT SUMMARY";
+            SetPalletReporting rp = new SetPalletReporting();
+            foreach (DevExpress.XtraReports.Parameters.Parameter i in rp.Parameters)
+            {
+                i.Visible = false;
+            }
+            rp.InitData(refinv);
+            documentViewer1.DocumentSource = rp;
+            rp.PaperKind = System.Drawing.Printing.PaperKind.A4;
+            //rp.Margins.Left = 3;
+            rp.Margins.Right = 1;
+            rp.Margins.Top = 7;
+            //rp.Margins.Bottom = 10;
+            rp.CreateDocument();
         }
     }
 }

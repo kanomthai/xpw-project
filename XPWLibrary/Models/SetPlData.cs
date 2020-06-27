@@ -49,6 +49,7 @@ namespace XPWLibrary.Models
         public string FTicket { get; set; }
         public string SerialNo { get; set; }
         public string LotNo { get; set; }
+        public string ContainerType { get; set; }
         public int ITem { get; set; }
         public int PrePareCtn { get; set; }
         public int ShCtn { get; set; }

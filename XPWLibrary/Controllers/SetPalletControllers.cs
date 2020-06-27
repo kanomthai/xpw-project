@@ -78,6 +78,41 @@ namespace XPWLibrary.Controllers
             return obj;
         }
 
+        public List<SetPalletListData> GetJobListPallet(string refinv)
+        {
+            string sql = $"SELECT \n"+
+                $"    e.ISSUINGKEY,e.REFINVOICE,e.CONTAINERTYPE,e.ETDDTE,'' desination,l.PALLETNO shipplno,d.PONO,d.PARTNO,sum(d.ORDERQTY) ORDERQTY,b.STDPACK,sum(d.ORDERQTY)/b.STDPACK ctn,count(d.ITEM) seq,'' lotno\n" +
+                "FROM TXP_ISSPALLET l\n" +
+                "INNER JOIN TXP_ISSTRANSENT e ON l.ISSUINGKEY = e.ISSUINGKEY\n" +
+                "INNER JOIN TXP_ISSPACKDETAIL d ON l.ISSUINGKEY = e.ISSUINGKEY AND l.PALLETNO = d.SHIPPLNO\n" +
+                "INNER JOIN TXP_ISSTRANSBODY b ON l.ISSUINGKEY = b.ISSUINGKEY AND d.PONO = b.PONO AND d.PARTNO = b.PARTNO\n" +
+                $"WHERE l.ISSUINGKEY = '{refinv}'\n" +
+                $"GROUP BY e.ISSUINGKEY,e.REFINVOICE,e.CONTAINERTYPE,e.ETDDTE,l.PALLETNO,d.PONO,d.PARTNO,b.STDPACK\n" +
+                "ORDER BY l.PALLETNO,d.PONO,d.PARTNO";
+            List<SetPalletListData> obj = new List<SetPalletListData>();
+            Console.WriteLine(sql);
+            DataSet dr = new ConnDB().GetFill(sql);
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                obj.Add(new SetPalletListData()
+                {
+                    Id = obj.Count + 1,
+                    EtdDte = DateTime.Parse(r["etddte"].ToString()),
+                    RefInv = r["refinvoice"].ToString(),
+                    RefNo = r["issuingkey"].ToString(),
+                    OrderNo = r["pono"].ToString(),
+                    ShipPlNo = r["shipplno"].ToString().Substring(2),
+                    PartNo = r["partno"].ToString(),
+                    ContainerType = r["containertype"].ToString(),
+                    Qty = int.Parse(r["orderqty"].ToString()),
+                    StdPack = int.Parse(r["stdpack"].ToString()),
+                    Ctn = int.Parse(r["ctn"].ToString()),
+                    ITem = int.Parse(r["seq"].ToString()),
+                });
+            }
+            return obj;
+        }
+
         public List<SetPalletListData> GetPallatePartList(SetPallatData x)
         {
             List<SetPalletListData> obj = new List<SetPalletListData>();
