@@ -254,8 +254,14 @@ namespace SetPalletApp
 
         private void gridPalletView_Click(object sender, EventArgs e)
         {
-            SetPallatData x = gridPalletView.GetFocusedRow() as SetPallatData;
-            gridPalleteDetailControl.DataSource = new SetPalletControllers().GetPallatePartList(x);
+            try
+            {
+                SetPallatData x = gridPalletView.GetFocusedRow() as SetPallatData;
+                gridPalleteDetailControl.DataSource = new SetPalletControllers().GetPallatePartList(x);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void bbiResetQty_ItemClick(object sender, ItemClickEventArgs e)
