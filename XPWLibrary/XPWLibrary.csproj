@@ -142,7 +142,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Configures\settings.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Configures\xpw-templates\init.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
