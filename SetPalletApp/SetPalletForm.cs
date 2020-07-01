@@ -66,7 +66,7 @@ namespace SetPalletApp
                 string ll = obj.PlSize.Substring(w.Length + 1, l.IndexOf("x"));
 
                 string h = obj.PlSize.Substring(ll.Length + 2);
-                string hh = obj.PlSize.Substring(h.IndexOf("x"));
+                string hh = h.Substring(h.IndexOf("x")+1);
 
                 DataSet dr = new ConnDB().GetFill(sql);
                 if (dr.Tables[0].Rows.Count < 1)
@@ -88,7 +88,7 @@ namespace SetPalletApp
         void bbiPrintPreview_ItemClick(object sender, ItemClickEventArgs e)
         {
             List<SetPallatData> list = gridPartControl.DataSource as List<SetPallatData>;
-            if (list.Count < 0)
+            if (list.Count < 1)
             {
                 SetPalletReportJobOrderPreview frm = new SetPalletReportJobOrderPreview(inv);
                 frm.ShowDialog();
