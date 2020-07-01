@@ -55,5 +55,9 @@ namespace XPWLibrary.Models
         public int ShCtn { get; set; }
         public int WaitCtn { get; set; }
         public int Status { get; set; }
+        public string Note1 { get; set; }//PNAME
+        public string Note2 { get; set; }//PARTNO
+        public string Note3 { get; set; }//PARTNAME
+        public string ZCode { get; set; }//PLSIZE
     }
 }

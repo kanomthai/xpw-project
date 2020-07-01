@@ -80,15 +80,7 @@ namespace XPWLibrary.Controllers
 
         public List<SetPalletListData> GetJobListPallet(string refinv)
         {
-            string sql = $"SELECT \n"+
-                $"    e.ISSUINGKEY,e.REFINVOICE,e.CONTAINERTYPE,e.ETDDTE,'' desination,l.PALLETNO shipplno,d.PONO,d.PARTNO,sum(d.ORDERQTY) ORDERQTY,b.STDPACK,sum(d.ORDERQTY)/b.STDPACK ctn,count(d.ITEM) seq,'' lotno\n" +
-                "FROM TXP_ISSPALLET l\n" +
-                "INNER JOIN TXP_ISSTRANSENT e ON l.ISSUINGKEY = e.ISSUINGKEY\n" +
-                "INNER JOIN TXP_ISSPACKDETAIL d ON l.ISSUINGKEY = e.ISSUINGKEY AND l.PALLETNO = d.SHIPPLNO\n" +
-                "INNER JOIN TXP_ISSTRANSBODY b ON l.ISSUINGKEY = b.ISSUINGKEY AND d.PONO = b.PONO AND d.PARTNO = b.PARTNO\n" +
-                $"WHERE l.ISSUINGKEY = '{refinv}'\n" +
-                $"GROUP BY e.ISSUINGKEY,e.REFINVOICE,e.CONTAINERTYPE,e.ETDDTE,l.PALLETNO,d.PONO,d.PARTNO,b.STDPACK\n" +
-                "ORDER BY l.PALLETNO,d.PONO,d.PARTNO";
+            string sql = $"SELECT * FROM TBT_PALLETREPORT e WHERE e.ISSUINGKEY = '{refinv}'";
             List<SetPalletListData> obj = new List<SetPalletListData>();
             Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
@@ -108,6 +100,18 @@ namespace XPWLibrary.Controllers
                     StdPack = int.Parse(r["stdpack"].ToString()),
                     Ctn = int.Parse(r["ctn"].ToString()),
                     ITem = int.Parse(r["seq"].ToString()),
+                    PlSize = r["plsize"].ToString(),//PLSIZE
+                    CombInv = r["potype"].ToString(),//POTYPE
+                    LotNo = r["lotno"].ToString(),//LOTNO
+                    AffCode = r["affcode"].ToString(),//AFFCODE
+                    CustCode = r["bishpc"].ToString(),//BISHPC
+                    CustName = r["custname"].ToString(),//CUSTNAME
+                    ShipType = r["shiptype"].ToString(),//SHIPTYPE
+                    Factory = r["factory"].ToString(),//FACTORY
+                    Note1 = r["note1"].ToString(),//NOTE1
+                    Note2 = r["note2"].ToString(),//NOTE2
+                    Note3 = r["note3"].ToString(),//NOTE3
+                    ZCode = r["zonecode"].ToString(),//ZONECODE
                 });
             }
             return obj;

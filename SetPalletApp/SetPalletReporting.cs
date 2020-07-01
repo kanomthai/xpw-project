@@ -26,6 +26,15 @@ namespace SetPalletApp
                     x += i.ITem;
                 });
                 prInvoiceNo.Value = obj[0].RefInv;
+                prRefNo.Value = obj[0].RefNo;
+                prQrCode.Value = obj[0].RefNo;
+                prCustCode.Value = obj[0].CustCode;
+                prCountry.Value = obj[0].CustName;
+                prShipType.Value = obj[0].ShipType;
+                prFactory.Value = obj[0].Factory;
+                prGroupOrder.Value = obj[0].CombInv;
+
+
                 prContainerType.Value = obj[0].ContainerType;
                 prDesinations.Value = "";
                 prEtdDate.Value = obj[0].EtdDte;

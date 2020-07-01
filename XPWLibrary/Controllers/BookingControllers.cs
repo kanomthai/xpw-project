@@ -34,11 +34,11 @@ namespace XPWLibrary.Controllers
 
         public List<Bookings> GetContainerList(DateTime d)
         {
-            string sql = $"select c.custname,c.etddte,c.containerno,c.sealno,c.containersize,'' invoice,0 grossweight,0 netweight,0 plcount," +
-                $"l.PLOUTSTS loadsts,0 closed,c.RELEASEDTE from txp_loadcontainer c\n" +
+            string sql = $"select '' custname,c.etddte,c.containerno,c.sealno,c.containersize,'' invoice,0 grossweight,0 netweight,0 plcount," +
+                $"min(l.PLOUTSTS) loadsts,0 closed,c.RELEASEDTE from txp_loadcontainer c\n" +
                 "INNER JOIN TXP_ISSPALLET l ON c.CONTAINERNO = l.CONTAINERNO \n" +
                 $"where c.etddte = to_date('{d.ToString("dd/MM/yyyy")}', 'dd/MM/yyyy')\n" +
-                $"GROUP BY c.custname,c.etddte,c.containerno,c.sealno,c.containersize,l.PLOUTSTS,c.RELEASEDTE";
+                $"GROUP BY c.etddte,c.containerno,c.sealno,c.containersize,c.RELEASEDTE";
             DataSet dr = new ConnDB().GetFill(sql);
             Console.WriteLine(sql);
             Console.WriteLine("========== GetLoadContainer ===========");
@@ -52,7 +52,7 @@ namespace XPWLibrary.Controllers
                     ContainerSize = r["containersize"].ToString(),
                     Invoice = r["invoice"].ToString(),
                     SealNo = r["sealno"].ToString(),
-                    Custname = r["custname"].ToString(),
+                    //Custname = r["custname"].ToString(),
                     Pallet = GetCountContainer(r["containerno"].ToString()),
                     LoadStatus = int.Parse(r["loadsts"].ToString()),
                     CloseStatus = int.Parse(r["closed"].ToString()),
