@@ -48,6 +48,10 @@ namespace XPWLibrary.Controllers
                     ShCtn = int.Parse(r["shctn"].ToString()),
                     Conn = int.Parse(r["conn"].ToString()),
                     Status = int.Parse(r["status"].ToString()),
+                    Note1 = r["note1"].ToString(),
+                    Note2 = r["note2"].ToString(),
+                    Note3 = r["note3"].ToString(),
+                    ZCode = r["zonecode"].ToString(),
                     Upddte = DateTime.Parse(r["upddte"].ToString()),
                 });
             }
@@ -77,7 +81,7 @@ namespace XPWLibrary.Controllers
                 etddate = $"t.ETDDTE BETWEEN (TRUNC(to_date('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy'), 'DY') + 0) AND (TRUNC(to_date('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy'), 'DY') + 7)";
             }
             string sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate} AND t.CTN > 0\n" +
-                $"ORDER BY t.ZNAME,t.AFFCODE,t.CUSTNAME,t.BISHPC,t.SHIPTYPE,t.ORD";
+                $"ORDER BY t.CUSTNAME,t.AFFCODE,t.BISHPC,t.ZNAME,t.SHIPTYPE,t.ORD";
             Console.WriteLine(sql);
             return AppendInvoiceDetail(sql);
         }
@@ -261,9 +265,26 @@ namespace XPWLibrary.Controllers
                     ShCtn = int.Parse(r["shctn"].ToString()),
                     PartRmCtn = int.Parse(r["rm"].ToString()),
                     RemCtn = int.Parse(r["ctn"].ToString()) - (int.Parse(r["shctn"].ToString()) + int.Parse(r["rm"].ToString())),
+                    CurCtn = int.Parse(r["curstk"].ToString()),
+                    WaitCtn= int.Parse(r["waitrec"].ToString()),
                     StartFticket = sctn
                 });
             }
+
+              //as
+//  SELECT   b.UUID,b.ISSUINGKEY,b.PONO,b.PARTNO,b.PARTNAME,b.LOTNO,p.KIDS,p.SIZES,p.COLORS,
+//          CASE WHEN length(b.LOTNO) > 0 THEN substr(b.LOTNO, length(b.LOTNO) -2, 3)
+//                                         ELSE '0' END seq,
+//         b.ORDERQTY,ROUND(b.ORDERQTY / b.STDPACK) ctn,b.ISSUINGSTATUS status,
+//            ROUND(b.SHORDERQTY / b.STDPACK) shctn,
+//          (round(b.prepareqty / b.STDPACK))rm,
+//          get_injcurstk(b.TAGRP, b.PARTNO, 'S') CURSTK,
+//          get_injcurstk(b.TAGRP, b.PARTNO, 'R') WAITREC
+//  FROM TXP_ISSTRANSBODY b
+//  INNER JOIN TXP_ISSTRANSENT e ON b.ISSUINGKEY = e.ISSUINGKEY
+//  LEFT JOIN  TXP_PART p ON b.PARTNO = p.PARTNO AND b.tagrp = p.tagrp
+//  WHERE b.PONO NOT LIKE '#%'
+//ORDER BY b.PONO,p.KIDS,p.SIZES,b.LOTNO,b.ORDERQTY / b.STDPACK;
             return list;
         }
 

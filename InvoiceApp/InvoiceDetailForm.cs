@@ -63,6 +63,9 @@ namespace InvoiceApp
             bbiCustCode.EditValue = ob.Bishpc;
             bbiCustName.EditValue = ob.Custname;
             bbiEtd.EditValue = ob.Etddte;
+            txtNote1.EditValue = ob.Note1;
+            txtNote2.EditValue = ob.Note2;
+            txtZoneCode.EditValue = ob.ZCode;
             bbiEtd.Enabled = false;
             bbiShip.Enabled = false;
             bbiNewOrder.Enabled = false;
@@ -241,6 +244,8 @@ namespace InvoiceApp
                 case "RemCtn":
                 case "LotSeq":
                 case "PartRmCtn":
+                case "CurCtn":
+                case "WaitCtn":
                     if (e.Value.ToString() == "0")
                     {
                         e.DisplayText = "";

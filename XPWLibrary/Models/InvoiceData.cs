@@ -20,6 +20,10 @@ namespace XPWLibrary.Models
         public int Plno { get; set; }
         public int RmCon { get; internal set; }
         public int Conn { get; set; }
+        public string Note1 { get; set; }
+        public string Note2 { get; set; }
+        public string Note3 { get; set; }
+        public string ZCode { get; set; }
         public DateTime Upddte { get; set; }
     }
 
@@ -32,6 +36,8 @@ namespace XPWLibrary.Models
         public int LotSeq { get; set; }
         public int BalQty { get; set; }
         public int BalCtn { get; set; }
+        public int CurCtn { get; set; }
+        public int WaitCtn { get; set; }
         public int PartRmCtn { get; set; }
         public int RemCtn { get; set; }
         public int StartFticket { get; set; }

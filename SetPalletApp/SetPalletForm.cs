@@ -61,11 +61,18 @@ namespace SetPalletApp
                 obj.PlSize = new GreeterFunction().GetPlSize(obj.PlSize, p);
                 string plno = $"1P{(npl.Count + 1).ToString("D3")}";
                 string sql = $"SELECT * FROM TXP_ISSPALLET l WHERE l.ISSUINGKEY = '{obj.RefNo}' AND l.PALLETNO = '{plno}'";
+                string w = obj.PlSize.Substring(0, obj.PlSize.IndexOf("x"));
+                string l = obj.PlSize.Substring(w.Length + 1);
+                string ll = obj.PlSize.Substring(w.Length + 1, l.IndexOf("x"));
+
+                string h = obj.PlSize.Substring(ll.Length + 2);
+                string hh = obj.PlSize.Substring(h.IndexOf("x"));
+
                 DataSet dr = new ConnDB().GetFill(sql);
                 if (dr.Tables[0].Rows.Count < 1)
                 {
-                    string ins = $"INSERT INTO TXP_ISSPALLET(FACTORY, ISSUINGKEY, PALLETNO, PLTYPE, PLOUTSTS, UPDDTE, SYSDTE, PLTOTAL, BOOKED)\n" +
-                        $"VALUES('{StaticFunctionData.Factory}', '{obj.RefNo}', '{plno}', '{obj.PlSize}', 0, current_timestamp, current_timestamp, {p}, 0)";
+                    string ins = $"INSERT INTO TXP_ISSPALLET(FACTORY, ISSUINGKEY, PALLETNO, PLTYPE, PLOUTSTS, UPDDTE, SYSDTE, PLTOTAL, BOOKED,PLWIDE,PLLENG,PLHIGHT)\n" +
+                        $"VALUES('{StaticFunctionData.Factory}', '{obj.RefNo}', '{plno}', '{obj.PlSize}', 0, current_timestamp, current_timestamp, {p}, '0', '{w}', '{ll}' ,'{hh}')";
                     new ConnDB().ExcuteSQL(ins);
                 }
 
@@ -80,8 +87,16 @@ namespace SetPalletApp
 
         void bbiPrintPreview_ItemClick(object sender, ItemClickEventArgs e)
         {
-            SetPalletReportJobOrderPreview frm = new SetPalletReportJobOrderPreview(inv);
-            frm.ShowDialog();
+            List<SetPallatData> list = gridPartControl.DataSource as List<SetPallatData>;
+            if (list.Count < 0)
+            {
+                SetPalletReportJobOrderPreview frm = new SetPalletReportJobOrderPreview(inv);
+                frm.ShowDialog();
+            }
+            else
+            {
+                XtraMessageBox.Show("กรุณา Set Pallet ให้ครบด้วย", "ข้อความแจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         //void InsertPalletToPackingDetail(SetPallatData obj, string plno)

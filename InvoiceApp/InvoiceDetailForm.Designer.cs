@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             DevExpress.Utils.Animation.PushTransition pushTransition1 = new DevExpress.Utils.Animation.PushTransition();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InvoiceDetailForm));
             this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
@@ -61,10 +62,14 @@
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonStatusBar = new DevExpress.XtraBars.Ribbon.RibbonStatusBar();
-            this.workspaceManager1 = new DevExpress.Utils.WorkspaceManager();
+            this.workspaceManager1 = new DevExpress.Utils.WorkspaceManager(this.components);
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
             this.layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
+            this.label6 = new System.Windows.Forms.Label();
+            this.txtZoneCode = new DevExpress.XtraEditors.TextEdit();
+            this.txtNote2 = new DevExpress.XtraEditors.TextEdit();
+            this.txtNote1 = new DevExpress.XtraEditors.TextEdit();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -80,18 +85,22 @@
             this.bbiRefInv = new DevExpress.XtraEditors.TextEdit();
             this.layoutControlGroup1 = new DevExpress.XtraLayout.LayoutControlGroup();
             this.lbFactory = new DevExpress.XtraLayout.LayoutControlItem();
-            this.lbship = new DevExpress.XtraLayout.LayoutControlItem();
-            this.lbzone = new DevExpress.XtraLayout.LayoutControlItem();
-            this.lbEtd = new DevExpress.XtraLayout.LayoutControlItem();
-            this.lbaff = new DevExpress.XtraLayout.LayoutControlItem();
             this.lbcust = new DevExpress.XtraLayout.LayoutControlItem();
             this.lbOrder = new DevExpress.XtraLayout.LayoutControlItem();
-            this.lbref = new DevExpress.XtraLayout.LayoutControlItem();
-            this.lbcustname = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.lbinv = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lbEtd = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lbaff = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lbzone = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lbinv = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lbship = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lbref = new DevExpress.XtraLayout.LayoutControlItem();
+            this.lbcustname = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem6 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.gridControl = new DevExpress.XtraGrid.GridControl();
             this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -115,7 +124,9 @@
             this.lbAlert = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.ppMenu = new DevExpress.XtraBars.PopupMenu();
+            this.ppMenu = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.gridColumn15 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn16 = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -123,6 +134,9 @@
             this.groupControl2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).BeginInit();
             this.layoutControl2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.txtZoneCode.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtNote2.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtNote1.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bbiFactory.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bbiShip.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bbiZone.Properties)).BeginInit();
@@ -136,18 +150,22 @@
             ((System.ComponentModel.ISupportInitialize)(this.bbiRefInv.Properties)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbFactory)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbship)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbzone)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbEtd)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbaff)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbcust)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbOrder)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbref)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbcustname)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbinv)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbEtd)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbaff)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbzone)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbinv)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbship)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbref)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbcustname)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl)).BeginInit();
@@ -198,7 +216,7 @@
             this.ribbonPage1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.OfficeUniversal;
             this.ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
-            this.ribbonControl.Size = new System.Drawing.Size(965, 93);
+            this.ribbonControl.Size = new System.Drawing.Size(965, 79);
             this.ribbonControl.StatusBar = this.ribbonStatusBar;
             this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
@@ -468,10 +486,10 @@
             this.layoutControl1.Controls.Add(this.groupControl2);
             this.layoutControl1.Controls.Add(this.groupControl1);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl1.Location = new System.Drawing.Point(0, 93);
+            this.layoutControl1.Location = new System.Drawing.Point(0, 79);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.Root = this.Root;
-            this.layoutControl1.Size = new System.Drawing.Size(965, 576);
+            this.layoutControl1.Size = new System.Drawing.Size(965, 590);
             this.layoutControl1.TabIndex = 4;
             this.layoutControl1.Text = "layoutControl1";
             // 
@@ -480,12 +498,16 @@
             this.groupControl2.Controls.Add(this.layoutControl2);
             this.groupControl2.Location = new System.Drawing.Point(12, 12);
             this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(941, 116);
+            this.groupControl2.Size = new System.Drawing.Size(941, 146);
             this.groupControl2.TabIndex = 16;
             this.groupControl2.Text = "JOB ORDER LIST";
             // 
             // layoutControl2
             // 
+            this.layoutControl2.Controls.Add(this.label6);
+            this.layoutControl2.Controls.Add(this.txtZoneCode);
+            this.layoutControl2.Controls.Add(this.txtNote2);
+            this.layoutControl2.Controls.Add(this.txtNote1);
             this.layoutControl2.Controls.Add(this.label5);
             this.layoutControl2.Controls.Add(this.label4);
             this.layoutControl2.Controls.Add(this.label3);
@@ -500,57 +522,113 @@
             this.layoutControl2.Controls.Add(this.bbiInv);
             this.layoutControl2.Controls.Add(this.bbiRefInv);
             this.layoutControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl2.Location = new System.Drawing.Point(2, 22);
+            this.layoutControl2.Location = new System.Drawing.Point(2, 20);
             this.layoutControl2.Name = "layoutControl2";
+            this.layoutControl2.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1003, 0, 650, 400);
             this.layoutControl2.Root = this.layoutControlGroup1;
-            this.layoutControl2.Size = new System.Drawing.Size(937, 92);
+            this.layoutControl2.Size = new System.Drawing.Size(937, 124);
             this.layoutControl2.TabIndex = 0;
             this.layoutControl2.Text = "layoutControl2";
             // 
+            // label6
+            // 
+            this.label6.Location = new System.Drawing.Point(860, 60);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(65, 20);
+            this.label6.TabIndex = 20;
+            // 
+            // txtZoneCode
+            // 
+            this.txtZoneCode.Enabled = false;
+            this.txtZoneCode.Location = new System.Drawing.Point(627, 60);
+            this.txtZoneCode.MenuManager = this.ribbonControl;
+            this.txtZoneCode.Name = "txtZoneCode";
+            this.txtZoneCode.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.txtZoneCode.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtZoneCode.Properties.Appearance.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.txtZoneCode.Properties.Appearance.Options.UseBackColor = true;
+            this.txtZoneCode.Properties.Appearance.Options.UseFont = true;
+            this.txtZoneCode.Properties.Appearance.Options.UseForeColor = true;
+            this.txtZoneCode.Size = new System.Drawing.Size(229, 20);
+            this.txtZoneCode.StyleController = this.layoutControl2;
+            this.txtZoneCode.TabIndex = 19;
+            // 
+            // txtNote2
+            // 
+            this.txtNote2.Enabled = false;
+            this.txtNote2.Location = new System.Drawing.Point(605, 36);
+            this.txtNote2.MenuManager = this.ribbonControl;
+            this.txtNote2.Name = "txtNote2";
+            this.txtNote2.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.txtNote2.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNote2.Properties.Appearance.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.txtNote2.Properties.Appearance.Options.UseBackColor = true;
+            this.txtNote2.Properties.Appearance.Options.UseFont = true;
+            this.txtNote2.Properties.Appearance.Options.UseForeColor = true;
+            this.txtNote2.Size = new System.Drawing.Size(251, 20);
+            this.txtNote2.StyleController = this.layoutControl2;
+            this.txtNote2.TabIndex = 18;
+            // 
+            // txtNote1
+            // 
+            this.txtNote1.Enabled = false;
+            this.txtNote1.Location = new System.Drawing.Point(605, 12);
+            this.txtNote1.MenuManager = this.ribbonControl;
+            this.txtNote1.Name = "txtNote1";
+            this.txtNote1.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.txtNote1.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtNote1.Properties.Appearance.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.txtNote1.Properties.Appearance.Options.UseBackColor = true;
+            this.txtNote1.Properties.Appearance.Options.UseFont = true;
+            this.txtNote1.Properties.Appearance.Options.UseForeColor = true;
+            this.txtNote1.Size = new System.Drawing.Size(251, 20);
+            this.txtNote1.StyleController = this.layoutControl2;
+            this.txtNote1.TabIndex = 17;
+            // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(679, 60);
+            this.label5.Location = new System.Drawing.Point(195, 84);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(246, 20);
+            this.label5.Size = new System.Drawing.Size(730, 28);
             this.label5.TabIndex = 16;
             // 
             // label4
             // 
-            this.label4.Location = new System.Drawing.Point(648, 36);
+            this.label4.Location = new System.Drawing.Point(860, 36);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(277, 20);
+            this.label4.Size = new System.Drawing.Size(65, 20);
             this.label4.TabIndex = 15;
             // 
             // label3
             // 
-            this.label3.Location = new System.Drawing.Point(576, 12);
+            this.label3.Location = new System.Drawing.Point(860, 12);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(349, 20);
+            this.label3.Size = new System.Drawing.Size(65, 20);
             this.label3.TabIndex = 14;
             // 
             // bbiFactory
             // 
             this.bbiFactory.Enabled = false;
-            this.bbiFactory.Location = new System.Drawing.Point(68, 12);
+            this.bbiFactory.Location = new System.Drawing.Point(66, 12);
             this.bbiFactory.Name = "bbiFactory";
-            this.bbiFactory.Properties.Appearance.BackColor = System.Drawing.Color.White;
-            this.bbiFactory.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.bbiFactory.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.bbiFactory.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.bbiFactory.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bbiFactory.Properties.Appearance.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.bbiFactory.Properties.Appearance.Options.UseBackColor = true;
             this.bbiFactory.Properties.Appearance.Options.UseFont = true;
             this.bbiFactory.Properties.Appearance.Options.UseForeColor = true;
-            this.bbiFactory.Size = new System.Drawing.Size(92, 20);
+            this.bbiFactory.Size = new System.Drawing.Size(125, 20);
             this.bbiFactory.StyleController = this.layoutControl2;
             this.bbiFactory.TabIndex = 4;
             // 
             // bbiShip
             // 
             this.bbiShip.Enabled = false;
-            this.bbiShip.Location = new System.Drawing.Point(220, 12);
+            this.bbiShip.Location = new System.Drawing.Point(66, 60);
             this.bbiShip.Name = "bbiShip";
-            this.bbiShip.Properties.Appearance.BackColor = System.Drawing.Color.White;
-            this.bbiShip.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.bbiShip.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.bbiShip.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.bbiShip.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bbiShip.Properties.Appearance.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.bbiShip.Properties.Appearance.Options.UseBackColor = true;
             this.bbiShip.Properties.Appearance.Options.UseFont = true;
             this.bbiShip.Properties.Appearance.Options.UseForeColor = true;
@@ -560,22 +638,22 @@
             "A",
             "B",
             "T"});
-            this.bbiShip.Size = new System.Drawing.Size(140, 20);
+            this.bbiShip.Size = new System.Drawing.Size(125, 20);
             this.bbiShip.StyleController = this.layoutControl2;
             this.bbiShip.TabIndex = 5;
             // 
             // bbiZone
             // 
             this.bbiZone.Enabled = false;
-            this.bbiZone.Location = new System.Drawing.Point(400, 12);
+            this.bbiZone.Location = new System.Drawing.Point(46, 36);
             this.bbiZone.Name = "bbiZone";
-            this.bbiZone.Properties.Appearance.BackColor = System.Drawing.Color.White;
-            this.bbiZone.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.bbiZone.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.bbiZone.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.bbiZone.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bbiZone.Properties.Appearance.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.bbiZone.Properties.Appearance.Options.UseBackColor = true;
             this.bbiZone.Properties.Appearance.Options.UseFont = true;
             this.bbiZone.Properties.Appearance.Options.UseForeColor = true;
-            this.bbiZone.Size = new System.Drawing.Size(172, 20);
+            this.bbiZone.Size = new System.Drawing.Size(145, 20);
             this.bbiZone.StyleController = this.layoutControl2;
             this.bbiZone.TabIndex = 7;
             // 
@@ -583,11 +661,11 @@
             // 
             this.bbiEtd.EditValue = null;
             this.bbiEtd.Enabled = false;
-            this.bbiEtd.Location = new System.Drawing.Point(40, 36);
+            this.bbiEtd.Location = new System.Drawing.Point(221, 12);
             this.bbiEtd.Name = "bbiEtd";
-            this.bbiEtd.Properties.Appearance.BackColor = System.Drawing.Color.White;
-            this.bbiEtd.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.bbiEtd.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.bbiEtd.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.bbiEtd.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bbiEtd.Properties.Appearance.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.bbiEtd.Properties.Appearance.Options.UseBackColor = true;
             this.bbiEtd.Properties.Appearance.Options.UseFont = true;
             this.bbiEtd.Properties.Appearance.Options.UseForeColor = true;
@@ -595,18 +673,18 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.bbiEtd.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.bbiEtd.Size = new System.Drawing.Size(120, 20);
+            this.bbiEtd.Size = new System.Drawing.Size(183, 20);
             this.bbiEtd.StyleController = this.layoutControl2;
             this.bbiEtd.TabIndex = 6;
             // 
             // bbiAff
             // 
             this.bbiAff.Enabled = false;
-            this.bbiAff.Location = new System.Drawing.Point(220, 36);
+            this.bbiAff.Location = new System.Drawing.Point(462, 12);
             this.bbiAff.Name = "bbiAff";
-            this.bbiAff.Properties.Appearance.BackColor = System.Drawing.Color.White;
-            this.bbiAff.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.bbiAff.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.bbiAff.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.bbiAff.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bbiAff.Properties.Appearance.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.bbiAff.Properties.Appearance.Options.UseBackColor = true;
             this.bbiAff.Properties.Appearance.Options.UseFont = true;
             this.bbiAff.Properties.Appearance.Options.UseForeColor = true;
@@ -617,75 +695,75 @@
             // bbiCustCode
             // 
             this.bbiCustCode.Enabled = false;
-            this.bbiCustCode.Location = new System.Drawing.Point(383, 36);
+            this.bbiCustCode.Location = new System.Drawing.Point(469, 36);
             this.bbiCustCode.Name = "bbiCustCode";
-            this.bbiCustCode.Properties.Appearance.BackColor = System.Drawing.Color.White;
-            this.bbiCustCode.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.bbiCustCode.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.bbiCustCode.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.bbiCustCode.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bbiCustCode.Properties.Appearance.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.bbiCustCode.Properties.Appearance.Options.UseBackColor = true;
             this.bbiCustCode.Properties.Appearance.Options.UseFont = true;
             this.bbiCustCode.Properties.Appearance.Options.UseForeColor = true;
-            this.bbiCustCode.Size = new System.Drawing.Size(104, 20);
+            this.bbiCustCode.Size = new System.Drawing.Size(89, 20);
             this.bbiCustCode.StyleController = this.layoutControl2;
             this.bbiCustCode.TabIndex = 9;
             // 
             // bbiCustName
             // 
             this.bbiCustName.Enabled = false;
-            this.bbiCustName.Location = new System.Drawing.Point(554, 36);
+            this.bbiCustName.Location = new System.Drawing.Point(469, 60);
             this.bbiCustName.Name = "bbiCustName";
-            this.bbiCustName.Properties.Appearance.BackColor = System.Drawing.Color.White;
-            this.bbiCustName.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.bbiCustName.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.bbiCustName.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.bbiCustName.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bbiCustName.Properties.Appearance.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.bbiCustName.Properties.Appearance.Options.UseBackColor = true;
             this.bbiCustName.Properties.Appearance.Options.UseFont = true;
             this.bbiCustName.Properties.Appearance.Options.UseForeColor = true;
-            this.bbiCustName.Size = new System.Drawing.Size(90, 20);
+            this.bbiCustName.Size = new System.Drawing.Size(89, 20);
             this.bbiCustName.StyleController = this.layoutControl2;
             this.bbiCustName.TabIndex = 10;
             // 
             // bbiOrderBy
             // 
             this.bbiOrderBy.Enabled = false;
-            this.bbiOrderBy.Location = new System.Drawing.Point(71, 60);
+            this.bbiOrderBy.Location = new System.Drawing.Point(69, 84);
             this.bbiOrderBy.Name = "bbiOrderBy";
-            this.bbiOrderBy.Properties.Appearance.BackColor = System.Drawing.Color.White;
-            this.bbiOrderBy.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.bbiOrderBy.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.bbiOrderBy.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.bbiOrderBy.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bbiOrderBy.Properties.Appearance.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.bbiOrderBy.Properties.Appearance.Options.UseBackColor = true;
             this.bbiOrderBy.Properties.Appearance.Options.UseFont = true;
             this.bbiOrderBy.Properties.Appearance.Options.UseForeColor = true;
-            this.bbiOrderBy.Size = new System.Drawing.Size(89, 20);
+            this.bbiOrderBy.Size = new System.Drawing.Size(122, 20);
             this.bbiOrderBy.StyleController = this.layoutControl2;
             this.bbiOrderBy.TabIndex = 11;
             // 
             // bbiInv
             // 
             this.bbiInv.Enabled = false;
-            this.bbiInv.Location = new System.Drawing.Point(234, 60);
+            this.bbiInv.Location = new System.Drawing.Point(263, 36);
             this.bbiInv.Name = "bbiInv";
-            this.bbiInv.Properties.Appearance.BackColor = System.Drawing.Color.White;
-            this.bbiInv.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.bbiInv.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.bbiInv.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.bbiInv.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bbiInv.Properties.Appearance.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.bbiInv.Properties.Appearance.Options.UseBackColor = true;
             this.bbiInv.Properties.Appearance.Options.UseFont = true;
             this.bbiInv.Properties.Appearance.Options.UseForeColor = true;
-            this.bbiInv.Size = new System.Drawing.Size(192, 20);
+            this.bbiInv.Size = new System.Drawing.Size(141, 20);
             this.bbiInv.StyleController = this.layoutControl2;
             this.bbiInv.TabIndex = 12;
             // 
             // bbiRefInv
             // 
             this.bbiRefInv.Enabled = false;
-            this.bbiRefInv.Location = new System.Drawing.Point(477, 60);
+            this.bbiRefInv.Location = new System.Drawing.Point(240, 60);
             this.bbiRefInv.Name = "bbiRefInv";
-            this.bbiRefInv.Properties.Appearance.BackColor = System.Drawing.Color.White;
-            this.bbiRefInv.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-            this.bbiRefInv.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.bbiRefInv.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.bbiRefInv.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bbiRefInv.Properties.Appearance.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.bbiRefInv.Properties.Appearance.Options.UseBackColor = true;
             this.bbiRefInv.Properties.Appearance.Options.UseFont = true;
             this.bbiRefInv.Properties.Appearance.Options.UseForeColor = true;
-            this.bbiRefInv.Size = new System.Drawing.Size(198, 20);
+            this.bbiRefInv.Size = new System.Drawing.Size(164, 20);
             this.bbiRefInv.StyleController = this.layoutControl2;
             this.bbiRefInv.TabIndex = 13;
             // 
@@ -695,21 +773,25 @@
             this.layoutControlGroup1.GroupBordersVisible = false;
             this.layoutControlGroup1.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.lbFactory,
-            this.lbship,
-            this.lbzone,
-            this.lbEtd,
-            this.lbaff,
             this.lbcust,
             this.lbOrder,
-            this.lbref,
-            this.lbcustname,
             this.layoutControlItem3,
             this.layoutControlItem4,
+            this.layoutControlItem5,
+            this.lbEtd,
+            this.lbaff,
+            this.lbzone,
             this.lbinv,
-            this.layoutControlItem5});
-            this.layoutControlGroup1.Name = "layoutControlGroup1";
+            this.lbship,
+            this.lbref,
+            this.lbcustname,
+            this.layoutControlItem6,
+            this.layoutControlItem7,
+            this.layoutControlItem8,
+            this.layoutControlItem9});
+            this.layoutControlGroup1.Name = "Root";
             this.layoutControlGroup1.OptionsItemText.TextAlignMode = DevExpress.XtraLayout.TextAlignModeGroup.AutoSize;
-            this.layoutControlGroup1.Size = new System.Drawing.Size(937, 92);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(937, 124);
             this.layoutControlGroup1.TextVisible = false;
             // 
             // lbFactory
@@ -717,154 +799,213 @@
             this.lbFactory.Control = this.bbiFactory;
             this.lbFactory.CustomizationFormText = "FACTORY:";
             this.lbFactory.Location = new System.Drawing.Point(0, 0);
+            this.lbFactory.MaxSize = new System.Drawing.Size(183, 24);
+            this.lbFactory.MinSize = new System.Drawing.Size(183, 24);
             this.lbFactory.Name = "lbFactory";
-            this.lbFactory.Size = new System.Drawing.Size(152, 24);
+            this.lbFactory.Size = new System.Drawing.Size(183, 24);
+            this.lbFactory.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.lbFactory.Text = "FACTORY:";
-            this.lbFactory.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.lbFactory.TextSize = new System.Drawing.Size(51, 13);
-            this.lbFactory.TextToControlDistance = 5;
-            // 
-            // lbship
-            // 
-            this.lbship.Control = this.bbiShip;
-            this.lbship.CustomizationFormText = "SHIPTYPE:";
-            this.lbship.Location = new System.Drawing.Point(152, 0);
-            this.lbship.Name = "lbship";
-            this.lbship.Size = new System.Drawing.Size(200, 24);
-            this.lbship.Text = "SHIPTYPE:";
-            this.lbship.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
-            this.lbship.TextSize = new System.Drawing.Size(51, 13);
-            this.lbship.TextToControlDistance = 5;
-            // 
-            // lbzone
-            // 
-            this.lbzone.Control = this.bbiZone;
-            this.lbzone.CustomizationFormText = "ZONE:";
-            this.lbzone.Location = new System.Drawing.Point(352, 0);
-            this.lbzone.Name = "lbzone";
-            this.lbzone.Size = new System.Drawing.Size(212, 24);
-            this.lbzone.Text = "ZONE:";
-            this.lbzone.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
-            this.lbzone.TextSize = new System.Drawing.Size(31, 13);
-            this.lbzone.TextToControlDistance = 5;
-            // 
-            // lbEtd
-            // 
-            this.lbEtd.Control = this.bbiEtd;
-            this.lbEtd.CustomizationFormText = "ETD:";
-            this.lbEtd.Location = new System.Drawing.Point(0, 24);
-            this.lbEtd.Name = "lbEtd";
-            this.lbEtd.Size = new System.Drawing.Size(152, 24);
-            this.lbEtd.Text = "ETD:";
-            this.lbEtd.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
-            this.lbEtd.TextSize = new System.Drawing.Size(23, 13);
-            this.lbEtd.TextToControlDistance = 5;
-            // 
-            // lbaff
-            // 
-            this.lbaff.Control = this.bbiAff;
-            this.lbaff.CustomizationFormText = "AFFCODE:";
-            this.lbaff.Location = new System.Drawing.Point(152, 24);
-            this.lbaff.Name = "lbaff";
-            this.lbaff.Size = new System.Drawing.Size(156, 24);
-            this.lbaff.Text = "AFFCODE:";
-            this.lbaff.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
-            this.lbaff.TextSize = new System.Drawing.Size(51, 13);
-            this.lbaff.TextToControlDistance = 5;
             // 
             // lbcust
             // 
             this.lbcust.Control = this.bbiCustCode;
             this.lbcust.CustomizationFormText = "CUSTCODE:";
-            this.lbcust.Location = new System.Drawing.Point(308, 24);
+            this.lbcust.Location = new System.Drawing.Point(396, 24);
+            this.lbcust.MaxSize = new System.Drawing.Size(154, 24);
+            this.lbcust.MinSize = new System.Drawing.Size(154, 24);
             this.lbcust.Name = "lbcust";
-            this.lbcust.Size = new System.Drawing.Size(171, 24);
+            this.lbcust.Size = new System.Drawing.Size(154, 24);
+            this.lbcust.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.lbcust.Text = "CUSTCODE:";
-            this.lbcust.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.lbcust.TextSize = new System.Drawing.Size(58, 13);
-            this.lbcust.TextToControlDistance = 5;
             // 
             // lbOrder
             // 
             this.lbOrder.Control = this.bbiOrderBy;
             this.lbOrder.CustomizationFormText = "ORDER BY:";
-            this.lbOrder.Location = new System.Drawing.Point(0, 48);
+            this.lbOrder.Location = new System.Drawing.Point(0, 72);
+            this.lbOrder.MaxSize = new System.Drawing.Size(183, 32);
+            this.lbOrder.MinSize = new System.Drawing.Size(183, 32);
             this.lbOrder.Name = "lbOrder";
-            this.lbOrder.Size = new System.Drawing.Size(152, 24);
+            this.lbOrder.Size = new System.Drawing.Size(183, 32);
+            this.lbOrder.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.lbOrder.Text = "ORDER BY:";
-            this.lbOrder.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.lbOrder.TextSize = new System.Drawing.Size(54, 13);
-            this.lbOrder.TextToControlDistance = 5;
-            // 
-            // lbref
-            // 
-            this.lbref.Control = this.bbiRefInv;
-            this.lbref.CustomizationFormText = "REFNO.:";
-            this.lbref.Location = new System.Drawing.Point(418, 48);
-            this.lbref.Name = "lbref";
-            this.lbref.Size = new System.Drawing.Size(249, 24);
-            this.lbref.Text = "REFNO.:";
-            this.lbref.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
-            this.lbref.TextSize = new System.Drawing.Size(42, 13);
-            this.lbref.TextToControlDistance = 5;
-            // 
-            // lbcustname
-            // 
-            this.lbcustname.Control = this.bbiCustName;
-            this.lbcustname.CustomizationFormText = "CUSTNAME:";
-            this.lbcustname.Location = new System.Drawing.Point(479, 24);
-            this.lbcustname.Name = "lbcustname";
-            this.lbcustname.Size = new System.Drawing.Size(157, 24);
-            this.lbcustname.Text = "CUSTNAME:";
-            this.lbcustname.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
-            this.lbcustname.TextSize = new System.Drawing.Size(58, 13);
-            this.lbcustname.TextToControlDistance = 5;
             // 
             // layoutControlItem3
             // 
             this.layoutControlItem3.Control = this.label3;
-            this.layoutControlItem3.Location = new System.Drawing.Point(564, 0);
+            this.layoutControlItem3.Location = new System.Drawing.Point(848, 0);
             this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(353, 24);
+            this.layoutControlItem3.Size = new System.Drawing.Size(69, 24);
             this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem3.TextVisible = false;
             // 
             // layoutControlItem4
             // 
             this.layoutControlItem4.Control = this.label4;
-            this.layoutControlItem4.Location = new System.Drawing.Point(636, 24);
+            this.layoutControlItem4.Location = new System.Drawing.Point(848, 24);
             this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(281, 24);
+            this.layoutControlItem4.Size = new System.Drawing.Size(69, 24);
             this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem4.TextVisible = false;
+            // 
+            // layoutControlItem5
+            // 
+            this.layoutControlItem5.Control = this.label5;
+            this.layoutControlItem5.Location = new System.Drawing.Point(183, 72);
+            this.layoutControlItem5.MaxSize = new System.Drawing.Size(734, 32);
+            this.layoutControlItem5.MinSize = new System.Drawing.Size(734, 32);
+            this.layoutControlItem5.Name = "layoutControlItem5";
+            this.layoutControlItem5.Size = new System.Drawing.Size(734, 32);
+            this.layoutControlItem5.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem5.TextVisible = false;
+            // 
+            // lbEtd
+            // 
+            this.lbEtd.Control = this.bbiEtd;
+            this.lbEtd.CustomizationFormText = "ETD:";
+            this.lbEtd.Location = new System.Drawing.Point(183, 0);
+            this.lbEtd.MaxSize = new System.Drawing.Size(213, 24);
+            this.lbEtd.MinSize = new System.Drawing.Size(213, 24);
+            this.lbEtd.Name = "lbEtd";
+            this.lbEtd.Size = new System.Drawing.Size(213, 24);
+            this.lbEtd.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.lbEtd.Text = "ETD:";
+            this.lbEtd.TextSize = new System.Drawing.Size(23, 13);
+            // 
+            // lbaff
+            // 
+            this.lbaff.Control = this.bbiAff;
+            this.lbaff.CustomizationFormText = "AFFCODE:";
+            this.lbaff.Location = new System.Drawing.Point(396, 0);
+            this.lbaff.MaxSize = new System.Drawing.Size(154, 24);
+            this.lbaff.MinSize = new System.Drawing.Size(154, 24);
+            this.lbaff.Name = "lbaff";
+            this.lbaff.Size = new System.Drawing.Size(154, 24);
+            this.lbaff.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.lbaff.Text = "AFFCODE:";
+            this.lbaff.TextLocation = DevExpress.Utils.Locations.Left;
+            this.lbaff.TextSize = new System.Drawing.Size(51, 13);
+            // 
+            // lbzone
+            // 
+            this.lbzone.Control = this.bbiZone;
+            this.lbzone.CustomizationFormText = "ZONE:";
+            this.lbzone.Location = new System.Drawing.Point(0, 24);
+            this.lbzone.MaxSize = new System.Drawing.Size(183, 24);
+            this.lbzone.MinSize = new System.Drawing.Size(183, 24);
+            this.lbzone.Name = "lbzone";
+            this.lbzone.Size = new System.Drawing.Size(183, 24);
+            this.lbzone.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.lbzone.Text = "ZONE:";
+            this.lbzone.TextSize = new System.Drawing.Size(31, 13);
             // 
             // lbinv
             // 
             this.lbinv.Control = this.bbiInv;
             this.lbinv.CustomizationFormText = "INVOICENO.:";
-            this.lbinv.Location = new System.Drawing.Point(152, 48);
+            this.lbinv.Location = new System.Drawing.Point(183, 24);
+            this.lbinv.MaxSize = new System.Drawing.Size(213, 24);
+            this.lbinv.MinSize = new System.Drawing.Size(213, 24);
             this.lbinv.Name = "lbinv";
-            this.lbinv.Size = new System.Drawing.Size(266, 24);
+            this.lbinv.Size = new System.Drawing.Size(213, 24);
+            this.lbinv.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.lbinv.Text = "INVOICENO.:";
-            this.lbinv.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.lbinv.TextSize = new System.Drawing.Size(65, 13);
-            this.lbinv.TextToControlDistance = 5;
             // 
-            // layoutControlItem5
+            // lbship
             // 
-            this.layoutControlItem5.Control = this.label5;
-            this.layoutControlItem5.Location = new System.Drawing.Point(667, 48);
-            this.layoutControlItem5.Name = "layoutControlItem5";
-            this.layoutControlItem5.Size = new System.Drawing.Size(250, 24);
-            this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem5.TextVisible = false;
+            this.lbship.Control = this.bbiShip;
+            this.lbship.CustomizationFormText = "SHIPTYPE:";
+            this.lbship.Location = new System.Drawing.Point(0, 48);
+            this.lbship.MaxSize = new System.Drawing.Size(183, 24);
+            this.lbship.MinSize = new System.Drawing.Size(183, 24);
+            this.lbship.Name = "lbship";
+            this.lbship.Size = new System.Drawing.Size(183, 24);
+            this.lbship.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.lbship.Text = "SHIPTYPE:";
+            this.lbship.TextSize = new System.Drawing.Size(51, 13);
+            // 
+            // lbref
+            // 
+            this.lbref.Control = this.bbiRefInv;
+            this.lbref.CustomizationFormText = "REFNO.:";
+            this.lbref.Location = new System.Drawing.Point(183, 48);
+            this.lbref.MaxSize = new System.Drawing.Size(213, 24);
+            this.lbref.MinSize = new System.Drawing.Size(213, 24);
+            this.lbref.Name = "lbref";
+            this.lbref.Size = new System.Drawing.Size(213, 24);
+            this.lbref.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.lbref.Text = "REFNO.:";
+            this.lbref.TextSize = new System.Drawing.Size(42, 13);
+            // 
+            // lbcustname
+            // 
+            this.lbcustname.Control = this.bbiCustName;
+            this.lbcustname.CustomizationFormText = "CUSTNAME:";
+            this.lbcustname.Location = new System.Drawing.Point(396, 48);
+            this.lbcustname.MaxSize = new System.Drawing.Size(154, 24);
+            this.lbcustname.MinSize = new System.Drawing.Size(154, 24);
+            this.lbcustname.Name = "lbcustname";
+            this.lbcustname.Size = new System.Drawing.Size(154, 24);
+            this.lbcustname.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.lbcustname.Text = "CUSTNAME:";
+            this.lbcustname.TextSize = new System.Drawing.Size(58, 13);
+            // 
+            // layoutControlItem6
+            // 
+            this.layoutControlItem6.Control = this.txtNote1;
+            this.layoutControlItem6.Location = new System.Drawing.Point(550, 0);
+            this.layoutControlItem6.MaxSize = new System.Drawing.Size(298, 24);
+            this.layoutControlItem6.MinSize = new System.Drawing.Size(298, 24);
+            this.layoutControlItem6.Name = "layoutControlItem6";
+            this.layoutControlItem6.Size = new System.Drawing.Size(298, 24);
+            this.layoutControlItem6.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.layoutControlItem6.Text = "NOTE 1:";
+            this.layoutControlItem6.TextSize = new System.Drawing.Size(40, 13);
+            // 
+            // layoutControlItem7
+            // 
+            this.layoutControlItem7.Control = this.txtNote2;
+            this.layoutControlItem7.Location = new System.Drawing.Point(550, 24);
+            this.layoutControlItem7.MaxSize = new System.Drawing.Size(298, 24);
+            this.layoutControlItem7.MinSize = new System.Drawing.Size(298, 24);
+            this.layoutControlItem7.Name = "layoutControlItem7";
+            this.layoutControlItem7.Size = new System.Drawing.Size(298, 24);
+            this.layoutControlItem7.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.layoutControlItem7.Text = "NOTE 2:";
+            this.layoutControlItem7.TextSize = new System.Drawing.Size(40, 13);
+            // 
+            // layoutControlItem8
+            // 
+            this.layoutControlItem8.Control = this.txtZoneCode;
+            this.layoutControlItem8.Location = new System.Drawing.Point(550, 48);
+            this.layoutControlItem8.MaxSize = new System.Drawing.Size(298, 24);
+            this.layoutControlItem8.MinSize = new System.Drawing.Size(298, 24);
+            this.layoutControlItem8.Name = "layoutControlItem8";
+            this.layoutControlItem8.Size = new System.Drawing.Size(298, 24);
+            this.layoutControlItem8.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
+            this.layoutControlItem8.Text = "ZONE CODE:";
+            this.layoutControlItem8.TextSize = new System.Drawing.Size(62, 13);
+            // 
+            // layoutControlItem9
+            // 
+            this.layoutControlItem9.Control = this.label6;
+            this.layoutControlItem9.Location = new System.Drawing.Point(848, 48);
+            this.layoutControlItem9.Name = "layoutControlItem9";
+            this.layoutControlItem9.Size = new System.Drawing.Size(69, 24);
+            this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem9.TextVisible = false;
             // 
             // groupControl1
             // 
             this.groupControl1.Controls.Add(this.gridControl);
-            this.groupControl1.Location = new System.Drawing.Point(12, 132);
+            this.groupControl1.Location = new System.Drawing.Point(12, 162);
             this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(941, 432);
+            this.groupControl1.Size = new System.Drawing.Size(941, 416);
             this.groupControl1.TabIndex = 15;
             // 
             // gridControl
@@ -872,11 +1013,11 @@
             this.gridControl.Cursor = System.Windows.Forms.Cursors.Hand;
             this.gridControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridControl.EmbeddedNavigator.Buttons.Edit.Enabled = false;
-            this.gridControl.Location = new System.Drawing.Point(2, 22);
+            this.gridControl.Location = new System.Drawing.Point(2, 20);
             this.gridControl.MainView = this.gridView;
             this.gridControl.MenuManager = this.ribbonControl;
             this.gridControl.Name = "gridControl";
-            this.gridControl.Size = new System.Drawing.Size(937, 408);
+            this.gridControl.Size = new System.Drawing.Size(937, 394);
             this.gridControl.TabIndex = 0;
             this.gridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -897,7 +1038,9 @@
             this.gridColumn11,
             this.gridColumn12,
             this.gridColumn13,
-            this.gridColumn14});
+            this.gridColumn14,
+            this.gridColumn15,
+            this.gridColumn16});
             this.gridView.CustomizationFormBounds = new System.Drawing.Rectangle(809, 490, 250, 280);
             this.gridView.GridControl = this.gridControl;
             this.gridView.Name = "gridView";
@@ -935,7 +1078,7 @@
             this.gridColumn2.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn2.Visible = true;
             this.gridColumn2.VisibleIndex = 0;
-            this.gridColumn2.Width = 116;
+            this.gridColumn2.Width = 99;
             // 
             // gridColumn3
             // 
@@ -946,7 +1089,7 @@
             this.gridColumn3.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn3.Visible = true;
             this.gridColumn3.VisibleIndex = 1;
-            this.gridColumn3.Width = 92;
+            this.gridColumn3.Width = 79;
             // 
             // gridColumn4
             // 
@@ -961,7 +1104,7 @@
             this.gridColumn4.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn4.Visible = true;
             this.gridColumn4.VisibleIndex = 2;
-            this.gridColumn4.Width = 166;
+            this.gridColumn4.Width = 142;
             // 
             // gridColumn5
             // 
@@ -976,7 +1119,7 @@
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "BalQty", "{0:n0}")});
             this.gridColumn5.Visible = true;
             this.gridColumn5.VisibleIndex = 5;
-            this.gridColumn5.Width = 50;
+            this.gridColumn5.Width = 42;
             // 
             // gridColumn6
             // 
@@ -995,7 +1138,7 @@
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "BalCtn", "{0:n0}")});
             this.gridColumn6.Visible = true;
             this.gridColumn6.VisibleIndex = 6;
-            this.gridColumn6.Width = 39;
+            this.gridColumn6.Width = 33;
             // 
             // gridColumn7
             // 
@@ -1010,7 +1153,7 @@
             this.gridColumn7.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn7.Visible = true;
             this.gridColumn7.VisibleIndex = 3;
-            this.gridColumn7.Width = 127;
+            this.gridColumn7.Width = 109;
             // 
             // gridColumn8
             // 
@@ -1027,7 +1170,7 @@
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "LotSeq", "{0:0.##}")});
             this.gridColumn8.Visible = true;
             this.gridColumn8.VisibleIndex = 4;
-            this.gridColumn8.Width = 39;
+            this.gridColumn8.Width = 33;
             // 
             // gridColumn9
             // 
@@ -1044,8 +1187,8 @@
             this.gridColumn9.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "ShCtn", "{0:n0}")});
             this.gridColumn9.Visible = true;
-            this.gridColumn9.VisibleIndex = 7;
-            this.gridColumn9.Width = 63;
+            this.gridColumn9.VisibleIndex = 9;
+            this.gridColumn9.Width = 58;
             // 
             // gridColumn10
             // 
@@ -1063,8 +1206,8 @@
             this.gridColumn10.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "RemCtn", "{0:n0}")});
             this.gridColumn10.Visible = true;
-            this.gridColumn10.VisibleIndex = 9;
-            this.gridColumn10.Width = 52;
+            this.gridColumn10.VisibleIndex = 11;
+            this.gridColumn10.Width = 48;
             // 
             // gridColumn11
             // 
@@ -1092,8 +1235,8 @@
             this.gridColumn13.Name = "gridColumn13";
             this.gridColumn13.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.gridColumn13.Visible = true;
-            this.gridColumn13.VisibleIndex = 10;
-            this.gridColumn13.Width = 124;
+            this.gridColumn13.VisibleIndex = 12;
+            this.gridColumn13.Width = 127;
             // 
             // gridColumn14
             // 
@@ -1107,8 +1250,8 @@
             this.gridColumn14.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PartRmCtn", "{0:n0}")});
             this.gridColumn14.Visible = true;
-            this.gridColumn14.VisibleIndex = 8;
-            this.gridColumn14.Width = 53;
+            this.gridColumn14.VisibleIndex = 10;
+            this.gridColumn14.Width = 49;
             // 
             // Root
             // 
@@ -1118,15 +1261,15 @@
             this.layoutControlItem1,
             this.layoutControlItem2});
             this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(965, 576);
+            this.Root.Size = new System.Drawing.Size(965, 590);
             this.Root.TextVisible = false;
             // 
             // layoutControlItem1
             // 
             this.layoutControlItem1.Control = this.groupControl1;
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 120);
+            this.layoutControlItem1.Location = new System.Drawing.Point(0, 150);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(945, 436);
+            this.layoutControlItem1.Size = new System.Drawing.Size(945, 420);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
@@ -1135,7 +1278,7 @@
             this.layoutControlItem2.Control = this.groupControl2;
             this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(945, 120);
+            this.layoutControlItem2.Size = new System.Drawing.Size(945, 150);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
             // 
@@ -1182,6 +1325,36 @@
             this.ppMenu.ShowCaption = true;
             this.ppMenu.ShowNavigationHeader = DevExpress.Utils.DefaultBoolean.True;
             // 
+            // gridColumn15
+            // 
+            this.gridColumn15.AppearanceCell.FontStyleDelta = System.Drawing.FontStyle.Bold;
+            this.gridColumn15.AppearanceCell.ForeColor = System.Drawing.Color.Green;
+            this.gridColumn15.AppearanceCell.Options.UseFont = true;
+            this.gridColumn15.AppearanceCell.Options.UseForeColor = true;
+            this.gridColumn15.Caption = "STK";
+            this.gridColumn15.DisplayFormat.FormatString = "{0:n0}";
+            this.gridColumn15.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.gridColumn15.FieldName = "CurCtn";
+            this.gridColumn15.Name = "gridColumn15";
+            this.gridColumn15.Visible = true;
+            this.gridColumn15.VisibleIndex = 7;
+            this.gridColumn15.Width = 48;
+            // 
+            // gridColumn16
+            // 
+            this.gridColumn16.AppearanceCell.FontStyleDelta = System.Drawing.FontStyle.Bold;
+            this.gridColumn16.AppearanceCell.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.gridColumn16.AppearanceCell.Options.UseFont = true;
+            this.gridColumn16.AppearanceCell.Options.UseForeColor = true;
+            this.gridColumn16.Caption = "WAIT REC";
+            this.gridColumn16.DisplayFormat.FormatString = "{0:n0}";
+            this.gridColumn16.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.gridColumn16.FieldName = "WaitCtn";
+            this.gridColumn16.Name = "gridColumn16";
+            this.gridColumn16.Visible = true;
+            this.gridColumn16.VisibleIndex = 8;
+            this.gridColumn16.Width = 54;
+            // 
             // InvoiceDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1203,6 +1376,9 @@
             this.groupControl2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl2)).EndInit();
             this.layoutControl2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.txtZoneCode.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtNote2.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.txtNote1.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bbiFactory.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bbiShip.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bbiZone.Properties)).EndInit();
@@ -1216,18 +1392,22 @@
             ((System.ComponentModel.ISupportInitialize)(this.bbiRefInv.Properties)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlGroup1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbFactory)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbship)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbzone)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbEtd)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbaff)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbcust)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbOrder)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbref)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbcustname)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.lbinv)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbEtd)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbaff)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbzone)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbinv)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbship)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbref)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lbcustname)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem6)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.groupControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridControl)).EndInit();
@@ -1328,5 +1508,15 @@
         private DevExpress.XtraBars.BarButtonItem bbiConfirmShort;
         private DevExpress.XtraBars.BarButtonItem bbiAddShorting;
         private DevExpress.XtraBars.BarButtonItem bbiEditCustomer;
+        private System.Windows.Forms.Label label6;
+        private DevExpress.XtraEditors.TextEdit txtZoneCode;
+        private DevExpress.XtraEditors.TextEdit txtNote2;
+        private DevExpress.XtraEditors.TextEdit txtNote1;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem6;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem7;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem8;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn15;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn16;
     }
 }
