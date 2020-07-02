@@ -95,7 +95,6 @@
             this.layoutControl5 = new DevExpress.XtraLayout.LayoutControl();
             this.bbi4oFt = new System.Windows.Forms.RadioButton();
             this.bbi20Ft = new System.Windows.Forms.RadioButton();
-            this.label2 = new System.Windows.Forms.Label();
             this.btnCheckInvoice = new DevExpress.XtraEditors.SimpleButton();
             this.label1 = new System.Windows.Forms.Label();
             this.bbiRelTimer = new DevExpress.XtraEditors.TimeEdit();
@@ -113,7 +112,6 @@
             this.layoutControlItem15 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem16 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem17 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem18 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem19 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem20 = new DevExpress.XtraLayout.LayoutControlItem();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
@@ -177,7 +175,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem16)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem17)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem18)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem19)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem20)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
@@ -867,7 +864,6 @@
             // 
             this.layoutControl5.Controls.Add(this.bbi4oFt);
             this.layoutControl5.Controls.Add(this.bbi20Ft);
-            this.layoutControl5.Controls.Add(this.label2);
             this.layoutControl5.Controls.Add(this.btnCheckInvoice);
             this.layoutControl5.Controls.Add(this.label1);
             this.layoutControl5.Controls.Add(this.bbiRelTimer);
@@ -886,9 +882,9 @@
             // 
             // bbi4oFt
             // 
-            this.bbi4oFt.Location = new System.Drawing.Point(85, 62);
+            this.bbi4oFt.Location = new System.Drawing.Point(78, 62);
             this.bbi4oFt.Name = "bbi4oFt";
-            this.bbi4oFt.Size = new System.Drawing.Size(59, 25);
+            this.bbi4oFt.Size = new System.Drawing.Size(82, 25);
             this.bbi4oFt.TabIndex = 15;
             this.bbi4oFt.Text = "40FT.";
             this.bbi4oFt.UseVisualStyleBackColor = true;
@@ -898,25 +894,17 @@
             this.bbi20Ft.Checked = true;
             this.bbi20Ft.Location = new System.Drawing.Point(12, 62);
             this.bbi20Ft.Name = "bbi20Ft";
-            this.bbi20Ft.Size = new System.Drawing.Size(69, 25);
+            this.bbi20Ft.Size = new System.Drawing.Size(62, 25);
             this.bbi20Ft.TabIndex = 14;
             this.bbi20Ft.TabStop = true;
             this.bbi20Ft.Text = "20FT.";
             this.bbi20Ft.UseVisualStyleBackColor = true;
             // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(148, 62);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(263, 25);
-            this.label2.TabIndex = 13;
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
             // btnCheckInvoice
             // 
             this.btnCheckInvoice.Location = new System.Drawing.Point(309, 12);
             this.btnCheckInvoice.Name = "btnCheckInvoice";
-            this.btnCheckInvoice.Size = new System.Drawing.Size(102, 22);
+            this.btnCheckInvoice.Size = new System.Drawing.Size(197, 22);
             this.btnCheckInvoice.StyleController = this.layoutControl5;
             this.btnCheckInvoice.TabIndex = 12;
             this.btnCheckInvoice.Text = "CHECK INVOICE";
@@ -924,34 +912,34 @@
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(415, 12);
+            this.label1.Location = new System.Drawing.Point(510, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(433, 99);
+            this.label1.Size = new System.Drawing.Size(338, 99);
             this.label1.TabIndex = 11;
             // 
             // bbiRelTimer
             // 
             this.bbiRelTimer.EditValue = new System.DateTime(2020, 6, 24, 0, 0, 0, 0);
-            this.bbiRelTimer.Location = new System.Drawing.Point(232, 91);
+            this.bbiRelTimer.Location = new System.Drawing.Point(375, 62);
             this.bbiRelTimer.MenuManager = this.ribbonControl;
             this.bbiRelTimer.Name = "bbiRelTimer";
             this.bbiRelTimer.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.bbiRelTimer.Size = new System.Drawing.Size(179, 20);
+            this.bbiRelTimer.Size = new System.Drawing.Size(131, 20);
             this.bbiRelTimer.StyleController = this.layoutControl5;
             this.bbiRelTimer.TabIndex = 10;
             // 
             // bbiRelDate
             // 
             this.bbiRelDate.EditValue = null;
-            this.bbiRelDate.Location = new System.Drawing.Point(93, 91);
+            this.bbiRelDate.Location = new System.Drawing.Point(245, 62);
             this.bbiRelDate.MenuManager = this.ribbonControl;
             this.bbiRelDate.Name = "bbiRelDate";
             this.bbiRelDate.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.bbiRelDate.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.bbiRelDate.Size = new System.Drawing.Size(102, 20);
+            this.bbiRelDate.Size = new System.Drawing.Size(93, 20);
             this.bbiRelDate.StyleController = this.layoutControl5;
             this.bbiRelDate.TabIndex = 9;
             // 
@@ -960,7 +948,7 @@
             this.bbiSealNo.Location = new System.Drawing.Point(275, 38);
             this.bbiSealNo.MenuManager = this.ribbonControl;
             this.bbiSealNo.Name = "bbiSealNo";
-            this.bbiSealNo.Size = new System.Drawing.Size(136, 20);
+            this.bbiSealNo.Size = new System.Drawing.Size(231, 20);
             this.bbiSealNo.StyleController = this.layoutControl5;
             this.bbiSealNo.TabIndex = 7;
             this.bbiSealNo.Enter += new System.EventHandler(this.bbiSealNo_Enter);
@@ -1010,13 +998,12 @@
             this.layoutControlItem10,
             this.layoutControlItem11,
             this.layoutControlItem12,
-            this.layoutControlItem14,
-            this.layoutControlItem15,
             this.layoutControlItem16,
             this.layoutControlItem17,
-            this.layoutControlItem18,
             this.layoutControlItem19,
-            this.layoutControlItem20});
+            this.layoutControlItem20,
+            this.layoutControlItem14,
+            this.layoutControlItem15});
             this.layoutControlGroup5.Name = "layoutControlGroup5";
             this.layoutControlGroup5.Size = new System.Drawing.Size(860, 123);
             this.layoutControlGroup5.TextVisible = false;
@@ -1063,7 +1050,7 @@
             this.layoutControlItem12.ControlAlignment = System.Drawing.ContentAlignment.MiddleCenter;
             this.layoutControlItem12.Location = new System.Drawing.Point(208, 26);
             this.layoutControlItem12.Name = "layoutControlItem12";
-            this.layoutControlItem12.Size = new System.Drawing.Size(195, 24);
+            this.layoutControlItem12.Size = new System.Drawing.Size(290, 24);
             this.layoutControlItem12.Text = "SEAL NO.:";
             this.layoutControlItem12.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.layoutControlItem12.TextSize = new System.Drawing.Size(50, 13);
@@ -1073,9 +1060,9 @@
             // 
             this.layoutControlItem14.Control = this.bbiRelDate;
             this.layoutControlItem14.ControlAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.layoutControlItem14.Location = new System.Drawing.Point(0, 79);
+            this.layoutControlItem14.Location = new System.Drawing.Point(152, 50);
             this.layoutControlItem14.Name = "layoutControlItem14";
-            this.layoutControlItem14.Size = new System.Drawing.Size(187, 24);
+            this.layoutControlItem14.Size = new System.Drawing.Size(178, 53);
             this.layoutControlItem14.Text = "RELEASE DATE:";
             this.layoutControlItem14.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.layoutControlItem14.TextSize = new System.Drawing.Size(76, 13);
@@ -1085,9 +1072,9 @@
             // 
             this.layoutControlItem15.Control = this.bbiRelTimer;
             this.layoutControlItem15.ControlAlignment = System.Drawing.ContentAlignment.MiddleCenter;
-            this.layoutControlItem15.Location = new System.Drawing.Point(187, 79);
+            this.layoutControlItem15.Location = new System.Drawing.Point(330, 50);
             this.layoutControlItem15.Name = "layoutControlItem15";
-            this.layoutControlItem15.Size = new System.Drawing.Size(216, 24);
+            this.layoutControlItem15.Size = new System.Drawing.Size(168, 53);
             this.layoutControlItem15.Text = "TIME:";
             this.layoutControlItem15.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.layoutControlItem15.TextSize = new System.Drawing.Size(28, 13);
@@ -1096,9 +1083,9 @@
             // layoutControlItem16
             // 
             this.layoutControlItem16.Control = this.label1;
-            this.layoutControlItem16.Location = new System.Drawing.Point(403, 0);
+            this.layoutControlItem16.Location = new System.Drawing.Point(498, 0);
             this.layoutControlItem16.Name = "layoutControlItem16";
-            this.layoutControlItem16.Size = new System.Drawing.Size(437, 103);
+            this.layoutControlItem16.Size = new System.Drawing.Size(342, 103);
             this.layoutControlItem16.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem16.TextVisible = false;
             // 
@@ -1107,34 +1094,25 @@
             this.layoutControlItem17.Control = this.btnCheckInvoice;
             this.layoutControlItem17.Location = new System.Drawing.Point(297, 0);
             this.layoutControlItem17.Name = "layoutControlItem17";
-            this.layoutControlItem17.Size = new System.Drawing.Size(106, 26);
+            this.layoutControlItem17.Size = new System.Drawing.Size(201, 26);
             this.layoutControlItem17.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem17.TextVisible = false;
-            // 
-            // layoutControlItem18
-            // 
-            this.layoutControlItem18.Control = this.label2;
-            this.layoutControlItem18.Location = new System.Drawing.Point(136, 50);
-            this.layoutControlItem18.Name = "layoutControlItem18";
-            this.layoutControlItem18.Size = new System.Drawing.Size(267, 29);
-            this.layoutControlItem18.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem18.TextVisible = false;
             // 
             // layoutControlItem19
             // 
             this.layoutControlItem19.Control = this.bbi20Ft;
             this.layoutControlItem19.Location = new System.Drawing.Point(0, 50);
             this.layoutControlItem19.Name = "layoutControlItem19";
-            this.layoutControlItem19.Size = new System.Drawing.Size(73, 29);
+            this.layoutControlItem19.Size = new System.Drawing.Size(66, 53);
             this.layoutControlItem19.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem19.TextVisible = false;
             // 
             // layoutControlItem20
             // 
             this.layoutControlItem20.Control = this.bbi4oFt;
-            this.layoutControlItem20.Location = new System.Drawing.Point(73, 50);
+            this.layoutControlItem20.Location = new System.Drawing.Point(66, 50);
             this.layoutControlItem20.Name = "layoutControlItem20";
-            this.layoutControlItem20.Size = new System.Drawing.Size(63, 29);
+            this.layoutControlItem20.Size = new System.Drawing.Size(86, 53);
             this.layoutControlItem20.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem20.TextVisible = false;
             // 
@@ -1255,7 +1233,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem15)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem16)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem17)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem18)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem19)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem20)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
@@ -1350,8 +1327,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn16;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn21;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn22;
-        private System.Windows.Forms.Label label2;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem18;
         private System.Windows.Forms.RadioButton bbi4oFt;
         private System.Windows.Forms.RadioButton bbi20Ft;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem19;
