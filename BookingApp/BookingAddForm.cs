@@ -256,54 +256,7 @@ namespace BookingApp
 
         private void gridPalletView_Click(object sender, EventArgs e)
         {
-            if (bbiContainer.EditValue.ToString() == "")
-            {
-                XtraMessageBox.Show("กรุณาระบุเลขที่ CONTAINER ด้วย", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                bbiContainer.Focus();
-                return;
-            }
-            else if (bbiSealNo.EditValue.ToString() == "")
-            {
-                XtraMessageBox.Show("กรุณาระบุเลขที่ SEALNO ด้วย", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                bbiSealNo.Focus();
-                return;
-            }
-            else
-            {
-                string txt = bbiSealNo.EditValue.ToString().ToUpper();
-                bbiSealNo.EditValue = txt;
-                BookingInvoicePallet pl = gridPalletView.GetFocusedRow() as BookingInvoicePallet;
-                pl.conno = bbiContainer.EditValue.ToString().ToUpper();
-                pl.sealno = txt;
-                cpl.Add(pl);
-                int x = 1;
-                cpl.ForEach(i => {
-                    i.id = x;
-                    x++;
-                });
-                if (UpdatePallet(pl, 6))
-                {
-                    UpdateContainer(pl);
-                }
-
-
-                gridSlPlControl.BeginUpdate();
-                gridSlPlControl.DataSource = cpl;
-                gridSlPlControl.EndUpdate();
-
-                List<BookingInvoicePallet> obj = gridPalletControl.DataSource as List<BookingInvoicePallet>;
-                obj.Remove(pl);
-                x = 1;
-                obj.ForEach(i => {
-                    i.id = x;
-                    x++;
-                });
-                gridPalletControl.BeginUpdate();
-                gridPalletControl.DataSource = obj;
-                gridPalletControl.EndUpdate();
-
-                ReloadContainer();
-            }
+            
         }
 
         private void gridSlPlView_Click(object sender, EventArgs e)
@@ -392,6 +345,63 @@ namespace BookingApp
             }
             catch (Exception)
             {
+            }
+        }
+
+        private void gridInvView_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void gridPalletView_DoubleClick(object sender, EventArgs e)
+        {
+            if (bbiContainer.EditValue.ToString() == "")
+            {
+                XtraMessageBox.Show("กรุณาระบุเลขที่ CONTAINER ด้วย", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                bbiContainer.Focus();
+                return;
+            }
+            else if (bbiSealNo.EditValue.ToString() == "")
+            {
+                XtraMessageBox.Show("กรุณาระบุเลขที่ SEALNO ด้วย", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                bbiSealNo.Focus();
+                return;
+            }
+            else
+            {
+                string txt = bbiSealNo.EditValue.ToString().ToUpper();
+                bbiSealNo.EditValue = txt;
+                BookingInvoicePallet pl = gridPalletView.GetFocusedRow() as BookingInvoicePallet;
+                pl.conno = bbiContainer.EditValue.ToString().ToUpper();
+                pl.sealno = txt;
+                cpl.Add(pl);
+                int x = 1;
+                cpl.ForEach(i => {
+                    i.id = x;
+                    x++;
+                });
+                if (UpdatePallet(pl, 6))
+                {
+                    UpdateContainer(pl);
+                }
+
+
+                gridSlPlControl.BeginUpdate();
+                gridSlPlControl.DataSource = cpl;
+                gridSlPlControl.EndUpdate();
+
+                List<BookingInvoicePallet> obj = gridPalletControl.DataSource as List<BookingInvoicePallet>;
+                obj.Remove(pl);
+                x = 1;
+                obj.ForEach(i => {
+                    i.id = x;
+                    x++;
+                });
+                gridPalletControl.BeginUpdate();
+                gridPalletControl.DataSource = obj;
+                gridPalletControl.EndUpdate();
+
+                ReloadContainer();
             }
         }
     }

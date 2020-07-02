@@ -227,8 +227,9 @@ namespace XPWLibrary.Controllers
         public List<BookingInvoicePallet> GetContainerDeaitl(string conns)
         {
             List<BookingInvoicePallet> list = new List<BookingInvoicePallet>();
-            string sql = $"SELECT l.*,e.refinvoice FROM txp_isspallet l\n" +
-                        $"INNER JOIN TXP_ISSTRANSENT e ON l.ISSUINGKEY = e.ISSUINGKEY WHERE l.containerno = '{conns}'";
+            string sql = $"SELECT e.FACTORY,e.ISSUINGKEY,l.PALLETNO,l.PONO,l.CUSTNAME,l.PLTYPE,l.PLOUTNO,l.PLOUTSTS,l.PLTOTAL,l.CONTAINERNO,l.BOOKED,l.PLWIDE,l.PLLENG,l.PLHIGHT,e.CUSTNAME,e.REFINVOICE FROM txp_isspallet l\n" +
+                        $"INNER JOIN TXP_ISSTRANSENT e ON l.ISSUINGKEY = e.ISSUINGKEY WHERE l.containerno = '{conns}'\n" +
+                        $"order by l.PLOUTNO,l.PALLETNO,l.PONO";
             Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow r in dr.Tables[0].Rows)
