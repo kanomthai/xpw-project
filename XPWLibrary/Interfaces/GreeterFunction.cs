@@ -948,233 +948,238 @@ namespace XPWLibrary.Interfaces
 
         public bool SumPallet(string inv)
         {
-            try
-            {
-                try
-                {
-                    SplashScreenManager.Default.SetWaitFormDescription($"SUMMARY PL.");
-                }
-                catch (Exception)
-                {
-                }
-                string fac = "AW";
-                if (inv.Substring(0, 1) == "I")
-                {
-                    fac = "INJ";
-                    return true;
-                }
-                else
-                {
-                    BindingList<PlListData> olkey = GetPlData(inv);
-                    bool repl = CountPl(inv);
-                    //// Console.WriteLine(repl);
-                    //string sql = $"SELECT SUBSTR(d.PARTNO, 0, 3) partype,count(d.PARTNO) seqctn FROM TXP_ISSPACKDETAIL d  WHERE d.ISSUINGKEY = '{inv}' GROUP BY SUBSTR(d.PARTNO, 0, 3) order by seqctn desc";
-                    string sql = $"SELECT partype,sum(ctn) seqctn FROM (\n" +
-                                $"    SELECT SUBSTR(p.PARTNO, 0, 3) partype,p.BALQTY / p.BISTDP ctn FROM TXP_ORDERPLAN p WHERE p.CURINV = '{inv}' AND p.STATUS = 1\n" +
-                                $") GROUP BY partype\n" +
-                                $"ORDER BY seqctn DESC";
-                    // Console.WriteLine(sql);
-                    string lastissueno = null;
-                    DataSet dr = new ConnDB().GetFill(sql);
-                    string scust = $"SELECT e.FACTORY,get_zone(e.FACTORY, e.ZONEID) zname, to_char(e.ETDDTE, 'dd/MM/yyyy') etd,e.CUSTNAME FROM TXP_ISSTRANSENT e WHERE e.ISSUINGKEY = '{inv}'";
-                    DataSet rx = new ConnDB().GetFill(scust);
-                    foreach (DataRow rr in rx.Tables[0].Rows)
-                    {
-                        string ssql = $"SELECT ISSUINGKEY,SUBSTR(ISSUINGKEY, 12) issctn FROM TXP_ISSTRANSENT e WHERE " +
-                            $"e.FACTORY = '{rr["factory"].ToString()}' AND " +
-                            $"get_zone(e.FACTORY, e.ZONEID) = '{rr["zname"].ToString()}' " +
-                            $"AND e.ETDDTE = TO_DATE('{rr["etd"].ToString()}', 'dd/MM/yyyy') " +
-                            $"AND e.CUSTNAME = '{rr["custname"].ToString()}' " +
-                            $"AND rownum < 3 " +
-                            $"ORDER BY SUBSTR(ISSUINGKEY, 12)  DESC";
-                        Console.WriteLine(ssql);
-                        DataSet rq = new ConnDB().GetFill(ssql);
-                        //int row = 0;
-                        //while (row < rq.Tables[0].Rows.Count)
-                        //{
-                        //    var o = rq.Tables[0].Rows[row];
-                        //    Console.WriteLine(o["issuingkey"]);
-                        //    if 
-                        //    row++;
-                        //}
-                        lastissueno = rq.Tables[0].Rows[0]["issuingkey"].ToString();
-                        //if (rq.Tables[0].Rows.Count >= 2)
-                        //{
-                        //    lastissueno = rq.Tables[0].Rows[1]["issuingkey"].ToString();
-                        //    Console.WriteLine(rq.Tables[0].Rows[2]["issuingkey"].ToString());
-                        //}
-                    }
-
-
-                    int xpl = 0;
-                    int laspl = 0;
-                    int i;
-                    int final = 0;
-                    List<PlCountData> x = new List<PlCountData>();//จำนวนเศษ
-                    string pltypename = "MIX";
-                    foreach (DataRow r in dr.Tables[0].Rows)
-                    {
-                        // Console.WriteLine(r["seqctn"].ToString());
-                        int[] pl_total = countPallet(int.Parse(r["seqctn"].ToString()));
-                        // Console.WriteLine(pl_total);
-                        pltypename = r["partype"].ToString();
-                        if (int.Parse(r["seqctn"].ToString()) > 44)
-                        {
-                            i = 0;
-                            while (i < pl_total[0])
-                            {
-                                laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "P");
-                                xpl = laspl + (i + 1);
-                                // Console.WriteLine($"TYPE: {r["partype"].ToString()} PALLET: 1P" + (xpl).ToString("D3"));
-                                string plnumber = "1P" + (xpl).ToString("D3");
-                                var plnokey = olkey.Where(plx => plx.PlNo.Contains(plnumber)).FirstOrDefault();
-                                // Console.WriteLine(plnokey);
-                                string ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}', '{pltypename}',45,sysdate,sysdate)";
-                                if (plnokey != null)
-                                {
-                                    ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno,containerno,Pltype,pltotal,ploutsts,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}','{plnokey.PlKey}', '{plnokey.ContNo}', '{pltypename}',45,{plnokey.PlStatus},sysdate,sysdate)";
-                                }
-                                bool xup = new ConnDB().ExcuteSQL(ins_pl);
-                                if (xup)
-                                {
-                                    i++;
-                                }
-                            }
-                            x.Add(new PlCountData()
-                            {
-                                pltype = r["partype"].ToString(),
-                                plcount = pl_total[1]
-                            });
-                            laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "P");
-                        }
-                        else
-                        {
-                            if (pl_total[2] == 1)
-                            {
-                                laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "P");
-                                string plnumber = "1P" + (laspl + 1).ToString("D3");
-                                var plnokey = olkey.Where(plx => plx.PlNo.Contains(plnumber)).FirstOrDefault();
-                                // Console.WriteLine(plnokey);
-                                string ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}', '{pltypename}',{int.Parse(r["seqctn"].ToString())},sysdate,sysdate)";
-                                if (plnokey != null)
-                                {
-                                    ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno, containerno,Pltype,pltotal,ploutsts,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}','{plnokey.PlKey}', '{plnokey.ContNo}', '{pltypename}',{int.Parse(r["seqctn"].ToString())},{plnokey.PlStatus},sysdate,sysdate)";
-                                }
-                                new ConnDB().ExcuteSQL(ins_pl);
-                                final = pl_total[0];
-                            }
-                            else
-                            {
-                                x.Add(new PlCountData()
-                                {
-                                    pltype = r["partype"].ToString(),
-                                    plcount = int.Parse(r["seqctn"].ToString())
-                                });
-                            }
-                        }
-                    }
-                    // Console.WriteLine(xpl);
-                    // Console.WriteLine(x);
-                    int total_pl = 0;
-                    foreach (var ii in x)
-                    {
-                        total_pl += ii.plcount;
-                        if (ii.plcount > 0)
-                        {
-                            pltypename = ii.pltype;
-                        }
-                    }
-                    if (x.Count > 1)
-                    {
-                        if (x[0].plcount > 0 && x[1].plcount > 0)
-                        {
-                            pltypename = "MIX";
-                        }
-                    }
-                    else
-                    {
-                        if (x[0].plcount > 0)
-                        {
-                            pltypename = "MIX";
-                        }
-                    }
-                    int[] xmix = countPallet(total_pl);
-                    // Console.WriteLine(xmix[0]);//จำนวนเต็ม
-                    i = 0;
-                    while (i < xmix[0])
-                    {
-                        laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "P");
-                        xpl = laspl + 1;
-                        int tt = 45;
-                        if (xmix[2] == 0)
-                        {
-                            tt = total_pl;
-                        }
-                        // Console.WriteLine($"TYPE: MIX PALLET: 1P" + (xpl).ToString("D3"));
-                        string plnumber = "1P" + (xpl).ToString("D3");
-                        var plnokey = olkey.Where(plx => plx.PlNo.Contains(plnumber)).FirstOrDefault();
-                        string ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}', '{pltypename}',{tt},sysdate,sysdate)";
-                        if (plnokey != null)
-                        {
-                            ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno,containerno,Pltype,pltotal,ploutsts,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}','{plnokey.PlKey}','{plnokey.ContNo}', '{pltypename}',{tt},{plnokey.PlStatus},sysdate,sysdate)";
-                        }
-                        bool xup = new ConnDB().ExcuteSQL(ins_pl);
-                        //bool xup = new ConnDB().ExcuteSQL($"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '1P{(xpl).ToString("D3")}', '{pltypename}',{tt},sysdate,sysdate)");
-                        if (xup)
-                        {
-                            //xpl += 1;
-                            i++;
-                        }
-                    }
-                    // Console.WriteLine(xmix[1]);//จำนวนเศษ
-                    if (xmix[1] > 17)
-                    {
-                        // Console.WriteLine($"TYPE: MIX PALLET: 1P" + (xpl + 1).ToString("D3"));
-                        laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "P");
-                        string plnumber = "1P" + (laspl + 1).ToString("D3");
-                        var plnokey = olkey.Where(plx => plx.PlNo.Contains(plnumber)).FirstOrDefault();
-                        string ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}', 'MIX',{xmix[1]},sysdate,sysdate)";
-                        if (plnokey != null)
-                        {
-                            ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno,containerno,Pltype,pltotal,ploutsts,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}','{plnokey.PlKey}','{plnokey.ContNo}', 'MIX',{xmix[1]}, {plnokey.PlStatus},sysdate,sysdate)";
-                        }
-                        bool xup = new ConnDB().ExcuteSQL(ins_pl);
-                        //bool xup = new ConnDB().ExcuteSQL($"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '1P{(xpl + 1).ToString("D3")}', 'MIX',{xmix[1]},sysdate,sysdate)");
-                        return xup;
-                    }
-                    else
-                    {
-                        int bb_a = xmix[1] / 2;
-                        int bb_b = xmix[1] - (bb_a * 2);
-                        i = 0;
-                        while (i < bb_a)
-                        {
-                            // Console.WriteLine($"TYPE: BIGBOX PALLET: 1C" + (i + 1).ToString("D3"));
-                            laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "C");
-                            bool xup = new ConnDB().ExcuteSQL($"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '1C{(laspl + 1).ToString("D3")}', 'BBOX',2,sysdate,sysdate)");
-                            if (xup)
-                            {
-                                i++;
-                            }
-                        }
-                        if (bb_b > 0)
-                        {
-                            if (final == 0)
-                            {
-                                // Console.WriteLine($"TYPE: SMALLBOX PALLET: 1C" + (bb_b + i).ToString("D3"));
-                                laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "C");
-                                new ConnDB().ExcuteSQL($"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '1C{(laspl + 1).ToString("D3")}', 'SBOX',1,sysdate,sysdate)");
-                            }
-                        }
-                    }
-                }    
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
             return true;
         }
+
+        //public bool SumPallet(string inv)
+        //{
+        //    try
+        //    {
+        //        try
+        //        {
+        //            SplashScreenManager.Default.SetWaitFormDescription($"SUMMARY PL.");
+        //        }
+        //        catch (Exception)
+        //        {
+        //        }
+        //        string fac = "AW";
+        //        if (inv.Substring(0, 1) == "I")
+        //        {
+        //            fac = "INJ";
+        //            return true;
+        //        }
+        //        else
+        //        {
+        //            BindingList<PlListData> olkey = GetPlData(inv);
+        //            bool repl = CountPl(inv);
+        //            //// Console.WriteLine(repl);
+        //            //string sql = $"SELECT SUBSTR(d.PARTNO, 0, 3) partype,count(d.PARTNO) seqctn FROM TXP_ISSPACKDETAIL d  WHERE d.ISSUINGKEY = '{inv}' GROUP BY SUBSTR(d.PARTNO, 0, 3) order by seqctn desc";
+        //            string sql = $"SELECT partype,sum(ctn) seqctn FROM (\n" +
+        //                        $"    SELECT SUBSTR(p.PARTNO, 0, 3) partype,p.BALQTY / p.BISTDP ctn FROM TXP_ORDERPLAN p WHERE p.CURINV = '{inv}' AND p.STATUS = 1\n" +
+        //                        $") GROUP BY partype\n" +
+        //                        $"ORDER BY seqctn DESC";
+        //            // Console.WriteLine(sql);
+        //            string lastissueno = null;
+        //            DataSet dr = new ConnDB().GetFill(sql);
+        //            string scust = $"SELECT e.FACTORY,get_zone(e.FACTORY, e.ZONEID) zname, to_char(e.ETDDTE, 'dd/MM/yyyy') etd,e.CUSTNAME FROM TXP_ISSTRANSENT e WHERE e.ISSUINGKEY = '{inv}'";
+        //            DataSet rx = new ConnDB().GetFill(scust);
+        //            foreach (DataRow rr in rx.Tables[0].Rows)
+        //            {
+        //                string ssql = $"SELECT ISSUINGKEY,SUBSTR(ISSUINGKEY, 12) issctn FROM TXP_ISSTRANSENT e WHERE " +
+        //                    $"e.FACTORY = '{rr["factory"].ToString()}' AND " +
+        //                    $"get_zone(e.FACTORY, e.ZONEID) = '{rr["zname"].ToString()}' " +
+        //                    $"AND e.ETDDTE = TO_DATE('{rr["etd"].ToString()}', 'dd/MM/yyyy') " +
+        //                    $"AND e.CUSTNAME = '{rr["custname"].ToString()}' " +
+        //                    $"AND rownum < 3 " +
+        //                    $"ORDER BY SUBSTR(ISSUINGKEY, 12)  DESC";
+        //                Console.WriteLine(ssql);
+        //                DataSet rq = new ConnDB().GetFill(ssql);
+        //                //int row = 0;
+        //                //while (row < rq.Tables[0].Rows.Count)
+        //                //{
+        //                //    var o = rq.Tables[0].Rows[row];
+        //                //    Console.WriteLine(o["issuingkey"]);
+        //                //    if 
+        //                //    row++;
+        //                //}
+        //                lastissueno = rq.Tables[0].Rows[0]["issuingkey"].ToString();
+        //                //if (rq.Tables[0].Rows.Count >= 2)
+        //                //{
+        //                //    lastissueno = rq.Tables[0].Rows[1]["issuingkey"].ToString();
+        //                //    Console.WriteLine(rq.Tables[0].Rows[2]["issuingkey"].ToString());
+        //                //}
+        //            }
+
+
+        //            int xpl = 0;
+        //            int laspl = 0;
+        //            int i;
+        //            int final = 0;
+        //            List<PlCountData> x = new List<PlCountData>();//จำนวนเศษ
+        //            string pltypename = "MIX";
+        //            foreach (DataRow r in dr.Tables[0].Rows)
+        //            {
+        //                // Console.WriteLine(r["seqctn"].ToString());
+        //                int[] pl_total = countPallet(int.Parse(r["seqctn"].ToString()));
+        //                // Console.WriteLine(pl_total);
+        //                pltypename = r["partype"].ToString();
+        //                if (int.Parse(r["seqctn"].ToString()) > 44)
+        //                {
+        //                    i = 0;
+        //                    while (i < pl_total[0])
+        //                    {
+        //                        laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "P");
+        //                        xpl = laspl + (i + 1);
+        //                        // Console.WriteLine($"TYPE: {r["partype"].ToString()} PALLET: 1P" + (xpl).ToString("D3"));
+        //                        string plnumber = "1P" + (xpl).ToString("D3");
+        //                        var plnokey = olkey.Where(plx => plx.PlNo.Contains(plnumber)).FirstOrDefault();
+        //                        // Console.WriteLine(plnokey);
+        //                        string ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}', '{pltypename}',45,sysdate,sysdate)";
+        //                        if (plnokey != null)
+        //                        {
+        //                            ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno,containerno,Pltype,pltotal,ploutsts,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}','{plnokey.PlKey}', '{plnokey.ContNo}', '{pltypename}',45,{plnokey.PlStatus},sysdate,sysdate)";
+        //                        }
+        //                        bool xup = new ConnDB().ExcuteSQL(ins_pl);
+        //                        if (xup)
+        //                        {
+        //                            i++;
+        //                        }
+        //                    }
+        //                    x.Add(new PlCountData()
+        //                    {
+        //                        pltype = r["partype"].ToString(),
+        //                        plcount = pl_total[1]
+        //                    });
+        //                    laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "P");
+        //                }
+        //                else
+        //                {
+        //                    if (pl_total[2] == 1)
+        //                    {
+        //                        laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "P");
+        //                        string plnumber = "1P" + (laspl + 1).ToString("D3");
+        //                        var plnokey = olkey.Where(plx => plx.PlNo.Contains(plnumber)).FirstOrDefault();
+        //                        // Console.WriteLine(plnokey);
+        //                        string ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}', '{pltypename}',{int.Parse(r["seqctn"].ToString())},sysdate,sysdate)";
+        //                        if (plnokey != null)
+        //                        {
+        //                            ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno, containerno,Pltype,pltotal,ploutsts,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}','{plnokey.PlKey}', '{plnokey.ContNo}', '{pltypename}',{int.Parse(r["seqctn"].ToString())},{plnokey.PlStatus},sysdate,sysdate)";
+        //                        }
+        //                        new ConnDB().ExcuteSQL(ins_pl);
+        //                        final = pl_total[0];
+        //                    }
+        //                    else
+        //                    {
+        //                        x.Add(new PlCountData()
+        //                        {
+        //                            pltype = r["partype"].ToString(),
+        //                            plcount = int.Parse(r["seqctn"].ToString())
+        //                        });
+        //                    }
+        //                }
+        //            }
+        //            // Console.WriteLine(xpl);
+        //            // Console.WriteLine(x);
+        //            int total_pl = 0;
+        //            foreach (var ii in x)
+        //            {
+        //                total_pl += ii.plcount;
+        //                if (ii.plcount > 0)
+        //                {
+        //                    pltypename = ii.pltype;
+        //                }
+        //            }
+        //            if (x.Count > 1)
+        //            {
+        //                if (x[0].plcount > 0 && x[1].plcount > 0)
+        //                {
+        //                    pltypename = "MIX";
+        //                }
+        //            }
+        //            else
+        //            {
+        //                if (x[0].plcount > 0)
+        //                {
+        //                    pltypename = "MIX";
+        //                }
+        //            }
+        //            int[] xmix = countPallet(total_pl);
+        //            // Console.WriteLine(xmix[0]);//จำนวนเต็ม
+        //            i = 0;
+        //            while (i < xmix[0])
+        //            {
+        //                laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "P");
+        //                xpl = laspl + 1;
+        //                int tt = 45;
+        //                if (xmix[2] == 0)
+        //                {
+        //                    tt = total_pl;
+        //                }
+        //                // Console.WriteLine($"TYPE: MIX PALLET: 1P" + (xpl).ToString("D3"));
+        //                string plnumber = "1P" + (xpl).ToString("D3");
+        //                var plnokey = olkey.Where(plx => plx.PlNo.Contains(plnumber)).FirstOrDefault();
+        //                string ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}', '{pltypename}',{tt},sysdate,sysdate)";
+        //                if (plnokey != null)
+        //                {
+        //                    ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno,containerno,Pltype,pltotal,ploutsts,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}','{plnokey.PlKey}','{plnokey.ContNo}', '{pltypename}',{tt},{plnokey.PlStatus},sysdate,sysdate)";
+        //                }
+        //                bool xup = new ConnDB().ExcuteSQL(ins_pl);
+        //                //bool xup = new ConnDB().ExcuteSQL($"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '1P{(xpl).ToString("D3")}', '{pltypename}',{tt},sysdate,sysdate)");
+        //                if (xup)
+        //                {
+        //                    //xpl += 1;
+        //                    i++;
+        //                }
+        //            }
+        //            // Console.WriteLine(xmix[1]);//จำนวนเศษ
+        //            if (xmix[1] > 17)
+        //            {
+        //                // Console.WriteLine($"TYPE: MIX PALLET: 1P" + (xpl + 1).ToString("D3"));
+        //                laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "P");
+        //                string plnumber = "1P" + (laspl + 1).ToString("D3");
+        //                var plnokey = olkey.Where(plx => plx.PlNo.Contains(plnumber)).FirstOrDefault();
+        //                string ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}', 'MIX',{xmix[1]},sysdate,sysdate)";
+        //                if (plnokey != null)
+        //                {
+        //                    ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno,containerno,Pltype,pltotal,ploutsts,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}','{plnokey.PlKey}','{plnokey.ContNo}', 'MIX',{xmix[1]}, {plnokey.PlStatus},sysdate,sysdate)";
+        //                }
+        //                bool xup = new ConnDB().ExcuteSQL(ins_pl);
+        //                //bool xup = new ConnDB().ExcuteSQL($"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '1P{(xpl + 1).ToString("D3")}', 'MIX',{xmix[1]},sysdate,sysdate)");
+        //                return xup;
+        //            }
+        //            else
+        //            {
+        //                int bb_a = xmix[1] / 2;
+        //                int bb_b = xmix[1] - (bb_a * 2);
+        //                i = 0;
+        //                while (i < bb_a)
+        //                {
+        //                    // Console.WriteLine($"TYPE: BIGBOX PALLET: 1C" + (i + 1).ToString("D3"));
+        //                    laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "C");
+        //                    bool xup = new ConnDB().ExcuteSQL($"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '1C{(laspl + 1).ToString("D3")}', 'BBOX',2,sysdate,sysdate)");
+        //                    if (xup)
+        //                    {
+        //                        i++;
+        //                    }
+        //                }
+        //                if (bb_b > 0)
+        //                {
+        //                    if (final == 0)
+        //                    {
+        //                        // Console.WriteLine($"TYPE: SMALLBOX PALLET: 1C" + (bb_b + i).ToString("D3"));
+        //                        laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "C");
+        //                        new ConnDB().ExcuteSQL($"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '1C{(laspl + 1).ToString("D3")}', 'SBOX',1,sysdate,sysdate)");
+        //                    }
+        //                }
+        //            }
+        //        }    
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //    }
+        //    return true;
+        //}
 
         private BindingList<PlListData> GetPlData(string inv)
         {
