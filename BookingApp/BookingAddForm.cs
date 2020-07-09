@@ -223,6 +223,7 @@ namespace BookingApp
                 
             }
             new ConnDB().ExcuteSQL(sqlupdate);
+            new ConnDB().ExcuteSQL($"UPDATE TXP_LOADPALLET SET CONTAINERNO = '{bbiContainer.EditValue.ToString().ToUpper()}' WHERE PLOUTNO = '{pl.ploutno}'");
         }
 
         bool UpdatePallet(BookingInvoicePallet pl, int sl)
@@ -255,6 +256,7 @@ namespace BookingApp
             {
                 sql_isspl = $"UPDATE txp_isspallet l SET l.booked = {sl},l.CONTAINERNO = '',l.custname = '' " +
                             $"WHERE l.issuingkey = '{pl.issuekey}' AND l.palletno = '{pl.plno}'";
+                new ConnDB().ExcuteSQL($"UPDATE TXP_LOADPALLET SET CONTAINERNO = '' WHERE PLOUTNO = '{pl.ploutno}'");
             }
             new ConnDB().ExcuteSQL(sql_isspl);
             return true;
@@ -267,44 +269,7 @@ namespace BookingApp
 
         private void gridSlPlView_Click(object sender, EventArgs e)
         {
-            BookingInvoicePallet p = gridSlPlView.GetFocusedRow() as BookingInvoicePallet;
-            if (p.plstatus > 3)
-            {
-                XtraMessageBox.Show($"ไม่สามารถลบข้อมูลนี้ได้\nเนื่องจากถูก LOAD เรียบร้อยแล้ว", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            else
-            {
-                DialogResult r = XtraMessageBox.Show($"คุณต้องการที่จะนำ {p.plno} ออกใช่หรือไม่?", "XPW Alert!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (r == DialogResult.Yes)
-                {
-                    List<BookingInvoicePallet> pl = gridPalletControl.DataSource as List<BookingInvoicePallet>;
-                    pl.Add(p);
-                    int x = 1;
-                    pl.ForEach(i => {
-                        i.id = x;
-                        x++;
-                    });
-                    gridPalletControl.BeginUpdate();
-                    gridPalletControl.DataSource = pl;
-                    gridPalletControl.EndUpdate();
-
-                    List<BookingInvoicePallet> px = gridSlPlControl.DataSource as List<BookingInvoicePallet>;
-                    if (UpdatePallet(p, 0))
-                    {
-                        px.Remove(p);
-                        x = 1;
-                        px.ForEach(i => {
-                            i.id = x;
-                            x++;
-                        });
-                        gridSlPlControl.BeginUpdate();
-                        gridSlPlControl.DataSource = px;
-                        gridSlPlControl.EndUpdate();
-                    }
-                }
-            }
-            ReloadContainer();
+            
         }
 
         void ReloadContainer()
@@ -336,9 +301,15 @@ namespace BookingApp
 
         private void gridContainerView_Click(object sender, EventArgs e)
         {
-            var issuekey = gridContainerView.GetFocusedRowCellValue("issuekey").ToString();
-            GetPalletList(issuekey);
-            GetInvoiceList();
+            try
+            {
+                var issuekey = gridContainerView.GetFocusedRowCellValue("issuekey").ToString();
+                GetPalletList(issuekey);
+                GetInvoiceList();
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void bbiSealNo_Enter(object sender, EventArgs e)
@@ -409,6 +380,48 @@ namespace BookingApp
 
                 ReloadContainer();
             }
+        }
+
+        private void gridSlPlView_DoubleClick(object sender, EventArgs e)
+        {
+            BookingInvoicePallet p = gridSlPlView.GetFocusedRow() as BookingInvoicePallet;
+            if (p.plstatus > 3)
+            {
+                XtraMessageBox.Show($"ไม่สามารถลบข้อมูลนี้ได้\nเนื่องจากถูก LOAD เรียบร้อยแล้ว", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+            {
+                DialogResult r = XtraMessageBox.Show($"คุณต้องการที่จะนำ {p.plno} ออกใช่หรือไม่?", "XPW Alert!", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (r == DialogResult.Yes)
+                {
+                    List<BookingInvoicePallet> pl = gridPalletControl.DataSource as List<BookingInvoicePallet>;
+                    pl.Add(p);
+                    int x = 1;
+                    pl.ForEach(i => {
+                        i.id = x;
+                        x++;
+                    });
+                    gridPalletControl.BeginUpdate();
+                    gridPalletControl.DataSource = pl;
+                    gridPalletControl.EndUpdate();
+
+                    List<BookingInvoicePallet> px = gridSlPlControl.DataSource as List<BookingInvoicePallet>;
+                    if (UpdatePallet(p, 0))
+                    {
+                        px.Remove(p);
+                        x = 1;
+                        px.ForEach(i => {
+                            i.id = x;
+                            x++;
+                        });
+                        gridSlPlControl.BeginUpdate();
+                        gridSlPlControl.DataSource = px;
+                        gridSlPlControl.EndUpdate();
+                    }
+                }
+            }
+            ReloadContainer();
         }
     }
 }
