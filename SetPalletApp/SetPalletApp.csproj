@@ -73,6 +73,12 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SetPalletAddToForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetPalletAddToForm.Designer.cs">
+      <DependentUpon>SetPalletAddToForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SetPalletForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,7 +106,11 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="SetPalletAddToForm.resx">
+      <DependentUpon>SetPalletAddToForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SetPalletForm.resx">
       <DependentUpon>SetPalletForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -130,6 +140,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\icons8-cardboard-box-32.png" />
+    <None Include="Resources\icons8-cardboard-box-16.png" />
+    <None Include="Resources\icons8-add-subnode-16.png" />
     <Content Include="templates\setpallet_template.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

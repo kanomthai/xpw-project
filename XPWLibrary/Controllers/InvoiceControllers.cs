@@ -80,8 +80,15 @@ namespace XPWLibrary.Controllers
             {
                 etddate = $"t.ETDDTE BETWEEN (TRUNC(to_date('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy'), 'DY') + 0) AND (TRUNC(to_date('{etd.ToString("ddMMyyyy")}', 'ddMMyyyy'), 'DY') + 7)";
             }
-            string sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate} AND t.CTN > 0\n" +
-                $"ORDER BY t.CUSTNAME,t.AFFCODE,t.BISHPC,t.ZNAME,t.SHIPTYPE,t.ORD";
+            string sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate} AND t.CTN > 0\n";
+            if (StaticFunctionData.Factory == "AW")
+            {
+                sql += "ORDER BY t.ZNAME,t.ETDDTE,t.CUSTNAME,t.REFINVOICE,t.ISSUINGKEY";
+            }
+            else
+            {
+                sql += "ORDER BY t.ZNAME,t.ETDDTE,t.CUSTNAME,t.REFINVOICE,t.ISSUINGKEY";
+            }
             Console.WriteLine(sql);
             return AppendInvoiceDetail(sql);
         }

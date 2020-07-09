@@ -48,8 +48,9 @@ namespace XPWLibrary.Controllers
         public List<SetPallatData> GetPartListCompletedDetail(string issuekey)
         {
             List<SetPallatData> obj = new List<SetPallatData>();
-            string sql = $"SELECT * FROM TXP_ISSPALLET l WHERE l.ISSUINGKEY = '{issuekey}' AND l.PALLETNO LIKE '%P%'\n"+
+            string sql = $"SELECT * FROM TXP_ISSPALLET l WHERE l.ISSUINGKEY = '{issuekey}'\n"+
                            "ORDER BY l.PALLETNO ";
+            Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow r in dr.Tables[0].Rows)
             {
@@ -181,6 +182,28 @@ namespace XPWLibrary.Controllers
                 }
             }
             return x;
+        }
+
+        public string GetLastCarton(string issuekey)
+        {
+            string ssql = $"SELECT SUBSTR(PALLETNO, 3) ctn  FROM TXP_ISSPALLET WHERE ISSUINGKEY = '{issuekey}' AND PALLETNO LIKE '1C%' ORDER BY PALLETNO DESC";
+            DataSet dr = new ConnDB().GetFill(ssql);
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                return $"1C{(int.Parse(dr.Tables[0].Rows[0]["ctn"].ToString()) + 1).ToString("D3")}";
+            }
+            return $"1C{(1).ToString("D3")}";
+        }
+
+        public string GetLastPallet(string issuekey)
+        {
+            string ssql = $"SELECT SUBSTR(PALLETNO, 3) ctn  FROM TXP_ISSPALLET WHERE ISSUINGKEY = '{issuekey}' AND PALLETNO LIKE '1P%' ORDER BY PALLETNO DESC";
+            DataSet dr = new ConnDB().GetFill(ssql);
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                return $"1P{(int.Parse(dr.Tables[0].Rows[0]["ctn"].ToString()) + 1).ToString("D3")}";
+            }
+            return $"1P{(1).ToString("D3")}";
         }
     }
 }

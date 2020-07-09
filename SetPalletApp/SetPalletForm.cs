@@ -59,14 +59,21 @@ namespace SetPalletApp
             if (p > 0)
             {
                 obj.PlSize = new GreeterFunction().GetPlSize(obj.PlSize, p);
-                string plno = $"1P{(npl.Count + 1).ToString("D3")}";
+                string plno = new SetPalletControllers().GetLastPallet(obj.RefNo);
                 string sql = $"SELECT * FROM TXP_ISSPALLET l WHERE l.ISSUINGKEY = '{obj.RefNo}' AND l.PALLETNO = '{plno}'";
-                string w = obj.PlSize.Substring(0, obj.PlSize.IndexOf("x"));
-                string l = obj.PlSize.Substring(w.Length + 1);
-                string ll = obj.PlSize.Substring(w.Length + 1, l.IndexOf("x"));
+                string w = "0";
+                string ll = "0";
+                string hh = "0";
+                if (obj.PlSize != "MIX")
+                {
+                    w = obj.PlSize.Substring(0, obj.PlSize.IndexOf("x"));
+                    string l = obj.PlSize.Substring(w.Length + 1);
+                    ll = obj.PlSize.Substring(w.Length + 1, l.IndexOf("x"));
 
-                string h = obj.PlSize.Substring(ll.Length + 2);
-                string hh = h.Substring(h.IndexOf("x")+1);
+                    string h = obj.PlSize.Substring(ll.Length + 2);
+                    hh = h.Substring(h.IndexOf("x") + 1);
+
+                }
 
                 DataSet dr = new ConnDB().GetFill(sql);
                 if (dr.Tables[0].Rows.Count < 1)
@@ -84,6 +91,8 @@ namespace SetPalletApp
             }
             return null;
         }
+
+
 
         void bbiPrintPreview_ItemClick(object sender, ItemClickEventArgs e)
         {
@@ -152,9 +161,14 @@ namespace SetPalletApp
                 int x = 0;
                 List<SetPallatData> list = gridPartView.DataSource as List<SetPallatData>;
                 list.ForEach(i => {
-                    c = true;
                     x += i.CtnQty;
                 });
+                if (x > 0)
+                {
+                    c = true;
+                }
+                bbiSetCarton.Enabled = !c;
+                bbisendToPallet.Enabled = c;
                 bbiSetPallet.Enabled = c;
                 bbiSetPallet.Caption = $"Set Pallet({x})";
                 popupMenu1.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
@@ -216,14 +230,14 @@ namespace SetPalletApp
 
         private void InsertPalletToPackingDetailAll(SetPallatData obj, string plno)
         {
-            int i = 0;
-            while (i < obj.CtnQty)
-            {
-                string sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plno}'\n" +
-                        $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{obj.RefNo}' AND PONO = '{obj.OrderNo}' AND PARTNO = '{obj.PartNo}' AND ROWNUM < 2";
-                new ConnDB().ExcuteSQL(sql);
-                i++;
-            }
+            //int i = obj.CtnQty + 1;
+            //string xsql = $"SELECT * FROM TXP_ISSPACKDETAIL \n" +
+            //           $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{obj.RefNo}' AND PONO = '{obj.OrderNo}' AND PARTNO = '{obj.PartNo}' AND ROWNUM < {i}";
+            //Console.WriteLine(xsql);
+            //string sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plno.ToUpper()}'\n" +
+            //            $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{obj.RefNo}' AND PONO = '{obj.OrderNo}' AND PARTNO = '{obj.PartNo}' AND ROWNUM < {i}";
+            //new ConnDB().ExcuteSQL(sql);
+            new SelPlControllers().InsertPalletToPackingDetailAll(obj, plno);
         }
 
         private void gridPartView_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
@@ -338,6 +352,117 @@ namespace SetPalletApp
                 }
             }
             Reload();
+        }
+
+        bool ReloadCartonSet(SetPallatData obj, string plno)
+        {
+            string sql = $"SELECT * FROM TXP_ISSPALLET l WHERE l.ISSUINGKEY = '{obj.RefNo}' AND l.PALLETNO = '{plno}'";
+            DataSet dr = new ConnDB().GetFill(sql);
+            if (dr.Tables[0].Rows.Count < 1)
+            {
+                string ins = $"INSERT INTO TXP_ISSPALLET(FACTORY, ISSUINGKEY, PALLETNO, PLTYPE, PLOUTSTS, UPDDTE, SYSDTE, PLTOTAL, BOOKED,PLWIDE,PLLENG,PLHIGHT)\n" +
+                    $"VALUES('{StaticFunctionData.Factory}', '{obj.RefNo}', '{plno}', 'BOX', 0, current_timestamp, current_timestamp, 1, '0', '0', '0' ,'0')";
+                new ConnDB().ExcuteSQL(ins);
+            }
+
+            npl = new SetPalletControllers().GetPartListCompletedDetail(inv);
+            gridPalletControl.BeginUpdate();
+            gridPalletControl.DataSource = npl;
+            gridPalletControl.EndUpdate();
+            return true;
+        }
+
+
+
+        private void bbiSetCarton_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SetPallatData obj = gridPartView.GetFocusedRow() as SetPallatData;
+            if (obj.CtnQty <= 0)
+            {
+                DialogResult r = XtraMessageBox.Show($"คุณต้องการที่จะ Set Carton({obj.PName}) นี้ใช่หรือไม่?", "ข้อความแจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (r == DialogResult.Yes)
+                {
+                    obj.CtnQty += 1;
+                    int x = obj.Ctn -= 1;
+                    if (obj.CtnQty > 0)
+                    {
+                        string plno = new SetPalletControllers().GetLastCarton(obj.RefNo);
+                        if (ReloadCartonSet(obj, plno))
+                        {
+                            InsertPalletToPackingDetailAll(obj, plno);
+                            if (x > 0)
+                            {
+                                gridPartView.SetFocusedRowCellValue("Ctn", x);
+                                gridPartView.SetFocusedRowCellValue("CtnQty", 0);
+                            }
+                            else
+                            {
+                                gridPartView.DeleteSelectedRows();
+                            }
+                            gridPartView.UpdateCurrentRow();
+                            gridPartView.UpdateTotalSummary();
+                        }
+                    }
+                }
+            }
+        }
+
+        private void bbisendToPallet_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SetPallatData obj = gridPartView.GetFocusedRow() as SetPallatData;
+            SetPalletAddToForm frm = new SetPalletAddToForm(obj);
+            frm.ShowDialog();
+            Reload();
+        }
+
+        private void bbiRefresh_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Reload();
+        }
+
+        private void bbiDelPartDetail_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SetPalletListData obj = gridPalleteDetailView.GetFocusedRow() as SetPalletListData;
+            DialogResult r = XtraMessageBox.Show($"ยืนยันคำสั่งลบ {obj.FTicket} ข้อมูล", "", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
+            if (r == DialogResult.Yes)
+            {
+                if (new SelPlControllers().UpdateSetPallet(obj))
+                {
+                    gridPalleteDetailView.DeleteSelectedRows();
+                    gridPalleteDetailView.UpdateCurrentRow();
+                    gridPalleteDetailView.UpdateTotalSummary();
+
+                    npl = new SetPalletControllers().GetPartListCompletedDetail(inv);
+                    gridPalletControl.BeginUpdate();
+                    gridPalletControl.DataSource = npl;
+                    gridPalletControl.EndUpdate();
+
+                    List<SetPallatData> list = new SetPalletControllers().GetPartListDetail(inv);
+                    gridPartControl.DataSource = list;
+                }
+            }
+        }
+
+        private void gridPalleteDetailView_MouseUp(object sender, MouseEventArgs e)
+        {
+            List<SetPalletListData> o = gridPalleteDetailControl.DataSource as List<SetPalletListData>;
+            if (o.Count > 0)
+            {
+                try
+                {
+                    if (e.Button.ToString() == "Right")
+                    {
+                        popupMenu3.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
+                    }
+                    else
+                    {
+                        popupMenu3.HidePopup();
+                    }
+                }
+                catch (Exception)
+                {
+                }
+            }
         }
     }
 }

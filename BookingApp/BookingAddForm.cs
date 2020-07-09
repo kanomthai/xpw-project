@@ -184,8 +184,14 @@ namespace BookingApp
 
         private void gridInvView_Click(object sender, EventArgs e)
         {
-            var issuekey = gridInvView.GetFocusedRowCellValue("issuekey").ToString();
-            GetPalletList(issuekey);
+            try
+            {
+                var issuekey = gridInvView.GetFocusedRowCellValue("issuekey").ToString();
+                GetPalletList(issuekey);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         void UpdateContainer(BookingInvoicePallet pl)

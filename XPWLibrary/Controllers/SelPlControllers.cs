@@ -37,5 +37,35 @@ namespace XPWLibrary.Controllers
             }
             return obj;
         }
+
+        public bool UpdateSetPallet(SetPalletListData obj)
+        {
+            string sql = $"UPDATE TXP_ISSPACKDETAIL d SET d.SHIPPLNO = ''  WHERE d.FTICKETNO = '{obj.FTicket}'";
+            new ConnDB().ExcuteSQL(sql);
+            string upsql = $"SELECT  count(*) PLTOTAL FROM TXP_ISSPACKDETAIL l WHERE ISSUINGKEY = '{obj.RefNo}' AND SHIPPLNO = '{obj.ShipPlNo}'";
+            int x = 0;
+            DataSet dr = new ConnDB().GetFill(upsql);
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                x += int.Parse(r["pltotal"].ToString());
+            }
+            return new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPALLET set PLTOTAL ='{x}' WHERE ISSUINGKEY = '{obj.RefNo}' AND PALLETNO = '{obj.ShipPlNo}'");
+        }
+
+        public bool InsertPalletToPackingDetailAll(SetPallatData obj, string plno)
+        {
+            int i = obj.CtnQty + 1;
+            string sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plno.ToUpper()}'\n" +
+                        $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{obj.RefNo}' AND PONO = '{obj.OrderNo}' AND PARTNO = '{obj.PartNo}' AND ROWNUM < {i}";
+            new ConnDB().ExcuteSQL(sql);
+            string upsql = $"SELECT  count(*) PLTOTAL FROM TXP_ISSPACKDETAIL l WHERE ISSUINGKEY = '{obj.RefNo}' AND SHIPPLNO = '{plno}'";
+            int x = 0;
+            DataSet dr = new ConnDB().GetFill(upsql);
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                x += int.Parse(r["pltotal"].ToString());
+            }
+            return new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPALLET set PLTOTAL ='{x}' WHERE ISSUINGKEY = '{obj.RefNo}' AND PALLETNO = '{plno}'");
+        }
     }
 }
