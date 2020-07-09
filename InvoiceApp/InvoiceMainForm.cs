@@ -259,10 +259,12 @@ namespace InvoiceApp
         {
             try
             {
-                int i = int.Parse(gridView.GetFocusedRowCellValue("Id").ToString()) - 1;
-                List<InvoiceData> obj = gridControl.DataSource as List<InvoiceData>;
-                InvoiceDetailForm frm = new InvoiceDetailForm(obj[i]);
+                //int i = int.Parse(gridView.GetFocusedRowCellValue("Id").ToString()) - 1;
+                //List<InvoiceData> obj = gridControl.DataSource as List<InvoiceData>;
+                InvoiceData obj = gridView.GetFocusedRow() as InvoiceData;
+                InvoiceDetailForm frm = new InvoiceDetailForm(obj);
                 frm.ShowDialog();
+                gridView.UpdateCurrentRow();
                 if (bbiAllWeek.Checked != true)
                 {
                     Thread th = new Thread(ReloadGridControl);

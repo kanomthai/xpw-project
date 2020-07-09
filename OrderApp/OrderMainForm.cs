@@ -157,16 +157,14 @@ namespace OrderApp
 
         private void gridView_DoubleClick(object sender, EventArgs e)
         {
-            //var i = gridView.GetFocusedDataRow();
-            //var obj = gridView.GetDataRow(0);
-            List<OrderData> obj = gridControl.DataSource as List<OrderData>;
-            int i = int.Parse(gridView.GetFocusedRowCellValue("Id").ToString()) - 1;
-            OrderDetailForm frm = new OrderDetailForm(obj[i]);
+            OrderData obj = gridView.GetFocusedRow() as OrderData;
+            OrderDetailForm frm = new OrderDetailForm(obj);
             frm.ShowDialog();
             gridView.BeginUpdate();
-            int st = new GreeterFunction().GetInvoiceStatus(obj[i].RefNo);
-            gridView.SetRowCellValue(i, "Status", st);
-            gridView.EndUpdate();
+            int st = new GreeterFunction().GetInvoiceStatus(obj.RefNo);
+            gridView.SetFocusedRowCellValue("Status", st);
+            //gridView.UpdateCurrentRow();
+            //gridView.UpdateTotalSummary();
         }
 
         private void bbiEtd_EditValueChanged(object sender, EventArgs e)

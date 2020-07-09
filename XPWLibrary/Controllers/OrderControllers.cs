@@ -719,5 +719,17 @@ namespace XPWLibrary.Controllers
             }
             return x;
         }
+
+        public int GetLastPalletCtn(string issno, string pltype)
+        {
+            int x = 0;
+            string sql = $"SELECT SUBSTR(PALLETNO, 3) ctn FROM TXP_ISSPALLET l WHERE ISSUINGKEY = '{issno}' AND PALLETNO  LIKE '1{pltype}%' ORDER BY PALLETNO DESC";
+            DataSet dr = new ConnDB().GetFill(sql);
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                x = int.Parse(dr.Tables[0].Rows[0]["ctn"].ToString());
+            }
+            return x;
+        }
     }
 }

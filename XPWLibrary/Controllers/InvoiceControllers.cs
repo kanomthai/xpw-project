@@ -300,6 +300,7 @@ namespace XPWLibrary.Controllers
             string sql = $"SELECT l.PALLETNO,l.PLOUTNO,l.PLTYPE,l.CONTAINERNO,l.PLTOTAL,CASE WHEN cc.ctn IS NULL THEN 0 ELSE cc.ctn END total,case when l.PLOUTSTS is null then '0' else l.PLOUTSTS end PLOUTSTS FROM TXP_ISSPALLET l\n" +
                         "LEFT JOIN(SELECT c.PLOUTNO, count(c.PLOUTNO) ctn FROM TXP_CARTONDETAILS c GROUP BY c.PLOUTNO) cc ON l.PLOUTNO = cc.PLOUTNO\n" +
                         $"WHERE l.ISSUINGKEY = '{refinv}'";
+            Console.WriteLine(sql);
             List<PalletData> obj = new List<PalletData>();
             Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);

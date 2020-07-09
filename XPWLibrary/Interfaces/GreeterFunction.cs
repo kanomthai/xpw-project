@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
 using System.Xml;
+using XPWLibrary.Controllers;
 using XPWLibrary.Models;
 
 namespace XPWLibrary.Interfaces
@@ -973,7 +974,38 @@ namespace XPWLibrary.Interfaces
                                 $") GROUP BY partype\n" +
                                 $"ORDER BY seqctn DESC";
                     // Console.WriteLine(sql);
+                    string lastissueno = null;
                     DataSet dr = new ConnDB().GetFill(sql);
+                    string scust = $"SELECT e.FACTORY,get_zone(e.FACTORY, e.ZONEID) zname, to_char(e.ETDDTE, 'dd/MM/yyyy') etd,e.CUSTNAME FROM TXP_ISSTRANSENT e WHERE e.ISSUINGKEY = '{inv}'";
+                    DataSet rx = new ConnDB().GetFill(scust);
+                    foreach (DataRow rr in rx.Tables[0].Rows)
+                    {
+                        string ssql = $"SELECT ISSUINGKEY,SUBSTR(ISSUINGKEY, 12) issctn FROM TXP_ISSTRANSENT e WHERE " +
+                            $"e.FACTORY = '{rr["factory"].ToString()}' AND " +
+                            $"get_zone(e.FACTORY, e.ZONEID) = '{rr["zname"].ToString()}' " +
+                            $"AND e.ETDDTE = TO_DATE('{rr["etd"].ToString()}', 'dd/MM/yyyy') " +
+                            $"AND e.CUSTNAME = '{rr["custname"].ToString()}' " +
+                            $"AND rownum < 3 " +
+                            $"ORDER BY SUBSTR(ISSUINGKEY, 12)  DESC";
+                        Console.WriteLine(ssql);
+                        DataSet rq = new ConnDB().GetFill(ssql);
+                        //int row = 0;
+                        //while (row < rq.Tables[0].Rows.Count)
+                        //{
+                        //    var o = rq.Tables[0].Rows[row];
+                        //    Console.WriteLine(o["issuingkey"]);
+                        //    if 
+                        //    row++;
+                        //}
+                        lastissueno = rq.Tables[0].Rows[0]["issuingkey"].ToString();
+                        //if (rq.Tables[0].Rows.Count >= 2)
+                        //{
+                        //    lastissueno = rq.Tables[0].Rows[1]["issuingkey"].ToString();
+                        //    Console.WriteLine(rq.Tables[0].Rows[2]["issuingkey"].ToString());
+                        //}
+                    }
+
+
                     int xpl = 0;
                     int laspl = 0;
                     int i;
@@ -991,6 +1023,7 @@ namespace XPWLibrary.Interfaces
                             i = 0;
                             while (i < pl_total[0])
                             {
+                                laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "P");
                                 xpl = laspl + (i + 1);
                                 // Console.WriteLine($"TYPE: {r["partype"].ToString()} PALLET: 1P" + (xpl).ToString("D3"));
                                 string plnumber = "1P" + (xpl).ToString("D3");
@@ -1012,12 +1045,13 @@ namespace XPWLibrary.Interfaces
                                 pltype = r["partype"].ToString(),
                                 plcount = pl_total[1]
                             });
-                            laspl = xpl;
+                            laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "P");
                         }
                         else
                         {
                             if (pl_total[2] == 1)
                             {
+                                laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "P");
                                 string plnumber = "1P" + (laspl + 1).ToString("D3");
                                 var plnokey = olkey.Where(plx => plx.PlNo.Contains(plnumber)).FirstOrDefault();
                                 // Console.WriteLine(plnokey);
@@ -1069,7 +1103,8 @@ namespace XPWLibrary.Interfaces
                     i = 0;
                     while (i < xmix[0])
                     {
-                        xpl = laspl + (i + 1);
+                        laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "P");
+                        xpl = laspl + 1;
                         int tt = 45;
                         if (xmix[2] == 0)
                         {
@@ -1095,7 +1130,8 @@ namespace XPWLibrary.Interfaces
                     if (xmix[1] > 17)
                     {
                         // Console.WriteLine($"TYPE: MIX PALLET: 1P" + (xpl + 1).ToString("D3"));
-                        string plnumber = "1P" + (xpl + 1).ToString("D3");
+                        laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "P");
+                        string plnumber = "1P" + (laspl + 1).ToString("D3");
                         var plnokey = olkey.Where(plx => plx.PlNo.Contains(plnumber)).FirstOrDefault();
                         string ins_pl = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '{plnumber}', 'MIX',{xmix[1]},sysdate,sysdate)";
                         if (plnokey != null)
@@ -1114,7 +1150,8 @@ namespace XPWLibrary.Interfaces
                         while (i < bb_a)
                         {
                             // Console.WriteLine($"TYPE: BIGBOX PALLET: 1C" + (i + 1).ToString("D3"));
-                            bool xup = new ConnDB().ExcuteSQL($"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '1C{(i + 1).ToString("D3")}', 'BBOX',2,sysdate,sysdate)");
+                            laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "C");
+                            bool xup = new ConnDB().ExcuteSQL($"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '1C{(laspl + 1).ToString("D3")}', 'BBOX',2,sysdate,sysdate)");
                             if (xup)
                             {
                                 i++;
@@ -1125,7 +1162,8 @@ namespace XPWLibrary.Interfaces
                             if (final == 0)
                             {
                                 // Console.WriteLine($"TYPE: SMALLBOX PALLET: 1C" + (bb_b + i).ToString("D3"));
-                                new ConnDB().ExcuteSQL($"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '1C{(bb_b + i).ToString("D3")}', 'SBOX',1,sysdate,sysdate)");
+                                laspl = new OrderControllers().GetLastPalletCtn(lastissueno, "C");
+                                new ConnDB().ExcuteSQL($"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,Pltype,pltotal,Sysdte,Upddte)values('{fac}', '{inv}', '1C{(laspl + 1).ToString("D3")}', 'SBOX',1,sysdate,sysdate)");
                             }
                         }
                     }
