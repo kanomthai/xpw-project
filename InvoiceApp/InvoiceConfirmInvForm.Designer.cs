@@ -41,8 +41,8 @@
             this.bbiRebuildPallet = new DevExpress.XtraBars.BarButtonItem();
             this.bbiPlDetail = new DevExpress.XtraBars.BarButtonItem();
             this.bbiContainerDetail = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem3 = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiPrintShippingMark = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -58,9 +58,11 @@
             this.colPlSize = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTotal = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.ppMenu = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.bbiShipingSelect = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -87,17 +89,18 @@
             this.bbiRebuildPallet,
             this.bbiPlDetail,
             this.bbiContainerDetail,
-            this.barButtonItem3,
-            this.barButtonItem1});
+            this.barButtonItem1,
+            this.bbiPrintShippingMark,
+            this.bbiShipingSelect});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 26;
+            this.ribbonControl.MaxItemId = 29;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.PageHeaderItemLinks.Add(this.barButtonItem1, "RE PRINT PALLET");
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.OfficeUniversal;
             this.ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
-            this.ribbonControl.Size = new System.Drawing.Size(960, 93);
+            this.ribbonControl.Size = new System.Drawing.Size(960, 91);
             this.ribbonControl.StatusBar = this.ribbonStatusBar;
             this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
@@ -183,12 +186,6 @@
             this.bbiContainerDetail.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.article_32x323;
             this.bbiContainerDetail.Name = "bbiContainerDetail";
             // 
-            // barButtonItem3
-            // 
-            this.barButtonItem3.Caption = "barButtonItem3";
-            this.barButtonItem3.Id = 24;
-            this.barButtonItem3.Name = "barButtonItem3";
-            // 
             // barButtonItem1
             // 
             this.barButtonItem1.Caption = "RE-PRINT PALLET";
@@ -199,6 +196,15 @@
                 | System.Windows.Forms.Keys.R));
             this.barButtonItem1.Name = "barButtonItem1";
             this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+            // 
+            // bbiPrintShippingMark
+            // 
+            this.bbiPrintShippingMark.Caption = "Print Shipping Mark";
+            this.bbiPrintShippingMark.Id = 27;
+            this.bbiPrintShippingMark.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiPrintShippingMark.ImageOptions.Image")));
+            this.bbiPrintShippingMark.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiPrintShippingMark.ImageOptions.LargeImage")));
+            this.bbiPrintShippingMark.Name = "bbiPrintShippingMark";
+            this.bbiPrintShippingMark.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiPrintShippingMark_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -223,6 +229,7 @@
             // ribbonPageGroup2
             // 
             this.ribbonPageGroup2.AllowTextClipping = false;
+            this.ribbonPageGroup2.ItemLinks.Add(this.bbiPrintShippingMark);
             this.ribbonPageGroup2.ItemLinks.Add(this.bbiPrintPreview);
             this.ribbonPageGroup2.Name = "ribbonPageGroup2";
             this.ribbonPageGroup2.ShowCaptionButton = false;
@@ -231,19 +238,19 @@
             // ribbonStatusBar
             // 
             this.ribbonStatusBar.ItemLinks.Add(this.bsiRecordsCount);
-            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 568);
+            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 573);
             this.ribbonStatusBar.Name = "ribbonStatusBar";
             this.ribbonStatusBar.Ribbon = this.ribbonControl;
-            this.ribbonStatusBar.Size = new System.Drawing.Size(960, 31);
+            this.ribbonStatusBar.Size = new System.Drawing.Size(960, 26);
             // 
             // layoutControl1
             // 
             this.layoutControl1.Controls.Add(this.gridControl);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl1.Location = new System.Drawing.Point(0, 93);
+            this.layoutControl1.Location = new System.Drawing.Point(0, 91);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.Root = this.Root;
-            this.layoutControl1.Size = new System.Drawing.Size(960, 475);
+            this.layoutControl1.Size = new System.Drawing.Size(960, 482);
             this.layoutControl1.TabIndex = 4;
             this.layoutControl1.Text = "layoutControl1";
             // 
@@ -254,7 +261,7 @@
             this.gridControl.MainView = this.gridView;
             this.gridControl.MenuManager = this.ribbonControl;
             this.gridControl.Name = "gridControl";
-            this.gridControl.Size = new System.Drawing.Size(936, 451);
+            this.gridControl.Size = new System.Drawing.Size(936, 458);
             this.gridControl.TabIndex = 8;
             this.gridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -270,7 +277,8 @@
             this.colPlStatus,
             this.colPlSize,
             this.colTotal,
-            this.gridColumn1});
+            this.gridColumn1,
+            this.gridColumn2});
             this.gridView.CustomizationFormBounds = new System.Drawing.Rectangle(153, 240, 250, 280);
             this.gridView.GridControl = this.gridControl;
             this.gridView.Name = "gridView";
@@ -306,7 +314,7 @@
             this.colPlNo.OptionsEditForm.StartNewRow = true;
             this.colPlNo.Visible = true;
             this.colPlNo.VisibleIndex = 0;
-            this.colPlNo.Width = 114;
+            this.colPlNo.Width = 105;
             // 
             // colPlOutNo
             // 
@@ -320,7 +328,7 @@
             this.colPlOutNo.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.colPlOutNo.Visible = true;
             this.colPlOutNo.VisibleIndex = 1;
-            this.colPlOutNo.Width = 176;
+            this.colPlOutNo.Width = 162;
             // 
             // colPlType
             // 
@@ -331,7 +339,7 @@
             this.colPlType.Name = "colPlType";
             this.colPlType.Visible = true;
             this.colPlType.VisibleIndex = 2;
-            this.colPlType.Width = 176;
+            this.colPlType.Width = 88;
             // 
             // colPlStatus
             // 
@@ -342,8 +350,8 @@
             this.colPlStatus.Name = "colPlStatus";
             this.colPlStatus.OptionsEditForm.Visible = DevExpress.Utils.DefaultBoolean.False;
             this.colPlStatus.Visible = true;
-            this.colPlStatus.VisibleIndex = 6;
-            this.colPlStatus.Width = 170;
+            this.colPlStatus.VisibleIndex = 7;
+            this.colPlStatus.Width = 178;
             // 
             // colPlSize
             // 
@@ -354,8 +362,8 @@
             this.colPlSize.Name = "colPlSize";
             this.colPlSize.OptionsEditForm.StartNewRow = true;
             this.colPlSize.Visible = true;
-            this.colPlSize.VisibleIndex = 4;
-            this.colPlSize.Width = 66;
+            this.colPlSize.VisibleIndex = 5;
+            this.colPlSize.Width = 62;
             // 
             // colTotal
             // 
@@ -363,8 +371,8 @@
             this.colTotal.FieldName = "PlTotal";
             this.colTotal.Name = "colTotal";
             this.colTotal.Visible = true;
-            this.colTotal.VisibleIndex = 5;
-            this.colTotal.Width = 76;
+            this.colTotal.VisibleIndex = 6;
+            this.colTotal.Width = 72;
             // 
             // gridColumn1
             // 
@@ -372,8 +380,17 @@
             this.gridColumn1.FieldName = "ContainerNo";
             this.gridColumn1.Name = "gridColumn1";
             this.gridColumn1.Visible = true;
-            this.gridColumn1.VisibleIndex = 3;
-            this.gridColumn1.Width = 133;
+            this.gridColumn1.VisibleIndex = 4;
+            this.gridColumn1.Width = 128;
+            // 
+            // gridColumn2
+            // 
+            this.gridColumn2.Caption = "PALLET SIZE";
+            this.gridColumn2.FieldName = "PalletSize";
+            this.gridColumn2.Name = "gridColumn2";
+            this.gridColumn2.Visible = true;
+            this.gridColumn2.VisibleIndex = 3;
+            this.gridColumn2.Width = 116;
             // 
             // Root
             // 
@@ -382,7 +399,7 @@
             this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem1});
             this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(960, 475);
+            this.Root.Size = new System.Drawing.Size(960, 482);
             this.Root.TextVisible = false;
             // 
             // layoutControlItem1
@@ -390,17 +407,25 @@
             this.layoutControlItem1.Control = this.gridControl;
             this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(940, 455);
+            this.layoutControlItem1.Size = new System.Drawing.Size(940, 462);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
             // ppMenu
             // 
-            this.ppMenu.ItemLinks.Add(this.bbiRebuildPallet);
-            this.ppMenu.ItemLinks.Add(this.bbiPlDetail, true);
+            this.ppMenu.ItemLinks.Add(this.bbiShipingSelect, true);
             this.ppMenu.ItemLinks.Add(this.bbiRefresh, true);
             this.ppMenu.Name = "ppMenu";
             this.ppMenu.Ribbon = this.ribbonControl;
+            // 
+            // bbiShipingSelect
+            // 
+            this.bbiShipingSelect.Caption = "Print";
+            this.bbiShipingSelect.Id = 28;
+            this.bbiShipingSelect.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiShipingSelect.ImageOptions.Image")));
+            this.bbiShipingSelect.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiShipingSelect.ImageOptions.LargeImage")));
+            this.bbiShipingSelect.Name = "bbiShipingSelect";
+            this.bbiShipingSelect.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiShipingSelect_ItemClick);
             // 
             // InvoiceConfirmInvForm
             // 
@@ -458,7 +483,9 @@
         private DevExpress.XtraBars.PopupMenu ppMenu;
         private DevExpress.XtraBars.BarButtonItem bbiPlDetail;
         private DevExpress.XtraBars.BarButtonItem bbiContainerDetail;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem3;
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
+        private DevExpress.XtraBars.BarButtonItem bbiPrintShippingMark;
+        private DevExpress.XtraBars.BarButtonItem bbiShipingSelect;
     }
 }

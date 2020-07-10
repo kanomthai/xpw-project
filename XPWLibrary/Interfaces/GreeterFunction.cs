@@ -1132,7 +1132,7 @@ namespace XPWLibrary.Interfaces
             return x;
         }
 
-        internal static void Logs(string message)
+        public static void Logs(string message)
         {
             string txtpath = $"{AppDomain.CurrentDomain.BaseDirectory}Logs\\errors.txt";
             TextWriter tw = new StreamWriter(txtpath);

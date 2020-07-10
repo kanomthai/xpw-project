@@ -295,9 +295,40 @@ namespace XPWLibrary.Controllers
             return list;
         }
 
+        private string GetPalletWireSize(int x)
+        {
+            string xpl;
+            if (x >= 46 && x <= 54)
+            {
+                xpl = "110x110x13.5";
+            }
+            else if (x >= 37 && x <= 45)
+            {
+                xpl = "110x110x82.5";
+            }
+            else if (x >= 28 && x <= 36)
+            {
+                xpl = "110x110x69";
+            }
+            else if (x >= 19 && x <= 27)
+            {
+                xpl = "110x110x55.5";
+            }
+            else if (x == 18)
+            {
+                xpl = "110x110x42";
+            }
+            else
+            {
+                xpl = "35x35x13.5";
+            }
+            return xpl;
+        }
+
         public List<PalletData> GetPalletDetail(string refinv)
         {
-            string sql = $"SELECT l.PALLETNO,l.PLOUTNO,l.PLTYPE,l.CONTAINERNO,l.PLTOTAL,CASE WHEN cc.ctn IS NULL THEN 0 ELSE cc.ctn END total,case when l.PLOUTSTS is null then '0' else l.PLOUTSTS end PLOUTSTS FROM TXP_ISSPALLET l\n" +
+            string sql = $"SELECT l.PALLETNO,l.PLOUTNO,l.PLTYPE,l.CONTAINERNO,CASE WHEN l.PLTOTAL IS NOT NULL THEN l.PLTOTAL ELSE cc.ctn END PLTOTAL,CASE WHEN cc.ctn IS NULL THEN l.PLTOTAL ELSE cc.ctn END total" +
+                        $",case when l.PLOUTSTS is null then '0' else l.PLOUTSTS end PLOUTSTS FROM TXP_ISSPALLET l\n" +
                         "LEFT JOIN(SELECT c.PLOUTNO, count(c.PLOUTNO) ctn FROM TXP_CARTONDETAILS c GROUP BY c.PLOUTNO) cc ON l.PLOUTNO = cc.PLOUTNO\n" +
                         $"WHERE l.ISSUINGKEY = '{refinv}'";
             Console.WriteLine(sql);
@@ -315,6 +346,7 @@ namespace XPWLibrary.Controllers
                     PlSize = int.Parse(r["pltotal"].ToString()),
                     PlTotal = int.Parse(r["total"].ToString()),
                     PlStatus = int.Parse(r["ploutsts"].ToString()),
+                    PalletSize = GetPalletWireSize(int.Parse(r["total"].ToString()))
                 });
             }
             return obj;

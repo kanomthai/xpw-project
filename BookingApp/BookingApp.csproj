@@ -83,10 +83,10 @@
     <Compile Include="BookingPreviewForm.Designer.cs">
       <DependentUpon>BookingPreviewForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="BookingReport.cs">
+    <Compile Include="Reporting\BookingReport.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="BookingReport.Designer.cs">
+    <Compile Include="Reporting\BookingReport.Designer.cs">
       <DependentUpon>BookingReport.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -112,7 +112,7 @@
     <EmbeddedResource Include="BookingPreviewForm.resx">
       <DependentUpon>BookingPreviewForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="BookingReport.resx">
+    <EmbeddedResource Include="Reporting\BookingReport.resx">
       <DependentUpon>BookingReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />

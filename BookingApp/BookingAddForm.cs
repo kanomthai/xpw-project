@@ -196,34 +196,41 @@ namespace BookingApp
 
         void UpdateContainer(BookingInvoicePallet pl)
         {
-            string sql = $"select * from txp_loadcontainer where containerno = '{bbiContainer.EditValue.ToString().ToUpper()}'";
-            DateTime d = DateTime.Parse(bbiRelDate.EditValue.ToString());
-            string txttime = $"{d.ToString("dd/MM/yyyy")} {bbiRelTimer.EditValue.ToString().Substring(10, 9).Trim()}";
-            DateTime dx = DateTime.Parse(bbiEtd.EditValue.ToString());
-            string containersize = "20F";
-            if (bbi4oFt.Checked)
+            try
             {
-                containersize = "40F";
+                string sql = $"select * from txp_loadcontainer where containerno = '{bbiContainer.EditValue.ToString().ToUpper()}'";
+                DateTime d = DateTime.Parse(bbiRelDate.EditValue.ToString());
+                string txttime = $"{d.ToString("dd/MM/yyyy")} {bbiRelTimer.EditValue.ToString().Substring(10, 9).Trim()}";
+                DateTime dx = DateTime.Parse(bbiEtd.EditValue.ToString());
+                string containersize = "20F";
+                if (bbi4oFt.Checked)
+                {
+                    containersize = "40F";
+                }
+                DataSet dr = new ConnDB().GetFill(sql);
+                string sqlupdate = $"update txp_loadcontainer set etddte=to_date('{dx.ToString("dd/MM/yyyy")}', 'DD/MM/YYYY')," +
+                                    $"sealno='{bbiSealNo.EditValue.ToString().ToUpper()}',containersize='{containersize}'," +
+                                    $"receivedte=to_date('{d.ToString("dd/MM/yyyy")}', 'DD/MM/YYYY')," +
+                                    $"releasedte=to_date('{txttime}', 'DD/MM/YYYY HH24:MI:SS'),upddte=sysdate\n" +
+                                    $"where containerno='{bbiContainer.EditValue.ToString().ToUpper()}'";
+                if (dr.Tables[0].Rows.Count <= 0)
+                {
+                    sqlupdate = "insert into txp_loadcontainer(containerno,custname,etddte,sealno,containersize,receivedte,releasedte,sysdte,upddte) \n" +
+                                   "values \n" +
+                                   $"('{bbiContainer.EditValue.ToString().ToUpper()}', " +
+                                   $"'{pl.custname.Trim().ToUpper()}', " +
+                                   $"to_date('{dx.ToString("dd/MM/yyyy")}', 'DD/MM/YYYY'), '{bbiSealNo.EditValue.ToString().ToUpper()}', " +
+                                   $"'{containersize}', to_date('{d.ToString("dd/MM/yyyy")}', 'DD/MM/YYYY'), " +
+                                   $"to_date('{txttime}', 'DD/MM/YYYY HH24:MI:SS'), sysdate, sysdate)";
+
+                }
+                new ConnDB().ExcuteSQL(sqlupdate);
+                new ConnDB().ExcuteSQL($"UPDATE TXP_LOADPALLET SET CONTAINERNO = '{bbiContainer.EditValue.ToString().ToUpper()}' WHERE PLOUTNO = '{pl.ploutno}'");
             }
-            DataSet dr = new ConnDB().GetFill(sql);
-            string sqlupdate = $"update txp_loadcontainer set etddte=to_date('{dx.ToString("dd/MM/yyyy")}', 'DD/MM/YYYY')," +
-                                $"sealno='{bbiSealNo.EditValue.ToString().ToUpper()}',containersize='{containersize}'," +
-                                $"receivedte=to_date('{d.ToString("dd/MM/yyyy")}', 'DD/MM/YYYY')," +
-                                $"releasedte=to_date('{txttime}', 'DD/MM/YYYY HH24:MI:SS'),upddte=sysdate\n" +
-                                $"where containerno='{bbiContainer.EditValue.ToString().ToUpper()}'";
-            if (dr.Tables[0].Rows.Count <= 0)
+            catch (Exception ex)
             {
-                sqlupdate = "insert into txp_loadcontainer(containerno,custname,etddte,sealno,containersize,receivedte,releasedte,sysdte,upddte) \n" +
-                               "values \n" +
-                               $"('{bbiContainer.EditValue.ToString().ToUpper()}', " +
-                               $"'{pl.custname.Trim().ToUpper()}', " +
-                               $"to_date('{dx.ToString("dd/MM/yyyy")}', 'DD/MM/YYYY'), '{bbiSealNo.EditValue.ToString().ToUpper()}', " +
-                               $"'{containersize}', to_date('{d.ToString("dd/MM/yyyy")}', 'DD/MM/YYYY'), " +
-                               $"to_date('{txttime}', 'DD/MM/YYYY HH24:MI:SS'), sysdate, sysdate)";
-                
+                GreeterFunction.Logs(ex.Message);
             }
-            new ConnDB().ExcuteSQL(sqlupdate);
-            new ConnDB().ExcuteSQL($"UPDATE TXP_LOADPALLET SET CONTAINERNO = '{bbiContainer.EditValue.ToString().ToUpper()}' WHERE PLOUTNO = '{pl.ploutno}'");
         }
 
         bool UpdatePallet(BookingInvoicePallet pl, int sl)

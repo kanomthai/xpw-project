@@ -9,6 +9,7 @@
         public int PlSize { get; set; }
         public int PlTotal { get; set; }
         public int PlStatus { get; set; }
+        public string PalletSize { get; set; }
     }
 
     public class PlDetailData

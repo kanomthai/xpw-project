@@ -150,7 +150,9 @@ namespace InvoiceApp
                 try
                 {
                     var plout = gridView.GetFocusedRowCellValue("PlOut");
+                    var plno = gridView.GetFocusedRowCellValue("PlNo");
                     var conno = gridView.GetFocusedRowCellValue("ContainerNo");
+                    bbiShipingSelect.Caption = $"Print Shipping({plno})";
                     if (plout != null)
                     {
                         bbiPlDetail.Enabled = true;
@@ -206,6 +208,26 @@ namespace InvoiceApp
                         XtraMessageBox.Show("อัพเดทข้อมูลเสร็จแล้ว");
                     }
                 }
+            }
+        }
+
+        private void bbiPrintShippingMark_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            InvoiceShippingMarkPreviewForm frm = new InvoiceShippingMarkPreviewForm(invno, null);
+            frm.ShowDialog();
+        }
+
+        private void bbiShipingSelect_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            string plout = gridView.GetFocusedRowCellValue("PlOut").ToString();
+            if (plout != "")
+            {
+                InvoiceShippingMarkPreviewForm frm = new InvoiceShippingMarkPreviewForm(invno, plout);
+                frm.ShowDialog();
+            }
+            else
+            {
+                XtraMessageBox.Show("ไม่พบข้อมูล PLOUT!", "ข้อความแจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

@@ -121,6 +121,7 @@
     <Compile Include="Models\PlCountData.cs" />
     <Compile Include="Models\PlListData.cs" />
     <Compile Include="Models\SetPlData.cs" />
+    <Compile Include="Models\ShipingMarkData.cs" />
     <Compile Include="Models\ShortData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
