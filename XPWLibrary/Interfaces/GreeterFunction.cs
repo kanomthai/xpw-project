@@ -946,9 +946,159 @@ namespace XPWLibrary.Interfaces
             return x;
         }
 
+        private int GetPartWireCtn(string inv, string ptype)
+        {
+            int x = 0;
+            string sql = $"SELECT sum(round(b.ORDERQTY/b.STDPACK)) ctn FROM TXP_ISSTRANSBODY b WHERE b.ISSUINGKEY = '{inv}' AND b.PARTNO LIKE '{ptype}%'";
+            DataSet dr = new ConnDB().GetFill(sql);
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                x = int.Parse(r["ctn"].ToString());
+            }
+            return x;
+        }
+
+        private int[] AvgPlWireCount(int x, string pltype)
+        {
+            int[] i = new int[5];
+            int a_a;//{ 0 } = pallet no
+            int a_b;//{ 1 } = กล่องใหญ่
+            int a_c;//{ 2 } = เศษ
+            int a_d = 0; //{ 3 } = กล่องเล็ก
+            int a_e; //{ 4 } = จำนวนต่อหน่วย
+
+            int a;
+
+            switch (pltype)
+            {
+                case "PL":
+                    if (x > 44)
+                    {
+                        a = x / 45;
+                        if ((x - (a * 45)) < 1)
+                        {
+                            a_a = 1;
+                            a_b = 0;
+                            a_c = (x - (a * 45));
+                            a_e = 45;
+                        }
+                        else
+                        {
+                            a_a = a;
+                            a_b = 0;
+                            a_c = (x - (a * 45));
+                            a_e = 0;
+                        }
+                    }
+                    else
+                    {
+                        a_a = 0;
+                        a_b = 0;
+                        a_c = x;
+                        a_e = 0;
+                    }
+                    break;
+                default:
+                    a = x / 2;
+                    a_a = 0;
+                    a_b = a;
+                    a_c = 0;
+                    a_d = (x - (a * 2));
+                    a_e = 2;
+                    break;
+            }
+
+            i[0] = a_a;
+            i[1] = a_b;
+            i[2] = a_c;
+            i[3] = a_d;
+            i[4] = a_e;
+            return i;
+        }
+
+        private int WrPl(int i, string inv, string pltype,int lastpl, int total)
+        {
+            try
+            {
+                if (i > 0)
+                {
+                    int j = 0;
+                    while (j < i)
+                    {
+                        lastpl++;
+                        string plnum = $"1P{lastpl.ToString("D3")}";
+                        Console.WriteLine($"{inv} PL=>{plnum} TYPE=>{pltype} TOTAL=>{total}");
+                        Logs($"{inv} PL=>{plnum} TYPE=>{pltype} TOTAL=>{total}");
+
+                        j++;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                GreeterFunction.Logs(ex.Message);
+            }
+            return lastpl;
+        }
+
         public bool SumPallet(string inv)
         {
-            return true;
+            bool success = false;
+            try
+            {
+                int lastpl = GetPalletCount(inv, "P");//get Last PL
+                int ctn_180 = GetPartWireCtn(inv, "180");
+                int ctn_181 = GetPartWireCtn(inv, "181");
+                BindingList<PlListData> olkey = GetPlData(inv);
+
+                int[] a_180 = AvgPlWireCount(ctn_180, "PL");
+                int[] a_181 = AvgPlWireCount(ctn_181, "PL");
+
+                //180
+                lastpl = WrPl(a_180[0], inv, "180", lastpl, a_180[4]);
+
+                //181
+                lastpl = WrPl(a_181[0], inv, "181", lastpl, a_180[4]);
+
+                //mix
+                int mpl = a_180[2] + a_181[2];
+                int[] mmpl = AvgPlWireCount(mpl, "PL");
+                lastpl = WrPl(mmpl[0], inv, "MIX", lastpl, a_180[4]);
+
+                //lastmix
+                lastpl = WrPl(mmpl[2], inv, "MIX", lastpl, mmpl[2]);
+
+
+                lastpl = GetPalletCount(inv, "B");//get Last box
+
+
+            }
+            catch (Exception ex)
+            {
+                GreeterFunction.Logs(ex.Message);
+                success = false;
+            }
+            return success;
+        }
+
+        private int GetPalletCount(string inv, string v)
+        {
+            int x = 1;
+            string refinv = inv.Substring(0, 12) + (int.Parse(inv.Substring(13).ToString()) - 1).ToString("D5");
+            if ((int.Parse(inv.Substring(13).ToString()) - 1) < 1)
+            {
+                refinv = inv;
+            }
+            x += new OrderControllers().GetLastPalletCtn(refinv, v);
+            return x;
+        }
+
+        internal static void Logs(string message)
+        {
+            string txtpath = $"{AppDomain.CurrentDomain.BaseDirectory}Logs\\errors.txt";
+            TextWriter tw = new StreamWriter(txtpath);
+            tw.WriteLine(message);
+            tw.Close();
         }
 
         //public bool SumPallet(string inv)

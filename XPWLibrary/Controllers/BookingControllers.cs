@@ -175,7 +175,7 @@ namespace XPWLibrary.Controllers
 
         public List<BookingInvoicePallet> GetInvoicePl(string issuekey)
         {
-            string sql = $"SELECT l.* FROM TXP_ISSPALLET l WHERE l.ISSUINGKEY = '{issuekey}' AND l.BOOKED < 4";
+            string sql = $"SELECT * FROM TBT_BOOKINGLIST WHERE ISSUINGKEY = '{issuekey}' AND BOOKED < 4";
             List<BookingInvoicePallet> obj = new List<BookingInvoicePallet>();
             Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
@@ -198,7 +198,7 @@ namespace XPWLibrary.Controllers
 
         public List<BookingInvoicePallet> GetInvoicePlBooked(string issuekey)
         {
-            string sql = $"SELECT l.* FROM TXP_ISSPALLET l WHERE l.ISSUINGKEY = '{issuekey}' AND l.BOOKED > 3";
+            string sql = $"SELECT * FROM TBT_BOOKINGLIST WHERE ISSUINGKEY = '{issuekey}' AND BOOKED > 3";
             List<BookingInvoicePallet> obj = new List<BookingInvoicePallet>();
             Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);

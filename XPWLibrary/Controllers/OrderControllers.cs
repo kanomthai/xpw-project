@@ -667,8 +667,9 @@ namespace XPWLibrary.Controllers
             {
                 SplashScreenManager.Default.SetWaitFormDescription($"CHECK REFNO.");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                GreeterFunction.Logs(ex.Message);
             }
             string sql = $"SELECT p.CURINV FROM TXP_ORDERPLAN p\n" +
                 "LEFT JOIN TXP_ISSTRANSBODY b ON p.CURINV = b.ISSUINGKEY AND p.PARTNO = b.PARTNO\n" +

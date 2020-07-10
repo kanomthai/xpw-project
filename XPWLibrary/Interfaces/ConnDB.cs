@@ -27,6 +27,7 @@ namespace XPWLibrary.Interfaces
                 Console.WriteLine("ERROR ====>");
                 Console.WriteLine(sql);
                 Console.WriteLine(ex);
+                GreeterFunction.Logs(ex.Message);
                 Console.WriteLine("END ====>");
                 //throw ex;
             }
@@ -53,6 +54,7 @@ namespace XPWLibrary.Interfaces
             {
                 Console.WriteLine("ERROR ====>");
                 Console.WriteLine(sql);
+                GreeterFunction.Logs(ex.Message);
                 Console.WriteLine("END ====>");
                 throw ex;
             }
@@ -81,6 +83,7 @@ namespace XPWLibrary.Interfaces
                 Console.WriteLine("ERROR ====>");
                 Console.WriteLine(sql);
                 Console.WriteLine(ex.Message);
+                GreeterFunction.Logs(ex.Message);
                 Console.WriteLine("END ====>");
                 throw ex;
             }
