@@ -66,14 +66,14 @@ namespace InvoiceApp
 
         void ReBuildingPallet()
         {
-            if (invno.Substring(0, 1) == "I")
-            {
-                //new GreeterFunction().SumPlInj(invno);
-            }
-            else
-            {
-                new GreeterFunction().SumPallet(invno);
-            }
+            //if (invno.Substring(0, 1) == "I")
+            //{
+            //    //new GreeterFunction().SumPlInj(invno);
+            //}
+            //else
+            //{
+            //    new GreeterFunction().SumPallet(invno);
+            //}
             ReloadData();
         }
 

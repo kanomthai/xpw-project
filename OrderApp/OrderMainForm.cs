@@ -160,11 +160,10 @@ namespace OrderApp
             OrderData obj = gridView.GetFocusedRow() as OrderData;
             OrderDetailForm frm = new OrderDetailForm(obj);
             frm.ShowDialog();
-            gridView.BeginUpdate();
             int st = new GreeterFunction().GetInvoiceStatus(obj.RefNo);
             gridView.SetFocusedRowCellValue("Status", st);
-            //gridView.UpdateCurrentRow();
-            //gridView.UpdateTotalSummary();
+            gridView.UpdateCurrentRow();
+            gridView.UpdateTotalSummary();
         }
 
         private void bbiEtd_EditValueChanged(object sender, EventArgs e)

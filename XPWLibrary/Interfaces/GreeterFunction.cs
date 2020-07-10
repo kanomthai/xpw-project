@@ -949,7 +949,8 @@ namespace XPWLibrary.Interfaces
         private int GetPartWireCtn(string inv, string ptype)
         {
             int x = 0;
-            string sql = $"SELECT sum(round(b.ORDERQTY/b.STDPACK)) ctn FROM TXP_ISSTRANSBODY b WHERE b.ISSUINGKEY = '{inv}' AND b.PARTNO LIKE '{ptype}%'";
+            string sql = $"SELECT CASE WHEN sum(round(b.ORDERQTY/b.STDPACK)) IS NULL THEN 0 ELSE sum(round(b.ORDERQTY/b.STDPACK)) END ctn " +
+                $"FROM TXP_ISSTRANSBODY b WHERE b.ISSUINGKEY = '{inv}' AND b.PARTNO LIKE '{ptype}%'";
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow r in dr.Tables[0].Rows)
             {
@@ -988,6 +989,10 @@ namespace XPWLibrary.Interfaces
                             a_b = 0;
                             a_c = (x - (a * 45));
                             a_e = 0;
+                            if (a > 0)
+                            {
+                                a_e = 45;
+                            }
                         }
                     }
                     else
@@ -1016,7 +1021,7 @@ namespace XPWLibrary.Interfaces
             return i;
         }
 
-        private int WrPl(int i, string inv, string pltype,int lastpl, int total)
+        private int WrPl(List<PlListData> olkey, int i, string inv, string pltype,int lastpl, int total)
         {
             try
             {
@@ -1025,12 +1030,32 @@ namespace XPWLibrary.Interfaces
                     int j = 0;
                     while (j < i)
                     {
-                        lastpl++;
-                        string plnum = $"1P{lastpl.ToString("D3")}";
+                        string plpref = "P";
+                        if (pltype == "BOX")
+                        {
+                            plpref = "C";
+                        }
+                        string plnum = $"1{plpref}{lastpl.ToString("D3")}";
                         Console.WriteLine($"{inv} PL=>{plnum} TYPE=>{pltype} TOTAL=>{total}");
-                        Logs($"{inv} PL=>{plnum} TYPE=>{pltype} TOTAL=>{total}");
-
-                        j++;
+                        var b = olkey.FindIndex(x => x.PlNo == plnum);
+                        string PlKey = "";
+                        string ContNo = "";
+                        int PlStatus = 0;
+                        if (b >= 0)
+                        {
+                            PlKey = olkey[b].PlKey;
+                            ContNo = olkey[b].ContNo;
+                            PlStatus = olkey[b].PlStatus;
+                        }
+                        string sql = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno,containerno,Pltype,pltotal,ploutsts,Sysdte,Upddte)" +
+                            $"values" +
+                            $"('{StaticFunctionData.Factory}', '{inv}', '{plnum}','{PlKey}', '{ContNo}', '{pltype}',{total},{PlStatus},sysdate,sysdate)";
+                        if (new ConnDB().ExcuteSQL(sql))
+                        {
+                            Console.WriteLine("==================================================");
+                            lastpl++;
+                            j++;
+                        }
                     }
                 }
             }
@@ -1046,31 +1071,45 @@ namespace XPWLibrary.Interfaces
             bool success = false;
             try
             {
-                int lastpl = GetPalletCount(inv, "P");//get Last PL
-                int ctn_180 = GetPartWireCtn(inv, "180");
-                int ctn_181 = GetPartWireCtn(inv, "181");
-                BindingList<PlListData> olkey = GetPlData(inv);
+                List<PlListData> olkey = GetPlData(inv);
+                if (CountPl(inv))
+                {
+                    int lastpl = GetPalletCount(inv, "P");//get Last PL
+                    int ctn_180 = GetPartWireCtn(inv, "180");
+                    int ctn_181 = GetPartWireCtn(inv, "181");
 
-                int[] a_180 = AvgPlWireCount(ctn_180, "PL");
-                int[] a_181 = AvgPlWireCount(ctn_181, "PL");
+                    int[] a_180 = AvgPlWireCount(ctn_180, "PL");
+                    int[] a_181 = AvgPlWireCount(ctn_181, "PL");
 
-                //180
-                lastpl = WrPl(a_180[0], inv, "180", lastpl, a_180[4]);
+                    //180
+                    lastpl = WrPl(olkey, a_180[0], inv, "180", lastpl, a_180[4]);
 
-                //181
-                lastpl = WrPl(a_181[0], inv, "181", lastpl, a_180[4]);
+                    //181
+                    lastpl = WrPl(olkey, a_181[0], inv, "181", lastpl, a_180[4]);
 
-                //mix
-                int mpl = a_180[2] + a_181[2];
-                int[] mmpl = AvgPlWireCount(mpl, "PL");
-                lastpl = WrPl(mmpl[0], inv, "MIX", lastpl, a_180[4]);
+                    //mix
+                    Console.WriteLine("START MIX==========================");
+                    int mpl = a_180[2] + a_181[2];
+                    int[] mmpl = AvgPlWireCount(mpl, "PL");
+                    lastpl = WrPl(olkey, mmpl[0], inv, "MIX", lastpl, 45);
 
-                //lastmix
-                lastpl = WrPl(mmpl[2], inv, "MIX", lastpl, mmpl[2]);
-
-
-                lastpl = GetPalletCount(inv, "B");//get Last box
-
+                    //lastmix
+                    if (mmpl[2] >= 17)
+                    {
+                        lastpl = WrPl(olkey, 1, inv, "MIX", lastpl, mmpl[2]);
+                    }
+                    else
+                    {
+                        Console.WriteLine("START BOX ==========================");
+                        lastpl = GetPalletCount(inv, "B");//get Last box
+                        int[] bbc = AvgPlWireCount(mmpl[2], "BX");
+                        lastpl = WrPl(olkey, bbc[1], inv, "BOX", lastpl, 2);
+                        if (bbc[3] > 0)
+                        {
+                            lastpl = WrPl(olkey, bbc[3], inv, "BOX", lastpl, 1);
+                        }
+                    }
+                }
 
             }
             catch (Exception ex)
@@ -1084,7 +1123,7 @@ namespace XPWLibrary.Interfaces
         private int GetPalletCount(string inv, string v)
         {
             int x = 1;
-            string refinv = inv.Substring(0, 12) + (int.Parse(inv.Substring(13).ToString()) - 1).ToString("D5");
+            string refinv = inv.Substring(0, 12) + (int.Parse(inv.Substring(13).ToString()) - 1).ToString("D4");
             if ((int.Parse(inv.Substring(13).ToString()) - 1) < 1)
             {
                 refinv = inv;
@@ -1331,10 +1370,10 @@ namespace XPWLibrary.Interfaces
         //    return true;
         //}
 
-        private BindingList<PlListData> GetPlData(string inv)
+        private List<PlListData> GetPlData(string inv)
         {
-            BindingList<PlListData> list = new BindingList<PlListData>();
-            string sql = $"select l.palletno,l.ploutno,l.containerno,CASE WHEN l.PLOUTSTS IS NULL THEN '0' ELSE l.PLOUTSTS END PLOUTSTS from txp_isspallet l where l.issuingkey = '{inv}' and l.ploutno is not null";
+            List<PlListData> list = new List<PlListData>();
+            string sql = $"select l.palletno,l.ploutno,l.containerno,CASE WHEN l.PLOUTSTS IS NULL THEN '0' ELSE l.PLOUTSTS END PLOUTSTS from txp_isspallet l where l.issuingkey = '{inv}'";
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow i in dr.Tables[0].Rows)
             {

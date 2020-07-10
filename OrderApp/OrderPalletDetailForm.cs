@@ -32,14 +32,14 @@ namespace OrderApp
         void ReloadData()
         {
             SplashScreenManager.ShowDefaultWaitForm();
-            if (refno.Replace("'", "").Trim().StartsWith("I"))
-            {
-                new GreeterFunction().SumPlInj(refno.Replace("'", "").Trim());
-            }
-            else
-            {
-                new GreeterFunction().SumPallet(refno.Replace("'", "").Trim());
-            }
+            //if (refno.Replace("'", "").Trim().StartsWith("I"))
+            //{
+            //    new GreeterFunction().SumPlInj(refno.Replace("'", "").Trim());
+            //}
+            //else
+            //{
+            //    new GreeterFunction().SumPallet(refno.Replace("'", "").Trim());
+            //}
             BindingList<PalletData> dataSource = GetDataSource();
             gridControl.DataSource = dataSource;
             bsiRecordsCount.Caption = "RECORDS : " + dataSource.Count;

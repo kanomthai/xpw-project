@@ -724,11 +724,24 @@ namespace XPWLibrary.Controllers
         public int GetLastPalletCtn(string issno, string pltype)
         {
             int x = 0;
+            if (pltype == "B")
+            {
+                pltype = "C";
+            }
             string sql = $"SELECT SUBSTR(PALLETNO, 3) ctn FROM TXP_ISSPALLET l WHERE ISSUINGKEY = '{issno}' AND PALLETNO  LIKE '1{pltype}%' ORDER BY PALLETNO DESC";
             DataSet dr = new ConnDB().GetFill(sql);
             if (dr.Tables[0].Rows.Count > 0)
             {
                 x = int.Parse(dr.Tables[0].Rows[0]["ctn"].ToString());
+            }
+            else
+            {
+                sql = $"SELECT SUBSTR(PALLETNO, 3) ctn FROM TXP_ISSPALLET l WHERE ISSUINGKEY LIKE '{issno.Substring(0,11)}%' AND PALLETNO  LIKE '1{pltype}%' ORDER BY PALLETNO DESC";
+                dr = new ConnDB().GetFill(sql);
+                if (dr.Tables[0].Rows.Count > 0)
+                {
+                    x = int.Parse(dr.Tables[0].Rows[0]["ctn"].ToString());
+                }
             }
             return x;
         }
