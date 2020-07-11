@@ -33,7 +33,11 @@ namespace SetPalletApp
                 prShipType.Value = obj[0].ShipType;
                 prFactory.Value = obj[0].Factory;
                 prGroupOrder.Value = obj[0].CombInv;
-
+                pPartName.Value = "PARTNO";
+                if (obj[0].Factory != "INJ")
+                {
+                    pPartName.Value = "PARTNAME";
+                }
 
                 prContainerType.Value = obj[0].ContainerType;
                 prDesinations.Value = "";

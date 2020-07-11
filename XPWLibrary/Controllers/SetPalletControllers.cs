@@ -106,6 +106,13 @@ namespace XPWLibrary.Controllers
                         npl = "";
                     }
                 }
+                string plsize = r["plsize"].ToString();
+                string partn = r["partname"].ToString();
+                if (r["factory"].ToString() != "AW")
+                {
+                    plsize = r["plsize"].ToString();
+                    partn = r["partno"].ToString();
+                }
                 obj.Add(new SetPalletListData()
                 {
                     Id = obj.Count + 1,
@@ -114,13 +121,13 @@ namespace XPWLibrary.Controllers
                     RefNo = r["issuingkey"].ToString(),
                     OrderNo = r["pono"].ToString(),
                     ShipPlNo = npl,
-                    PartNo = r["partno"].ToString(),
+                    PartNo = partn,
                     ContainerType = r["containertype"].ToString(),
                     Qty = int.Parse(r["orderqty"].ToString()),
                     StdPack = int.Parse(r["stdpack"].ToString()),
                     Ctn = int.Parse(r["ctn"].ToString()),
                     ITem = int.Parse(r["seq"].ToString()),
-                    PlSize = r["plsize"].ToString(),//PLSIZE
+                    PlSize = plsize,//r["plsize"].ToString(),//PLSIZE
                     CombInv = r["potype"].ToString(),//POTYPE
                     //LotNo = r["lotno"].ToString(),//LOTNO
                     AffCode = r["affcode"].ToString(),//AFFCODE
