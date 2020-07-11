@@ -38,6 +38,7 @@ namespace XPWLibrary.Models
         public int CtnQty { get; set; }//CTN
         public int Ctn { get; set; }//CTN
         public int Qty { get; set; }//CTN
+        public string PlOutNo { get; set; }
         public int StdPack { get; set; }//CTN
         public string ShipPlNo { get; set; }//SHIPPLNO
         public bool MgrPl { get; set; }
@@ -45,7 +46,6 @@ namespace XPWLibrary.Models
 
     public class SetPalletListData: SetPallatData
     { 
-        public string PlOutNo { get; set; }
         public string FTicket { get; set; }
         public string SerialNo { get; set; }
         public string LotNo { get; set; }

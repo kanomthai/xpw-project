@@ -1,14 +1,10 @@
 ﻿using DevExpress.XtraSplashScreen;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Web.Script.Serialization;
-using System.Windows.Forms;
 using System.Xml;
 using XPWLibrary.Controllers;
 using XPWLibrary.Models;
@@ -887,62 +883,6 @@ namespace XPWLibrary.Interfaces
         public bool SumPlInj(string invoice)
         {
             bool x = true;
-            //bool x = false;
-            //string sql = $"SELECT sum(round(b.ORDERQTY/b.STDPACK)) ctn,p.BIWIDT||'x'||p.BILENG||'x'||p.BIHIGH dm FROM TXP_ISSTRANSBODY b\n"+
-            //            $"INNER JOIN TXP_ORDERPLAN p ON b.ISSUINGKEY = p.CURINV AND b.PARTNO = p.PARTNO\n"+
-            //            $"WHERE b.ISSUINGKEY = '{invoice}'\n"+
-            //            $"GROUP BY p.BIWIDT || 'x' || p.BILENG || 'x' || p.BIHIGH\n" +
-            //            $"ORDER BY sum(round(b.ORDERQTY/b.STDPACK)) DESC,p.BIWIDT || 'x' || p.BILENG || 'x' || p.BIHIGH";
-            //Console.WriteLine(sql);
-            //DataSet dr = new ConnDB().GetFill(sql);
-
-            ////================================>
-            //List<INJPlData> ob = new List<INJPlData>();
-            //List<INJPlData> opl = new List<INJPlData>();
-            //int plnum = 1;
-            //int bbctn = 1;
-            //foreach (DataRow r in dr.Tables[0].Rows)
-            //{
-            //    List<INJPlData> obj = PlInjSize(r["dm"].ToString(), int.Parse(r["ctn"].ToString()));
-            //    int i = 0;
-            //    while (i < obj.Count)
-            //    {
-            //        if (obj[i].PlNo > 0)
-            //        {
-            //            int j = 0;
-            //            while (j < obj[i].Total)
-            //            {
-            //                Console.WriteLine($"P => {obj[i].Total}");
-            //                obj[i].PlName = $"1P{plnum.ToString("D3")}";
-            //                ob.Add(obj[i]);
-            //                Console.WriteLine($"PARTSIZE: {obj[i].PSize} PLSIZE: {obj[i].PlSize} PLKEY: {obj[i].PlName}");
-            //                if (CheckPalleteDuplicate(obj[i], invoice))
-            //                {
-            //                    plnum++;
-            //                    j++;
-            //                }
-            //            }
-            //        }
-            //        else
-            //        {
-            //            int j = 0;
-            //            while (j < obj[i].Total)
-            //            {
-            //                opl.Add(obj[i]);
-            //                obj[i].PlName = $"1C{bbctn.ToString("D3")}";
-            //                Console.WriteLine($"C => {obj[i].PlName}");
-            //                Console.WriteLine($"PARTSIZE: {obj[i].PSize} PLSIZE: {obj[i].PlSize} PLKEY: {obj[i].PlName}");
-            //                if (CheckPalleteDuplicate(obj[i], invoice))
-            //                {
-            //                    bbctn++;
-            //                    j++;
-            //                }
-            //            }
-            //        }
-            //        i++;
-            //    }
-            //}
-            //Console.WriteLine($"FULLPL: {ob.Count} BBOX: {opl.Count}");
             return x;
         }
 
@@ -1052,6 +992,14 @@ namespace XPWLibrary.Interfaces
                             $"('{StaticFunctionData.Factory}', '{inv}', '{plnum}','{PlKey}', '{ContNo}', '{pltype}',{total},{PlStatus},sysdate,sysdate)";
                         if (new ConnDB().ExcuteSQL(sql))
                         {
+                            sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plnum.ToUpper()}'\n" +
+                                    $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{inv}' AND PARTNO LIKE '{pltype}%' AND ROWNUM <= {total}";
+                            if (pltype == "BOX")
+                            {
+                                sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plnum.ToUpper()}'\n" +
+                                    $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{inv}' AND ROWNUM <= {total}";
+                            }
+                            new ConnDB().ExcuteSQL(sql);
                             Console.WriteLine("==================================================");
                             lastpl++;
                             j++;

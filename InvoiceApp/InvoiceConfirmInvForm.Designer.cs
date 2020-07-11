@@ -43,6 +43,7 @@
             this.bbiContainerDetail = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             this.bbiPrintShippingMark = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiShipingSelect = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -62,7 +63,7 @@
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.ppMenu = new DevExpress.XtraBars.PopupMenu(this.components);
-            this.bbiShipingSelect = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiPalletReport = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -91,16 +92,17 @@
             this.bbiContainerDetail,
             this.barButtonItem1,
             this.bbiPrintShippingMark,
-            this.bbiShipingSelect});
+            this.bbiShipingSelect,
+            this.bbiPalletReport});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 29;
+            this.ribbonControl.MaxItemId = 30;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.PageHeaderItemLinks.Add(this.barButtonItem1, "RE PRINT PALLET");
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.OfficeUniversal;
             this.ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
-            this.ribbonControl.Size = new System.Drawing.Size(960, 91);
+            this.ribbonControl.Size = new System.Drawing.Size(960, 93);
             this.ribbonControl.StatusBar = this.ribbonStatusBar;
             this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
@@ -206,6 +208,15 @@
             this.bbiPrintShippingMark.Name = "bbiPrintShippingMark";
             this.bbiPrintShippingMark.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiPrintShippingMark_ItemClick);
             // 
+            // bbiShipingSelect
+            // 
+            this.bbiShipingSelect.Caption = "Print";
+            this.bbiShipingSelect.Id = 28;
+            this.bbiShipingSelect.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiShipingSelect.ImageOptions.Image")));
+            this.bbiShipingSelect.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiShipingSelect.ImageOptions.LargeImage")));
+            this.bbiShipingSelect.Name = "bbiShipingSelect";
+            this.bbiShipingSelect.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiShipingSelect_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -230,6 +241,7 @@
             // 
             this.ribbonPageGroup2.AllowTextClipping = false;
             this.ribbonPageGroup2.ItemLinks.Add(this.bbiPrintShippingMark);
+            this.ribbonPageGroup2.ItemLinks.Add(this.bbiPalletReport);
             this.ribbonPageGroup2.ItemLinks.Add(this.bbiPrintPreview);
             this.ribbonPageGroup2.Name = "ribbonPageGroup2";
             this.ribbonPageGroup2.ShowCaptionButton = false;
@@ -238,19 +250,19 @@
             // ribbonStatusBar
             // 
             this.ribbonStatusBar.ItemLinks.Add(this.bsiRecordsCount);
-            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 573);
+            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 568);
             this.ribbonStatusBar.Name = "ribbonStatusBar";
             this.ribbonStatusBar.Ribbon = this.ribbonControl;
-            this.ribbonStatusBar.Size = new System.Drawing.Size(960, 26);
+            this.ribbonStatusBar.Size = new System.Drawing.Size(960, 31);
             // 
             // layoutControl1
             // 
             this.layoutControl1.Controls.Add(this.gridControl);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl1.Location = new System.Drawing.Point(0, 91);
+            this.layoutControl1.Location = new System.Drawing.Point(0, 93);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.Root = this.Root;
-            this.layoutControl1.Size = new System.Drawing.Size(960, 482);
+            this.layoutControl1.Size = new System.Drawing.Size(960, 475);
             this.layoutControl1.TabIndex = 4;
             this.layoutControl1.Text = "layoutControl1";
             // 
@@ -261,7 +273,7 @@
             this.gridControl.MainView = this.gridView;
             this.gridControl.MenuManager = this.ribbonControl;
             this.gridControl.Name = "gridControl";
-            this.gridControl.Size = new System.Drawing.Size(936, 458);
+            this.gridControl.Size = new System.Drawing.Size(936, 451);
             this.gridControl.TabIndex = 8;
             this.gridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -361,6 +373,8 @@
             this.colPlSize.FieldName = "PlSize";
             this.colPlSize.Name = "colPlSize";
             this.colPlSize.OptionsEditForm.StartNewRow = true;
+            this.colPlSize.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PlSize", "{0:0.##}")});
             this.colPlSize.Visible = true;
             this.colPlSize.VisibleIndex = 5;
             this.colPlSize.Width = 62;
@@ -370,6 +384,8 @@
             this.colTotal.Caption = "TOTAL";
             this.colTotal.FieldName = "PlTotal";
             this.colTotal.Name = "colTotal";
+            this.colTotal.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
+            new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "PlTotal", "{0:0.##}")});
             this.colTotal.Visible = true;
             this.colTotal.VisibleIndex = 6;
             this.colTotal.Width = 72;
@@ -399,7 +415,7 @@
             this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem1});
             this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(960, 482);
+            this.Root.Size = new System.Drawing.Size(960, 475);
             this.Root.TextVisible = false;
             // 
             // layoutControlItem1
@@ -407,7 +423,7 @@
             this.layoutControlItem1.Control = this.gridControl;
             this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(940, 462);
+            this.layoutControlItem1.Size = new System.Drawing.Size(940, 455);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
@@ -418,14 +434,14 @@
             this.ppMenu.Name = "ppMenu";
             this.ppMenu.Ribbon = this.ribbonControl;
             // 
-            // bbiShipingSelect
+            // bbiPalletReport
             // 
-            this.bbiShipingSelect.Caption = "Print";
-            this.bbiShipingSelect.Id = 28;
-            this.bbiShipingSelect.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiShipingSelect.ImageOptions.Image")));
-            this.bbiShipingSelect.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiShipingSelect.ImageOptions.LargeImage")));
-            this.bbiShipingSelect.Name = "bbiShipingSelect";
-            this.bbiShipingSelect.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiShipingSelect_ItemClick);
+            this.bbiPalletReport.Caption = "Pallet Report";
+            this.bbiPalletReport.Id = 29;
+            this.bbiPalletReport.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem2.ImageOptions.Image")));
+            this.bbiPalletReport.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem2.ImageOptions.LargeImage")));
+            this.bbiPalletReport.Name = "bbiPalletReport";
+            this.bbiPalletReport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiPalletReport_ItemClick);
             // 
             // InvoiceConfirmInvForm
             // 
@@ -487,5 +503,6 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
         private DevExpress.XtraBars.BarButtonItem bbiPrintShippingMark;
         private DevExpress.XtraBars.BarButtonItem bbiShipingSelect;
+        private DevExpress.XtraBars.BarButtonItem bbiPalletReport;
     }
 }

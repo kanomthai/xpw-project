@@ -2,6 +2,7 @@
 using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
 using OrderApp;
+using SetPalletApp;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -175,17 +176,24 @@ namespace InvoiceApp
 
         private void bbiPlDetail_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var plout = gridView.GetFocusedRowCellValue("PlOut");
-            InvoicePalletDetailForm frm = new InvoicePalletDetailForm(plout.ToString());
-            frm.ShowDialog();
+            try
+            {
+                PalletData x = gridView.GetFocusedRow() as PalletData;
+                InvoicePalletDetailForm frm = new InvoicePalletDetailForm(x);
+                frm.ShowDialog();
+            }
+            catch (System.Exception)
+            {
+            }
         }
 
         private void gridView_DoubleClick(object sender, System.EventArgs e)
         {
             try
             {
-                var plout = gridView.GetFocusedRowCellValue("PlOut");
-                InvoicePalletDetailForm frm = new InvoicePalletDetailForm(plout.ToString());
+                /*ar plout = gridView.GetFocusedRowCellValue("PlOut");*/
+                PalletData x = gridView.GetFocusedRow() as PalletData;
+                InvoicePalletDetailForm frm = new InvoicePalletDetailForm(x);
                 frm.ShowDialog();
             }
             catch (System.Exception)
@@ -229,6 +237,12 @@ namespace InvoiceApp
             {
                 XtraMessageBox.Show("ไม่พบข้อมูล PLOUT!", "ข้อความแจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void bbiPalletReport_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SetPalletReportJobOrderPreview frm = new SetPalletReportJobOrderPreview(invno);
+            frm.ShowDialog();
         }
     }
 }

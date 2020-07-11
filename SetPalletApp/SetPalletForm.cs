@@ -328,7 +328,17 @@ namespace SetPalletApp
         {
             if (e.Button.ToString() == "Right")
             {
-                popupMenu2.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
+                SetPallatData x = gridPalletView.GetFocusedRow() as SetPallatData;
+                bbiDeletePallet.Enabled = true;
+                bbiDeletePallet.Caption = $"Delete {x.ShipPlNo}";
+                if (x.PlOutNo != "")
+                {
+                    bbiDeletePallet.Enabled = false;
+                }
+                else
+                {
+                    popupMenu2.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
+                }
             }
             else
             {
@@ -452,6 +462,8 @@ namespace SetPalletApp
                 {
                     if (e.Button.ToString() == "Right")
                     {
+                        SetPalletListData obj = gridPalleteDetailView.GetFocusedRow() as SetPalletListData;
+                        bbiDelPartDetail.Caption = $"Delete {obj.FTicket}";
                         popupMenu3.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
                     }
                     else

@@ -2,6 +2,7 @@
 {
     public class PalletData
     {
+        public string RefNo { get; set; }
         public string PlNo { get; set; }
         public string PlOut { get; set; }
         public string PlType { get; set; }

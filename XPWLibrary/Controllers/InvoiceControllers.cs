@@ -330,7 +330,7 @@ namespace XPWLibrary.Controllers
             string sql = $"SELECT l.PALLETNO,l.PLOUTNO,l.PLTYPE,l.CONTAINERNO,CASE WHEN l.PLTOTAL IS NOT NULL THEN l.PLTOTAL ELSE cc.ctn END PLTOTAL,CASE WHEN cc.ctn IS NULL THEN l.PLTOTAL ELSE cc.ctn END total" +
                         $",case when l.PLOUTSTS is null then '0' else l.PLOUTSTS end PLOUTSTS FROM TXP_ISSPALLET l\n" +
                         "LEFT JOIN(SELECT c.PLOUTNO, count(c.PLOUTNO) ctn FROM TXP_CARTONDETAILS c GROUP BY c.PLOUTNO) cc ON l.PLOUTNO = cc.PLOUTNO\n" +
-                        $"WHERE l.ISSUINGKEY = '{refinv}'";
+                        $"WHERE l.ISSUINGKEY = '{refinv}' ORDER BY l.PALLETNO";
             Console.WriteLine(sql);
             List<PalletData> obj = new List<PalletData>();
             Console.WriteLine(sql);
@@ -339,6 +339,7 @@ namespace XPWLibrary.Controllers
             {
                 obj.Add(new PalletData()
                 {
+                    RefNo = refinv,
                     PlNo = r["palletno"].ToString(),
                     PlOut = r["ploutno"].ToString(),
                     PlType = r["pltype"].ToString(),
