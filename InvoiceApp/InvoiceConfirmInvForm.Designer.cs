@@ -44,6 +44,9 @@
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             this.bbiPrintShippingMark = new DevExpress.XtraBars.BarButtonItem();
             this.bbiShipingSelect = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiPalletReport = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiRebuildPalletCarton = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiPrintCartonShippingLabel = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -63,7 +66,6 @@
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.ppMenu = new DevExpress.XtraBars.PopupMenu(this.components);
-            this.bbiPalletReport = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -93,11 +95,14 @@
             this.barButtonItem1,
             this.bbiPrintShippingMark,
             this.bbiShipingSelect,
-            this.bbiPalletReport});
+            this.bbiPalletReport,
+            this.bbiRebuildPalletCarton,
+            this.bbiPrintCartonShippingLabel});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 30;
+            this.ribbonControl.MaxItemId = 32;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.PageHeaderItemLinks.Add(this.barButtonItem1, "RE PRINT PALLET");
+            this.ribbonControl.PageHeaderItemLinks.Add(this.bbiRebuildPalletCarton);
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.OfficeUniversal;
@@ -216,6 +221,32 @@
             this.bbiShipingSelect.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiShipingSelect.ImageOptions.LargeImage")));
             this.bbiShipingSelect.Name = "bbiShipingSelect";
             this.bbiShipingSelect.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiShipingSelect_ItemClick);
+            // 
+            // bbiPalletReport
+            // 
+            this.bbiPalletReport.Caption = "Pallet Report";
+            this.bbiPalletReport.Id = 29;
+            this.bbiPalletReport.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiPalletReport.ImageOptions.Image")));
+            this.bbiPalletReport.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiPalletReport.ImageOptions.LargeImage")));
+            this.bbiPalletReport.Name = "bbiPalletReport";
+            this.bbiPalletReport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiPalletReport_ItemClick);
+            // 
+            // bbiRebuildPalletCarton
+            // 
+            this.bbiRebuildPalletCarton.Caption = "Re-Build Pallet";
+            this.bbiRebuildPalletCarton.Id = 30;
+            this.bbiRebuildPalletCarton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiRebuildPalletCarton.ImageOptions.Image")));
+            this.bbiRebuildPalletCarton.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiRebuildPalletCarton.ImageOptions.LargeImage")));
+            this.bbiRebuildPalletCarton.Name = "bbiRebuildPalletCarton";
+            this.bbiRebuildPalletCarton.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiRebuildPalletCarton_ItemClick);
+            // 
+            // bbiPrintCartonShippingLabel
+            // 
+            this.bbiPrintCartonShippingLabel.Caption = "barButtonItem2";
+            this.bbiPrintCartonShippingLabel.Id = 31;
+            this.bbiPrintCartonShippingLabel.ImageOptions.Image = global::InvoiceApp.Properties.Resources.icons8_qr_code_16;
+            this.bbiPrintCartonShippingLabel.Name = "bbiPrintCartonShippingLabel";
+            this.bbiPrintCartonShippingLabel.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiPrintCartonShippingLabel_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -430,18 +461,10 @@
             // ppMenu
             // 
             this.ppMenu.ItemLinks.Add(this.bbiShipingSelect, true);
+            this.ppMenu.ItemLinks.Add(this.bbiPrintCartonShippingLabel);
             this.ppMenu.ItemLinks.Add(this.bbiRefresh, true);
             this.ppMenu.Name = "ppMenu";
             this.ppMenu.Ribbon = this.ribbonControl;
-            // 
-            // bbiPalletReport
-            // 
-            this.bbiPalletReport.Caption = "Pallet Report";
-            this.bbiPalletReport.Id = 29;
-            this.bbiPalletReport.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem2.ImageOptions.Image")));
-            this.bbiPalletReport.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem2.ImageOptions.LargeImage")));
-            this.bbiPalletReport.Name = "bbiPalletReport";
-            this.bbiPalletReport.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiPalletReport_ItemClick);
             // 
             // InvoiceConfirmInvForm
             // 
@@ -504,5 +527,7 @@
         private DevExpress.XtraBars.BarButtonItem bbiPrintShippingMark;
         private DevExpress.XtraBars.BarButtonItem bbiShipingSelect;
         private DevExpress.XtraBars.BarButtonItem bbiPalletReport;
+        private DevExpress.XtraBars.BarButtonItem bbiRebuildPalletCarton;
+        private DevExpress.XtraBars.BarButtonItem bbiPrintCartonShippingLabel;
     }
 }

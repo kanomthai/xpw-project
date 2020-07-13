@@ -1,10 +1,12 @@
-﻿using DevExpress.XtraSplashScreen;
+﻿using DevExpress.XtraEditors;
+using DevExpress.XtraSplashScreen;
 using NiceLabel.SDK;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Linq;
+using System.Windows.Forms;
 using XPWLibrary.Interfaces;
 using XPWLibrary.Models;
 
@@ -420,6 +422,131 @@ namespace XPWLibrary.Controllers
             Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
             return dr;
+        }
+
+        public bool PrintWireLabelQR(string invno, string carton)
+        {
+            bool x = true;
+            try
+            {
+                SplashScreenManager.ShowDefaultWaitForm();
+                SplashScreenManager.Default.SetWaitFormCaption($"PRINTING {carton}");
+                string labeltemp = $"{AppDomain.CurrentDomain.BaseDirectory}Labels\\PL_OUTER_LABEL_BNK.nlbl";
+                IPrintEngine NL_PrintEngine = PrintEngineFactory.PrintEngine;
+                NL_PrintEngine.Initialize();
+                ILabel NL_Label = NL_PrintEngine.OpenLabel(labeltemp);
+                bool bFound = false;
+                foreach (IPrinter p in NL_PrintEngine.Printers) if (p.Name == StaticFunctionData.cartonticketprinter) bFound = true;
+                if (bFound)
+                {
+                    string sql = $"SELECT * FROM TBT_SHIPPINGCARTON WHERE ISSUINGKEY = '{invno}' AND  SHIPPLNO = '{carton}'";
+                    DataSet dr = new ConnDB().GetFill(sql);
+
+                    //head
+                    var j = dr.Tables[0].Rows[0];
+                    string inv = j["refinvoice"].ToString();
+                    string custname = j["custname"].ToString();
+                    string ordernumber = j["pono"].ToString();
+
+                    string cartonnumber = carton;
+                    int i = 0;
+                    foreach (DataRow r in dr.Tables[0].Rows)
+                    {
+                        i += int.Parse(r["ctn"].ToString());
+                    }
+                    string cartonctn = i.ToString();
+                    //body
+                    string partname_1 = null;
+                    string partno_1 = null;
+                    string qty_1 = null;
+                    string label_partno_1 = null;
+                    string label_qty_1 = null;
+                    string partname_2 = null;
+                    string partno_2 = null;
+                    string qty_2 = null;
+                    string label_partno_2 = null;
+                    string label_qty_2 = null;
+                    string qrcode = null;
+                    
+                    if (dr.Tables[0].Rows.Count > 1)
+                    {
+                        partname_1 = $"{j["partname"].ToString()} {j["ctn"].ToString()}";
+                        partno_1 = $"{j["partno"].ToString()}";
+                        qty_1 = $"{j["qty"].ToString()}";
+                        label_partno_1 = $"*{j["partno"].ToString()}*";
+                        label_qty_1 = $"*{j["qty"].ToString()}*";
+                        partname_2 = $"{dr.Tables[0].Rows[1]["partname"].ToString()} {dr.Tables[0].Rows[1]["ctn"].ToString()}";
+                        partno_2 = $"{dr.Tables[0].Rows[1]["partno"].ToString()}";
+                        qty_2 = $"{dr.Tables[0].Rows[1]["qty"].ToString()}";
+                        label_partno_2 = $"*{dr.Tables[0].Rows[1]["partno"].ToString()}*";
+                        label_qty_2 = $"*{dr.Tables[0].Rows[1]["qty"].ToString()}*";
+                        qrcode = $"{custname}|{ordernumber}|{cartonnumber}|{cartonctn}|{j["partname"].ToString()};{dr.Tables[0].Rows[1]["partname"].ToString()}";
+                    }
+                    else
+                    {
+                        partname_1 = $"{j["partname"].ToString()} {j["qty"].ToString()}";
+                        //partno_1 = $"*{j["partcode"].ToString()}*";
+                        //qty_1 = $"*{j["packqty"].ToString()}*";
+                        partno_1 = $"{j["partno"].ToString()}";
+                        qty_1 = $"{j["qty"].ToString()}";
+                        label_partno_1 = $"*{j["partno"].ToString()}*";
+                        label_qty_1 = $"*{j["qty"].ToString()}*";
+                        partname_2 = null;
+                        partno_2 = null;
+                        qty_2 = null;
+                        label_partno_2 = null;
+                        label_qty_2 = null;
+                        if (int.Parse(j["qty"].ToString()) > 1)
+                        {
+                            qrcode = $"{custname}|{ordernumber}|{cartonnumber}|{cartonctn}|{j["partname"].ToString()};{j["partname"].ToString()}";
+                        }
+                        else
+                        {
+                            qrcode = $"{custname}|{ordernumber}|{cartonnumber}|{cartonctn}|{j["partname"].ToString()}";
+                        }
+                    }
+
+                    try
+                    {
+                        NL_Label.Variables["prCustName"].SetValue(custname);
+                        NL_Label.Variables["prQrCode"].SetValue(qrcode);
+                        NL_Label.Variables["prCartonNo"].SetValue(cartonnumber);
+                        NL_Label.Variables["prOrderNo"].SetValue(ordernumber);
+                        NL_Label.Variables["prPartno_1"].SetValue(partname_1);
+                        NL_Label.Variables["prPartno_2"].SetValue(partname_2);
+                        NL_Label.Variables["prBarcodePart_1"].SetValue(partno_1);
+                        NL_Label.Variables["prBarcodePart_2"].SetValue(partno_2);
+                        NL_Label.Variables["prBarcodeSize_1"].SetValue(qty_1);
+                        NL_Label.Variables["prBarcodeSize_2"].SetValue(qty_2);
+
+                        NL_Label.Variables["prBarcodePart_1"].SetValue(label_partno_1);
+                        NL_Label.Variables["prBarcodePart_2"].SetValue(label_partno_2);
+                        NL_Label.Variables["prBarcodeSize_1"].SetValue(label_qty_1);
+                        NL_Label.Variables["prBarcodeSize_2"].SetValue(label_qty_2);
+
+                        NL_Label.Variables["prCartonSize"].SetValue($"{cartonctn}");
+                        NL_Label.PrintSettings.PrinterName = StaticFunctionData.cartonticketprinter;
+                        NL_Label.PrintSettings.JobName = $"PRINTING CARTON({carton})";
+                        NL_Label.Print(1);
+                        SplashScreenManager.CloseDefaultWaitForm();
+                    }
+                    catch (Exception ex)
+                    {
+                        XtraMessageBox.Show(ex.Message, "ข้อความแจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        x = false;
+                    }
+                }
+                else
+                {
+                    XtraMessageBox.Show("ไม่พบรายการ Printer กรุณาติดต่อผู้ดูแลระบบ", "ข้อความแจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    x = false;
+                }
+            }
+            catch (Exception)
+            {
+                x = false;
+            }
+            return x;
         }
     }
 }

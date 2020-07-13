@@ -148,7 +148,7 @@ namespace XPWLibrary.Controllers
         {
             List<SetPalletListData> obj = new List<SetPalletListData>();
             string sql = $"SELECT * FROM TBT_PALLETVIEWER p WHERE p.ISSUINGKEY = '{x.RefNo}' AND p.SHIPPLNO = '{x.ShipPlNo}'";
-            if (x.PlOutNo != null)
+            if (x.PlOutNo != "")
             {
                 sql = $"SELECT * FROM TBT_PALLETVIEWRPLOUT p WHERE p.ISSUINGKEY = '{x.RefNo}' AND p.ploutno = '{x.PlOutNo}'";
             }

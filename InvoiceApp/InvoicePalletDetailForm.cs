@@ -1,7 +1,11 @@
 ﻿using DevExpress.XtraBars;
+using DevExpress.XtraEditors;
 using System;
 using System.ComponentModel;
 using System.Data;
+using System.Drawing;
+using System.Windows.Forms;
+using XPWLibrary.Controllers;
 using XPWLibrary.Interfaces;
 using XPWLibrary.Models;
 
@@ -14,7 +18,7 @@ namespace InvoiceApp
         {
             InitializeComponent();
             plno = pl;
-            this.Text = $"{plno} DETAIL";
+            this.Text = $"{plno.PlNo} DETAIL";
             ReBuildingPallet();
         }
 
@@ -82,6 +86,39 @@ namespace InvoiceApp
             //        ReloadData();
             //    }
             //}
+        }
+
+        private void gridView_MouseUp(object sender, System.Windows.Forms.MouseEventArgs e)
+        {
+            try
+            {
+                BindingList<PlDetailData> list =  gridControl.DataSource as BindingList<PlDetailData>;
+                if (list.Count > 0)
+                {
+                    if (e.Button.ToString() == "Right")
+                    {
+                        bbiPrintCarton.Caption = $"Print {plno.PlNo}";
+                        popupMenu1.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
+                    }
+                    else
+                    {
+                        popupMenu1.HidePopup();
+                    }
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void bbiPrintCarton_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            PlDetailData obj = gridView.GetFocusedRow() as PlDetailData;
+            bool x = new InvoiceControllers().PrintWireLabelQR(plno.RefNo, plno.PlNo);
+            if (x)
+            {
+                XtraMessageBox.Show("ปริ้นข้อมูลเสร็จแล้ว", "ข้อความแจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

@@ -19,6 +19,11 @@ namespace InvoiceApp
         {
             InitializeComponent();
             invno = refinv;
+            bbiPrintCartonShippingLabel.Enabled = false;
+            if (invno.Substring(0, 1) == "A")
+            {
+                bbiPrintCartonShippingLabel.Enabled = true;
+            }
             this.Text = $"Pallet List({invno})";
             ReBuildingPallet();
         }
@@ -154,6 +159,7 @@ namespace InvoiceApp
                     var plno = gridView.GetFocusedRowCellValue("PlNo");
                     var conno = gridView.GetFocusedRowCellValue("ContainerNo");
                     bbiShipingSelect.Caption = $"Print Shipping({plno})";
+                    bbiPrintCartonShippingLabel.Caption = $"Print Label({plno})";
                     if (plout != null)
                     {
                         bbiPlDetail.Enabled = true;
@@ -203,19 +209,26 @@ namespace InvoiceApp
 
         private void barButtonItem1_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var plout = gridView.GetFocusedRowCellValue("PlOut");
-            if (plout != null)
+            try
             {
-                DialogResult r = XtraMessageBox.Show("ยืนยันคำสั่ง Reprint Palet", "XPW Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
-                if (r == DialogResult.OK)
+                var plout = gridView.GetFocusedRowCellValue("PlOut");
+                if (plout != null)
                 {
-                    string sql = $"UPDATE TXP_LOADPALLET l SET l.PLOUTSTS = 0,l.PRINTDATE=sysdate,l.UPDDTE=sysdate WHERE l.PLOUTNO = '{plout}'";
-                    if (new ConnDB().ExcuteSQL(sql))
+                    DialogResult r = XtraMessageBox.Show("ยืนยันคำสั่ง Reprint Palet", "XPW Confirm", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+                    if (r == DialogResult.OK)
                     {
-                        gridView.SetFocusedRowCellValue("PlOut", 1);
-                        XtraMessageBox.Show("อัพเดทข้อมูลเสร็จแล้ว");
+                        string sql = $"UPDATE TXP_LOADPALLET l SET l.PLOUTSTS = 0,l.PRINTDATE=sysdate,l.UPDDTE=sysdate WHERE l.PLOUTNO = '{plout}'";
+                        if (new ConnDB().ExcuteSQL(sql))
+                        {
+                            gridView.SetFocusedRowCellValue("PlOut", 1);
+                            gridView.UpdateCurrentRow();
+                            XtraMessageBox.Show("อัพเดทข้อมูลเสร็จแล้ว");
+                        }
                     }
                 }
+            }
+            catch (System.Exception)
+            {
             }
         }
 
@@ -243,6 +256,34 @@ namespace InvoiceApp
         {
             SetPalletReportJobOrderPreview frm = new SetPalletReportJobOrderPreview(invno);
             frm.ShowDialog();
+        }
+
+        private void bbiRebuildPalletCarton_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            DialogResult r = XtraMessageBox.Show("คุณต้องการที่จะ RE-BUILD PALLET ใหม่ใช่หรือไม่?", "XPW Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (r == DialogResult.Yes)
+            {
+                if (invno.Substring(0, 1) == "I")
+                {
+                    //new GreeterFunction().SumPlInj(invno);
+                }
+                else
+                {
+                    new GreeterFunction().SumPallet(invno);
+                }
+                XtraMessageBox.Show("อัพเดทข้อมูลเสร็จแล้ว");
+            }
+            ReloadData();
+        }
+
+        private void bbiPrintCartonShippingLabel_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var pl = gridView.GetFocusedRowCellValue("PlNo");
+            bool x = new InvoiceControllers().PrintWireLabelQR(invno, pl.ToString());
+            if (x)
+            {
+                XtraMessageBox.Show("ปริ้นข้อมูลเสร็จแล้ว", "ข้อความแจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
     }
 }

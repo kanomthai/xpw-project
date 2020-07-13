@@ -270,6 +270,7 @@
     <None Include="Resources\window_32x32.png" />
     <None Include="Resources\customer_16x16.png" />
     <None Include="Resources\customer_32x32.png" />
+    <None Include="Resources\icons8-qr-code-16.png" />
     <Content Include="Templates\CurrentInvoiceControl.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

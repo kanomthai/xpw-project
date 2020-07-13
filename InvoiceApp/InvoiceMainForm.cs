@@ -264,6 +264,7 @@ namespace InvoiceApp
                 InvoiceData obj = gridView.GetFocusedRow() as InvoiceData;
                 InvoiceDetailForm frm = new InvoiceDetailForm(obj);
                 frm.ShowDialog();
+                //bbiEtd.EditValue = obj.Etddte;
                 gridView.UpdateCurrentRow();
                 if (bbiAllWeek.Checked != true)
                 {
@@ -375,22 +376,48 @@ namespace InvoiceApp
 
         private void gridWeekView_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
         {
-            SplashScreenManager.ShowDefaultWaitForm();
-            var etd = gridWeekView.GetFocusedRowCellValue("Etd").ToString();
-            List<InvoiceData> obj = new InvoiceControllers().GetInvoiceData(DateTime.Parse(etd), e.Column.FieldName.ToString().ToUpper());
-            gridControl.DataSource = obj;
-            bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
-            SplashScreenManager.CloseDefaultWaitForm();
+            try
+            {
+                SplashScreenManager.ShowDefaultWaitForm();
+                var etd = gridWeekView.GetFocusedRowCellValue("Etd").ToString();
+                //bbiEtd.EditValue = DateTime.Parse(etd);
+                List<InvoiceData> obj = new InvoiceControllers().GetInvoiceData(DateTime.Parse(etd), e.Column.FieldName.ToString().ToUpper());
+                gridControl.DataSource = obj;
+                bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
+                try
+                {
+                    SplashScreenManager.CloseDefaultWaitForm();
+                }
+                catch (Exception)
+                {
+                }
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void gridForwardView_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
         {
-            SplashScreenManager.ShowDefaultWaitForm();
-            var etd = gridForwardView.GetFocusedRowCellValue("Etd").ToString();
-            List<InvoiceData> obj = new InvoiceControllers().GetInvoiceData(DateTime.Parse(etd), e.Column.FieldName.ToString().ToUpper());
-            gridControl.DataSource = obj;
-            bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
-            SplashScreenManager.CloseDefaultWaitForm();
+            try
+            {
+                SplashScreenManager.ShowDefaultWaitForm();
+                var etd = gridForwardView.GetFocusedRowCellValue("Etd").ToString();
+                //bbiEtd.EditValue = DateTime.Parse(etd);
+                List<InvoiceData> obj = new InvoiceControllers().GetInvoiceData(DateTime.Parse(etd), e.Column.FieldName.ToString().ToUpper());
+                gridControl.DataSource = obj;
+                bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
+                try
+                {
+                    SplashScreenManager.CloseDefaultWaitForm();
+                }
+                catch (Exception)
+                {
+                }
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private void gridView_Layout(object sender, EventArgs e)
