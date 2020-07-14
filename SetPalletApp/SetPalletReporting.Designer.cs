@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             DevExpress.XtraPrinting.BarCode.QRCodeGenerator qrCodeGenerator1 = new DevExpress.XtraPrinting.BarCode.QRCodeGenerator();
             this.TopMargin = new DevExpress.XtraReports.UI.TopMarginBand();
+            this.xrLabel13 = new DevExpress.XtraReports.UI.XRLabel();
+            this.xrLabel14 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrQrCode = new DevExpress.XtraReports.UI.XRBarCode();
             this.xrLabel8 = new DevExpress.XtraReports.UI.XRLabel();
             this.xrLabel9 = new DevExpress.XtraReports.UI.XRLabel();
@@ -93,6 +95,7 @@
             this.prGroupOrder = new DevExpress.XtraReports.Parameters.Parameter();
             this.pPartName = new DevExpress.XtraReports.Parameters.Parameter();
             this.objectDataSource1 = new DevExpress.DataAccess.ObjectBinding.ObjectDataSource(this.components);
+            this.prAffCode = new DevExpress.XtraReports.Parameters.Parameter();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable3)).BeginInit();
@@ -102,6 +105,8 @@
             // TopMargin
             // 
             this.TopMargin.Controls.AddRange(new DevExpress.XtraReports.UI.XRControl[] {
+            this.xrLabel13,
+            this.xrLabel14,
             this.xrQrCode,
             this.xrLabel8,
             this.xrLabel9,
@@ -122,6 +127,32 @@
             this.xrLabel1});
             this.TopMargin.HeightF = 200F;
             this.TopMargin.Name = "TopMargin";
+            // 
+            // xrLabel13
+            // 
+            this.xrLabel13.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
+            new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "?prAffCode")});
+            this.xrLabel13.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.xrLabel13.LocationFloat = new DevExpress.Utils.PointFloat(76.04166F, 100.7915F);
+            this.xrLabel13.Multiline = true;
+            this.xrLabel13.Name = "xrLabel13";
+            this.xrLabel13.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel13.SizeF = new System.Drawing.SizeF(75.23009F, 26.12502F);
+            this.xrLabel13.StylePriority.UseFont = false;
+            this.xrLabel13.StylePriority.UseTextAlignment = false;
+            this.xrLabel13.Text = "XXXXXX";
+            this.xrLabel13.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
+            // 
+            // xrLabel14
+            // 
+            this.xrLabel14.LocationFloat = new DevExpress.Utils.PointFloat(0F, 100.7915F);
+            this.xrLabel14.Multiline = true;
+            this.xrLabel14.Name = "xrLabel14";
+            this.xrLabel14.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
+            this.xrLabel14.SizeF = new System.Drawing.SizeF(76.04166F, 26.12498F);
+            this.xrLabel14.StylePriority.UseTextAlignment = false;
+            this.xrLabel14.Text = "AFFCODE:";
+            this.xrLabel14.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
             // xrQrCode
             // 
@@ -173,7 +204,7 @@
             this.xrShipType.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "?prShipType")});
             this.xrShipType.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.xrShipType.LocationFloat = new DevExpress.Utils.PointFloat(442.833F, 100.7915F);
+            this.xrShipType.LocationFloat = new DevExpress.Utils.PointFloat(363.8333F, 63.20834F);
             this.xrShipType.Multiline = true;
             this.xrShipType.Name = "xrShipType";
             this.xrShipType.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
@@ -188,7 +219,7 @@
             this.xrEtd.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "?prEtdDate")});
             this.xrEtd.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.xrEtd.LocationFloat = new DevExpress.Utils.PointFloat(352.1449F, 100.7915F);
+            this.xrEtd.LocationFloat = new DevExpress.Utils.PointFloat(511.5201F, 100.7915F);
             this.xrEtd.Multiline = true;
             this.xrEtd.Name = "xrEtd";
             this.xrEtd.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
@@ -201,7 +232,7 @@
             // 
             // xrLabel5
             // 
-            this.xrLabel5.LocationFloat = new DevExpress.Utils.PointFloat(313.6033F, 100.7915F);
+            this.xrLabel5.LocationFloat = new DevExpress.Utils.PointFloat(472.9785F, 100.7915F);
             this.xrLabel5.Multiline = true;
             this.xrLabel5.Name = "xrLabel5";
             this.xrLabel5.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
@@ -215,11 +246,11 @@
             this.xrCountry.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "?prCountry")});
             this.xrCountry.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.xrCountry.LocationFloat = new DevExpress.Utils.PointFloat(245.895F, 100.7915F);
+            this.xrCountry.LocationFloat = new DevExpress.Utils.PointFloat(393.0001F, 100.7915F);
             this.xrCountry.Multiline = true;
             this.xrCountry.Name = "xrCountry";
             this.xrCountry.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrCountry.SizeF = new System.Drawing.SizeF(67.70821F, 26.12502F);
+            this.xrCountry.SizeF = new System.Drawing.SizeF(79.97842F, 26.12502F);
             this.xrCountry.StylePriority.UseFont = false;
             this.xrCountry.StylePriority.UseTextAlignment = false;
             this.xrCountry.Text = "XXXXXX";
@@ -282,11 +313,11 @@
             this.xrLabel2.ExpressionBindings.AddRange(new DevExpress.XtraReports.UI.ExpressionBinding[] {
             new DevExpress.XtraReports.UI.ExpressionBinding("BeforePrint", "Text", "?prCustCode")});
             this.xrLabel2.Font = new System.Drawing.Font("Arial", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.xrLabel2.LocationFloat = new DevExpress.Utils.PointFloat(87.49999F, 100.7916F);
+            this.xrLabel2.LocationFloat = new DevExpress.Utils.PointFloat(238.7718F, 100.7916F);
             this.xrLabel2.Multiline = true;
             this.xrLabel2.Name = "xrLabel2";
             this.xrLabel2.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel2.SizeF = new System.Drawing.SizeF(82.35337F, 26.12502F);
+            this.xrLabel2.SizeF = new System.Drawing.SizeF(67.76999F, 26.12502F);
             this.xrLabel2.StylePriority.UseFont = false;
             this.xrLabel2.StylePriority.UseTextAlignment = false;
             this.xrLabel2.Text = "XXXXXX";
@@ -294,22 +325,22 @@
             // 
             // xrLabel4
             // 
-            this.xrLabel4.LocationFloat = new DevExpress.Utils.PointFloat(169.8534F, 100.7915F);
+            this.xrLabel4.LocationFloat = new DevExpress.Utils.PointFloat(306.5417F, 100.7915F);
             this.xrLabel4.Multiline = true;
             this.xrLabel4.Name = "xrLabel4";
             this.xrLabel4.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel4.SizeF = new System.Drawing.SizeF(76.04166F, 26.125F);
+            this.xrLabel4.SizeF = new System.Drawing.SizeF(86.45831F, 26.125F);
             this.xrLabel4.StylePriority.UseTextAlignment = false;
             this.xrLabel4.Text = "COUNTRY:";
             this.xrLabel4.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
             // 
             // xrLabel10
             // 
-            this.xrLabel10.LocationFloat = new DevExpress.Utils.PointFloat(0F, 100.7916F);
+            this.xrLabel10.LocationFloat = new DevExpress.Utils.PointFloat(151.2718F, 100.7916F);
             this.xrLabel10.Multiline = true;
             this.xrLabel10.Name = "xrLabel10";
             this.xrLabel10.Padding = new DevExpress.XtraPrinting.PaddingInfo(2, 2, 0, 0, 100F);
-            this.xrLabel10.SizeF = new System.Drawing.SizeF(87.49999F, 26.12498F);
+            this.xrLabel10.SizeF = new System.Drawing.SizeF(87.5F, 26.12498F);
             this.xrLabel10.StylePriority.UseTextAlignment = false;
             this.xrLabel10.Text = "CUSTCODE:";
             this.xrLabel10.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleLeft;
@@ -466,7 +497,7 @@
             this.xrTableCell7.StylePriority.UseBorders = false;
             this.xrTableCell7.StylePriority.UseFont = false;
             this.xrTableCell7.StylePriority.UseTextAlignment = false;
-            this.xrTableCell7.Text = "SIZE";
+            this.xrTableCell7.Text = "PLSIZE";
             this.xrTableCell7.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.xrTableCell7.Weight = 1.1940491591203104D;
             // 
@@ -672,7 +703,7 @@
             this.xrTableCell14.StylePriority.UseFont = false;
             this.xrTableCell14.StylePriority.UseTextAlignment = false;
             this.xrTableCell14.Text = "Q\'TY(BOX)";
-            this.xrTableCell14.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
+            this.xrTableCell14.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.xrTableCell14.TextFormatString = "{0:#,#}";
             this.xrTableCell14.Weight = 0.85683251498979185D;
             // 
@@ -774,7 +805,7 @@
             this.xrTableCell21.StylePriority.UseFont = false;
             this.xrTableCell21.StylePriority.UseTextAlignment = false;
             this.xrTableCell21.Text = "Q\'TY(PCS.)";
-            this.xrTableCell21.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight;
+            this.xrTableCell21.TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter;
             this.xrTableCell21.TextFormatString = "{0:#,#}";
             this.xrTableCell21.Weight = 0.42952055924547661D;
             // 
@@ -843,6 +874,11 @@
             this.objectDataSource1.DataSource = typeof(XPWLibrary.Models.SetPalletListData);
             this.objectDataSource1.Name = "objectDataSource1";
             // 
+            // prAffCode
+            // 
+            this.prAffCode.Description = "Parameter1";
+            this.prAffCode.Name = "prAffCode";
+            // 
             // SetPalletReporting
             // 
             this.Bands.AddRange(new DevExpress.XtraReports.UI.Band[] {
@@ -869,7 +905,8 @@
             this.prRefNo,
             this.prFactory,
             this.prGroupOrder,
-            this.pPartName});
+            this.pPartName,
+            this.prAffCode});
             this.Version = "19.1";
             ((System.ComponentModel.ISupportInitialize)(this.xrTable1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.xrTable2)).EndInit();
@@ -944,5 +981,8 @@
         private DevExpress.XtraReports.Parameters.Parameter prFactory;
         private DevExpress.XtraReports.Parameters.Parameter prGroupOrder;
         private DevExpress.XtraReports.Parameters.Parameter pPartName;
+        private DevExpress.XtraReports.UI.XRLabel xrLabel13;
+        private DevExpress.XtraReports.UI.XRLabel xrLabel14;
+        private DevExpress.XtraReports.Parameters.Parameter prAffCode;
     }
 }

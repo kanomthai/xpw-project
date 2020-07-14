@@ -193,7 +193,17 @@ namespace XPWLibrary.Controllers
 
         public bool UpdatePalletSize(SetPallatData obj)
         {
-            string sql = $"UPDATE TXP_ISSPALLET l SET l.PLTYPE='{obj.PlSize}' WHERE l.ISSUINGKEY = '{obj.RefNo}' AND l.PALLETNO = '{obj.ShipPlNo}'";
+            string w = "0";
+            string l = "0";
+            string h = "0";
+            if (obj.PlSize.IndexOf("x") >= 0)
+            {
+                w = obj.PlSize.Substring(0, obj.PlSize.IndexOf("x"));
+                l = obj.PlSize.Substring(obj.PlSize.IndexOf("x") + 1);
+                l = l.Substring(0, l.IndexOf("x"));
+                h = obj.PlSize.Substring((w.Length + l.Length) + 2);
+            }
+            string sql = $"UPDATE TXP_ISSPALLET l SET l.PLTYPE='{obj.PlSize}',PLWIDE={w},PLLENG={l},PLHIGHT={h} WHERE l.ISSUINGKEY = '{obj.RefNo}' AND l.PALLETNO = '{obj.ShipPlNo}'";
             return new ConnDB().ExcuteSQL(sql);
         }
 
@@ -223,6 +233,41 @@ namespace XPWLibrary.Controllers
                 return $"1C{(int.Parse(dr.Tables[0].Rows[0]["ctn"].ToString()) + 1).ToString("D3")}";
             }
             return $"1C{(1).ToString("D3")}";
+        }
+
+        public string GetLastCarton(SetPallatData obj)
+        {
+            string ssql = $"SELECT count(*) ctn FROM TXP_ISSPALLET l " +
+                $"INNER JOIN TXP_ISSTRANSENT e ON l.ISSUINGKEY = e.ISSUINGKEY " +
+                $"WHERE e.FACTORY = '{obj.Factory}' AND " +
+                $"e.ETDDTE = TO_DATE('{obj.EtdDte.ToString("dd/MM/yyyy")}', 'dd/MM/yyyy') AND " +
+                $"e.CUSTNAME = '{obj.CustName}' AND " +
+                $"PALLETNO LIKE '1C%' \n" +
+                $"ORDER BY PALLETNO DESC";
+            DataSet dr = new ConnDB().GetFill(ssql);
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                return $"1C{(int.Parse(dr.Tables[0].Rows[0]["ctn"].ToString()) + 1).ToString("D3")}";
+            }
+            return $"1C{(1).ToString("D3")}";
+        }
+
+
+        public string GetLastPallet(SetPallatData obj)
+        {
+            string ssql = $"SELECT count(*) ctn FROM TXP_ISSPALLET l " +
+                $"INNER JOIN TXP_ISSTRANSENT e ON l.ISSUINGKEY = e.ISSUINGKEY " +
+                $"WHERE e.FACTORY = '{obj.Factory}' AND " +
+                $"e.ETDDTE = TO_DATE('{obj.EtdDte.ToString("dd/MM/yyyy")}', 'dd/MM/yyyy') AND " +
+                $"e.CUSTNAME = '{obj.CustName}' AND "+
+                $"PALLETNO LIKE '1P%' \n" +
+                $" ORDER BY PALLETNO DESC";
+            DataSet dr = new ConnDB().GetFill(ssql);
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                return $"1P{(int.Parse(dr.Tables[0].Rows[0]["ctn"].ToString()) + 1).ToString("D3")}";
+            }
+            return $"1P{(1).ToString("D3")}";
         }
 
         public string GetLastPallet(string issuekey)

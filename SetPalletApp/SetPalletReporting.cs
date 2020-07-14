@@ -25,6 +25,7 @@ namespace SetPalletApp
                 obj.ForEach(i => {
                     x += i.ITem;
                 });
+                prAffCode.Value = obj[0].AffCode;
                 prInvoiceNo.Value = obj[0].RefInv;
                 prRefNo.Value = obj[0].RefNo;
                 prQrCode.Value = obj[0].RefNo;

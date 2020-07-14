@@ -65,6 +65,13 @@ namespace XPWLibrary.Controllers
             {
                 x += int.Parse(r["pltotal"].ToString());
             }
+            if (obj.Factory == "AW")
+            {
+                if (plno.IndexOf("C") >= 0)
+                {
+                    x = 2;
+                }
+            }
             return new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPALLET set PLTOTAL ='{x}' WHERE ISSUINGKEY = '{obj.RefNo}' AND PALLETNO = '{plno}'");
         }
     }

@@ -58,8 +58,19 @@ namespace SetPalletApp
         {
             if (p > 0)
             {
-                obj.PlSize = new GreeterFunction().GetPlSize(obj.PlSize, p);
-                string plno = new SetPalletControllers().GetLastPallet(obj.RefNo);
+                obj.PlSize = null;
+                string plno = null;
+                if (obj.Factory == "INJ")
+                {
+                    plno = new SetPalletControllers().GetLastPallet(obj.RefNo);
+                    obj.PlSize = new GreeterFunction().GetPlSize(obj.PlSize, p);
+                }
+                else
+                {
+                    plno = new SetPalletControllers().GetLastPallet(obj);
+                    obj.PlSize = new GreeterFunction().GetPalletWireSize(p);
+                }
+
                 string sql = $"SELECT * FROM TXP_ISSPALLET l WHERE l.ISSUINGKEY = '{obj.RefNo}' AND l.PALLETNO = '{plno}'";
                 string w = "0";
                 string ll = "0";
@@ -158,6 +169,7 @@ namespace SetPalletApp
             if (e.Button.ToString() == "Right")
             {
                 bool c = false;
+                bbiSetCarton.Enabled = false;
                 int x = 0;
                 List<SetPallatData> list = gridPartView.DataSource as List<SetPallatData>;
                 list.ForEach(i => {
@@ -167,7 +179,20 @@ namespace SetPalletApp
                 {
                     c = true;
                 }
-                bbiSetCarton.Enabled = !c;
+                if (list[0].Factory == "AW")
+                {
+                    if (x == 2)
+                    {
+                        bbiSetCarton.Enabled = true;
+                    }
+                }
+                else
+                {
+                    if (x < 1)
+                    {
+                        bbiSetCarton.Enabled = true;
+                    }
+                }
                 bbisendToPallet.Enabled = c;
                 bbiSetPallet.Enabled = c;
                 bbiSetPallet.Caption = $"Set Pallet({x})";
@@ -387,30 +412,56 @@ namespace SetPalletApp
         private void bbiSetCarton_ItemClick(object sender, ItemClickEventArgs e)
         {
             SetPallatData obj = gridPartView.GetFocusedRow() as SetPallatData;
-            if (obj.CtnQty <= 0)
+            if (obj.Factory == "AW")
             {
                 DialogResult r = XtraMessageBox.Show($"คุณต้องการที่จะ Set Carton({obj.PName}) นี้ใช่หรือไม่?", "ข้อความแจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (r == DialogResult.Yes)
                 {
-                    obj.CtnQty += 1;
-                    int x = obj.Ctn -= 1;
-                    if (obj.CtnQty > 0)
+                    List<SetPallatData> list = gridPartControl.DataSource as List<SetPallatData>;
+                    string plno = new SetPalletControllers().GetLastCarton(list[0]);
+                    int x = 0;
+                    while (x < list.Count)
                     {
-                        string plno = new SetPalletControllers().GetLastCarton(obj.RefNo);
-                        if (ReloadCartonSet(obj, plno))
+                        if (list[x].CtnQty > 0)
                         {
-                            InsertPalletToPackingDetailAll(obj, plno);
-                            if (x > 0)
+                            if (ReloadCartonSet(list[x], plno))
                             {
-                                gridPartView.SetFocusedRowCellValue("Ctn", x);
-                                gridPartView.SetFocusedRowCellValue("CtnQty", 0);
+                                InsertPalletToPackingDetailAll(list[x], plno);
                             }
-                            else
+                        }
+                        x++;
+                    }
+                }
+                Reload();
+            }
+            else
+            {
+                if (obj.CtnQty <= 0)
+                {
+                    DialogResult r = XtraMessageBox.Show($"คุณต้องการที่จะ Set Carton({obj.PName}) นี้ใช่หรือไม่?", "ข้อความแจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (r == DialogResult.Yes)
+                    {
+                        obj.CtnQty += 1;
+                        int x = obj.Ctn -= 1;
+                        if (obj.CtnQty > 0)
+                        {
+                            string plno = new SetPalletControllers().GetLastCarton(obj.RefNo);
+
+                            if (ReloadCartonSet(obj, plno))
                             {
-                                gridPartView.DeleteSelectedRows();
+                                InsertPalletToPackingDetailAll(obj, plno);
+                                if (x > 0)
+                                {
+                                    gridPartView.SetFocusedRowCellValue("Ctn", x);
+                                    gridPartView.SetFocusedRowCellValue("CtnQty", 0);
+                                }
+                                else
+                                {
+                                    gridPartView.DeleteSelectedRows();
+                                }
+                                gridPartView.UpdateCurrentRow();
+                                gridPartView.UpdateTotalSummary();
                             }
-                            gridPartView.UpdateCurrentRow();
-                            gridPartView.UpdateTotalSummary();
                         }
                     }
                 }

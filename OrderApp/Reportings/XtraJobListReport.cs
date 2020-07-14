@@ -31,6 +31,7 @@ namespace OrderApp.Reportings
             if (ob.Count > 0)
             {
                 var r = ob[0];
+                prAffCode.Value = r.Affcode;
                 prQrCode.Value = r.RefNo;
                 prRefNo.Value = r.RefNo;
                 prInvoice.Value = r.RefInv;
