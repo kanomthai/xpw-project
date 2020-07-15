@@ -181,9 +181,21 @@ namespace SetPalletApp
                 }
                 if (list[0].Factory == "AW")
                 {
+                    bbisendToPallet.Enabled = true;
                     if (x == 2)
                     {
                         bbiSetCarton.Enabled = true;
+                        bbiSetPallet.Enabled = false;
+                    }
+                    else if (x > 17)
+                    {
+                        bbiSetCarton.Enabled = false;
+                        bbiSetPallet.Enabled = true;
+                    }
+                    else
+                    {
+                        bbiSetCarton.Enabled = false;
+                        bbiSetPallet.Enabled = false;
                     }
                 }
                 else
@@ -192,9 +204,9 @@ namespace SetPalletApp
                     {
                         bbiSetCarton.Enabled = true;
                     }
+                    bbisendToPallet.Enabled = c;
+                    bbiSetPallet.Enabled = c;
                 }
-                bbisendToPallet.Enabled = c;
-                bbiSetPallet.Enabled = c;
                 bbiSetPallet.Caption = $"Set Pallet({x})";
                 popupMenu1.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
             }
