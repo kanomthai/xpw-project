@@ -54,6 +54,7 @@ namespace XPWLibrary.Controllers
                     Note2 = r["note2"].ToString(),
                     Note3 = r["note3"].ToString(),
                     ZCode = r["zonecode"].ToString(),
+                    ContainerType = r["containertype"].ToString(),
                     Upddte = DateTime.Parse(r["upddte"].ToString()),
                 });
             }
@@ -324,6 +325,72 @@ namespace XPWLibrary.Controllers
             }
             return obj;
         }
+        public bool PrintFTicket(string RefInv, string fticketno, string ctn)
+        {
+            string prname = StaticFunctionData.cartonticketprinter;
+            string labeltemp = $"{AppDomain.CurrentDomain.BaseDirectory}Labels\\CK2_1DCTN.nlbl";
+            if (RefInv.Substring(0, 1) != "A")
+            {
+                SplashScreenManager.Default.SetWaitFormCaption("Printing Job Card");
+                labeltemp = $"{AppDomain.CurrentDomain.BaseDirectory}Labels\\CK2_1DCTN.nlbl";
+                prname = StaticFunctionData.fticketprinter;
+                IPrintEngine NL_PrintEngine = PrintEngineFactory.PrintEngine;
+                NL_PrintEngine.Initialize();
+                ILabel NL_Label = NL_PrintEngine.OpenLabel(labeltemp);
+                DataSet dr = this.GetFTicker(RefInv, fticketno);
+                var prn = NL_PrintEngine.Printers.ToList().Find(i => i.Name == prname);
+                if (prn != null)
+                {
+                    var r = dr.Tables[0].Rows;
+                    if (dr.Tables[0].Rows.Count > 0)
+                    {
+                        int i = 0;
+                        while (i < r.Count)
+                        {
+                            if (r[i]["fticketno"].ToString() != "")
+                            {
+                                string invno = null;
+                                if (ctn != null)
+                                {
+                                    invno = $"{r[i]["issuingkey"].ToString()}/{ctn}";
+                                    NL_Label.Variables["PARTNO"].SetValue(r[i]["partno"].ToString());
+                                    NL_Label.Variables["CUSTPARTNO"].SetValue(r[i]["custname"].ToString());
+                                    NL_Label.Variables["ORDERNO"].SetValue(r[i]["pono"].ToString());
+                                    // NL_Label.Variables["CUSTNAME"].SetValue(r.CustName);
+                                    NL_Label.Variables["CUSTNAME"].SetValue("");
+                                    NL_Label.Variables["INVOICENO"].SetValue(invno);
+                                    NL_Label.Variables["BARCODE"].SetValue($"{r[i]["fticketno"].ToString().ToUpper()}");
+                                    NL_Label.Variables["txtbarcode"].SetValue($"*{r[i]["fticketno"].ToString().ToUpper()}*");
+                                    NL_Label.Variables["QRCODE"].SetValue($"06P{r[i]["partno"].ToString().ToUpper()};17Q{r[i]["qty"].ToString().ToUpper()};30T{r[i]["pono"].ToString().ToUpper()};32T{r[i]["fticketno"].ToString().ToUpper()};");
+                                    NL_Label.Variables["PREFIX"].SetValue(r[i]["shipplno"].ToString().ToUpper());
+                                    NL_Label.PrintSettings.PrinterName = prname;// GetPrinterName(r["factory"].ToString());
+                                    NL_Label.PrintSettings.JobName = $"NiceLabel Printing {r[i]["issuingkey"].ToString()}";
+                                    SplashScreenManager.Default.SetWaitFormDescription($"F_Ticket {invno}");
+                                    //update detail
+                                    new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPACKDETAIL d SET d.ISSUINGSTATUS = '1' WHERE d.FTICKETNO = '{r[i]["fticketno"].ToString()}'");
+                                    NL_Label.Print(1);
+                                    i = r.Count;
+                                }
+                            }
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("ไม่พบข้อมูลที่จะปริ้น");
+                        return false;
+                    }
+                    NL_Label.Dispose();
+                    NL_PrintEngine.Shutdown();
+                }
+                else
+                {
+                    Console.WriteLine("ไม่พบเครื่องปริ้นที่ต้องการ");
+                    return false;
+                }
+            }
+            return true;
+        }
 
         public bool PrintFTicket(string RefInv, string Partno, string pono, int seq, string snum)
         {
@@ -411,6 +478,17 @@ namespace XPWLibrary.Controllers
                 }
             }
             return true;
+        }
+
+        private DataSet GetFTicker(string inv, string fticket)
+        {
+            string sql = $"SELECT d.partno,d.pono,e.refinvoice issuingkey,e.custname,d.fticketno,d.orderqty,d.orderqty qty,d.SHIPPLNO FROM TXP_ISSPACKDETAIL d\n" +
+                        $"inner join txp_isstransent e on d.ISSUINGKEY = e.issuingkey\n" +
+                        $"WHERE d.ISSUINGKEY = '{inv}' AND d.fticketno = '{fticket}' \n" +
+                        $"order by d.fticketno";
+            Console.WriteLine(sql);
+            DataSet dr = new ConnDB().GetFill(sql);
+            return dr;
         }
 
         private DataSet GetFTicker(string inv, string partno, string pono)

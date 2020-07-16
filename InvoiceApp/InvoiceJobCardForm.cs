@@ -217,7 +217,8 @@ namespace InvoiceApp
                     {
                         if (o.PrintFTicket)
                         {
-                            bool plabel = new InvoiceControllers().PrintFTicket(ob.RefInv, o.PartNo, o.OrderNo, o.Seq, o.Seq.ToString());
+                            //bool plabel = new InvoiceControllers().PrintFTicket(ob.RefInv, o.PartNo, o.OrderNo, o.Seq, o.Seq.ToString());
+                            bool plabel = new InvoiceControllers().PrintFTicket(ob.RefInv, o.FTicketNo, o.Id.ToString());
                             if (plabel)
                             {
                                 //XtraMessageBox.Show("ปริ้นข้อมูลเสร็จแล้ว");

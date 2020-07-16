@@ -470,7 +470,7 @@
             this.gridColumn63,
             this.gridColumn64,
             this.gridColumn65});
-            this.gridPalleteDetailView.CustomizationFormBounds = new System.Drawing.Rectangle(1326, 327, 260, 232);
+            this.gridPalleteDetailView.CustomizationFormBounds = new System.Drawing.Rectangle(1020, 327, 260, 232);
             this.gridPalleteDetailView.GridControl = this.gridPalleteDetailControl;
             this.gridPalleteDetailView.Name = "gridPalleteDetailView";
             this.gridPalleteDetailView.OptionsBehavior.Editable = false;

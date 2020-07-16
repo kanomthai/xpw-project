@@ -66,11 +66,12 @@
             this.layoutControl1 = new DevExpress.XtraLayout.LayoutControl();
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
             this.layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.txtZoneCode = new DevExpress.XtraEditors.TextEdit();
             this.txtNote2 = new DevExpress.XtraEditors.TextEdit();
             this.txtNote1 = new DevExpress.XtraEditors.TextEdit();
-            this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.bbiFactory = new DevExpress.XtraEditors.TextEdit();
@@ -89,7 +90,6 @@
             this.lbOrder = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem4 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
             this.lbEtd = new DevExpress.XtraLayout.LayoutControlItem();
             this.lbaff = new DevExpress.XtraLayout.LayoutControlItem();
             this.lbzone = new DevExpress.XtraLayout.LayoutControlItem();
@@ -101,6 +101,8 @@
             this.layoutControlItem7 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.gridControl = new DevExpress.XtraGrid.GridControl();
             this.gridView = new DevExpress.XtraGrid.Views.Grid.GridView();
@@ -118,6 +120,8 @@
             this.gridColumn12 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn13 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.gridColumn14 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn15 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.gridColumn16 = new DevExpress.XtraGrid.Columns.GridColumn();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
@@ -125,8 +129,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.ppMenu = new DevExpress.XtraBars.PopupMenu(this.components);
-            this.gridColumn15 = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.gridColumn16 = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.bbiConTypeCaption = new DevExpress.XtraEditors.TextEdit();
+            this.bbiConType = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -154,7 +158,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.lbOrder)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbEtd)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbaff)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbzone)).BeginInit();
@@ -166,6 +169,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl)).BeginInit();
@@ -174,6 +179,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ppMenu)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bbiConTypeCaption.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bbiConType)).BeginInit();
             this.SuspendLayout();
             // 
             // ribbonControl
@@ -504,11 +511,13 @@
             // 
             // layoutControl2
             // 
+            this.layoutControl2.Controls.Add(this.bbiConTypeCaption);
+            this.layoutControl2.Controls.Add(this.label7);
+            this.layoutControl2.Controls.Add(this.label5);
             this.layoutControl2.Controls.Add(this.label6);
             this.layoutControl2.Controls.Add(this.txtZoneCode);
             this.layoutControl2.Controls.Add(this.txtNote2);
             this.layoutControl2.Controls.Add(this.txtNote1);
-            this.layoutControl2.Controls.Add(this.label5);
             this.layoutControl2.Controls.Add(this.label4);
             this.layoutControl2.Controls.Add(this.label3);
             this.layoutControl2.Controls.Add(this.bbiFactory);
@@ -529,6 +538,20 @@
             this.layoutControl2.Size = new System.Drawing.Size(937, 124);
             this.layoutControl2.TabIndex = 0;
             this.layoutControl2.Text = "layoutControl2";
+            // 
+            // label7
+            // 
+            this.label7.Location = new System.Drawing.Point(378, 84);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(180, 28);
+            this.label7.TabIndex = 24;
+            // 
+            // label5
+            // 
+            this.label5.Location = new System.Drawing.Point(562, 84);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(363, 28);
+            this.label5.TabIndex = 23;
             // 
             // label6
             // 
@@ -584,13 +607,6 @@
             this.txtNote1.Size = new System.Drawing.Size(251, 20);
             this.txtNote1.StyleController = this.layoutControl2;
             this.txtNote1.TabIndex = 17;
-            // 
-            // label5
-            // 
-            this.label5.Location = new System.Drawing.Point(195, 84);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(730, 28);
-            this.label5.TabIndex = 16;
             // 
             // label4
             // 
@@ -725,7 +741,7 @@
             // bbiOrderBy
             // 
             this.bbiOrderBy.Enabled = false;
-            this.bbiOrderBy.Location = new System.Drawing.Point(69, 84);
+            this.bbiOrderBy.Location = new System.Drawing.Point(71, 84);
             this.bbiOrderBy.Name = "bbiOrderBy";
             this.bbiOrderBy.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
             this.bbiOrderBy.Properties.Appearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -733,7 +749,7 @@
             this.bbiOrderBy.Properties.Appearance.Options.UseBackColor = true;
             this.bbiOrderBy.Properties.Appearance.Options.UseFont = true;
             this.bbiOrderBy.Properties.Appearance.Options.UseForeColor = true;
-            this.bbiOrderBy.Size = new System.Drawing.Size(122, 20);
+            this.bbiOrderBy.Size = new System.Drawing.Size(120, 20);
             this.bbiOrderBy.StyleController = this.layoutControl2;
             this.bbiOrderBy.TabIndex = 11;
             // 
@@ -777,7 +793,6 @@
             this.lbOrder,
             this.layoutControlItem3,
             this.layoutControlItem4,
-            this.layoutControlItem5,
             this.lbEtd,
             this.lbaff,
             this.lbzone,
@@ -788,7 +803,10 @@
             this.layoutControlItem6,
             this.layoutControlItem7,
             this.layoutControlItem8,
-            this.layoutControlItem9});
+            this.layoutControlItem9,
+            this.layoutControlItem5,
+            this.layoutControlItem11,
+            this.bbiConType});
             this.layoutControlGroup1.Name = "Root";
             this.layoutControlGroup1.OptionsItemText.TextAlignMode = DevExpress.XtraLayout.TextAlignModeGroup.AutoSize;
             this.layoutControlGroup1.Size = new System.Drawing.Size(937, 124);
@@ -831,7 +849,10 @@
             this.lbOrder.Size = new System.Drawing.Size(183, 32);
             this.lbOrder.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.lbOrder.Text = "ORDER BY:";
+            this.lbOrder.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
+            this.lbOrder.TextLocation = DevExpress.Utils.Locations.Left;
             this.lbOrder.TextSize = new System.Drawing.Size(54, 13);
+            this.lbOrder.TextToControlDistance = 5;
             // 
             // layoutControlItem3
             // 
@@ -850,18 +871,6 @@
             this.layoutControlItem4.Size = new System.Drawing.Size(69, 24);
             this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem4.TextVisible = false;
-            // 
-            // layoutControlItem5
-            // 
-            this.layoutControlItem5.Control = this.label5;
-            this.layoutControlItem5.Location = new System.Drawing.Point(183, 72);
-            this.layoutControlItem5.MaxSize = new System.Drawing.Size(734, 32);
-            this.layoutControlItem5.MinSize = new System.Drawing.Size(734, 32);
-            this.layoutControlItem5.Name = "layoutControlItem5";
-            this.layoutControlItem5.Size = new System.Drawing.Size(734, 32);
-            this.layoutControlItem5.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
-            this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem5.TextVisible = false;
             // 
             // lbEtd
             // 
@@ -1000,6 +1009,24 @@
             this.layoutControlItem9.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem9.TextVisible = false;
             // 
+            // layoutControlItem5
+            // 
+            this.layoutControlItem5.Control = this.label5;
+            this.layoutControlItem5.Location = new System.Drawing.Point(550, 72);
+            this.layoutControlItem5.Name = "layoutControlItem5";
+            this.layoutControlItem5.Size = new System.Drawing.Size(367, 32);
+            this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem5.TextVisible = false;
+            // 
+            // layoutControlItem11
+            // 
+            this.layoutControlItem11.Control = this.label7;
+            this.layoutControlItem11.Location = new System.Drawing.Point(366, 72);
+            this.layoutControlItem11.Name = "layoutControlItem11";
+            this.layoutControlItem11.Size = new System.Drawing.Size(184, 32);
+            this.layoutControlItem11.TextSize = new System.Drawing.Size(0, 0);
+            this.layoutControlItem11.TextVisible = false;
+            // 
             // groupControl1
             // 
             this.groupControl1.Controls.Add(this.gridControl);
@@ -1041,7 +1068,7 @@
             this.gridColumn14,
             this.gridColumn15,
             this.gridColumn16});
-            this.gridView.CustomizationFormBounds = new System.Drawing.Rectangle(809, 490, 250, 280);
+            this.gridView.CustomizationFormBounds = new System.Drawing.Rectangle(809, 210, 250, 280);
             this.gridView.GridControl = this.gridControl;
             this.gridView.Name = "gridView";
             this.gridView.OptionsBehavior.Editable = false;
@@ -1253,6 +1280,36 @@
             this.gridColumn14.VisibleIndex = 10;
             this.gridColumn14.Width = 49;
             // 
+            // gridColumn15
+            // 
+            this.gridColumn15.AppearanceCell.FontStyleDelta = System.Drawing.FontStyle.Bold;
+            this.gridColumn15.AppearanceCell.ForeColor = System.Drawing.Color.Green;
+            this.gridColumn15.AppearanceCell.Options.UseFont = true;
+            this.gridColumn15.AppearanceCell.Options.UseForeColor = true;
+            this.gridColumn15.Caption = "STK";
+            this.gridColumn15.DisplayFormat.FormatString = "{0:n0}";
+            this.gridColumn15.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.gridColumn15.FieldName = "CurCtn";
+            this.gridColumn15.Name = "gridColumn15";
+            this.gridColumn15.Visible = true;
+            this.gridColumn15.VisibleIndex = 7;
+            this.gridColumn15.Width = 48;
+            // 
+            // gridColumn16
+            // 
+            this.gridColumn16.AppearanceCell.FontStyleDelta = System.Drawing.FontStyle.Bold;
+            this.gridColumn16.AppearanceCell.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.gridColumn16.AppearanceCell.Options.UseFont = true;
+            this.gridColumn16.AppearanceCell.Options.UseForeColor = true;
+            this.gridColumn16.Caption = "WAIT REC";
+            this.gridColumn16.DisplayFormat.FormatString = "{0:n0}";
+            this.gridColumn16.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            this.gridColumn16.FieldName = "WaitCtn";
+            this.gridColumn16.Name = "gridColumn16";
+            this.gridColumn16.Visible = true;
+            this.gridColumn16.VisibleIndex = 8;
+            this.gridColumn16.Width = 54;
+            // 
             // Root
             // 
             this.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
@@ -1325,35 +1382,32 @@
             this.ppMenu.ShowCaption = true;
             this.ppMenu.ShowNavigationHeader = DevExpress.Utils.DefaultBoolean.True;
             // 
-            // gridColumn15
+            // bbiConTypeCaption
             // 
-            this.gridColumn15.AppearanceCell.FontStyleDelta = System.Drawing.FontStyle.Bold;
-            this.gridColumn15.AppearanceCell.ForeColor = System.Drawing.Color.Green;
-            this.gridColumn15.AppearanceCell.Options.UseFont = true;
-            this.gridColumn15.AppearanceCell.Options.UseForeColor = true;
-            this.gridColumn15.Caption = "STK";
-            this.gridColumn15.DisplayFormat.FormatString = "{0:n0}";
-            this.gridColumn15.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.gridColumn15.FieldName = "CurCtn";
-            this.gridColumn15.Name = "gridColumn15";
-            this.gridColumn15.Visible = true;
-            this.gridColumn15.VisibleIndex = 7;
-            this.gridColumn15.Width = 48;
+            this.bbiConTypeCaption.Enabled = false;
+            this.bbiConTypeCaption.Location = new System.Drawing.Point(290, 84);
+            this.bbiConTypeCaption.MenuManager = this.ribbonControl;
+            this.bbiConTypeCaption.Name = "bbiConTypeCaption";
+            this.bbiConTypeCaption.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
+            this.bbiConTypeCaption.Properties.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bbiConTypeCaption.Properties.Appearance.ForeColor = System.Drawing.Color.Black;
+            this.bbiConTypeCaption.Properties.Appearance.Options.UseBackColor = true;
+            this.bbiConTypeCaption.Properties.Appearance.Options.UseFont = true;
+            this.bbiConTypeCaption.Properties.Appearance.Options.UseForeColor = true;
+            this.bbiConTypeCaption.Size = new System.Drawing.Size(84, 20);
+            this.bbiConTypeCaption.StyleController = this.layoutControl2;
+            this.bbiConTypeCaption.TabIndex = 25;
             // 
-            // gridColumn16
+            // bbiConType
             // 
-            this.gridColumn16.AppearanceCell.FontStyleDelta = System.Drawing.FontStyle.Bold;
-            this.gridColumn16.AppearanceCell.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
-            this.gridColumn16.AppearanceCell.Options.UseFont = true;
-            this.gridColumn16.AppearanceCell.Options.UseForeColor = true;
-            this.gridColumn16.Caption = "WAIT REC";
-            this.gridColumn16.DisplayFormat.FormatString = "{0:n0}";
-            this.gridColumn16.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            this.gridColumn16.FieldName = "WaitCtn";
-            this.gridColumn16.Name = "gridColumn16";
-            this.gridColumn16.Visible = true;
-            this.gridColumn16.VisibleIndex = 8;
-            this.gridColumn16.Width = 54;
+            this.bbiConType.Control = this.bbiConTypeCaption;
+            this.bbiConType.Location = new System.Drawing.Point(183, 72);
+            this.bbiConType.Name = "bbiConType";
+            this.bbiConType.Size = new System.Drawing.Size(183, 32);
+            this.bbiConType.Text = "CONTAINER TYPE:";
+            this.bbiConType.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
+            this.bbiConType.TextSize = new System.Drawing.Size(90, 13);
+            this.bbiConType.TextToControlDistance = 5;
             // 
             // InvoiceDetailForm
             // 
@@ -1396,7 +1450,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.lbOrder)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbEtd)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbaff)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.lbzone)).EndInit();
@@ -1408,6 +1461,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem7)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.groupControl1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.gridControl)).EndInit();
@@ -1416,6 +1471,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ppMenu)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bbiConTypeCaption.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bbiConType)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1494,8 +1551,6 @@
         private DevExpress.XtraBars.BarButtonItem bbiSplitInvoice;
         private DevExpress.XtraBars.BarButtonItem bbiSplitPart;
         private DevExpress.XtraBars.BarButtonItem bbiNewOrder;
-        private System.Windows.Forms.Label label5;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem2;
         private DevExpress.XtraBars.BarSubItem bbiShippingList;
         private DevExpress.XtraBars.BarButtonItem bbiShipingPart;
@@ -1518,5 +1573,11 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn15;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn16;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label5;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem11;
+        private DevExpress.XtraEditors.TextEdit bbiConTypeCaption;
+        private DevExpress.XtraLayout.LayoutControlItem bbiConType;
     }
 }

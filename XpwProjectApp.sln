@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30104.148
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.1169
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceApp", "InvoiceApp\InvoiceApp.csproj", "{E4CD952C-0457-4951-A67F-F9F8E9FF5F81}"
 EndProject
@@ -19,6 +19,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShortingApp", "ShortingApp\ShortingApp.csproj", "{9F624496-0EC0-4BEF-ABB7-67EFF8C34E20}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetPalletApp", "SetPalletApp\SetPalletApp.csproj", "{89DBB9E9-9275-4040-B119-267BF2E52E17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckOrderApp", "CheckOrderApp\CheckOrderApp.csproj", "{A8839565-C7BF-4301-9B5A-9FA634232385}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{89DBB9E9-9275-4040-B119-267BF2E52E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89DBB9E9-9275-4040-B119-267BF2E52E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89DBB9E9-9275-4040-B119-267BF2E52E17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8839565-C7BF-4301-9B5A-9FA634232385}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8839565-C7BF-4301-9B5A-9FA634232385}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8839565-C7BF-4301-9B5A-9FA634232385}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8839565-C7BF-4301-9B5A-9FA634232385}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,4 +1,5 @@
 ﻿using BookingApp;
+using CheckOrderApp;
 using DevExpress.LookAndFeel;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
@@ -580,6 +581,12 @@ namespace InvoiceApp
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void bbiCheckOrder_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            CheckOrderForm frm = new CheckOrderForm();
+            frm.Show();
         }
     }
 }

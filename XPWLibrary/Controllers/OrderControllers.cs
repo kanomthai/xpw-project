@@ -194,7 +194,7 @@ namespace XPWLibrary.Controllers
                         while (rn < r.Ctn)
                         {
                             int nums = (rn + 1);
-                            string sqldetail = $"SELECT count(*) ctn FROM TXP_ISSPACKDETAIL d WHERE d.PARTNO = '{r.PartNo}' AND d.ITEM = '{nums}' AND d.ISSUINGKEY IN ({refkey})";
+                            string sqldetail = $"SELECT count(*) ctn FROM TXP_ISSPACKDETAIL d WHERE d.PARTNO = '{r.PartNo}' AND d.pono='{r.OrderNo}' AND d.ITEM = '{nums}' AND d.ISSUINGKEY IN ({refkey})";
                             dr = new ConnDB().GetFill(sqldetail);
                             if (dr.Tables[0].Rows.Count > 0)
                             {

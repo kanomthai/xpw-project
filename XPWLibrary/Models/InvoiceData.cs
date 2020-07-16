@@ -24,6 +24,7 @@ namespace XPWLibrary.Models
         public string Note2 { get; set; }
         public string Note3 { get; set; }
         public string ZCode { get; set; }
+        public string ContainerType { get; set; }
         public DateTime Upddte { get; set; }
     }
 

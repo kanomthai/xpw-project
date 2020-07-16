@@ -217,7 +217,7 @@ namespace XPWLibrary.Controllers
                 if (dr.Tables[0].Rows[0]["status"].ToString() == "0")
                 {
                     string sql = $"DELETE TXP_ISSPALLET l  WHERE l.ISSUINGKEY = '{obj.RefNo}' AND l.PALLETNO = '{obj.ShipPlNo}'";
-                    new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPACKDETAIL d SET d.SHIPPLNO = '' WHERE d.ISSUINGKEY ='{obj.RefNo}' AND d.SHIPPLNO = '{obj.ShipPlNo}'");
+                    new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPACKDETAIL d SET d.SHIPPLNO = '',d.CTNSN='',d.ploutno='' WHERE d.ISSUINGKEY ='{obj.RefNo}' AND d.SHIPPLNO = '{obj.ShipPlNo}'");
                     x = new ConnDB().ExcuteSQL(sql);
                 }
             }

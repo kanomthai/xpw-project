@@ -66,6 +66,7 @@ namespace InvoiceApp
             txtNote1.EditValue = ob.Note1;
             txtNote2.EditValue = ob.Note2;
             txtZoneCode.EditValue = ob.ZCode;
+            bbiConTypeCaption.EditValue = ob.ContainerType;
             bbiEtd.Enabled = false;
             bbiShip.Enabled = false;
             bbiNewOrder.Enabled = false;
