@@ -117,10 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="bbiPrintCarton.ImageOptions.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAC3SURBVDhPjZGBDcIwDAQ7CIOwCIuwByzCIAzSQUru5UeWayNe+sR+O9843RaOgeAVBF0P1PJY
+        vAWJVVi4BsHYx4LAnmNQDdq+sbBQRxgNphGqwThCR1BH6Ci3S9DumVUH2VguLlZ313IO8mgCSW3Ih2B+
+        i0yB69QrOjd95aqfHE0jv0H3VmqefiNAs6l7nKvPBQuOwT9vo+WXwXsRjXiP3ERX8zTCPQjQOPRM+9eg
+        YwWaPxLxdnwADS+YwVMZTCoAAAAASUVORK5CYII=
+</value>
+  </data>
   <metadata name="popupMenu1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAYAAAAAAAEAIADhBwAAZgAAAICAAAABACAAKAgBAEcIAABAQAAAAQAgAChCAABvEAEAMDAAAAEA

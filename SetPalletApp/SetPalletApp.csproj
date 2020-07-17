@@ -144,6 +144,7 @@
     <None Include="Resources\icons8-cardboard-box-32.png" />
     <None Include="Resources\icons8-cardboard-box-16.png" />
     <None Include="Resources\icons8-add-subnode-16.png" />
+    <None Include="Resources\icons8-qr-code-16.png" />
     <Content Include="templates\setpallet_template.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

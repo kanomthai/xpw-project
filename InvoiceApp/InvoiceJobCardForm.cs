@@ -48,7 +48,7 @@ namespace InvoiceApp
                 "LEFT JOIN TXP_PART p ON d.PARTNO = p.PARTNO\n" +
                 $"WHERE d.PARTNO = '{ob.PartNo}' AND d.ISSUINGKEY = '{ob.RefInv}'\n" +
                 $"GROUP BY d.PONO,d.PARTNO,p.PARTNAME,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,c.SHELVE ,d.ISSUINGSTATUS\n" +
-                $"ORDER BY d.FTICKETNO ";
+                $"ORDER BY l.PALLETNO,d.FTICKETNO ";
             Console.WriteLine(sql);
             List<FTicketData> list = new List<FTicketData>();
             DataSet dr = new ConnDB().GetFill(sql);
@@ -89,7 +89,7 @@ namespace InvoiceApp
                  "LEFT JOIN TXP_PART p ON d.PARTNO = p.PARTNO\n" +
                  $"WHERE d.ISSUINGKEY = '{ob.RefInv}'\n" +
                  $"GROUP BY d.PONO,d.PARTNO,p.PARTNAME,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,c.SHELVE ,d.ISSUINGSTATUS,d.SHIPPLNO\n" +
-                 $"ORDER BY d.FTICKETNO ";
+                 $"ORDER BY l.PALLETNO,d.FTICKETNO ";
             Console.WriteLine(sql);
             List<FTicketData> list = new List<FTicketData>();
             DataSet dr = new ConnDB().GetFill(sql);

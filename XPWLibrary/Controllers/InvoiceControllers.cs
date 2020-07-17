@@ -392,6 +392,7 @@ namespace XPWLibrary.Controllers
             return true;
         }
 
+
         public bool PrintFTicket(string RefInv, string Partno, string pono, int seq, string snum)
         {
             string prname = StaticFunctionData.cartonticketprinter;
@@ -485,7 +486,7 @@ namespace XPWLibrary.Controllers
             string sql = $"SELECT d.partno,d.pono,e.refinvoice issuingkey,e.custname,d.fticketno,d.orderqty,d.orderqty qty,d.SHIPPLNO FROM TXP_ISSPACKDETAIL d\n" +
                         $"inner join txp_isstransent e on d.ISSUINGKEY = e.issuingkey\n" +
                         $"WHERE d.ISSUINGKEY = '{inv}' AND d.fticketno = '{fticket}' \n" +
-                        $"order by d.fticketno";
+                        $"order by d.SHIPPLNO,d.fticketno";
             Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
             return dr;
@@ -496,7 +497,7 @@ namespace XPWLibrary.Controllers
             string sql = $"SELECT d.partno,d.pono,e.refinvoice issuingkey,e.custname,d.fticketno,d.orderqty,d.orderqty qty,d.SHIPPLNO FROM TXP_ISSPACKDETAIL d\n" +
                         $"inner join txp_isstransent e on d.ISSUINGKEY = e.issuingkey\n" +
                         $"WHERE d.ISSUINGKEY = '{inv}' AND d.partno = '{partno}' AND d.PONO = '{pono}'\n" +
-                        $"order by d.fticketno";
+                        $"order by d.SHIPPLNO,d.fticketno";
             Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
             return dr;

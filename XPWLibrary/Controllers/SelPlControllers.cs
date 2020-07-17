@@ -55,21 +55,30 @@ namespace XPWLibrary.Controllers
         public bool InsertPalletToPackingDetailAll(SetPallatData obj, string plno)
         {
             int i = obj.CtnQty + 1;
-            string sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plno.ToUpper()}'\n" +
-                        $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{obj.RefNo}' AND PONO = '{obj.OrderNo}' AND PARTNO = '{obj.PartNo}' AND ROWNUM < {i}";
-            new ConnDB().ExcuteSQL(sql);
-            string upsql = $"SELECT  count(*) PLTOTAL FROM TXP_ISSPACKDETAIL l WHERE ISSUINGKEY = '{obj.RefNo}' AND SHIPPLNO = '{plno}'";
+            string ysql = $"SELECT FTICKETNO FROM (" +
+                          $"SELECT FTICKETNO FROM TXP_ISSPACKDETAIL\n" +
+                          $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{obj.RefNo}' AND PONO = '{obj.OrderNo}' AND PARTNO = '{obj.PartNo}' ORDER BY FTICKETNO)" +
+                          $"WHERE rownum < {i}";
+
+            Console.WriteLine(ysql);
+            DataSet d = new ConnDB().GetFill(ysql);
             int x = 0;
-            DataSet dr = new ConnDB().GetFill(upsql);
-            foreach (DataRow r in dr.Tables[0].Rows)
+            foreach (DataRow j in d.Tables[0].Rows)
             {
-                x += int.Parse(r["pltotal"].ToString());
-            }
-            if (obj.Factory == "AW")
-            {
-                if (plno.IndexOf("C") >= 0)
+                string sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plno.ToUpper()}' WHERE FTICKETNO='{j["fticketno"].ToString()}' AND ISSUINGKEY = '{obj.RefNo}'";
+                new ConnDB().ExcuteSQL(sql);
+                string upsql = $"SELECT  count(*) PLTOTAL FROM TXP_ISSPACKDETAIL l WHERE ISSUINGKEY = '{obj.RefNo}' AND SHIPPLNO = '{plno}'";
+                DataSet dr = new ConnDB().GetFill(upsql);
+                foreach (DataRow r in dr.Tables[0].Rows)
                 {
-                    x = 2;
+                    x += int.Parse(r["pltotal"].ToString());
+                }
+                if (obj.Factory == "AW")
+                {
+                    if (plno.IndexOf("C") >= 0)
+                    {
+                        x = 2;
+                    }
                 }
             }
             return new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPALLET set PLTOTAL ='{x}' WHERE ISSUINGKEY = '{obj.RefNo}' AND PALLETNO = '{plno}'");

@@ -527,6 +527,7 @@ namespace SetPalletApp
                     {
                         SetPalletListData obj = gridPalleteDetailView.GetFocusedRow() as SetPalletListData;
                         bbiDelPartDetail.Caption = $"Delete {obj.FTicket}";
+                        bbiPrintCarton.Caption = $"Print Carton({obj.ShipPlNo})";
                         popupMenu3.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
                     }
                     else
@@ -537,6 +538,16 @@ namespace SetPalletApp
                 catch (Exception)
                 {
                 }
+            }
+        }
+
+        private void bbiPrintCarton_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SetPallatData obj = gridPalletView.GetFocusedRow() as SetPallatData;
+            bool x = new InvoiceControllers().PrintWireLabelQR(obj.RefNo, obj.ShipPlNo);
+            if (x)
+            {
+                XtraMessageBox.Show("ปริ้นข้อมูลเสร็จแล้ว", "ข้อความแจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
     }

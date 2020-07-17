@@ -3,6 +3,7 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Windows.Forms;
 using XPWLibrary.Controllers;
 using XPWLibrary.Interfaces;
@@ -251,21 +252,32 @@ namespace OrderApp
         {
             SplashScreenManager.ShowDefaultWaitForm();
             List<OrderBody> ob = gridControl.DataSource as List<OrderBody>;
-            int stctn = 0;
-            int i = 0;
-            while (i < ob.Count)
+            string sql = $"SELECT * FROM TXP_ISSPACKDETAIL d WHERE d.ISSUINGKEY = '{ob[0].RefNo}' AND d.SHIPPLNO  IS NOT NULL ORDER BY d.SHIPPLNO,d.FTICKETNO";
+            DataSet dr = new ConnDB().GetFill(sql);
+            if (dr.Tables[0].Rows.Count > 0)
             {
-                OrderBody r = ob[i];
-                if (r.Ctn > 0)
+                int stctn = 0;
+                foreach (DataRow r in dr.Tables[0].Rows)
                 {
-                    stctn += r.Ctn;
-                    int startlb = stctn - (r.Ctn - 1);
-                    Console.WriteLine($"{i}. {r.RefNo} PARTNO: {r.PartNo} CTN: {r.Ctn} SEQ START: {startlb} SEQ END: {stctn}");
-                    new InvoiceControllers().PrintFTicket(r.RefNo, r.PartNo, r.OrderNo, (startlb - 1), null);
+                    stctn += 1;
+                    new InvoiceControllers().PrintFTicket(ob[0].RefNo, r["fticketno"].ToString(), stctn.ToString());
                 }
-                i++;
             }
-            Console.WriteLine($"TOTAL: {i}");
+            //int stctn = 0;
+            //int i = 0;
+            //while (i < ob.Count)
+            //{
+            //    OrderBody r = ob[i];
+            //    if (r.Ctn > 0)
+            //    {
+            //        stctn += r.Ctn;
+            //        int startlb = stctn - (r.Ctn - 1);
+            //        Console.WriteLine($"{i}. {r.RefNo} PARTNO: {r.PartNo} CTN: {r.Ctn} SEQ START: {startlb} SEQ END: {stctn}");
+            //        new InvoiceControllers().PrintFTicket(r.RefNo, r.PartNo, r.OrderNo, (startlb - 1), null);
+            //    }
+            //    i++;
+            //}
+            //Console.WriteLine($"TOTAL: {i}");
             SplashScreenManager.CloseDefaultWaitForm();
         }
 

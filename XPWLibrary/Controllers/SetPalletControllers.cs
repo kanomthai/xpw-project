@@ -15,7 +15,7 @@ namespace XPWLibrary.Controllers
         public List<SetPallatData> GetPartListDetail(string issuekey)
         {
             List<SetPallatData> obj = new List<SetPallatData>();
-            string sql = $"SELECT * FROM TBT_SETPALLET l WHERE l.ISSUINGKEY = '{issuekey}' AND CTN > 0 ORDER BY PLSIZE ";
+            string sql = $"SELECT * FROM TBT_SETPALLET l WHERE l.ISSUINGKEY = '{issuekey}' AND CTN > 0 ORDER BY PARTNO,PLSIZE ";
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow r in dr.Tables[0].Rows)
             {
