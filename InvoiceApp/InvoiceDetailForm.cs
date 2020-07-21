@@ -610,5 +610,15 @@ namespace InvoiceApp
                 new ConnDB().ExcuteSQL(sql);
             }
         }
+
+        private void barButtonItem2_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            List<InvoiceBodyData> obj =  gridControl.DataSource as List<InvoiceBodyData>;
+            if (obj.Count > 0)
+            {
+                OrderEditCustomerForm frm = new OrderEditCustomerForm(obj);
+                frm.ShowDialog();
+            }
+        }
     }
 }

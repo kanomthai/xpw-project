@@ -131,6 +131,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.ppMenu = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem2 = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -214,11 +216,14 @@
             this.bbiCancelOrder,
             this.bbiConfirmShort,
             this.bbiAddShorting,
-            this.bbiEditCustomer});
+            this.bbiEditCustomer,
+            this.barButtonItem1,
+            this.barButtonItem2});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 41;
+            this.ribbonControl.MaxItemId = 43;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.PageHeaderItemLinks.Add(this.bbiEditCustomer);
+            this.ribbonControl.PageHeaderItemLinks.Add(this.barButtonItem2);
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.OfficeUniversal;
@@ -1409,6 +1414,21 @@
             this.ppMenu.ShowCaption = true;
             this.ppMenu.ShowNavigationHeader = DevExpress.Utils.DefaultBoolean.True;
             // 
+            // barButtonItem1
+            // 
+            this.barButtonItem1.Caption = "barButtonItem1";
+            this.barButtonItem1.Id = 41;
+            this.barButtonItem1.Name = "barButtonItem1";
+            // 
+            // barButtonItem2
+            // 
+            this.barButtonItem2.Caption = "barButtonItem2";
+            this.barButtonItem2.Id = 42;
+            this.barButtonItem2.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("barButtonItem2.ImageOptions.Image")));
+            this.barButtonItem2.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("barButtonItem2.ImageOptions.LargeImage")));
+            this.barButtonItem2.Name = "barButtonItem2";
+            this.barButtonItem2.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem2_ItemClick);
+            // 
             // InvoiceDetailForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1579,5 +1599,7 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem11;
         private DevExpress.XtraEditors.TextEdit bbiConTypeCaption;
         private DevExpress.XtraLayout.LayoutControlItem bbiConType;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem2;
     }
 }
