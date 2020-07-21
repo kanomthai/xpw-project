@@ -48,6 +48,10 @@ namespace SetPalletApp
                 bbiOrderBy.EditValue = r.CombInv;
                 bbiRefInv.EditValue = r.RefNo;
                 bbiInv.EditValue = r.RefInv;
+                if (list[0].Ctn <= 1)
+                {
+                    list.Clear();
+                }
             }
             bsiRecordsCount.Caption = "RECORDS : " + list.Count;
             npl = new SetPalletControllers().GetPartListCompletedDetail(inv);

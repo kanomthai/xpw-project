@@ -15,7 +15,7 @@ namespace XPWLibrary.Controllers
         public List<SetPallatData> GetPartListDetail(string issuekey)
         {
             List<SetPallatData> obj = new List<SetPallatData>();
-            string sql = $"SELECT * FROM TBT_SETPALLET l WHERE l.ISSUINGKEY = '{issuekey}' AND CTN > 0 ORDER BY PARTNO,PLSIZE ";
+            string sql = $"SELECT * FROM TBT_SETPALLET l WHERE l.ISSUINGKEY = '{issuekey}' ORDER BY PARTNO,PLSIZE ";
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow r in dr.Tables[0].Rows)
             {
@@ -48,31 +48,17 @@ namespace XPWLibrary.Controllers
         public List<SetPallatData> GetPartListCompletedDetail(string issuekey)
         {
             List<SetPallatData> obj = new List<SetPallatData>();
-            string sql = $"SELECT * FROM TXP_ISSPALLET l WHERE l.ISSUINGKEY = '{issuekey}'\n"+
-                           "ORDER BY l.PALLETNO ";
+            string sql = $"SELECT * FROM TBT_SHIPPINGPALLET l WHERE l.ISSUINGKEY = '{issuekey}' ORDER BY l.PALLETNO ";
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow r in dr.Tables[0].Rows)
             {
                 obj.Add(new SetPallatData()
                 {
                     Id = obj.Count + 1,
-                    //Factory = r["factory"].ToString(),//FACTORY
-                    //ShipType = r["shiptype"].ToString(),//SHIPTYPE
-                    //ZName = r["zname"].ToString(),//ZNAME
-                    //EtdDte = DateTime.Parse(r["etddte"].ToString()),//ETDDTE
-                    //AffCode = r["affcode"].ToString(),//AFFCODE
-                    //CustCode = r["bishpc"].ToString(),//BISHPC
-                    //CustName = r["custname"].ToString(),//CUSTNAME
-                    //CombInv = r["combinv"].ToString(),//COMBINV
-                    //RefInv = r["refinvoice"].ToString(),//REFINVOICE
                     RefNo = r["issuingkey"].ToString(),//ISSUINGKEY
-                    //OrderNo = r["orderno"].ToString(),//ORDERNO
-                    //PName = r["pname"].ToString(),//PNAME
-                    //PartNo = r["partno"].ToString(),//PARTNO
-                    //PartName = r["partname"].ToString(),//PARTNAME
-                    PlSize = r["pltype"].ToString(),//PLSIZE
                     Ctn = int.Parse(r["pltotal"].ToString()),//CTN
                     ShipPlNo = r["palletno"].ToString(),//SHIPPLNO
+                    PlSize = r["psize"].ToString(),
                     PlOutNo = r["ploutno"].ToString(),
                 });
             }
