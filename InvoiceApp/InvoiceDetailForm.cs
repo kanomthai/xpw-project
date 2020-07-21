@@ -67,7 +67,7 @@ namespace InvoiceApp
             txtNote2.EditValue = ob.Note2;
             txtZoneCode.EditValue = ob.ZCode;
             bbiConTypeCaption.EditValue = ob.ContainerType;
-            bbiEtd.Enabled = false;
+            bbiEtd.Enabled = true;
             bbiShip.Enabled = false;
             bbiNewOrder.Enabled = false;
             bbiConfirmShort.Enabled = false;
@@ -464,10 +464,21 @@ namespace InvoiceApp
         bool SaveShorting()
         {
             bool x = false;
+            //bool c = false;
+            //DialogResult r = XtraMessageBox.Show("คุณต้องการที่จะสร้าง Invoice ใหม่เลยหรืไม่?", "ข้อความแจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            //if (r == DialogResult.Yes)
+            //{
+            //    c = true;
+            //}
+            //else
+            //{
+            //    c = false;
+            //}
             SplashScreenManager.ShowDefaultWaitForm();
             try
             {
                 int i = 0;
+                List<string> ord = new List<string>();
                 while (i < shlist.Count)
                 {
                     var ob = shlist[i];
@@ -476,6 +487,7 @@ namespace InvoiceApp
                     string orderno = ob.OrderNo;
                     string partno = ob.PartNo;
                     int shctn = ob.ShCtn;
+                    ord.Add(orderno);
                     //update body 
                     int tctn = ob.BalCtn - ob.ShCtn;
                     while (tctn < ob.BalCtn)
@@ -491,12 +503,16 @@ namespace InvoiceApp
                     new ConnDB().ExcuteSQL(uporder);
                     i++;
                 }
+                //if (c)
+                //{
+                    
+                //}
                 shlist.Clear();
                 x = true;
             }
             catch (Exception)
             {
-               x = false;
+                x = false;
             }
             SplashScreenManager.CloseDefaultWaitForm();
             return x;
@@ -583,6 +599,14 @@ namespace InvoiceApp
         private void bbiEditCustomer_ItemClick(object sender, ItemClickEventArgs e)
         {
 
+        }
+
+        private void bbiEtd_EditValueChanged(object sender, EventArgs e)
+        {
+            if (DateTime.Parse(bbiEtd.EditValue.ToString()) != ob.Etddte) {
+                bbiNewOrder.Caption = $"Save ETD";
+                bbiNewOrder.Enabled = true;
+            }
         }
     }
 }
