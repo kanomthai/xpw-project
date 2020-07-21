@@ -604,8 +604,10 @@ namespace InvoiceApp
         private void bbiEtd_EditValueChanged(object sender, EventArgs e)
         {
             if (DateTime.Parse(bbiEtd.EditValue.ToString()) != ob.Etddte) {
-                bbiNewOrder.Caption = $"Save ETD";
-                bbiNewOrder.Enabled = true;
+                //bbiNewOrder.Caption = $"Save ETD";
+                //bbiNewOrder.Enabled = true;
+                string sql = $"UPDATE TXP_ISSTRANSENT SET ETDDTE = TO_DATE('{DateTime.Parse(bbiEtd.EditValue.ToString()).ToString("dd/MM/yyyy")}', 'dd/MM/yyyy') WHERE ISSUINGKEY = '{ob.RefNo}'";
+                new ConnDB().ExcuteSQL(sql);
             }
         }
     }
