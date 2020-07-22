@@ -430,5 +430,10 @@ namespace BookingApp
             }
             ReloadContainer();
         }
+
+        private void bbiDelete_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
     }
 }

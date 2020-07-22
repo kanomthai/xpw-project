@@ -34,7 +34,7 @@ namespace SetPalletApp
             gridPalletControl.DataSource = null;
             gridPalleteDetailControl.DataSource = null;
             List<SetPallatData> list = new SetPalletControllers().GetPartListDetail(inv);
-            gridPartControl.DataSource = list;
+            List<SetPallatData> ord = new List<SetPallatData>();
             if (list.Count > 0)
             {
                 var r = list[0];
@@ -48,12 +48,15 @@ namespace SetPalletApp
                 bbiOrderBy.EditValue = r.CombInv;
                 bbiRefInv.EditValue = r.RefNo;
                 bbiInv.EditValue = r.RefInv;
-                if (list[0].Ctn <= 1)
-                {
-                    list.Clear();
-                }
+                list.ForEach(i => {
+                    if (i.Ctn > 0)
+                    {
+                        ord.Add(i);
+                    }
+                });
             }
-            bsiRecordsCount.Caption = "RECORDS : " + list.Count;
+            gridPartControl.DataSource = ord;
+            bsiRecordsCount.Caption = "RECORDS : " + ord.Count;
             npl = new SetPalletControllers().GetPartListCompletedDetail(inv);
             gridPalletControl.DataSource = npl;
         }

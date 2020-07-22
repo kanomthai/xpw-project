@@ -534,6 +534,11 @@ namespace XPWLibrary.Controllers
 
         string CheckOrderGroup(OrderData b)
         {
+            string rescd = "";
+            //if (b.Factory == "AW")
+            //{
+            //    rescd = "AND p.REASONCD != '30' \n";
+            //}
             string sql;
             switch (b.Combinv.ToString())
             {
@@ -543,6 +548,7 @@ namespace XPWLibrary.Controllers
                          $"p.BISHPC = '{b.Custcode}' AND " +
                          $"p.BISAFN = '{b.Custname}' AND " +
                          $"p.SHIPTYPE = '{b.Ship}' " +
+                         $"{rescd}"+
                          $"AND p.COMMERCIAL = '{b.Commercial}' " +
                          $"AND p.PC = '{b.Pc}' " +
                          $"AND p.BIOABT = '{b.BioABT}' AND " +
@@ -554,6 +560,7 @@ namespace XPWLibrary.Controllers
                           $"p.BISHPC = '{b.Custcode}' AND " +
                           $"p.BISAFN = '{b.Custname}' AND " +
                           $"p.SHIPTYPE = '{b.Ship}' " +
+                          $"{rescd}" +
                           $"AND p.COMMERCIAL = '{b.Commercial}' " +
                           $"AND p.PC = '{b.Pc}' " +
                           $"AND p.BIOABT = '{b.BioABT}' AND " +
@@ -566,6 +573,7 @@ namespace XPWLibrary.Controllers
                          $"p.BISHPC = '{b.Custcode}' AND " +
                          $"p.BISAFN = '{b.Custname}' AND " +
                          $"p.SHIPTYPE = '{b.Ship}' " +
+                         $"{rescd}" +
                          $"AND p.COMMERCIAL = '{b.Commercial}' " +
                          $"AND p.PC = '{b.Pc}' " +
                          $"AND p.BIOABT = '{b.BioABT}' AND " +
@@ -577,7 +585,7 @@ namespace XPWLibrary.Controllers
                           $"p.AFFCODE = '{b.Affcode}' AND " +
                           $"p.BISHPC = '{b.Custcode}' AND " +
                           $"p.BISAFN = '{b.Custname}' AND " +
-                          $"p.SHIPTYPE = '{b.Ship}' AND " +
+                          $"p.SHIPTYPE = '{b.Ship}' {rescd} AND " +
                           $"p.COMMERCIAL = '{b.Commercial}' " +
                           $"AND p.PC = '{b.Pc}' " +
                           $"AND p.BIOABT = '{b.BioABT}' AND " +
