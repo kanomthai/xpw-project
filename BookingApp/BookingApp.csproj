@@ -140,13 +140,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\XPWLibrary\XPWLibrary.csproj">
-      <Project>{13c19695-4a3e-4529-9553-efbaae328143}</Project>
-      <Name>XPWLibrary</Name>
-    </ProjectReference>
+    <Content Include="icons8-add-property-48.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="icons8-add-property-48.ico" />
+    <ProjectReference Include="..\XPWLibrary\XPWLibrary.csproj">
+      <Project>{13C19695-4A3E-4529-9553-EFBAAE328143}</Project>
+      <Name>XPWLibrary</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

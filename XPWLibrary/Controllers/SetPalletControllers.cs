@@ -67,7 +67,7 @@ namespace XPWLibrary.Controllers
 
         public List<SetPalletListData> GetJobListPallet(string refinv)
         {
-            string sql = $"SELECT * FROM TBT_PALLETREPORT e WHERE e.ISSUINGKEY = '{refinv}'";
+            string sql = $"SELECT * FROM TBT_PALLETREPORT e WHERE e.ISSUINGKEY = '{refinv}' ORDER BY pono,partno";
             List<SetPalletListData> obj = new List<SetPalletListData>();
             Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
@@ -127,7 +127,33 @@ namespace XPWLibrary.Controllers
                     ZCode = r["zonecode"].ToString(),//ZONECODE
                 });
             }
-            return obj;
+
+            List<SetPalletListData> list = new List<SetPalletListData>();
+            plno = null;
+            foreach (SetPalletListData b in obj)
+            {
+                string npl = "";
+                if (plno == null)
+                {
+                    plno = b.PlSize;
+                    npl = b.PlSize;
+                }
+                else
+                {
+                    if (plno != b.PlSize)
+                    {
+                        plno = b.PlSize;
+                        npl = b.PlSize;
+                    }
+                    else
+                    {
+                        npl = "";
+                    }
+                }
+                b.PlSize = npl;
+                list.Add(b);
+            }
+            return list;
         }
 
         public List<SetPalletListData> GetPallatePartList(SetPallatData x)
