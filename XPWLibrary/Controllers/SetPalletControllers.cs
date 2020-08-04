@@ -63,7 +63,7 @@ namespace XPWLibrary.Controllers
 
         public List<SetPalletListData> GetJobListPallet(string refinv)
         {
-            string sql = $"SELECT * FROM TBT_PALLETREPORT e WHERE e.ISSUINGKEY = '{refinv}' ORDER BY pono,partno";
+            string sql = $"SELECT * FROM TBT_PALLETREPORT e WHERE e.ISSUINGKEY = '{refinv}' ORDER BY SHIPPLNO,pono,partno";
             List<SetPalletListData> obj = new List<SetPalletListData>();
             Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
@@ -90,14 +90,13 @@ namespace XPWLibrary.Controllers
                     else
                     {
                         npl = "";
-                        plsize = "";
                         ch = false;
                     }
                 }
                 string partn = r["partname"].ToString();
                 if (r["factory"].ToString() != "AW")
                 {
-                    plsize = r["plsize"].ToString();
+                    //plsize = r["plsize"].ToString();
                     partn = r["partno"].ToString();
                 }
                 obj.Add(new SetPalletListData()
@@ -130,36 +129,36 @@ namespace XPWLibrary.Controllers
                 });
             }
 
-            List<SetPalletListData> list = new List<SetPalletListData>();
-            plno = null;
-            foreach (SetPalletListData b in obj)
-            {
-                string plname = "";
-                if (b.ChPl)
-                {
-                    //npl = b.PlSize;
-                    if (plno is null)
-                    {
-                        plno = b.PlSize;
-                        plname = b.PlSize;
-                    }
-                    else
-                    {
-                        if (plno != b.PlSize)
-                        {
-                            plno = b.PlSize;
-                            plname = b.PlSize;
-                        }
-                        else
-                        {
-                            plname = "";
-                        }
-                    }
-                }
-                b.PlSize = plname;
-                list.Add(b);
-            }
-            return list;
+            //List<SetPalletListData> list = new List<SetPalletListData>();
+            //plno = null;
+            //foreach (SetPalletListData b in obj)
+            //{
+            //    string plname = "";
+            //    if (b.ChPl)
+            //    {
+            //        //npl = b.PlSize;
+            //        if (plno is null)
+            //        {
+            //            plno = b.PlSize;
+            //            plname = b.PlSize;
+            //        }
+            //        else
+            //        {
+            //            if (plno != b.PlSize)
+            //            {
+            //                plno = b.PlSize;
+            //                plname = b.PlSize;
+            //            }
+            //            else
+            //            {
+            //                plname = "";
+            //            }
+            //        }
+            //    }
+            //    b.PlSize = plname;
+            //    list.Add(b);
+            //}
+            return obj;
         }
 
         public List<SetPalletListData> GetPallatePartList(SetPallatData x)
