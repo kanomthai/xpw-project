@@ -101,22 +101,28 @@ namespace XPWLibrary.Controllers
             Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
             BindingList<InvoiceMasterData> list = new BindingList<InvoiceMasterData>();
-            if (dr.Tables.Count > 0)
+            try
             {
-                foreach (DataRow r in dr.Tables[0].Rows)
+                if (dr.Tables.Count > 0)
                 {
-                    list.Add(new InvoiceMasterData()
+                    foreach (DataRow r in dr.Tables[0].Rows)
                     {
-                        Id = list.Count + 1,
-                        Etd = DateTime.Parse(r["etd"].ToString()),
-                        Ck2 = int.Parse(r["ck2"].ToString()),
-                        Ness = int.Parse(r["ness"].ToString()),
-                        Icam = int.Parse(r["icam"].ToString()),
-                        Ck1 = int.Parse(r["ck1"].ToString()),
-                        Truck = int.Parse(r["truck"].ToString()),
-                        Air = int.Parse(r["air"].ToString()),
-                    });
+                        list.Add(new InvoiceMasterData()
+                        {
+                            Id = list.Count + 1,
+                            Etd = DateTime.Parse(r["etd"].ToString()),
+                            Ck2 = int.Parse(r["ck2"].ToString()),
+                            Ness = int.Parse(r["ness"].ToString()),
+                            Icam = int.Parse(r["icam"].ToString()),
+                            Ck1 = int.Parse(r["ck1"].ToString()),
+                            Truck = int.Parse(r["truck"].ToString()),
+                            Air = int.Parse(r["air"].ToString()),
+                        });
+                    }
                 }
+            }
+            catch (Exception)
+            {
             }
             return list;
         }

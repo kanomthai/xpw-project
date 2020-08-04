@@ -1,10 +1,6 @@
-﻿using DevExpress.XtraEditors.Filtering.Templates;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using XPWLibrary.Interfaces;
 using XPWLibrary.Models;
 
@@ -72,13 +68,16 @@ namespace XPWLibrary.Controllers
             Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
             string plno = null;
+            bool ch = false;
             foreach (DataRow r in dr.Tables[0].Rows)
             {
                 string npl = "";
+                string plsize = r["plsize"].ToString();
                 if (plno == null)
                 {
                     plno = r["shipplno"].ToString().Substring(2);
                     npl = r["shipplno"].ToString().Substring(2);
+                    ch = true;
                 }
                 else
                 {
@@ -86,13 +85,15 @@ namespace XPWLibrary.Controllers
                     {
                         plno = r["shipplno"].ToString().Substring(2);
                         npl = r["shipplno"].ToString().Substring(2);
+                        ch = true;
                     }
                     else
                     {
                         npl = "";
+                        plsize = "";
+                        ch = false;
                     }
                 }
-                string plsize = r["plsize"].ToString();
                 string partn = r["partname"].ToString();
                 if (r["factory"].ToString() != "AW")
                 {
@@ -125,6 +126,7 @@ namespace XPWLibrary.Controllers
                     Note2 = r["note2"].ToString(),//NOTE2
                     Note3 = r["note3"].ToString(),//NOTE3
                     ZCode = r["zonecode"].ToString(),//ZONECODE
+                    ChPl = ch
                 });
             }
 
@@ -132,25 +134,29 @@ namespace XPWLibrary.Controllers
             plno = null;
             foreach (SetPalletListData b in obj)
             {
-                string npl = "";
-                if (plno == null)
+                string plname = "";
+                if (b.ChPl)
                 {
-                    plno = b.PlSize;
-                    npl = b.PlSize;
-                }
-                else
-                {
-                    if (plno != b.PlSize)
+                    //npl = b.PlSize;
+                    if (plno is null)
                     {
                         plno = b.PlSize;
-                        npl = b.PlSize;
+                        plname = b.PlSize;
                     }
                     else
                     {
-                        npl = "";
+                        if (plno != b.PlSize)
+                        {
+                            plno = b.PlSize;
+                            plname = b.PlSize;
+                        }
+                        else
+                        {
+                            plname = "";
+                        }
                     }
                 }
-                b.PlSize = npl;
+                b.PlSize = plname;
                 list.Add(b);
             }
             return list;

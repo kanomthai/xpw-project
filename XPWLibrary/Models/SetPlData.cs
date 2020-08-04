@@ -59,5 +59,6 @@ namespace XPWLibrary.Models
         public string Note2 { get; set; }//PARTNO
         public string Note3 { get; set; }//PARTNAME
         public string ZCode { get; set; }//PLSIZE
+        public bool ChPl { get; set; }
     }
 }
