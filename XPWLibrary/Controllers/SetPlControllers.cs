@@ -9,7 +9,7 @@ using XPWLibrary.Models;
 
 namespace XPWLibrary.Controllers
 {
-    public class SelPlControllers
+    public class SetPlControllers
     {
         public List<SetPlData> GetPlData(string refinv)
         {
@@ -83,5 +83,7 @@ namespace XPWLibrary.Controllers
             }
             return new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPALLET set PLTOTAL ='{x}' WHERE ISSUINGKEY = '{obj.RefNo}' AND PALLETNO = '{plno}'");
         }
+
+
     }
 }

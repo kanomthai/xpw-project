@@ -35,7 +35,7 @@ namespace InvoiceApp
         private List<SetPlData> GetDataSource(string refinv)
         {
             gridView.OptionsBehavior.Editable = false;
-            return new SelPlControllers().GetPlData(refinv);
+            return new SetPlControllers().GetPlData(refinv);
         }
 
         void bbiPrintPreview_ItemClick(object sender, ItemClickEventArgs e)

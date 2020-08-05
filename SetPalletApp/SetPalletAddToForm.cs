@@ -31,7 +31,7 @@ namespace SetPalletApp
             try
             {
                 string plno = cbPalletObj.EditValue.ToString();
-                if (new SelPlControllers().InsertPalletToPackingDetailAll(ob, plno))
+                if (new SetPlControllers().InsertPalletToPackingDetailAll(ob, plno))
                 {
                     this.Close();
                 }

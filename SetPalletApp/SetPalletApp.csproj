@@ -86,6 +86,12 @@
     <Compile Include="SetPalletForm.Designer.cs">
       <DependentUpon>SetPalletForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SetPalletNewInvoiceForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetPalletNewInvoiceForm.Designer.cs">
+      <DependentUpon>SetPalletNewInvoiceForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SetPalletReporting.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -114,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SetPalletForm.resx">
       <DependentUpon>SetPalletForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SetPalletNewInvoiceForm.resx">
+      <DependentUpon>SetPalletNewInvoiceForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SetPalletReporting.resx">
       <DependentUpon>SetPalletReporting.cs</DependentUpon>

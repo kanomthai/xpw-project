@@ -1,5 +1,4 @@
 ﻿using BookingApp;
-using CheckOrderApp;
 using DevExpress.LookAndFeel;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
@@ -585,8 +584,8 @@ namespace InvoiceApp
 
         private void bbiCheckOrder_ItemClick(object sender, ItemClickEventArgs e)
         {
-            CheckOrderForm frm = new CheckOrderForm();
-            frm.Show();
+            //CheckOrderForm frm = new CheckOrderForm();
+            //frm.Show();
         }
     }
 }

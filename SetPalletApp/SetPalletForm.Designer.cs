@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SetPalletForm));
             this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.bbiPrintPreview = new DevExpress.XtraBars.BarButtonItem();
@@ -43,6 +44,8 @@
             this.bbisendToPallet = new DevExpress.XtraBars.BarButtonItem();
             this.bbiDelPartDetail = new DevExpress.XtraBars.BarButtonItem();
             this.bbiPrintCarton = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiNewInvoice = new DevExpress.XtraBars.BarButtonItem();
+            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -161,9 +164,9 @@
             this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.popupMenu1 = new DevExpress.XtraBars.PopupMenu();
-            this.popupMenu2 = new DevExpress.XtraBars.PopupMenu();
-            this.popupMenu3 = new DevExpress.XtraBars.PopupMenu();
+            this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.popupMenu2 = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.popupMenu3 = new DevExpress.XtraBars.PopupMenu(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -240,9 +243,11 @@
             this.bbiSetCarton,
             this.bbisendToPallet,
             this.bbiDelPartDetail,
-            this.bbiPrintCarton});
+            this.bbiPrintCarton,
+            this.bbiNewInvoice,
+            this.barButtonItem1});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 27;
+            this.ribbonControl.MaxItemId = 29;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -354,6 +359,21 @@
             this.bbiPrintCarton.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiPrintCarton.ImageOptions.Image")));
             this.bbiPrintCarton.Name = "bbiPrintCarton";
             this.bbiPrintCarton.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiPrintCarton_ItemClick);
+            // 
+            // bbiNewInvoice
+            // 
+            this.bbiNewInvoice.Caption = "New Invoice";
+            this.bbiNewInvoice.Id = 27;
+            this.bbiNewInvoice.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiNewInvoice.ImageOptions.Image")));
+            this.bbiNewInvoice.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiNewInvoice.ImageOptions.LargeImage")));
+            this.bbiNewInvoice.Name = "bbiNewInvoice";
+            this.bbiNewInvoice.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiNewInvoice_ItemClick);
+            // 
+            // barButtonItem1
+            // 
+            this.barButtonItem1.Caption = "barButtonItem1";
+            this.barButtonItem1.Id = 28;
+            this.barButtonItem1.Name = "barButtonItem1";
             // 
             // ribbonPage1
             // 
@@ -801,6 +821,9 @@
             this.gridPalletView.GridControl = this.gridPalletControl;
             this.gridPalletView.Name = "gridPalletView";
             this.gridPalletView.OptionsBehavior.Editable = false;
+            this.gridPalletView.OptionsSelection.CheckBoxSelectorField = "NewInvoice";
+            this.gridPalletView.OptionsSelection.MultiSelect = true;
+            this.gridPalletView.OptionsSelection.MultiSelectMode = DevExpress.XtraGrid.Views.Grid.GridMultiSelectMode.CheckBoxRowSelect;
             this.gridPalletView.OptionsView.ShowFooter = true;
             this.gridPalletView.OptionsView.ShowGroupPanel = false;
             this.gridPalletView.MouseUp += new System.Windows.Forms.MouseEventHandler(this.gridPalletView_MouseUp);
@@ -815,7 +838,7 @@
             this.gridColumn6.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Count, "Id", "{0}")});
             this.gridColumn6.Visible = true;
-            this.gridColumn6.VisibleIndex = 0;
+            this.gridColumn6.VisibleIndex = 1;
             this.gridColumn6.Width = 58;
             // 
             // gridColumn7
@@ -921,7 +944,7 @@
             this.gridColumn34.FieldName = "PlSize";
             this.gridColumn34.Name = "gridColumn34";
             this.gridColumn34.Visible = true;
-            this.gridColumn34.VisibleIndex = 2;
+            this.gridColumn34.VisibleIndex = 3;
             this.gridColumn34.Width = 126;
             // 
             // gridColumn35
@@ -934,7 +957,7 @@
             this.gridColumn35.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Ctn", "{0:0.##}")});
             this.gridColumn35.Visible = true;
-            this.gridColumn35.VisibleIndex = 4;
+            this.gridColumn35.VisibleIndex = 5;
             this.gridColumn35.Width = 53;
             // 
             // gridColumn36
@@ -947,7 +970,7 @@
             this.gridColumn36.FieldName = "ShipPlNo";
             this.gridColumn36.Name = "gridColumn36";
             this.gridColumn36.Visible = true;
-            this.gridColumn36.VisibleIndex = 1;
+            this.gridColumn36.VisibleIndex = 2;
             this.gridColumn36.Width = 116;
             // 
             // gridColumn66
@@ -960,7 +983,7 @@
             this.gridColumn66.FieldName = "PlOutNo";
             this.gridColumn66.Name = "gridColumn66";
             this.gridColumn66.Visible = true;
-            this.gridColumn66.VisibleIndex = 3;
+            this.gridColumn66.VisibleIndex = 4;
             this.gridColumn66.Width = 156;
             // 
             // gridColumn67
@@ -1617,6 +1640,7 @@
             // popupMenu2
             // 
             this.popupMenu2.ItemLinks.Add(this.bbiDeletePallet);
+            this.popupMenu2.ItemLinks.Add(this.bbiNewInvoice);
             this.popupMenu2.ItemLinks.Add(this.bbiPrintCarton);
             this.popupMenu2.Name = "popupMenu2";
             this.popupMenu2.Ribbon = this.ribbonControl;
@@ -1838,5 +1862,7 @@
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn66;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn67;
         private DevExpress.XtraBars.BarButtonItem bbiPrintCarton;
+        private DevExpress.XtraBars.BarButtonItem bbiNewInvoice;
+        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
     }
 }

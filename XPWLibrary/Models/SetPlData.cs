@@ -42,6 +42,8 @@ namespace XPWLibrary.Models
         public int StdPack { get; set; }//CTN
         public string ShipPlNo { get; set; }//SHIPPLNO
         public bool MgrPl { get; set; }
+        public bool NewInvoice { get; set; }
+        public string RefOldNo { get; set; }//ISSUINGKEY
     }
 
     public class SetPalletListData: SetPallatData

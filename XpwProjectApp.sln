@@ -20,8 +20,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShortingApp", "ShortingApp\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SetPalletApp", "SetPalletApp\SetPalletApp.csproj", "{89DBB9E9-9275-4040-B119-267BF2E52E17}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CheckOrderApp", "CheckOrderApp\CheckOrderApp.csproj", "{A8839565-C7BF-4301-9B5A-9FA634232385}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -52,10 +50,6 @@ Global
 		{89DBB9E9-9275-4040-B119-267BF2E52E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89DBB9E9-9275-4040-B119-267BF2E52E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89DBB9E9-9275-4040-B119-267BF2E52E17}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A8839565-C7BF-4301-9B5A-9FA634232385}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A8839565-C7BF-4301-9B5A-9FA634232385}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A8839565-C7BF-4301-9B5A-9FA634232385}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A8839565-C7BF-4301-9B5A-9FA634232385}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -281,7 +281,7 @@ namespace SetPalletApp
             //string sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plno.ToUpper()}'\n" +
             //            $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{obj.RefNo}' AND PONO = '{obj.OrderNo}' AND PARTNO = '{obj.PartNo}' AND ROWNUM < {i}";
             //new ConnDB().ExcuteSQL(sql);
-            new SelPlControllers().InsertPalletToPackingDetailAll(obj, plno);
+            new SetPlControllers().InsertPalletToPackingDetailAll(obj, plno);
         }
 
         private void gridPartView_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
@@ -374,15 +374,26 @@ namespace SetPalletApp
             {
                 SetPallatData x = gridPalletView.GetFocusedRow() as SetPallatData;
                 bbiDeletePallet.Enabled = true;
+                bbiPrintCarton.Enabled = true;
                 bbiDeletePallet.Caption = $"Delete {x.ShipPlNo}";
                 if (x.PlOutNo != "")
                 {
                     bbiDeletePallet.Enabled = false;
                 }
-                else
+                if (x.ShipPlNo.IndexOf("P") >= 0)
                 {
-                    popupMenu2.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
+                    bbiPrintCarton.Enabled = false;
                 }
+                List<SetPallatData> obj = gridPalletControl.DataSource as List<SetPallatData>;
+                bool xinv = false;
+                obj.ForEach(j => {
+                    if (j.NewInvoice)
+                    {
+                        xinv = true;
+                    }
+                });
+                bbiNewInvoice.Enabled = xinv;
+                popupMenu2.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
             }
             else
             {
@@ -506,7 +517,7 @@ namespace SetPalletApp
             DialogResult r = XtraMessageBox.Show($"ยืนยันคำสั่งลบ {obj.FTicket} ข้อมูล", "", MessageBoxButtons.YesNo, MessageBoxIcon.Error);
             if (r == DialogResult.Yes)
             {
-                if (new SelPlControllers().UpdateSetPallet(obj))
+                if (new SetPlControllers().UpdateSetPallet(obj))
                 {
                     gridPalleteDetailView.DeleteSelectedRows();
                     gridPalleteDetailView.UpdateCurrentRow();
@@ -555,6 +566,30 @@ namespace SetPalletApp
             if (x)
             {
                 XtraMessageBox.Show("ปริ้นข้อมูลเสร็จแล้ว", "ข้อความแจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void bbiNewInvoice_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            List<SetPallatData> l = gridPalletControl.DataSource as List<SetPallatData>;
+            List<SetPallatData> obj = new List<SetPallatData>();
+            int i = 0;
+            while (i < l.Count)
+            {
+                var r = l[i];
+                if (r.NewInvoice) {
+                    r.Factory = bbiFactory.EditValue.ToString();
+                    r.EtdDte = DateTime.Parse(bbiEtd.EditValue.ToString());
+                    r.ShipType = bbiShip.EditValue.ToString();
+                    obj.Add(r);
+                }
+                i++;
+            }
+            if (obj.Count > 0)
+            {
+                SetPalletNewInvoiceForm frm = new SetPalletNewInvoiceForm(obj);
+                frm.ShowDialog();
+                Reload();
             }
         }
     }

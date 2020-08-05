@@ -332,10 +332,6 @@
       <Project>{230C6DBD-0827-456C-BCD2-0BF1715AAB98}</Project>
       <Name>BookingApp</Name>
     </ProjectReference>
-    <ProjectReference Include="..\CheckOrderApp\CheckOrderApp.csproj">
-      <Project>{A8839565-C7BF-4301-9B5A-9FA634232385}</Project>
-      <Name>CheckOrderApp</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OrderApp\OrderApp.csproj">
       <Project>{E1C7E0A1-B6B8-43BB-B13B-4E0E3018DD3A}</Project>
       <Name>OrderApp</Name>

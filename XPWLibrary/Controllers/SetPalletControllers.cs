@@ -213,14 +213,14 @@ namespace XPWLibrary.Controllers
             string w = "0";
             string l = "0";
             string h = "0";
-            if (obj.PlSize.IndexOf("x") >= 0)
+            if (obj.PlSize.ToUpper().IndexOf("X") >= 0)
             {
-                w = obj.PlSize.Substring(0, obj.PlSize.IndexOf("x"));
-                l = obj.PlSize.Substring(obj.PlSize.IndexOf("x") + 1);
-                l = l.Substring(0, l.IndexOf("x"));
-                h = obj.PlSize.Substring((w.Length + l.Length) + 2);
+                w = obj.PlSize.ToUpper().Substring(0, obj.PlSize.ToUpper().IndexOf("X"));
+                l = obj.PlSize.ToUpper().Substring(obj.PlSize.ToUpper().IndexOf("X") + 1);
+                l = l.Substring(0, l.IndexOf("X"));
+                h = obj.PlSize.ToUpper().Substring((w.Length + l.Length) + 2);
             }
-            string sql = $"UPDATE TXP_ISSPALLET l SET l.PLTYPE='{obj.PlSize}',PLWIDE={w},PLLENG={l},PLHIGHT={h} WHERE l.ISSUINGKEY = '{obj.RefNo}' AND l.PALLETNO = '{obj.ShipPlNo}'";
+            string sql = $"UPDATE TXP_ISSPALLET l SET l.PLTYPE='{obj.PlSize.ToUpper()}',PLWIDE={w},PLLENG={l},PLHIGHT={h} WHERE l.ISSUINGKEY = '{obj.RefNo}' AND l.PALLETNO = '{obj.ShipPlNo}'";
             return new ConnDB().ExcuteSQL(sql);
         }
 
