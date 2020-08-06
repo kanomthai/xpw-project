@@ -24,6 +24,7 @@ namespace InvoiceApp
         InvoiceData ob;
         List<InvoiceBodyData> spobj = new List<InvoiceBodyData>();
         List<InvoiceBodyData> shlist = new List<InvoiceBodyData>();
+        bool chorderdate = false;
         public InvoiceDetailForm(InvoiceData ord)
         {
             InitializeComponent();
@@ -34,6 +35,7 @@ namespace InvoiceApp
         void ReloadData()
         {
             SplashScreenManager.ShowDefaultWaitForm();
+            chorderdate = false;
             this.Text = StaticFunctionData.JobListTilte;
             groupControl2.Text = StaticFunctionData.JobListInformation;
 
@@ -68,7 +70,7 @@ namespace InvoiceApp
             txtZoneCode.EditValue = ob.ZCode;
             bbiConTypeCaption.EditValue = ob.ContainerType;
             bbiEtd.Enabled = true;
-            bbiShip.Enabled = false;
+            bbiShip.Enabled = true;
             bbiNewOrder.Enabled = false;
             bbiConfirmShort.Enabled = false;
             bbiSplitInvoice.Caption = "";
@@ -379,7 +381,23 @@ namespace InvoiceApp
 
         private void bbiNewOrder_ItemClick(object sender, ItemClickEventArgs e)
         {
-
+            if (chorderdate)
+            {
+                DialogResult r = XtraMessageBox.Show("คุณต้องการเปลี่ยน ETD  นี้ใช่หรือไม่?", "ข้อความแจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (r == DialogResult.Yes)
+                {
+                    string sql = $"UPDATE TXP_ISSTRANSENT " +
+                        $"SET ETDDTE = TO_DATE('{DateTime.Parse(bbiEtd.EditValue.ToString()).ToString("dd/MM/yyyy")}', 'dd/MM/yyyy'),SHIPTYPE='{bbiShip.EditValue.ToString().ToUpper()}'" +
+                        $"WHERE ISSUINGKEY = '{ob.RefInv}'";
+                    if (new ConnDB().ExcuteSQL(sql))
+                    {
+                        XtraMessageBox.Show("บันทึกข้อมูลเสร็จแล้ว", "ข้อความแจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        bbiNewOrder.Caption = $"Save";
+                        bbiNewOrder.Enabled = false;
+                        chorderdate = false;
+                    }
+                }
+            }
         }
 
         private void bbiPalletList_ItemClick(object sender, ItemClickEventArgs e)
@@ -603,11 +621,17 @@ namespace InvoiceApp
 
         private void bbiEtd_EditValueChanged(object sender, EventArgs e)
         {
-            if (DateTime.Parse(bbiEtd.EditValue.ToString()) != ob.Etddte) {
-                //bbiNewOrder.Caption = $"Save ETD";
-                //bbiNewOrder.Enabled = true;
-                string sql = $"UPDATE TXP_ISSTRANSENT SET ETDDTE = TO_DATE('{DateTime.Parse(bbiEtd.EditValue.ToString()).ToString("dd/MM/yyyy")}', 'dd/MM/yyyy') WHERE ISSUINGKEY = '{ob.RefNo}'";
-                new ConnDB().ExcuteSQL(sql);
+            bbiNewOrder.Caption = $"*Save";
+            if (DateTime.Parse(bbiEtd.EditValue.ToString()) != ob.Etddte)
+            {
+                bbiNewOrder.Caption = $"*Save";
+                bbiNewOrder.Enabled = true;
+                chorderdate = true;
+            }
+            else
+            {
+                bbiNewOrder.Enabled = false;
+                chorderdate = false;
             }
         }
 
@@ -618,6 +642,22 @@ namespace InvoiceApp
             {
                 OrderEditCustomerForm frm = new OrderEditCustomerForm(obj);
                 frm.ShowDialog();
+            }
+        }
+
+        private void bbiShip_SelectedValueChanged(object sender, EventArgs e)
+        {
+            bbiNewOrder.Caption = $"*Save";
+            if (bbiShip.EditValue.ToString() != ob.Ship)
+            {
+                bbiNewOrder.Caption = $"*Save";
+                bbiNewOrder.Enabled = true;
+                chorderdate = true;
+            }
+            else
+            {
+                bbiNewOrder.Enabled = false;
+                chorderdate = false;
             }
         }
     }

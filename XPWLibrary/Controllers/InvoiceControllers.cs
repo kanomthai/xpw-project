@@ -17,6 +17,7 @@ namespace XPWLibrary.Controllers
         List<InvoiceData> AppendInvoiceDetail(string sql)
         {
             List<InvoiceData> list = new List<InvoiceData>();
+            Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow r in dr.Tables[0].Rows)
             {
