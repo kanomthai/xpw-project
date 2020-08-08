@@ -272,8 +272,19 @@ namespace XPWLibrary.Controllers
                         SplashScreenManager.Default.SetWaitFormCaption($"UPDATE ORDER STATUS");
                         i++;
                     }
-                    new GreeterFunction().SumPallet(refinvoice);
                 }
+            }
+            if (b.Factory == "AW")
+            {
+                //if (b.Custname == StaticFunctionData.specialcustomer)
+                //{
+                //    new GreeterFunction().SumPalletSpecial(refinvoice);
+                //}
+                //else
+                //{
+                //    new GreeterFunction().SumPallet(refinvoice);
+                //}
+                new GreeterFunction().SumPallet(refinvoice);
             }
             return refinvoice;
         }

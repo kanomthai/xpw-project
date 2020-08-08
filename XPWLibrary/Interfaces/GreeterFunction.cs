@@ -178,6 +178,7 @@ namespace XPWLibrary.Interfaces
             StaticFunctionData.StatusSendGEDI = int.Parse(node[21].InnerText);
             StaticFunctionData.PathSource = node[22].InnerText;
             StaticFunctionData.PathTemplate = node[23].InnerText;
+            StaticFunctionData.specialcustomer = node[24].InnerText;
 
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
 
@@ -997,6 +998,13 @@ namespace XPWLibrary.Interfaces
             {
                 if (i > 0)
                 {
+                    bool xcust = false;
+                    string sql_check_cust = $"SELECT * FROM TXP_ISSTRANSENT WHERE ISSUINGKEY = '{inv}' AND CUSTNAME = '{StaticFunctionData.specialcustomer}'";
+                    DataSet dr = new ConnDB().GetFill(sql_check_cust);
+                    if (dr.Tables[0].Rows.Count > 0)
+                    {
+                        xcust = true;
+                    }
                     int j = 0;
                     while (j < i)
                     {
@@ -1006,7 +1014,6 @@ namespace XPWLibrary.Interfaces
                             plpref = "C";
                         }
                         string plnum = $"1{plpref}{lastpl.ToString("D3")}";
-                        Console.WriteLine($"{inv} PL=>{plnum} TYPE=>{pltype} TOTAL=>{total}");
                         var b = olkey.FindIndex(x => x.PlNo == plnum);
                         string PlKey = "";
                         string ContNo = "";
@@ -1017,9 +1024,27 @@ namespace XPWLibrary.Interfaces
                             ContNo = olkey[b].ContNo;
                             PlStatus = olkey[b].PlStatus;
                         }
-                        string sql = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno,containerno,Pltype,pltotal,ploutsts,Sysdte,Upddte)" +
+                        //StaticFunctionData.specialcustomer
+                        int[] y = new int[3] { 0, 0, 0 };
+                        if (xcust)
+                        {
+                            y = AWCheckPalletSpecialDim(total);
+                        }
+                        else
+                        {
+                            y = AWCheckPalletDim(total);
+                        }
+                        string ptype = $"{y[0]}X{y[1]}X{y[2]}";
+                        string sql_coubnt = $"SELECT * FROM TXP_ISSPALLET WHERE Palletno ='{plnum}' AND issuingkey ='{inv}'";
+                        dr = new ConnDB().GetFill(sql_coubnt);
+                        Console.WriteLine($"{inv} PL=>{plnum} TYPE=>{pltype} TOTAL=>{total} SIZE: {ptype}");
+                        string sql = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno,containerno,Pltype,pltotal,ploutsts,Sysdte,Upddte,PLWIDE,PLLENG,PLHIGHT)" +
                             $"values" +
-                            $"('{StaticFunctionData.Factory}', '{inv}', '{plnum}','{PlKey}', '{ContNo}', '{pltype}',{total},{PlStatus},sysdate,sysdate)";
+                            $"('{StaticFunctionData.Factory}', '{inv}', '{plnum}','{PlKey}', '{ContNo}', '{ptype}',{total},{PlStatus},sysdate,sysdate, {y[0]}, {y[1]}, {y[2]})";
+                        if (dr.Tables[0].Rows.Count > 0)
+                        {
+                            sql = $"UPDATE TXP_ISSPALLET set Pltype='{ptype}',pltotal='{total}',PLWIDE={y[0]},PLLENG={y[1]},PLHIGHT={y[2]} WHERE Palletno ='{plnum}' AND issuingkey ='{inv}'";
+                        }
                         if (new ConnDB().ExcuteSQL(sql))
                         {
                             sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plnum.ToUpper()}'\n" +
@@ -1043,6 +1068,101 @@ namespace XPWLibrary.Interfaces
             }
             return lastpl;
         }
+
+        private int[] AWCheckPalletSpecialDim(int total)
+        {
+            int[] x = new int[3];
+            int w = 35;
+            int l = 35;
+            int h = 0;
+            if (total <= 54 && total >= 46)
+            {
+                w = 110;
+                l = 110;
+                h = 96;
+            }
+            else if (total <= 45 && total >= 37)
+            {
+                w = 110;
+                l = 110;
+                h = 82;
+            }
+            else if (total <= 36 && total >= 28)
+            {
+                w = 110;
+                l = 110;
+                h = 69;
+            }
+            else if (total <= 27 && total >= 19)
+            {
+                w = 110;
+                l = 110;
+                h = 55;
+            }
+            else if (total == 18)
+            {
+                w = 110;
+                l = 110;
+                h = 42;
+            }
+            else if (total <= 17)
+            {
+                h = 13;
+            }
+
+            x[0] = w;
+            x[1] = l;
+            x[2] = h;
+            return x;
+        }
+
+        private int[] AWCheckPalletDim(int total)
+        {
+            int[] x = new int[3];
+            int w = 35;
+            int l = 35;
+            int h = 13;
+            if (total <= 45 && total >= 37)
+            {
+                w = 110;
+                l = 110;
+                h = 70;
+            }
+            else if (total <= 36 && total >= 28)
+            {
+                w = 110;
+                l = 110;
+                h = 56;
+            }
+            else if (total <= 27 && total >= 19)
+            {
+                w = 110;
+                l = 110;
+                h = 42;
+            }
+            else if (total == 18)
+            {
+                w = 110;
+                l = 110;
+                h = 28;
+            }
+            else if (total == 2)
+            {
+                h = 23;
+            }
+
+            x[0] = w;
+            x[1] = l;
+            x[2] = h;
+            return x;
+        }
+
+        //public bool SumPalletSpecial(string inv)
+        //{
+        //    bool x = false;
+
+        //    return x;
+        //}
 
         public bool SumPallet(string inv)
         {

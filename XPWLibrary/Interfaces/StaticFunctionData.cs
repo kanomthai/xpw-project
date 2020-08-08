@@ -1,7 +1,9 @@
 ﻿namespace XPWLibrary.Interfaces
 {
     public class StaticFunctionData
-    { 
+    {
+        internal static string specialcustomer;
+
         public static string fticketprinter { get; set; }
         public static string cartonticketprinter { get; set; }
         public static int aw_totalpallet { get; set; }
