@@ -1040,7 +1040,7 @@ namespace XPWLibrary.Interfaces
                         Console.WriteLine($"{inv} PL=>{plnum} TYPE=>{pltype} TOTAL=>{total} SIZE: {ptype}");
                         string sql = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno,containerno,Pltype,pltotal,ploutsts,Sysdte,Upddte,PLWIDE,PLLENG,PLHIGHT)" +
                             $"values" +
-                            $"('{StaticFunctionData.Factory}', '{inv}', '{plnum}','{PlKey}', '{ContNo}', '{ptype}',{total},{PlStatus},sysdate,sysdate, {y[0]}, {y[1]}, {y[2]})";
+                            $"('{StaticFunctionData.Factory}', '{inv}', '{plnum}','{PlKey}', '{ContNo}', '{pltype}',{total},{PlStatus},sysdate,sysdate, {y[0]}, {y[1]}, {y[2]})";
                         if (dr.Tables[0].Rows.Count > 0)
                         {
                             sql = $"UPDATE TXP_ISSPALLET set Pltype='{ptype}',pltotal='{total}',PLWIDE={y[0]},PLLENG={y[1]},PLHIGHT={y[2]} WHERE Palletno ='{plnum}' AND issuingkey ='{inv}'";
