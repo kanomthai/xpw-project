@@ -69,8 +69,8 @@ namespace InvoiceApp
             txtNote2.EditValue = ob.Note2;
             txtZoneCode.EditValue = ob.ZCode;
             bbiConTypeCaption.EditValue = ob.ContainerType;
-            bbiEtd.Enabled = true;
-            bbiShip.Enabled = true;
+            bbiEtd.Enabled = false;
+            bbiShip.Enabled = false;
             bbiNewOrder.Enabled = false;
             bbiConfirmShort.Enabled = false;
             bbiSplitInvoice.Caption = "";
