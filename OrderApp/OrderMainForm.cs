@@ -142,7 +142,7 @@ namespace OrderApp
                     {
                         if (int.Parse(e.Value.ToString()) > 0)
                         {
-                            e.DisplayText = "REWRITE";
+                            e.DisplayText = "REVISED";
                         }
                     }
                     catch (Exception)

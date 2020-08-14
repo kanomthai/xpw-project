@@ -1034,30 +1034,42 @@ namespace XPWLibrary.Interfaces
                         {
                             y = AWCheckPalletDim(total);
                         }
-                        string ptype = $"{y[0]}X{y[1]}X{y[2]}";
-                        string sql_coubnt = $"SELECT * FROM TXP_ISSPALLET WHERE Palletno ='{plnum}' AND issuingkey ='{inv}'";
-                        dr = new ConnDB().GetFill(sql_coubnt);
-                        Console.WriteLine($"{inv} PL=>{plnum} TYPE=>{pltype} TOTAL=>{total} SIZE: {ptype}");
-                        string sql = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno,containerno,Pltype,pltotal,ploutsts,Sysdte,Upddte,PLWIDE,PLLENG,PLHIGHT)" +
-                            $"values" +
-                            $"('{StaticFunctionData.Factory}', '{inv}', '{plnum}','{PlKey}', '{ContNo}', '{pltype}',{total},{PlStatus},sysdate,sysdate, {y[0]}, {y[1]}, {y[2]})";
+                        dr = new ConnDB().GetFill($"SELECT * FROM TXP_ISSPACKDETAIL WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{inv}'");
                         if (dr.Tables[0].Rows.Count > 0)
                         {
-                            sql = $"UPDATE TXP_ISSPALLET set Pltype='{ptype}',pltotal='{total}',PLWIDE={y[0]},PLLENG={y[1]},PLHIGHT={y[2]} WHERE Palletno ='{plnum}' AND issuingkey ='{inv}'";
-                        }
-                        if (new ConnDB().ExcuteSQL(sql))
-                        {
-                            sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plnum.ToUpper()}'\n" +
-                                    $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{inv}' AND PARTNO LIKE '{pltype}%' AND ROWNUM <= {total}";
-                            if (pltype == "BOX")
+                            string ptype = $"{y[0]}X{y[1]}X{y[2]}";
+                            string sql_coubnt = $"SELECT * FROM TXP_ISSPALLET WHERE Palletno ='{plnum}' AND issuingkey ='{inv}'";
+                            dr = new ConnDB().GetFill(sql_coubnt);
+                            Console.WriteLine($"{inv} PL=>{plnum} TYPE=>{pltype} TOTAL=>{total} SIZE: {ptype}");
+                            string sql = $"insert into TXP_ISSPALLET(Factory,issuingkey,Palletno,ploutno,containerno,Pltype,pltotal,ploutsts,Sysdte,Upddte,PLWIDE,PLLENG,PLHIGHT)" +
+                                $"values" +
+                                $"('{StaticFunctionData.Factory}', '{inv}', '{plnum}','{PlKey}', '{ContNo}', '{pltype}',{total},{PlStatus},sysdate,sysdate, {y[0]}, {y[1]}, {y[2]})";
+                            if (dr.Tables[0].Rows.Count > 0)
                             {
-                                sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plnum.ToUpper()}'\n" +
-                                    $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{inv}' AND ROWNUM <= {total}";
+                                sql = $"UPDATE TXP_ISSPALLET set Pltype='{pltype}',pltotal='{total}',PLWIDE={y[0]},PLLENG={y[1]},PLHIGHT={y[2]} WHERE Palletno ='{plnum}' AND issuingkey ='{inv}'";
                             }
-                            new ConnDB().ExcuteSQL(sql);
-                            Console.WriteLine("==================================================");
-                            lastpl++;
-                            j++;
+                            if (new ConnDB().ExcuteSQL(sql))
+                            {
+                                string sql_q = $"SELECT UUID FROM TXP_ISSPACKDETAIL WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{inv}' AND PARTNO LIKE '{pltype}%' AND ROWNUM <= {total} ORDER BY FTICKETNO,ITEM";
+                                if (plnum.ToUpper().Substring(1, 1) == "C")
+                                {
+                                    sql_q = $"SELECT UUID FROM TXP_ISSPACKDETAIL WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{inv}' AND ROWNUM <= {total} ORDER BY FTICKETNO,ITEM";
+                                }
+                                DataSet ds = new ConnDB().GetFill(sql_q);
+                                int run = 0;
+                                foreach (DataRow r in ds.Tables[0].Rows)
+                                {
+                                    sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plnum.ToUpper()}' WHERE UUID='{r["uuid"].ToString()}'";
+                                    if (new ConnDB().ExcuteSQL(sql))
+                                    {
+                                        run++;
+                                        Console.WriteLine($"NEXT => {run}");
+                                    }
+                                }
+                                Console.WriteLine("==================================================");
+                                lastpl++;
+                                j++;
+                            }
                         }
                     }
                 }
@@ -1192,7 +1204,7 @@ namespace XPWLibrary.Interfaces
                     lastpl = WrPl(olkey, mmpl[0], inv, "MIX", lastpl, 45);
 
                     //lastmix
-                    if (mmpl[2] >= 17)
+                    if (mmpl[2] >= 18)
                     {
                         lastpl = WrPl(olkey, 1, inv, "MIX", lastpl, mmpl[2]);
                     }

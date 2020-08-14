@@ -797,7 +797,7 @@ namespace XPWLibrary.Controllers
             }
             else
             {
-                sql = $"SELECT SUBSTR(PALLETNO, 3) ctn FROM TXP_ISSPALLET l WHERE ISSUINGKEY LIKE '{issno.Substring(0,11)}%' AND PALLETNO  LIKE '1{pltype}%' ORDER BY PALLETNO DESC";
+                sql = $"SELECT SUBSTR(PALLETNO, 3) ctn FROM TXP_ISSPALLET l WHERE SUBSTR(ISSUINGKEY, 0, 10) = '{issno.Substring(0,10)}' AND PALLETNO  LIKE '1{pltype}%' ORDER BY PALLETNO DESC";
                 dr = new ConnDB().GetFill(sql);
                 if (dr.Tables[0].Rows.Count > 0)
                 {

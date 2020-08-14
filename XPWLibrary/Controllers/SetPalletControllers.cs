@@ -73,18 +73,23 @@ namespace XPWLibrary.Controllers
             {
                 string npl = "";
                 string plsize = r["plsize"].ToString();
+                int x = 2;
+                if (r["shipplno"].ToString().Substring(1, 1) == "C")
+                {
+                    x = 1;
+                }
                 if (plno == null)
                 {
-                    plno = r["shipplno"].ToString().Substring(2);
-                    npl = r["shipplno"].ToString().Substring(2);
+                    plno = r["shipplno"].ToString().Substring(x);
+                    npl = r["shipplno"].ToString().Substring(x);
                     ch = true;
                 }
                 else
                 {
-                    if (plno != r["shipplno"].ToString().Substring(2))
+                    if (plno != r["shipplno"].ToString().Substring(x))
                     {
-                        plno = r["shipplno"].ToString().Substring(2);
-                        npl = r["shipplno"].ToString().Substring(2);
+                        plno = r["shipplno"].ToString().Substring(x);
+                        npl = r["shipplno"].ToString().Substring(x);
                         ch = true;
                     }
                     else
@@ -128,36 +133,6 @@ namespace XPWLibrary.Controllers
                     ChPl = ch
                 });
             }
-
-            //List<SetPalletListData> list = new List<SetPalletListData>();
-            //plno = null;
-            //foreach (SetPalletListData b in obj)
-            //{
-            //    string plname = "";
-            //    if (b.ChPl)
-            //    {
-            //        //npl = b.PlSize;
-            //        if (plno is null)
-            //        {
-            //            plno = b.PlSize;
-            //            plname = b.PlSize;
-            //        }
-            //        else
-            //        {
-            //            if (plno != b.PlSize)
-            //            {
-            //                plno = b.PlSize;
-            //                plname = b.PlSize;
-            //            }
-            //            else
-            //            {
-            //                plname = "";
-            //            }
-            //        }
-            //    }
-            //    b.PlSize = plname;
-            //    list.Add(b);
-            //}
             return obj;
         }
 
