@@ -167,6 +167,7 @@
             this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
             this.popupMenu2 = new DevExpress.XtraBars.PopupMenu(this.components);
             this.popupMenu3 = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.btnSetNewInvoice = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -245,9 +246,10 @@
             this.bbiDelPartDetail,
             this.bbiPrintCarton,
             this.bbiNewInvoice,
-            this.barButtonItem1});
+            this.barButtonItem1,
+            this.btnSetNewInvoice});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 29;
+            this.ribbonControl.MaxItemId = 30;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.ribbonPage1});
@@ -363,6 +365,7 @@
             // bbiNewInvoice
             // 
             this.bbiNewInvoice.Caption = "New Invoice";
+            this.bbiNewInvoice.Enabled = false;
             this.bbiNewInvoice.Id = 27;
             this.bbiNewInvoice.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiNewInvoice.ImageOptions.Image")));
             this.bbiNewInvoice.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiNewInvoice.ImageOptions.LargeImage")));
@@ -1651,6 +1654,15 @@
             this.popupMenu3.Name = "popupMenu3";
             this.popupMenu3.Ribbon = this.ribbonControl;
             // 
+            // btnSetNewInvoice
+            // 
+            this.btnSetNewInvoice.Caption = "New Invoice";
+            this.btnSetNewInvoice.Id = 29;
+            this.btnSetNewInvoice.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSetNewInvoice.ImageOptions.Image")));
+            this.btnSetNewInvoice.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnSetNewInvoice.ImageOptions.LargeImage")));
+            this.btnSetNewInvoice.Name = "btnSetNewInvoice";
+            this.btnSetNewInvoice.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSetNewInvoice_ItemClick);
+            // 
             // SetPalletForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1864,5 +1876,6 @@
         private DevExpress.XtraBars.BarButtonItem bbiPrintCarton;
         private DevExpress.XtraBars.BarButtonItem bbiNewInvoice;
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private DevExpress.XtraBars.BarButtonItem btnSetNewInvoice;
     }
 }

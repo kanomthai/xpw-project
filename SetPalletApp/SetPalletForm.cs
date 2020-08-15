@@ -592,5 +592,10 @@ namespace SetPalletApp
                 Reload();
             }
         }
+
+        private void btnSetNewInvoice_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
     }
 }
