@@ -43,21 +43,30 @@ namespace SetPalletApp
                 while (i < ob.Count)
                 {
                     var b = ob[i];
+                    b.Prefix = new OrderControllers().GetPrefix(bbiInvoiceNo.EditValue.ToString());
                     b.RefInv = bbiInvoiceNo.EditValue.ToString();
                     b.RefNo = invno;
                     b.RefOldNo = olderno;
                     b.EtdDte = DateTime.Parse(bbiEtdDate.EditValue.ToString());
                     b.ShipType = bbiShipType.EditValue.ToString();
-                    if (new OrderControllers().CreateNewInvoice(b))
+                    i++;
+                    //if (new OrderControllers().CreateNewInvoice(ob))
+                    //{
+                    //    i++;
+                    //}
+                }
+                if (new OrderControllers().CreateNewInvoice(ob))
+                {
+                    SplashScreenManager.CloseDefaultWaitForm();
+                    r = XtraMessageBox.Show($"สร้างข้อมูล {invno} เรียบร้อยแล้ว", "ข้อความ", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (r == DialogResult.OK)
                     {
-                        i++;
+                        this.Close();
                     }
                 }
-                SplashScreenManager.CloseDefaultWaitForm();
-                r = XtraMessageBox.Show($"สร้างข้อมูล {invno} เรียบร้อยแล้ว", "ข้อความ", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if (r == DialogResult.OK)
+                else
                 {
-                    this.Close();
+                    SplashScreenManager.CloseDefaultWaitForm();
                 }
             }
         }

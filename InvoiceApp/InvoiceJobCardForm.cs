@@ -41,14 +41,14 @@ namespace InvoiceApp
         void ShowFTicketByPart()
         {
             this.Text = $"PRINT JOBCARD {ob.RefInv} WITH {ob.PartNo}";
-            string sql = $"SELECT d.PONO,d.PARTNO,p.PARTNAME,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,CASE WHEN d.PLOUTNO IS NULL THEN '' ELSE max(l.PALLETNO) END PALLETNO,c.SHELVE ,d.ISSUINGSTATUS FROM TXP_ISSPACKDETAIL d  \n" +
+            string sql = $"SELECT d.ITEM,d.PONO,d.PARTNO,p.PARTNAME,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,CASE WHEN d.PLOUTNO IS NULL THEN '' ELSE max(l.PALLETNO) END PALLETNO,c.SHELVE ,d.ISSUINGSTATUS FROM TXP_ISSPACKDETAIL d  \n" +
                 "INNER JOIN TXP_ISSTRANSBODY b ON d.ISSUINGKEY = b.ISSUINGKEY AND b.PARTNO = d.PARTNO\n" +
                 "LEFT JOIN TXP_ISSPALLET l ON b.ISSUINGKEY = l.ISSUINGKEY\n" +
                 "LEFT JOIN TXP_CARTONDETAILS c ON d.PLOUTNO = c.PLOUTNO\n" +
                 "LEFT JOIN TXP_PART p ON d.PARTNO = p.PARTNO\n" +
                 $"WHERE d.PARTNO = '{ob.PartNo}' AND d.ISSUINGKEY = '{ob.RefInv}'\n" +
-                $"GROUP BY d.PONO,d.PARTNO,p.PARTNAME,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,c.SHELVE ,d.ISSUINGSTATUS\n" +
-                $"ORDER BY d.SHIPPLNO,d.FTICKETNO  ";
+                $"GROUP BY d.ITEM,d.PONO,d.PARTNO,p.PARTNAME,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,c.SHELVE ,d.ISSUINGSTATUS\n" +
+                $"ORDER BY d.ITEM,d.SHIPPLNO,d.FTICKETNO  ";
             Console.WriteLine(sql);
             List<FTicketData> list = new List<FTicketData>();
             DataSet dr = new ConnDB().GetFill(sql);
@@ -59,7 +59,7 @@ namespace InvoiceApp
                 list.Add(new FTicketData()
                 {
                     Id = list.Count + 1,
-                    Seq = iseq,
+                    Seq = int.Parse(r["item"].ToString()),
                     OrderNo = r["pono"].ToString(),
                     PartName = r["partname"].ToString(),
                     PartNo = r["partno"].ToString(),
@@ -82,14 +82,14 @@ namespace InvoiceApp
         void ShowFTicketAll()
         {
             this.Text = $"Packing List({ob.RefInv})";
-            string sql = $"SELECT d.PONO,d.PARTNO,p.PARTNAME,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,d.SHIPPLNO PALLETNO,c.SHELVE ,d.ISSUINGSTATUS FROM TXP_ISSPACKDETAIL d  \n" +
+            string sql = $"SELECT d.ITEM,d.PONO,d.PARTNO,p.PARTNAME,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,d.SHIPPLNO PALLETNO,c.SHELVE ,d.ISSUINGSTATUS FROM TXP_ISSPACKDETAIL d  \n" +
                  "INNER JOIN TXP_ISSTRANSBODY b ON d.ISSUINGKEY = b.ISSUINGKEY AND b.PARTNO = d.PARTNO\n" +
                  "LEFT JOIN TXP_ISSPALLET l ON b.ISSUINGKEY = l.ISSUINGKEY\n" +
                  "LEFT JOIN TXP_CARTONDETAILS c ON d.PLOUTNO = c.PLOUTNO\n" +
                  "LEFT JOIN TXP_PART p ON d.PARTNO = p.PARTNO\n" +
                  $"WHERE d.ISSUINGKEY = '{ob.RefInv}'\n" +
-                 $"GROUP BY d.PONO,d.PARTNO,p.PARTNAME,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,c.SHELVE ,d.ISSUINGSTATUS,d.SHIPPLNO\n" +
-                 $"ORDER BY d.SHIPPLNO,d.FTICKETNO ";
+                 $"GROUP BY d.ITEM,d.PONO,d.PARTNO,p.PARTNAME,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,c.SHELVE ,d.ISSUINGSTATUS,d.SHIPPLNO\n" +
+                 $"ORDER BY d.ITEM,d.SHIPPLNO,d.FTICKETNO ";
             Console.WriteLine(sql);
             List<FTicketData> list = new List<FTicketData>();
             DataSet dr = new ConnDB().GetFill(sql);
@@ -100,7 +100,7 @@ namespace InvoiceApp
                 list.Add(new FTicketData()
                 {
                     Id = list.Count + 1,
-                    Seq = iseq,
+                    Seq = int.Parse(r["item"].ToString()),
                     OrderNo = r["pono"].ToString(),
                     PartName = r["partname"].ToString(),
                     PartNo = r["partno"].ToString(),
@@ -208,6 +208,7 @@ namespace InvoiceApp
             if (checkinv)
             {
                 List<FTicketData> f = gridControl.DataSource as List<FTicketData>;
+                List<FTicketData> list = new List<FTicketData>();
                 var x = f.OrderByDescending(j => j.PrintFTicket).ToList();
                 int i = 0;
                 while (i < x.Count)
@@ -217,13 +218,15 @@ namespace InvoiceApp
                     {
                         if (o.PrintFTicket)
                         {
+                            Console.WriteLine(o);
+                            list.Add(o);
                             //bool plabel = new InvoiceControllers().PrintFTicket(ob.RefInv, o.PartNo, o.OrderNo, o.Seq, o.Seq.ToString());
-                            bool plabel = new InvoiceControllers().PrintFTicket(ob.RefInv, o.FTicketNo, o.Id.ToString());
-                            if (plabel)
-                            {
-                                //XtraMessageBox.Show("ปริ้นข้อมูลเสร็จแล้ว");
-                                //this.Close();
-                            }
+                            //bool plabel = new InvoiceControllers().PrintFTicket(ob.RefInv, o.FTicketNo, o.Id.ToString());
+                            //if (plabel)
+                            //{
+                            //    //XtraMessageBox.Show("ปริ้นข้อมูลเสร็จแล้ว");
+                            //    //this.Close();
+                            //}
                         }
                     }
                     //else
@@ -231,6 +234,11 @@ namespace InvoiceApp
                     //    XtraMessageBox.Show("Label นี้ปริ้น/จัดเตรียมไปแล้ว", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     //}
                     i++;
+                }
+                bool plabel = new InvoiceControllers().PrintFTicket(ob.RefInv, list);
+                if (plabel)
+                {
+                    XtraMessageBox.Show("ปริ้นข้อมูลเสร็จแล้ว");
                 }
             }
             else

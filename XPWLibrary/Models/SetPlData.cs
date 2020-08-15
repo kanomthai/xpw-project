@@ -44,6 +44,7 @@ namespace XPWLibrary.Models
         public bool MgrPl { get; set; }
         public bool NewInvoice { get; set; }
         public string RefOldNo { get; set; }//ISSUINGKEY
+        public string Prefix { get; set; } //PrefFix
     }
 
     public class SetPalletListData: SetPallatData

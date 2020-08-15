@@ -41,6 +41,23 @@ namespace XPWLibrary.Controllers
             return obj;
         }
 
+        public bool CheckPalletSetSeq(string issuekey)
+        {
+            bool x = true;
+            string sql = $"SELECT UUID FROM TXP_ISSPACKDETAIL l WHERE l.ISSUINGKEY = '{issuekey}' ORDER BY l.FTICKETNO";
+            DataSet dr = new ConnDB().GetFill(sql);
+            int i = 1;
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow r in dr.Tables[0].Rows)
+                {
+                    new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPACKDETAIL SET ITEM={i} WHERE UUID='{r["uuid"].ToString()}'");
+                    i++;
+                }
+            }
+            return x;
+        }
+
         public List<SetPallatData> GetPartListCompletedDetail(string issuekey)
         {
             List<SetPallatData> obj = new List<SetPallatData>();
@@ -139,10 +156,10 @@ namespace XPWLibrary.Controllers
         public List<SetPalletListData> GetPallatePartList(SetPallatData x)
         {
             List<SetPalletListData> obj = new List<SetPalletListData>();
-            string sql = $"SELECT * FROM TBT_PALLETVIEWER p WHERE p.ISSUINGKEY = '{x.RefNo}' AND p.SHIPPLNO = '{x.ShipPlNo}'";
+            string sql = $"SELECT * FROM TBT_PALLETVIEWER p WHERE p.ISSUINGKEY = '{x.RefNo}' AND p.SHIPPLNO = '{x.ShipPlNo}' ORDER BY p.FTICKETNO";
             if (x.PlOutNo != "")
             {
-                sql = $"SELECT * FROM TBT_PALLETVIEWRPLOUT p WHERE p.ISSUINGKEY = '{x.RefNo}' AND p.ploutno = '{x.PlOutNo}'";
+                sql = $"SELECT * FROM TBT_PALLETVIEWRPLOUT p WHERE p.ISSUINGKEY = '{x.RefNo}' AND p.ploutno = '{x.PlOutNo}' ORDER BY p.FTICKETNO";
             }
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow r in dr.Tables[0].Rows)

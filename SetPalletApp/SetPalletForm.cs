@@ -270,6 +270,7 @@ namespace SetPalletApp
             {
                 XtraMessageBox.Show("กรุณาระบุจำนวนที่ต้องการด้วย", "ข้อความแจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            Reload();
         }
 
         private void InsertPalletToPackingDetailAll(SetPallatData obj, string plno)
@@ -392,7 +393,7 @@ namespace SetPalletApp
                         xinv = true;
                     }
                 });
-                bbiNewInvoice.Enabled = xinv;
+                bbiNewInvoice.Enabled = false;//def = false
                 popupMenu2.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
             }
             else
