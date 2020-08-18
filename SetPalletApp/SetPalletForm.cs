@@ -13,6 +13,7 @@ using System.ComponentModel.DataAnnotations;
 using XPWLibrary.Controllers;
 using XPWLibrary.Models;
 using XPWLibrary.Interfaces;
+using DevExpress.XtraSplashScreen;
 
 namespace SetPalletApp
 {
@@ -25,7 +26,10 @@ namespace SetPalletApp
             InitializeComponent();
             this.Text = $"{issuekey} DETAIL";
             inv = issuekey;
+            SplashScreenManager.ShowDefaultWaitForm();
+            new SetPalletControllers().CheckPalletSetSeq(issuekey);
             Reload();
+            SplashScreenManager.CloseDefaultWaitForm();
         }
 
         void Reload()
@@ -393,7 +397,7 @@ namespace SetPalletApp
                         xinv = true;
                     }
                 });
-                bbiNewInvoice.Enabled = false;//def = false
+                bbiNewInvoice.Enabled = xinv;
                 popupMenu2.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
             }
             else

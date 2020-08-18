@@ -1000,6 +1000,7 @@ namespace XPWLibrary.Interfaces
                 {
                     bool xcust = false;
                     string sql_check_cust = $"SELECT * FROM TXP_ISSTRANSENT WHERE ISSUINGKEY = '{inv}' AND CUSTNAME = '{StaticFunctionData.specialcustomer}'";
+                    SplashScreenManager.Default.SetWaitFormDescription($"CHECK CUTOMER");
                     DataSet dr = new ConnDB().GetFill(sql_check_cust);
                     if (dr.Tables[0].Rows.Count > 0)
                     {
@@ -1014,6 +1015,7 @@ namespace XPWLibrary.Interfaces
                             plpref = "C";
                         }
                         string plnum = $"1{plpref}{lastpl.ToString("D3")}";
+                        SplashScreenManager.Default.SetWaitFormDescription($"{plnum.ToString()}");
                         var b = olkey.FindIndex(x => x.PlNo == plnum);
                         string PlKey = "";
                         string ContNo = "";
@@ -1051,6 +1053,10 @@ namespace XPWLibrary.Interfaces
                             if (new ConnDB().ExcuteSQL(sql))
                             {
                                 string sql_q = $"SELECT UUID FROM TXP_ISSPACKDETAIL WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{inv}' AND PARTNO LIKE '{pltype}%' AND ROWNUM <= {total} ORDER BY FTICKETNO,ITEM";
+                                if (pltype == "MIX")
+                                {
+                                    sql_q = $"SELECT UUID FROM TXP_ISSPACKDETAIL WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{inv}' AND ROWNUM <= {total} ORDER BY FTICKETNO,ITEM";
+                                }
                                 if (plnum.ToUpper().Substring(1, 1) == "C")
                                 {
                                     sql_q = $"SELECT UUID FROM TXP_ISSPACKDETAIL WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{inv}' AND ROWNUM <= {total} ORDER BY FTICKETNO,ITEM";
@@ -1059,7 +1065,7 @@ namespace XPWLibrary.Interfaces
                                 int run = 0;
                                 foreach (DataRow r in ds.Tables[0].Rows)
                                 {
-                                    sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plnum.ToUpper()}' WHERE UUID='{r["uuid"].ToString()}'";
+                                    sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plnum.ToUpper()}',PLOUTNO='{PlKey}' WHERE UUID='{r["uuid"].ToString()}'";
                                     if (new ConnDB().ExcuteSQL(sql))
                                     {
                                         run++;
@@ -1483,7 +1489,7 @@ namespace XPWLibrary.Interfaces
         private List<PlListData> GetPlData(string inv)
         {
             List<PlListData> list = new List<PlListData>();
-            string sql = $"select l.palletno,l.ploutno,l.containerno,CASE WHEN l.PLOUTSTS IS NULL THEN '0' ELSE l.PLOUTSTS END PLOUTSTS from txp_isspallet l where l.issuingkey = '{inv}'";
+            string sql = $"select l.palletno,l.ploutno,l.containerno,CASE WHEN l.PLOUTSTS IS NULL THEN '0' ELSE l.PLOUTSTS END PLOUTSTS from txp_isspallet l where l.issuingkey = '{inv}' and l.ploutno is not null";
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow i in dr.Tables[0].Rows)
             {

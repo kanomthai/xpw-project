@@ -106,6 +106,8 @@ namespace InvoiceApp
                 bbiPlConfirm.Enabled = false;
                 bbiSetMultiLot.Enabled = true;
                 bbiAddShorting.Enabled = true;
+                //check print shipping
+                bbiShipingPart.Enabled = new SetPalletControllers().CheckShippingSeq(bbiRefInv.EditValue.ToString());
                 if (StaticFunctionData.Factory == "INJ")
                 {
                     bbiSetMultiLot.Enabled = false;

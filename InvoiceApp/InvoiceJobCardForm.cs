@@ -21,8 +21,10 @@ namespace InvoiceApp
         public InvoiceJobCardForm(InvoiceBodyData obj, bool all)
         {
             InitializeComponent();
+            SplashScreenManager.ShowDefaultWaitForm();
             ob = obj;
             bbiJobCardOnly.Enabled = true;
+            //new SetPalletControllers().CheckPalletSetSeq(ob.RefInv);
             if (StaticFunctionData.Factory == "AW")
             {
                 gridView.OptionsSelection.MultiSelect = false;
@@ -36,6 +38,7 @@ namespace InvoiceApp
             {
                 ShowFTicketByPart();
             }
+            SplashScreenManager.CloseDefaultWaitForm();
         }
 
         void ShowFTicketByPart()

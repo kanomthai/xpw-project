@@ -321,10 +321,10 @@ namespace OrderApp
                     bbiCreateJobList.Enabled = true;
                     if (ob[0].Status > 0)
                     {
-                        if (ob[0].Status >= 2)
-                        {
-                            bbiCreateJobList.Enabled = false;
-                        }
+                        //if (ob[0].Status >= 2)
+                        //{
+                        //    bbiCreateJobList.Enabled = false;
+                        //}
                         bbiCreateJobList.Caption = "Re-Create JobList";
                         bbiPrintJobList.Enabled = true;
                         bbiConfirmInvoice.Enabled = true;
