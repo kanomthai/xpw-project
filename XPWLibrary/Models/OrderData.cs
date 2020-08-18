@@ -17,6 +17,7 @@ namespace XPWLibrary.Models
         public string Custcode { get; set; }
         public string Custname { get; set; }
         public string CustPoType { get; set; }
+        public string Prefix { get; set; }
         public string PoType { get; set; }
         public string Commercial { get; set; }
         public string Pc { get; set; }
@@ -42,7 +43,6 @@ namespace XPWLibrary.Models
         public int BalQty { get; set; }
         public int Ctn { get; set; }
         public string ReasonCD { get; set; }
-        public string Prefix { get; set; }
         public string Uuid { get; set; }//UUID    UUID	15	VARCHAR2				36	36	0	VARCHAR
         public int BiSTDP { get; set; }//BISTDP  BISTDP	16	NUMBER				10	9	0	NUMERIC
         public int BiWidt { get; set; }//BIWIDT  BIWIDT	17	NUMBER				5	4	0	NUMERIC
