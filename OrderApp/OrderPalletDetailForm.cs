@@ -75,17 +75,18 @@ namespace OrderApp
         private void gridControl_DoubleClick(object sender, EventArgs e)
         {
             string plno = gridView.GetFocusedRowCellValue("PlOut").ToString();
-            if (plno != "")
+            if (plno == "")
             {
                 //Console.WriteLine(refno);
-                Console.WriteLine(plno);
-                OrderPalletForm frm = new OrderPalletForm(plno);
-                frm.ShowDialog();
+                plno = gridView.GetFocusedRowCellValue("PlNo").ToString();
             }
-            else
-            {
-                XtraMessageBox.Show("ไม่พบข้อมูล", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //else
+            //{
+            //    XtraMessageBox.Show("ไม่พบข้อมูล", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            Console.WriteLine(plno);
+            OrderPalletForm frm = new OrderPalletForm(plno);
+            frm.ShowDialog();
         }
 
         private void bbiConfirmInvoice_ItemClick(object sender, ItemClickEventArgs e)

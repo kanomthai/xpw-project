@@ -492,17 +492,13 @@ namespace XPWLibrary.Controllers
                 fdte = $"AND ETDTAP between TRUNC(to_date('{dte}', 'ddMMyyyy') - 1, 'DY') AND(TRUNC(to_date('{dte}', 'ddMMyyyy'), 'DY') + {wnum})";
             }
             string sql = $"select distinct * from TBT_ORDERLIST where FACTORY = '{factory}' {fdte} AND CURINV IS NULL ORDER BY affcode,bishpc,bisafn";
-            //string sql = $"SELECT p.FACTORY,p.ETDTAP,p.SHIPTYPE,get_zone(p.FACTORY, p.BIOABT) zname,p.AFFCODE,p.BISHPC,p.BISAFN,'' custpono,'' POTYPE,0 item,0 orderctn ," +
-            //            $"min(p.CURINV) CURINV,max(e.refinvoice) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS," +
-            //            $"m.combinv,p.COMMERCIAL,p.PC,p.BIOABT,max(p.REASONCD) rewrite,max(p.upddte) upddte\n" +
-            //            "FROM TXP_ORDERPLAN p\n" +
-            //            "INNER JOIN TXM_CUSTOMER m ON p.FACTORY = m.FACTORY  AND p.AFFCODE = m.AFFCODE AND p.BISHPC = m.BISHPC AND p.BISAFN = m.CUSTNM \n" +
-            //            "LEFT JOIN TXP_ISSTRANSENT e ON p.CURINV = e.ISSUINGKEY\n"+
-            //            $"WHERE p.STATUS = 1 AND p.FACTORY = '{factory}' {fdte} AND p.CURINV IS NULL\n" +
-            //            "GROUP BY p.ETDTAP,p.FACTORY,p.AFFCODE,p.BISHPC,p.BISAFN,p.COMMERCIAL,p.PC,p.SHIPTYPE,p.BIOABT,m.COMBINV\n" +
-            //            "ORDER BY p.ETDTAP,p.FACTORY,p.AFFCODE,p.BISHPC,p.BISAFN,p.COMMERCIAL,p.PC,p.SHIPTYPE,p.BIOABT,m.COMBINV";
             Console.WriteLine(sql);
             List<OrderData> obj = GetOrderList(sql);
+            if (obj.Count < 1)
+            {
+                sql = $"select distinct * from TBT_ORDERLIST where FACTORY = '{factory}' {fdte} ORDER BY affcode,bishpc,bisafn";
+                obj = GetOrderList(sql);
+            }
             return obj;
         }
 
