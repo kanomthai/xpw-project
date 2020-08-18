@@ -335,19 +335,50 @@ namespace XPWLibrary.Controllers
             return x;
         }
 
+        private bool ChecDuplicateOrder(string issuingkey, string pono, string partno)
+        {
+            bool x = false;
+            string sql = $"SELECT * FROM TXP_ISSTRANSBODY b WHERE ISSUINGKEY ='{issuingkey}' AND PONO='{pono}' AND PARTNO ='{partno}'";
+            DataSet dr = new ConnDB().GetFill(sql);
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                x = true;
+            }
+            return x;
+        }
+
         public bool CreateNewInvoice(List<SetPallatData> obj)
         {
             bool x = true;
             int i = 0;
             //create header
+            string oldekey = obj[0].RefOldNo;
             string nkey = GetRefInv(obj[0].Prefix, obj[0].Factory, obj[0].EtdDte);
             while (i < obj.Count)
             {
                 var r = obj[i];
+                Console.WriteLine($"REFNO: {r.RefNo} PLNO: {r.ShipPlNo} QTY: {r.Ctn}");
+                string sql = $"UPDATE TXP_ISSPACKDETAIL SET ISSUINGKEY ='{nkey}' WHERE ISSUINGKEY = '{oldekey}' AND SHIPPLNO = '{r.ShipPlNo}'";
+                Console.WriteLine(sql);
                 i++;
             }
             //create body
-
+            string sql_get_body = $"select issuingkey,pono,partno,sum(ORDERQTY) qty,sum(ORDERQTY)/count(*) stdpack,count(*) ctn from txp_isspackdetail " +
+                $"where issuingkey='{oldekey}' GROUP BY issuingkey,pono,partno";
+            //issuingkey,issuingseq,pono,tagrp,partno,stdpack,orderqty,issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,upddte,sysdte,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,refinv
+            Console.WriteLine(sql_get_body);
+            DataSet dr = new ConnDB().GetFill(sql_get_body);
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                bool xdul = ChecDuplicateOrder(r["issuingkey"].ToString(), r["pono"].ToString(), r["partno"].ToString());
+                if (xdul is false)
+                {
+                    string ins_body = $"insert into txp_isstransbody(issuingkey,issuingseq,pono,tagrp,partno,stdpack,orderqty,issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,upddte,sysdte,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,refinv)\n" +
+                                      $"select '{nkey}',{r["ctn"].ToString()},'{r["pono"].ToString()}',tagrp,partno,stdpack,{r["qty"].ToString()},issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,sysdate,sysdate,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,'{nkey}' from txp_isstransbody where \n" +
+                                      $"issuingkey = '{oldekey}' and pono = '{r["pono"].ToString()}' and partno = '{r["partno"].ToString()}'";
+                    Console.WriteLine(ins_body);
+                }
+            }
             //update body
 
             //update header
