@@ -347,77 +347,80 @@ namespace XPWLibrary.Controllers
             return x;
         }
 
+        private bool CheckIssueHeader(string issuingkey)
+        {
+            bool x = false;
+            string sql = $"SELECT * FROM TXP_ISSTRANSENT e WHERE e.ISSUINGKEY = '{issuingkey}'";
+            DataSet dr = new ConnDB().GetFill(sql);
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                x = true;
+            }
+            return x;
+        }
+
         public bool CreateNewInvoice(List<SetPallatData> obj)
         {
             bool x = true;
-            int i = 0;
-            //create header
-            string oldekey = obj[0].RefOldNo;
-            string nkey = GetRefInv(obj[0].Prefix, obj[0].Factory, obj[0].EtdDte);
-            while (i < obj.Count)
+            try
             {
-                var r = obj[i];
-                Console.WriteLine($"REFNO: {r.RefNo} PLNO: {r.ShipPlNo} QTY: {r.Ctn}");
-                string sql = $"UPDATE TXP_ISSPACKDETAIL SET ISSUINGKEY ='{nkey}' WHERE ISSUINGKEY = '{oldekey}' AND SHIPPLNO = '{r.ShipPlNo}'";
-                Console.WriteLine(sql);
-                i++;
-            }
-            //create body
-            string sql_get_body = $"select issuingkey,pono,partno,sum(ORDERQTY) qty,sum(ORDERQTY)/count(*) stdpack,count(*) ctn from txp_isspackdetail " +
-                $"where issuingkey='{oldekey}' GROUP BY issuingkey,pono,partno";
-            //issuingkey,issuingseq,pono,tagrp,partno,stdpack,orderqty,issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,upddte,sysdte,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,refinv
-            Console.WriteLine(sql_get_body);
-            DataSet dr = new ConnDB().GetFill(sql_get_body);
-            foreach (DataRow r in dr.Tables[0].Rows)
-            {
-                bool xdul = ChecDuplicateOrder(r["issuingkey"].ToString(), r["pono"].ToString(), r["partno"].ToString());
-                if (xdul is false)
+                Console.WriteLine($"============================= START {DateTime.Now.ToShortTimeString()} ====================================");
+                int i = 0;
+                //create header
+                string oldekey = obj[0].RefOldNo;
+                string nkey = GetRefInv(obj[0].Prefix, obj[0].Factory, obj[0].EtdDte);
+                List<string> plnum = new List<string>();
+                while (i < obj.Count)
                 {
-                    string ins_body = $"insert into txp_isstransbody(issuingkey,issuingseq,pono,tagrp,partno,stdpack,orderqty,issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,upddte,sysdte,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,refinv)\n" +
-                                      $"select '{nkey}',{r["ctn"].ToString()},'{r["pono"].ToString()}',tagrp,partno,stdpack,{r["qty"].ToString()},issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,sysdate,sysdate,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,'{nkey}' from txp_isstransbody where \n" +
-                                      $"issuingkey = '{oldekey}' and pono = '{r["pono"].ToString()}' and partno = '{r["partno"].ToString()}'";
-                    Console.WriteLine(ins_body);
+                    var r = obj[i];
+                    Console.WriteLine($"REFNO: {r.RefNo} PLNO: {r.ShipPlNo} QTY: {r.Ctn}");
+                    string sql = $"UPDATE TXP_ISSPACKDETAIL SET ISSUINGKEY ='{nkey}' WHERE ISSUINGKEY = '{oldekey}' AND SHIPPLNO = '{r.ShipPlNo}'";
+                    string sql_pallet = $"UPDATE TXP_ISSPALLET SET ISSUINGKEY ='{nkey}' WHERE ISSUINGKEY = '{oldekey}' AND PALLETNO = '{r.ShipPlNo}'";
+                    Console.WriteLine(sql);
+                    new ConnDB().ExcuteSQL(sql);
+                    new ConnDB().ExcuteSQL(sql_pallet);
+                    plnum.Add(r.ShipPlNo);
+                    i++;
                 }
+                //create body
+                string sql_get_body = $"select issuingkey,pono,partno,sum(ORDERQTY) qty,sum(ORDERQTY)/count(*) stdpack,count(*) ctn from txp_isspackdetail " +
+                    $"where issuingkey='{nkey}' GROUP BY issuingkey,pono,partno";
+                Console.WriteLine(sql_get_body);
+                DataSet dr = new ConnDB().GetFill(sql_get_body);
+                foreach (DataRow r in dr.Tables[0].Rows)
+                {
+                    bool xdul = ChecDuplicateOrder(nkey, r["pono"].ToString(), r["partno"].ToString());
+                    if (xdul is false)
+                    {
+                        string ins_body = $"insert into txp_isstransbody(issuingkey,issuingseq,pono,tagrp,partno,stdpack,orderqty,issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,upddte,sysdte,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,refinv)\n" +
+                                          $"select '{nkey}',0,'{r["pono"].ToString()}',tagrp,partno,stdpack,{r["qty"].ToString()},issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,sysdate,sysdate,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,'{obj[0].RefInv}' from txp_isstransbody where \n" +
+                                          $"issuingkey = '{oldekey}' and pono = '{r["pono"].ToString()}' and partno = '{r["partno"].ToString()}'";
+                        Console.WriteLine(ins_body);
+                        new ConnDB().ExcuteSQL(ins_body);
+                    }
+                }
+
+                bool head = CheckIssueHeader(nkey);
+                if (head is false)
+                {
+                    string sqlhead = $"insert into txp_isstransent(issuingkey,refinvoice,issuingstatus,etddte,factory,affcode,bishpc,custname,comercial,zoneid,shiptype,combinv,pc,zonecode,note1,note2,upddte,sysdte,uuid,createdby,modifiedby,containertype,issuingmax)\n" +
+                                     $"SELECT '{nkey}', '{obj[0].RefInv}', 0, etddte, factory, affcode, bishpc, custname, comercial, zoneid, shiptype, combinv, pc, zonecode, note1, note2, upddte, sysdte, uuid, createdby, modifiedby, containertype, 0 FROM txp_isstransent where issuingkey = '{oldekey}'";
+                    Console.WriteLine(sqlhead);
+                    new ConnDB().ExcuteSQL(sqlhead);
+                }
+                ////update issent 
+                string upolder = $"UPDATE TXP_ISSTRANSENT SET ISSUINGMAX = (SELECT count(*) FROM TXP_ISSTRANSBODY WHERE ISSUINGKEY = '{oldekey}') WHERE ISSUINGKEY = '{oldekey}'";
+                string upnewiss = $"UPDATE TXP_ISSTRANSENT SET ISSUINGMAX = (SELECT count(*) FROM TXP_ISSTRANSBODY WHERE ISSUINGKEY = '{nkey}') WHERE ISSUINGKEY = '{nkey}'";
+                new ConnDB().ExcuteSQL(upolder);
+                new ConnDB().ExcuteSQL(upnewiss);
+                Console.WriteLine(upolder);
+                Console.WriteLine(upnewiss);
+                Console.WriteLine($"============================= END {DateTime.Now.ToShortTimeString()} ====================================");
             }
-            //update body
-
-            //update header
-
-
-            //string sql = $"UPDATE TXP_ISSPACKDETAIL SET ISSUINGKEY ='{obj.RefNo}' WHERE ISSUINGKEY = '{obj.RefOldNo}' AND SHIPPLNO = '{obj.ShipPlNo}'";
-            //new ConnDB().ExcuteSQL(sql);
-
-            ////copy iss body
-            //string sql_body = $"SELECT ISSUINGKEY,PONO,PARTNO,sum(1) ctn,ORDERQTY FROM  TXP_ISSPACKDETAIL WHERE ISSUINGKEY = '{obj.RefNo}' AND SHIPPLNO = '{obj.ShipPlNo}'\n"+
-            //       "GROUP BY ISSUINGKEY,PONO,PARTNO,ORDERQTY";
-            //Console.WriteLine(sql_body);
-            ////create body 
-            //DataSet dr = new ConnDB().GetFill(sql_body);
-            //foreach (DataRow r in dr.Tables[0].Rows)
-            //{
-            //    int xctn = int.Parse(r["orderqty"].ToString()) * int.Parse(r["ctn"].ToString());
-            //    string ins_body = $"insert into txp_isstransbody(issuingkey,issuingseq,pono,tagrp,partno,stdpack,orderqty,issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,upddte,sysdte,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,refinv)\n" +
-            //                      $"select '{obj.RefNo}',{r["ctn"].ToString()},'{r["pono"].ToString()}',tagrp,partno,stdpack,{xctn},issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,sysdate,sysdate,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,'{obj.RefInv}' from txp_isstransbody where \n" +
-            //                      $"issuingkey = '{obj.RefNo}' and pono = '{r["pono"].ToString()}' and partno = '{r["partno"].ToString()}'";
-            //    Console.WriteLine(ins_body);
-            //    new ConnDB().ExcuteSQL(ins_body);
-            //}
-            ////create issue ent
-            //string sqlent = $"SELECT e.ISSUINGKEY FROM TXP_ISSTRANSENT e WHERE e.ISSUINGKEY = '{obj.RefNo}'";
-            //dr = new ConnDB().GetFill(sqlent);
-            //if (dr.Tables[0].Rows.Count <= 0)
-            //{
-            //    string sqlhead = $"insert into txp_isstransent(issuingkey,refinvoice,issuingstatus,etddte,factory,affcode,bishpc,custname,comercial,zoneid,shiptype,combinv,pc,zonecode,note1,note2,upddte,sysdte,uuid,createdby,modifiedby,containertype,issuingmax)\n"+
-            //                     $"SELECT '{obj.RefNo}', '{obj.RefInv}', 0, etddte, factory, affcode, bishpc, custname, comercial, zoneid, shiptype, combinv, pc, zonecode, note1, note2, upddte, sysdte, uuid, createdby, modifiedby, containertype, 0 FROM txp_isstransent where issuingkey = '{obj.RefNo}'";
-            //    Console.WriteLine(sqlhead);
-            //    new ConnDB().ExcuteSQL(sqlhead);
-            //}
-            ////update issent 
-            //string upolder = $"UPDATE TXP_ISSTRANSENT SET ISSUINGMAX = (SELECT count(*) FROM TXP_ISSTRANSBODY WHERE ISSUINGKEY = '{obj.RefOldNo}') WHERE ISSUINGKEY = '{obj.RefOldNo}'";
-            //string upnewiss = $"UPDATE TXP_ISSTRANSENT SET ISSUINGMAX = (SELECT count(*) FROM TXP_ISSTRANSBODY WHERE ISSUINGKEY = '{obj.RefNo}') WHERE ISSUINGKEY = '{obj.RefNo}'";
-            //new ConnDB().ExcuteSQL(upolder);
-            //new ConnDB().ExcuteSQL(upnewiss);
-            //new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPALLET SET ISSUINGKEY ='{obj.RefNo}' WHERE ISSUINGKEY ='{obj.RefOldNo}' AND PALLETNO ='{obj.ShipPlNo}'");
+            catch (Exception)
+            {
+                x = false;
+            }
             return x;
         }
 

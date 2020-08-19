@@ -25,10 +25,19 @@ namespace InvoiceApp
         List<InvoiceBodyData> spobj = new List<InvoiceBodyData>();
         List<InvoiceBodyData> shlist = new List<InvoiceBodyData>();
         bool chorderdate = false;
+        string note1;
+        string note2;
+        string note3;
+        string contype;
         public InvoiceDetailForm(InvoiceData ord)
         {
             InitializeComponent();
             ob = ord;
+            note1 = ob.Note1;
+            note2 = ob.Note2;
+            note3 = ob.Note3;
+            contype = ob.ContainerType;
+
             ReloadData();
         }
 
@@ -67,6 +76,7 @@ namespace InvoiceApp
             bbiEtd.EditValue = ob.Etddte;
             txtNote1.EditValue = ob.Note1;
             txtNote2.EditValue = ob.Note2;
+            bbiNote3.EditValue = ob.Note3;
             txtZoneCode.EditValue = ob.ZCode;
             bbiConTypeCaption.EditValue = ob.ContainerType;
             bbiEtd.Enabled = false;
@@ -385,11 +395,16 @@ namespace InvoiceApp
         {
             if (chorderdate)
             {
-                DialogResult r = XtraMessageBox.Show("คุณต้องการเปลี่ยน ETD  นี้ใช่หรือไม่?", "ข้อความแจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult r = XtraMessageBox.Show("คุณต้องการเปลี่ยนข้อมูลนี้ใช่หรือไม่?", "ข้อความแจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (r == DialogResult.Yes)
                 {
                     string sql = $"UPDATE TXP_ISSTRANSENT " +
-                        $"SET ETDDTE = TO_DATE('{DateTime.Parse(bbiEtd.EditValue.ToString()).ToString("dd/MM/yyyy")}', 'dd/MM/yyyy'),SHIPTYPE='{bbiShip.EditValue.ToString().ToUpper()}'" +
+                        $"SET ETDDTE = TO_DATE('{DateTime.Parse(bbiEtd.EditValue.ToString()).ToString("dd/MM/yyyy")}', 'dd/MM/yyyy')," +
+                        $"SHIPTYPE='{bbiShip.EditValue.ToString().ToUpper()}'," +
+                        $"NOTE1='{txtNote1.EditValue.ToString()}'," +
+                        $"NOTE2='{txtNote2.EditValue.ToString()}'," +
+                        $"NOTE3='{bbiNote3.EditValue.ToString()}'," +
+                        $"CONTAINERTYPE='{bbiConTypeCaption.EditValue.ToString()}'\n" +
                         $"WHERE ISSUINGKEY = '{ob.RefInv}'";
                     if (new ConnDB().ExcuteSQL(sql))
                     {
@@ -661,6 +676,63 @@ namespace InvoiceApp
                 bbiNewOrder.Enabled = false;
                 chorderdate = false;
             }
+        }
+
+        void CheckSave()
+        {
+            bbiNewOrder.Enabled = false;
+            bbiNewOrder.Caption = $"Save";
+            if (chorderdate)
+            {
+                bbiNewOrder.Enabled = true;
+                bbiNewOrder.Caption = $"Save";
+            }
+        }
+
+        void CheckSaveData()
+        {
+            try
+            {
+                chorderdate = false;
+                if (ob.Note1 != txtNote1.EditValue.ToString())
+                {
+                    chorderdate = true;
+                    CheckSave();
+                }
+                else if (ob.Note2 != txtNote2.EditValue.ToString())
+                {
+                    chorderdate = true;
+                    CheckSave();
+                }
+                else if (ob.Note3 != bbiNote3.EditValue.ToString())
+                {
+                    chorderdate = true;
+                    CheckSave();
+                }
+            }
+            catch (Exception)
+            {
+            }
+        }
+
+        private void txtNote1_EditValueChanged(object sender, EventArgs e)
+        {
+            CheckSaveData();
+        }
+
+        private void txtNote2_EditValueChanged(object sender, EventArgs e)
+        {
+            CheckSaveData();
+        }
+
+        private void bbiNote3_EditValueChanged(object sender, EventArgs e)
+        {
+            CheckSaveData();
+        }
+
+        private void bbiConTypeCaption_EditValueChanged(object sender, EventArgs e)
+        {
+            CheckSaveData();
         }
     }
 }

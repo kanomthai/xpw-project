@@ -69,7 +69,6 @@
             this.groupControl2 = new DevExpress.XtraEditors.GroupControl();
             this.layoutControl2 = new DevExpress.XtraLayout.LayoutControl();
             this.bbiConTypeCaption = new DevExpress.XtraEditors.TextEdit();
-            this.label7 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.txtZoneCode = new DevExpress.XtraEditors.TextEdit();
@@ -105,7 +104,6 @@
             this.layoutControlItem8 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem9 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem5 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.layoutControlItem11 = new DevExpress.XtraLayout.LayoutControlItem();
             this.bbiConType = new DevExpress.XtraLayout.LayoutControlItem();
             this.groupControl1 = new DevExpress.XtraEditors.GroupControl();
             this.gridControl = new DevExpress.XtraGrid.GridControl();
@@ -133,6 +131,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.ppMenu = new DevExpress.XtraBars.PopupMenu(this.components);
+            this.bbiNote3 = new DevExpress.XtraEditors.TextEdit();
+            this.layoutControlItem10 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -173,7 +173,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.bbiConType)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).BeginInit();
             this.groupControl1.SuspendLayout();
@@ -183,6 +182,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ppMenu)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bbiNote3.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).BeginInit();
             this.SuspendLayout();
             // 
             // ribbonControl
@@ -228,7 +229,7 @@
             this.ribbonPage1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.OfficeUniversal;
             this.ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
-            this.ribbonControl.Size = new System.Drawing.Size(965, 91);
+            this.ribbonControl.Size = new System.Drawing.Size(965, 79);
             this.ribbonControl.StatusBar = this.ribbonStatusBar;
             this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
@@ -498,10 +499,10 @@
             // 
             this.ribbonStatusBar.ItemLinks.Add(this.bsiRecordsCount);
             this.ribbonStatusBar.ItemLinks.Add(this.bbiSplitInvoice);
-            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 674);
+            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 669);
             this.ribbonStatusBar.Name = "ribbonStatusBar";
             this.ribbonStatusBar.Ribbon = this.ribbonControl;
-            this.ribbonStatusBar.Size = new System.Drawing.Size(965, 26);
+            this.ribbonStatusBar.Size = new System.Drawing.Size(965, 31);
             // 
             // workspaceManager1
             // 
@@ -513,10 +514,10 @@
             this.layoutControl1.Controls.Add(this.groupControl2);
             this.layoutControl1.Controls.Add(this.groupControl1);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl1.Location = new System.Drawing.Point(0, 91);
+            this.layoutControl1.Location = new System.Drawing.Point(0, 79);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.Root = this.Root;
-            this.layoutControl1.Size = new System.Drawing.Size(965, 583);
+            this.layoutControl1.Size = new System.Drawing.Size(965, 590);
             this.layoutControl1.TabIndex = 4;
             this.layoutControl1.Text = "layoutControl1";
             // 
@@ -525,14 +526,14 @@
             this.groupControl2.Controls.Add(this.layoutControl2);
             this.groupControl2.Location = new System.Drawing.Point(12, 12);
             this.groupControl2.Name = "groupControl2";
-            this.groupControl2.Size = new System.Drawing.Size(941, 153);
+            this.groupControl2.Size = new System.Drawing.Size(941, 155);
             this.groupControl2.TabIndex = 16;
             this.groupControl2.Text = "JOB ORDER LIST";
             // 
             // layoutControl2
             // 
+            this.layoutControl2.Controls.Add(this.bbiNote3);
             this.layoutControl2.Controls.Add(this.bbiConTypeCaption);
-            this.layoutControl2.Controls.Add(this.label7);
             this.layoutControl2.Controls.Add(this.label5);
             this.layoutControl2.Controls.Add(this.label6);
             this.layoutControl2.Controls.Add(this.txtZoneCode);
@@ -551,11 +552,11 @@
             this.layoutControl2.Controls.Add(this.bbiInv);
             this.layoutControl2.Controls.Add(this.bbiRefInv);
             this.layoutControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl2.Location = new System.Drawing.Point(2, 27);
+            this.layoutControl2.Location = new System.Drawing.Point(2, 20);
             this.layoutControl2.Name = "layoutControl2";
             this.layoutControl2.OptionsCustomizationForm.DesignTimeCustomizationFormPositionAndSize = new System.Drawing.Rectangle(1003, 0, 650, 400);
             this.layoutControl2.Root = this.layoutControlGroup1;
-            this.layoutControl2.Size = new System.Drawing.Size(937, 124);
+            this.layoutControl2.Size = new System.Drawing.Size(937, 133);
             this.layoutControl2.TabIndex = 0;
             this.layoutControl2.Text = "layoutControl2";
             // 
@@ -570,22 +571,16 @@
             this.bbiConTypeCaption.Properties.Appearance.Options.UseBackColor = true;
             this.bbiConTypeCaption.Properties.Appearance.Options.UseFont = true;
             this.bbiConTypeCaption.Properties.Appearance.Options.UseForeColor = true;
-            this.bbiConTypeCaption.Size = new System.Drawing.Size(84, 20);
+            this.bbiConTypeCaption.Size = new System.Drawing.Size(114, 20);
             this.bbiConTypeCaption.StyleController = this.layoutControl2;
             this.bbiConTypeCaption.TabIndex = 25;
-            // 
-            // label7
-            // 
-            this.label7.Location = new System.Drawing.Point(378, 84);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(180, 28);
-            this.label7.TabIndex = 24;
+            this.bbiConTypeCaption.EditValueChanged += new System.EventHandler(this.bbiConTypeCaption_EditValueChanged);
             // 
             // label5
             // 
-            this.label5.Location = new System.Drawing.Point(562, 84);
+            this.label5.Location = new System.Drawing.Point(706, 84);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(363, 28);
+            this.label5.Size = new System.Drawing.Size(219, 37);
             this.label5.TabIndex = 23;
             // 
             // label6
@@ -598,7 +593,7 @@
             // txtZoneCode
             // 
             this.txtZoneCode.Enabled = false;
-            this.txtZoneCode.Location = new System.Drawing.Point(627, 60);
+            this.txtZoneCode.Location = new System.Drawing.Point(473, 84);
             this.txtZoneCode.MenuManager = this.ribbonControl;
             this.txtZoneCode.Name = "txtZoneCode";
             this.txtZoneCode.Properties.Appearance.BackColor = System.Drawing.Color.Transparent;
@@ -625,6 +620,7 @@
             this.txtNote2.Size = new System.Drawing.Size(251, 20);
             this.txtNote2.StyleController = this.layoutControl2;
             this.txtNote2.TabIndex = 18;
+            this.txtNote2.EditValueChanged += new System.EventHandler(this.txtNote2_EditValueChanged);
             // 
             // txtNote1
             // 
@@ -640,6 +636,7 @@
             this.txtNote1.Size = new System.Drawing.Size(251, 20);
             this.txtNote1.StyleController = this.layoutControl2;
             this.txtNote1.TabIndex = 17;
+            this.txtNote1.EditValueChanged += new System.EventHandler(this.txtNote1_EditValueChanged);
             // 
             // label4
             // 
@@ -835,14 +832,14 @@
             this.lbcustname,
             this.layoutControlItem6,
             this.layoutControlItem7,
-            this.layoutControlItem8,
             this.layoutControlItem9,
             this.layoutControlItem5,
-            this.layoutControlItem11,
-            this.bbiConType});
+            this.bbiConType,
+            this.layoutControlItem8,
+            this.layoutControlItem10});
             this.layoutControlGroup1.Name = "Root";
             this.layoutControlGroup1.OptionsItemText.TextAlignMode = DevExpress.XtraLayout.TextAlignModeGroup.AutoSize;
-            this.layoutControlGroup1.Size = new System.Drawing.Size(937, 124);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(937, 133);
             this.layoutControlGroup1.TextVisible = false;
             // 
             // lbFactory
@@ -879,7 +876,7 @@
             this.lbOrder.MaxSize = new System.Drawing.Size(183, 32);
             this.lbOrder.MinSize = new System.Drawing.Size(183, 32);
             this.lbOrder.Name = "lbOrder";
-            this.lbOrder.Size = new System.Drawing.Size(183, 32);
+            this.lbOrder.Size = new System.Drawing.Size(183, 41);
             this.lbOrder.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.lbOrder.Text = "ORDER BY:";
             this.lbOrder.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
@@ -1025,11 +1022,11 @@
             // layoutControlItem8
             // 
             this.layoutControlItem8.Control = this.txtZoneCode;
-            this.layoutControlItem8.Location = new System.Drawing.Point(550, 48);
+            this.layoutControlItem8.Location = new System.Drawing.Point(396, 72);
             this.layoutControlItem8.MaxSize = new System.Drawing.Size(298, 24);
             this.layoutControlItem8.MinSize = new System.Drawing.Size(298, 24);
             this.layoutControlItem8.Name = "layoutControlItem8";
-            this.layoutControlItem8.Size = new System.Drawing.Size(298, 24);
+            this.layoutControlItem8.Size = new System.Drawing.Size(298, 41);
             this.layoutControlItem8.SizeConstraintsType = DevExpress.XtraLayout.SizeConstraintsType.Custom;
             this.layoutControlItem8.Text = "ZONE CODE:";
             this.layoutControlItem8.TextSize = new System.Drawing.Size(62, 13);
@@ -1046,27 +1043,18 @@
             // layoutControlItem5
             // 
             this.layoutControlItem5.Control = this.label5;
-            this.layoutControlItem5.Location = new System.Drawing.Point(550, 72);
+            this.layoutControlItem5.Location = new System.Drawing.Point(694, 72);
             this.layoutControlItem5.Name = "layoutControlItem5";
-            this.layoutControlItem5.Size = new System.Drawing.Size(367, 32);
+            this.layoutControlItem5.Size = new System.Drawing.Size(223, 41);
             this.layoutControlItem5.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem5.TextVisible = false;
-            // 
-            // layoutControlItem11
-            // 
-            this.layoutControlItem11.Control = this.label7;
-            this.layoutControlItem11.Location = new System.Drawing.Point(366, 72);
-            this.layoutControlItem11.Name = "layoutControlItem11";
-            this.layoutControlItem11.Size = new System.Drawing.Size(184, 32);
-            this.layoutControlItem11.TextSize = new System.Drawing.Size(0, 0);
-            this.layoutControlItem11.TextVisible = false;
             // 
             // bbiConType
             // 
             this.bbiConType.Control = this.bbiConTypeCaption;
             this.bbiConType.Location = new System.Drawing.Point(183, 72);
             this.bbiConType.Name = "bbiConType";
-            this.bbiConType.Size = new System.Drawing.Size(183, 32);
+            this.bbiConType.Size = new System.Drawing.Size(213, 41);
             this.bbiConType.Text = "CONTAINER TYPE:";
             this.bbiConType.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
             this.bbiConType.TextSize = new System.Drawing.Size(90, 13);
@@ -1075,9 +1063,9 @@
             // groupControl1
             // 
             this.groupControl1.Controls.Add(this.gridControl);
-            this.groupControl1.Location = new System.Drawing.Point(12, 169);
+            this.groupControl1.Location = new System.Drawing.Point(12, 171);
             this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(941, 402);
+            this.groupControl1.Size = new System.Drawing.Size(941, 407);
             this.groupControl1.TabIndex = 15;
             // 
             // gridControl
@@ -1085,11 +1073,11 @@
             this.gridControl.Cursor = System.Windows.Forms.Cursors.Hand;
             this.gridControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.gridControl.EmbeddedNavigator.Buttons.Edit.Enabled = false;
-            this.gridControl.Location = new System.Drawing.Point(2, 27);
+            this.gridControl.Location = new System.Drawing.Point(2, 20);
             this.gridControl.MainView = this.gridView;
             this.gridControl.MenuManager = this.ribbonControl;
             this.gridControl.Name = "gridControl";
-            this.gridControl.Size = new System.Drawing.Size(937, 373);
+            this.gridControl.Size = new System.Drawing.Size(937, 385);
             this.gridControl.TabIndex = 0;
             this.gridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -1363,15 +1351,15 @@
             this.layoutControlItem1,
             this.layoutControlItem2});
             this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(965, 583);
+            this.Root.Size = new System.Drawing.Size(965, 590);
             this.Root.TextVisible = false;
             // 
             // layoutControlItem1
             // 
             this.layoutControlItem1.Control = this.groupControl1;
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 157);
+            this.layoutControlItem1.Location = new System.Drawing.Point(0, 159);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(945, 406);
+            this.layoutControlItem1.Size = new System.Drawing.Size(945, 411);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
@@ -1380,7 +1368,7 @@
             this.layoutControlItem2.Control = this.groupControl2;
             this.layoutControlItem2.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(945, 157);
+            this.layoutControlItem2.Size = new System.Drawing.Size(945, 159);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
             // 
@@ -1426,6 +1414,25 @@
             this.ppMenu.Ribbon = this.ribbonControl;
             this.ppMenu.ShowCaption = true;
             this.ppMenu.ShowNavigationHeader = DevExpress.Utils.DefaultBoolean.True;
+            // 
+            // bbiNote3
+            // 
+            this.bbiNote3.Location = new System.Drawing.Point(605, 60);
+            this.bbiNote3.MenuManager = this.ribbonControl;
+            this.bbiNote3.Name = "bbiNote3";
+            this.bbiNote3.Size = new System.Drawing.Size(251, 20);
+            this.bbiNote3.StyleController = this.layoutControl2;
+            this.bbiNote3.TabIndex = 26;
+            this.bbiNote3.EditValueChanged += new System.EventHandler(this.bbiNote3_EditValueChanged);
+            // 
+            // layoutControlItem10
+            // 
+            this.layoutControlItem10.Control = this.bbiNote3;
+            this.layoutControlItem10.Location = new System.Drawing.Point(550, 48);
+            this.layoutControlItem10.Name = "layoutControlItem10";
+            this.layoutControlItem10.Size = new System.Drawing.Size(298, 24);
+            this.layoutControlItem10.Text = "NOTE 3:";
+            this.layoutControlItem10.TextSize = new System.Drawing.Size(40, 13);
             // 
             // InvoiceDetailForm
             // 
@@ -1481,7 +1488,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem8)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem11)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bbiConType)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.groupControl1)).EndInit();
             this.groupControl1.ResumeLayout(false);
@@ -1491,6 +1497,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ppMenu)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bbiNote3.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem10)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1591,13 +1599,13 @@
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem9;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn15;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn16;
-        private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Label label5;
         private DevExpress.XtraLayout.LayoutControlItem layoutControlItem5;
-        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem11;
         private DevExpress.XtraEditors.TextEdit bbiConTypeCaption;
         private DevExpress.XtraLayout.LayoutControlItem bbiConType;
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
         private DevExpress.XtraBars.BarButtonItem barButtonItem2;
+        private DevExpress.XtraEditors.TextEdit bbiNote3;
+        private DevExpress.XtraLayout.LayoutControlItem layoutControlItem10;
     }
 }

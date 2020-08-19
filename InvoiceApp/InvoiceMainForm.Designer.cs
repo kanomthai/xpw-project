@@ -131,6 +131,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bbiSendToDraft = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemRadioGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).BeginInit();
@@ -193,9 +194,10 @@
             this.bbiUpdateApp,
             this.bbiShowMe,
             this.bbiExitMe,
-            this.bbiCheckOrder});
+            this.bbiCheckOrder,
+            this.bbiSendToDraft});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 24;
+            this.ribbonControl.MaxItemId = 25;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.PageHeaderItemLinks.Add(this.skinDropDownButtonItem1);
             this.ribbonControl.PageHeaderItemLinks.Add(this.skinPalette);
@@ -207,7 +209,7 @@
             this.repositoryItemDateEdit1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.OfficeUniversal;
             this.ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
-            this.ribbonControl.Size = new System.Drawing.Size(1376, 93);
+            this.ribbonControl.Size = new System.Drawing.Size(1376, 79);
             this.ribbonControl.StatusBar = this.ribbonStatusBar;
             this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
@@ -512,10 +514,10 @@
             this.layoutControl1.Controls.Add(this.groupControl1);
             this.layoutControl1.Controls.Add(this.gridControl);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl1.Location = new System.Drawing.Point(0, 93);
+            this.layoutControl1.Location = new System.Drawing.Point(0, 79);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.Root = this.Root;
-            this.layoutControl1.Size = new System.Drawing.Size(1376, 663);
+            this.layoutControl1.Size = new System.Drawing.Size(1376, 677);
             this.layoutControl1.TabIndex = 4;
             this.layoutControl1.Text = "layoutControl1";
             // 
@@ -524,7 +526,7 @@
             this.groupControl1.Controls.Add(this.layoutControl2);
             this.groupControl1.Location = new System.Drawing.Point(1051, 12);
             this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(313, 639);
+            this.groupControl1.Size = new System.Drawing.Size(313, 653);
             this.groupControl1.TabIndex = 5;
             this.groupControl1.Text = "Navigator";
             // 
@@ -533,19 +535,19 @@
             this.layoutControl2.Controls.Add(this.groupControlForword);
             this.layoutControl2.Controls.Add(this.groupControlWeek);
             this.layoutControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl2.Location = new System.Drawing.Point(2, 22);
+            this.layoutControl2.Location = new System.Drawing.Point(2, 20);
             this.layoutControl2.Name = "layoutControl2";
             this.layoutControl2.Root = this.layoutControlGroup1;
-            this.layoutControl2.Size = new System.Drawing.Size(309, 615);
+            this.layoutControl2.Size = new System.Drawing.Size(309, 631);
             this.layoutControl2.TabIndex = 0;
             this.layoutControl2.Text = "layoutControl2";
             // 
             // groupControlForword
             // 
             this.groupControlForword.Controls.Add(this.gridForwardControl);
-            this.groupControlForword.Location = new System.Drawing.Point(12, 283);
+            this.groupControlForword.Location = new System.Drawing.Point(12, 290);
             this.groupControlForword.Name = "groupControlForword";
-            this.groupControlForword.Size = new System.Drawing.Size(285, 320);
+            this.groupControlForword.Size = new System.Drawing.Size(285, 329);
             this.groupControlForword.TabIndex = 5;
             this.groupControlForword.Text = "WEEK ล่วงหน้า(งานสำหรับสัปดาห์หน้า)";
             // 
@@ -553,11 +555,11 @@
             // 
             this.gridForwardControl.Cursor = System.Windows.Forms.Cursors.Hand;
             this.gridForwardControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridForwardControl.Location = new System.Drawing.Point(2, 22);
+            this.gridForwardControl.Location = new System.Drawing.Point(2, 20);
             this.gridForwardControl.MainView = this.gridForwardView;
             this.gridForwardControl.MenuManager = this.ribbonControl;
             this.gridForwardControl.Name = "gridForwardControl";
-            this.gridForwardControl.Size = new System.Drawing.Size(281, 296);
+            this.gridForwardControl.Size = new System.Drawing.Size(281, 307);
             this.gridForwardControl.TabIndex = 0;
             this.gridForwardControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridForwardView});
@@ -675,7 +677,7 @@
             this.groupControlWeek.Controls.Add(this.gridWeekControl);
             this.groupControlWeek.Location = new System.Drawing.Point(12, 12);
             this.groupControlWeek.Name = "groupControlWeek";
-            this.groupControlWeek.Size = new System.Drawing.Size(285, 267);
+            this.groupControlWeek.Size = new System.Drawing.Size(285, 274);
             this.groupControlWeek.TabIndex = 4;
             this.groupControlWeek.Text = "WEEK ปัจจุบัน(งานที่จะต้องโหลดขึ้นตู้)";
             // 
@@ -683,11 +685,11 @@
             // 
             this.gridWeekControl.Cursor = System.Windows.Forms.Cursors.Hand;
             this.gridWeekControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridWeekControl.Location = new System.Drawing.Point(2, 22);
+            this.gridWeekControl.Location = new System.Drawing.Point(2, 20);
             this.gridWeekControl.MainView = this.gridWeekView;
             this.gridWeekControl.MenuManager = this.ribbonControl;
             this.gridWeekControl.Name = "gridWeekControl";
-            this.gridWeekControl.Size = new System.Drawing.Size(281, 243);
+            this.gridWeekControl.Size = new System.Drawing.Size(281, 252);
             this.gridWeekControl.TabIndex = 0;
             this.gridWeekControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridWeekView});
@@ -810,7 +812,7 @@
             this.layoutControlItem3,
             this.layoutControlItem4});
             this.layoutControlGroup1.Name = "layoutControlGroup1";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(309, 615);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(309, 631);
             this.layoutControlGroup1.TextVisible = false;
             // 
             // layoutControlItem3
@@ -818,16 +820,16 @@
             this.layoutControlItem3.Control = this.groupControlWeek;
             this.layoutControlItem3.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(289, 271);
+            this.layoutControlItem3.Size = new System.Drawing.Size(289, 278);
             this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem3.TextVisible = false;
             // 
             // layoutControlItem4
             // 
             this.layoutControlItem4.Control = this.groupControlForword;
-            this.layoutControlItem4.Location = new System.Drawing.Point(0, 271);
+            this.layoutControlItem4.Location = new System.Drawing.Point(0, 278);
             this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(289, 324);
+            this.layoutControlItem4.Size = new System.Drawing.Size(289, 333);
             this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem4.TextVisible = false;
             // 
@@ -838,7 +840,7 @@
             this.gridControl.MainView = this.gridView;
             this.gridControl.MenuManager = this.ribbonControl;
             this.gridControl.Name = "gridControl";
-            this.gridControl.Size = new System.Drawing.Size(1035, 639);
+            this.gridControl.Size = new System.Drawing.Size(1035, 653);
             this.gridControl.TabIndex = 4;
             this.gridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -1182,7 +1184,7 @@
             this.layoutControlItem1,
             this.layoutControlItem2});
             this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(1376, 663);
+            this.Root.Size = new System.Drawing.Size(1376, 677);
             this.Root.TextVisible = false;
             // 
             // layoutControlItem1
@@ -1190,7 +1192,7 @@
             this.layoutControlItem1.Control = this.gridControl;
             this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(1039, 643);
+            this.layoutControlItem1.Size = new System.Drawing.Size(1039, 657);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
@@ -1199,7 +1201,7 @@
             this.layoutControlItem2.Control = this.groupControl1;
             this.layoutControlItem2.Location = new System.Drawing.Point(1039, 0);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(317, 643);
+            this.layoutControlItem2.Size = new System.Drawing.Size(317, 657);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
             // 
@@ -1209,7 +1211,8 @@
             this.ppMenu.ItemLinks.Add(this.bbiPartShorting, true);
             this.ppMenu.ItemLinks.Add(this.bbiOrderControl);
             this.ppMenu.ItemLinks.Add(this.bbiBookingControl);
-            this.ppMenu.ItemLinks.Add(this.bbiSendGedi, true);
+            this.ppMenu.ItemLinks.Add(this.bbiSendToDraft, true);
+            this.ppMenu.ItemLinks.Add(this.bbiSendGedi);
             this.ppMenu.ItemLinks.Add(this.bbiRefresh, true);
             this.ppMenu.ItemLinks.Add(this.bbiRestoreLayOut);
             this.ppMenu.Name = "ppMenu";
@@ -1250,6 +1253,15 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
+            // 
+            // bbiSendToDraft
+            // 
+            this.bbiSendToDraft.Caption = "Send To Draft";
+            this.bbiSendToDraft.Id = 24;
+            this.bbiSendToDraft.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiSendToDraft.ImageOptions.Image")));
+            this.bbiSendToDraft.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiSendToDraft.ImageOptions.LargeImage")));
+            this.bbiSendToDraft.Name = "bbiSendToDraft";
+            this.bbiSendToDraft.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiSendToDraft_ItemClick);
             // 
             // InvoiceMainForm
             // 
@@ -1403,5 +1415,6 @@
         private System.Windows.Forms.ToolStripMenuItem showToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private DevExpress.XtraBars.BarButtonItem bbiCheckOrder;
+        private DevExpress.XtraBars.BarButtonItem bbiSendToDraft;
     }
 }

@@ -587,5 +587,10 @@ namespace InvoiceApp
             //CheckOrderForm frm = new CheckOrderForm();
             //frm.Show();
         }
+
+        private void bbiSendToDraft_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            new GreeterFunction().ErrorHadler("ขอ อภัย!\nขณะนี้กำลังพัฒนาระบบ");
+        }
     }
 }

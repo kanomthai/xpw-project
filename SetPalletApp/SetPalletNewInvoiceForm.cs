@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using DevExpress.XtraEditors;
-using XPWLibrary.Models;
-using XPWLibrary.Interfaces;
-using XPWLibrary.Controllers;
+﻿using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
+using System;
+using System.Collections.Generic;
+using System.Windows.Forms;
+using XPWLibrary.Controllers;
+using XPWLibrary.Interfaces;
+using XPWLibrary.Models;
 
 namespace SetPalletApp
 {

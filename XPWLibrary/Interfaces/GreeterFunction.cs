@@ -1,10 +1,12 @@
-﻿using DevExpress.XtraSplashScreen;
+﻿using DevExpress.XtraEditors;
+using DevExpress.XtraSplashScreen;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Reflection;
 using System.Web.Script.Serialization;
+using System.Windows.Forms;
 using System.Xml;
 using XPWLibrary.Controllers;
 using XPWLibrary.Models;
@@ -1649,6 +1651,11 @@ namespace XPWLibrary.Interfaces
             }
 
             return txt + " => " + runno;
+        }
+
+        public void ErrorHadler(string msg)
+        {
+            XtraMessageBox.Show(msg, "Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }
