@@ -468,8 +468,15 @@ namespace InvoiceApp
             if (e.Button.ToString() == "Right")
             {
                 bbiSendGedi.Enabled = false;
+                var custname = gridView.GetFocusedRowCellValue("Custname").ToString();
                 var rmctn = gridView.GetFocusedRowCellValue("RmCtn").ToString();
                 bbiSendGedi.Caption = $"Send To GEDI";
+                bbiPrintShippingMark.Enabled = true;
+                var o = StaticFunctionData.shiping_label.FindAll(k => k.Contains(custname));
+                if (o.Count <= 0)
+                {
+                    bbiPrintShippingMark.Enabled = false;
+                }
                 if (int.Parse(rmctn) <= 0)
                 {
                     string ikey = gridView.GetFocusedRowCellValue("Invoice").ToString();
@@ -591,6 +598,16 @@ namespace InvoiceApp
         private void bbiSendToDraft_ItemClick(object sender, ItemClickEventArgs e)
         {
             new GreeterFunction().ErrorHadler("ขอ อภัย!\nขณะนี้กำลังพัฒนาระบบ");
+        }
+
+        private void bbiPrintShippingMark_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            string ikey = gridView.GetFocusedRowCellValue("RefInv").ToString();
+            //InvoiceAddShipMarkForm frm = new InvoiceAddShipMarkForm(ikey);
+            //frm.ShowDialog();
+
+            InvoiceShippingMarkPreviewForm frm = new InvoiceShippingMarkPreviewForm(ikey, null);
+            frm.ShowDialog();
         }
     }
 }

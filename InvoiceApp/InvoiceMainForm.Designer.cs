@@ -60,6 +60,7 @@
             this.bbiShowMe = new DevExpress.XtraBars.BarButtonItem();
             this.bbiExitMe = new DevExpress.XtraBars.BarButtonItem();
             this.bbiCheckOrder = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiSendToDraft = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -131,7 +132,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bbiSendToDraft = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiPrintShippingMark = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemRadioGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).BeginInit();
@@ -195,9 +196,10 @@
             this.bbiShowMe,
             this.bbiExitMe,
             this.bbiCheckOrder,
-            this.bbiSendToDraft});
+            this.bbiSendToDraft,
+            this.bbiPrintShippingMark});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 25;
+            this.ribbonControl.MaxItemId = 26;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.PageHeaderItemLinks.Add(this.skinDropDownButtonItem1);
             this.ribbonControl.PageHeaderItemLinks.Add(this.skinPalette);
@@ -450,6 +452,15 @@
             this.bbiCheckOrder.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiCheckOrder.ImageOptions.LargeImage")));
             this.bbiCheckOrder.Name = "bbiCheckOrder";
             this.bbiCheckOrder.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiCheckOrder_ItemClick);
+            // 
+            // bbiSendToDraft
+            // 
+            this.bbiSendToDraft.Caption = "Send To Draft";
+            this.bbiSendToDraft.Id = 24;
+            this.bbiSendToDraft.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiSendToDraft.ImageOptions.Image")));
+            this.bbiSendToDraft.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiSendToDraft.ImageOptions.LargeImage")));
+            this.bbiSendToDraft.Name = "bbiSendToDraft";
+            this.bbiSendToDraft.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiSendToDraft_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -1213,6 +1224,7 @@
             this.ppMenu.ItemLinks.Add(this.bbiBookingControl);
             this.ppMenu.ItemLinks.Add(this.bbiSendToDraft, true);
             this.ppMenu.ItemLinks.Add(this.bbiSendGedi);
+            this.ppMenu.ItemLinks.Add(this.bbiPrintShippingMark, true);
             this.ppMenu.ItemLinks.Add(this.bbiRefresh, true);
             this.ppMenu.ItemLinks.Add(this.bbiRestoreLayOut);
             this.ppMenu.Name = "ppMenu";
@@ -1254,14 +1266,14 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // bbiSendToDraft
+            // bbiPrintShippingMark
             // 
-            this.bbiSendToDraft.Caption = "Send To Draft";
-            this.bbiSendToDraft.Id = 24;
-            this.bbiSendToDraft.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiSendToDraft.ImageOptions.Image")));
-            this.bbiSendToDraft.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiSendToDraft.ImageOptions.LargeImage")));
-            this.bbiSendToDraft.Name = "bbiSendToDraft";
-            this.bbiSendToDraft.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiSendToDraft_ItemClick);
+            this.bbiPrintShippingMark.Caption = "Pring Shipping Mark";
+            this.bbiPrintShippingMark.Id = 25;
+            this.bbiPrintShippingMark.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiPrintShippingMark.ImageOptions.Image")));
+            this.bbiPrintShippingMark.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiPrintShippingMark.ImageOptions.LargeImage")));
+            this.bbiPrintShippingMark.Name = "bbiPrintShippingMark";
+            this.bbiPrintShippingMark.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiPrintShippingMark_ItemClick);
             // 
             // InvoiceMainForm
             // 
@@ -1416,5 +1428,6 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private DevExpress.XtraBars.BarButtonItem bbiCheckOrder;
         private DevExpress.XtraBars.BarButtonItem bbiSendToDraft;
+        private DevExpress.XtraBars.BarButtonItem bbiPrintShippingMark;
     }
 }

@@ -120,6 +120,12 @@
     <Compile Include="InvoiceAddNewPalletForm.Designer.cs">
       <DependentUpon>InvoiceAddNewPalletForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="InvoiceAddShipMarkForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InvoiceAddShipMarkForm.Designer.cs">
+      <DependentUpon>InvoiceAddShipMarkForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="InvoiceShippingMarkPreviewForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -172,6 +178,9 @@
     </Compile>
     <EmbeddedResource Include="InvoiceAddNewPalletForm.resx">
       <DependentUpon>InvoiceAddNewPalletForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InvoiceAddShipMarkForm.resx">
+      <DependentUpon>InvoiceAddShipMarkForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InvoiceConfirmInvForm.resx">
       <DependentUpon>InvoiceConfirmInvForm.cs</DependentUpon>
