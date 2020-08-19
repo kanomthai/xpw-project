@@ -1,9 +1,10 @@
-﻿namespace XPWLibrary.Interfaces
+﻿using System.Collections.Generic;
+
+namespace XPWLibrary.Interfaces
 {
     public class StaticFunctionData
     {
-        internal static string specialcustomer;
-
+        internal static string specialcustomer { get; set; }
         public static string fticketprinter { get; set; }
         public static string cartonticketprinter { get; set; }
         public static int aw_totalpallet { get; set; }
@@ -47,5 +48,6 @@
         public static int StatusSendGEDI { get; set; }
         public static string PathSource { get; set; }
         public static string PathTemplate { get; set; }
+        public static List<string> shiping_label { get; internal set; }
     }
 }

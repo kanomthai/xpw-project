@@ -24,7 +24,7 @@ namespace InvoiceApp
             SplashScreenManager.ShowDefaultWaitForm();
             ob = obj;
             bbiJobCardOnly.Enabled = true;
-            //new SetPalletControllers().CheckPalletSetSeq(ob.RefInv);
+            new SetPalletControllers().RunningSeq(ob.RefInv);
             if (StaticFunctionData.Factory == "AW")
             {
                 gridView.OptionsSelection.MultiSelect = false;

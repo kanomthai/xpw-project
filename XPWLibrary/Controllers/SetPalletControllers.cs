@@ -84,6 +84,25 @@ namespace XPWLibrary.Controllers
             return x;
         }
 
+        public bool RunningSeq(string issuekey)
+        {
+            bool x = false;
+            string sql = $"SELECT UUID FROM TXP_ISSPACKDETAIL l WHERE l.ISSUINGKEY = '{issuekey}' ORDER BY l.SHIPPLNO,l.PONO,l.PARTNO,l.FTICKETNO";
+            DataSet dr = new ConnDB().GetFill(sql);
+            int i = 1;
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow r in dr.Tables[0].Rows)
+                {
+                    SplashScreenManager.Default.SetWaitFormCaption($"UPDATE SEQ");
+                    SplashScreenManager.Default.SetWaitFormDescription($"{r["uuid"].ToString().Substring(0, 10)}...");
+                    new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPACKDETAIL SET ITEM={i} WHERE UUID='{r["uuid"].ToString()}'");
+                    i++;
+                }
+            }
+            return x;
+        }
+
         public List<SetPallatData> GetPartListCompletedDetail(string issuekey)
         {
             List<SetPallatData> obj = new List<SetPallatData>();

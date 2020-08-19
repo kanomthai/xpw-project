@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Web.Script.Serialization;
 using System.Windows.Forms;
@@ -181,6 +182,7 @@ namespace XPWLibrary.Interfaces
             StaticFunctionData.PathSource = node[22].InnerText;
             StaticFunctionData.PathTemplate = node[23].InnerText;
             StaticFunctionData.specialcustomer = node[24].InnerText;
+            StaticFunctionData.shiping_label = node[25].InnerText.Split(',').ToList();
 
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
 
