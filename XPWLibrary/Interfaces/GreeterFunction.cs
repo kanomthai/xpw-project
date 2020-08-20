@@ -183,6 +183,12 @@ namespace XPWLibrary.Interfaces
             StaticFunctionData.PathTemplate = node[23].InnerText;
             StaticFunctionData.specialcustomer = node[24].InnerText;
             StaticFunctionData.shiping_label = node[25].InnerText.Split(',').ToList();
+            StaticFunctionData.enable_etd = bool.Parse(node[26].InnerText.ToString());
+            StaticFunctionData.enable_ship = bool.Parse(node[27].InnerText.ToString());
+            StaticFunctionData.enable_note1 = bool.Parse(node[28].InnerText.ToString());
+            StaticFunctionData.enable_note2 = bool.Parse(node[29].InnerText.ToString());
+            StaticFunctionData.enable_note3 = bool.Parse(node[30].InnerText.ToString());
+            StaticFunctionData.enable_container = bool.Parse(node[31].InnerText.ToString());
 
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
 

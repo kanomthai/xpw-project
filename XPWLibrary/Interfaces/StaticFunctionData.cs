@@ -49,5 +49,11 @@ namespace XPWLibrary.Interfaces
         public static string PathSource { get; set; }
         public static string PathTemplate { get; set; }
         public static List<string> shiping_label { get; internal set; }
+        public static bool enable_etd { get; internal set; }
+        public static bool enable_ship { get; internal set; }
+        public static bool enable_note1 { get; internal set; }
+        public static bool enable_note2 { get; internal set; }
+        public static bool enable_note3 { get; internal set; }
+        public static bool enable_container { get; internal set; }
     }
 }

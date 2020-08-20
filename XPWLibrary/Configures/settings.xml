@@ -9,8 +9,8 @@
   <aw_netweight>1000</aw_netweight>
   <ipaddress>192.168.101.215</ipaddress>
   <dbname>RMW</dbname>
-  <user>sktsys</user>
-  <passwd>sktsys</passwd>
+  <user>expsys</user>
+  <passwd>expsys</passwd>
   <aw_plprinter>POSTEKI300</aw_plprinter>
   <inj_plprinter>POSTEKI300</inj_plprinter>
   <confirmlotno>true</confirmlotno>
@@ -26,4 +26,10 @@
   <pathtemplate>\\192.168.101.150\\Sharefull_SKT\\XPW-CK2\\XPW-Update\\xpw-templates</pathtemplate>
   <specialcustomer>YEL-BL</specialcustomer>
   <shipinglabel>YHK,YHK-J</shipinglabel>
+  <enable_etd>true</enable_etd>
+  <enable_ship>false</enable_ship>
+  <enable_note1>true</enable_note1>
+  <enable_note2>true</enable_note2>
+  <enable_note3>true</enable_note3>
+  <enable_container>true</enable_container>
 </data>

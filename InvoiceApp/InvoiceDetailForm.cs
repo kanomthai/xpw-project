@@ -79,8 +79,12 @@ namespace InvoiceApp
             bbiNote3.EditValue = ob.Note3;
             txtZoneCode.EditValue = ob.ZCode;
             bbiConTypeCaption.EditValue = ob.ContainerType;
-            bbiEtd.Enabled = false;
-            bbiShip.Enabled = false;
+            bbiEtd.Enabled = StaticFunctionData.enable_etd;
+            bbiShip.Enabled = StaticFunctionData.enable_ship;
+            txtNote1.Enabled = StaticFunctionData.enable_note1;
+            txtNote2.Enabled = StaticFunctionData.enable_note2;
+            bbiNote3.Enabled = StaticFunctionData.enable_note3;
+            bbiConTypeCaption.Enabled = StaticFunctionData.enable_container;
             bbiNewOrder.Enabled = false;
             bbiConfirmShort.Enabled = false;
             bbiSplitInvoice.Caption = "";
@@ -408,6 +412,8 @@ namespace InvoiceApp
                         $"WHERE ISSUINGKEY = '{ob.RefInv}'";
                     if (new ConnDB().ExcuteSQL(sql))
                     {
+                        new ConnDB().ExcuteSQL($"UPDATE TXP_LOADPALLET SET ETDDTE =TO_DATE('{DateTime.Parse(bbiEtd.EditValue.ToString()).ToString("dd/MM/yyyy")}', 'dd/MM/yyyy') WHERE ISSUINGKEY='{ob.RefInv}'");
+                        new ConnDB().ExcuteSQL($"UPDATE TXP_CARTONDETAILS SET SIDTE =TO_DATE('{DateTime.Parse(bbiEtd.EditValue.ToString()).ToString("dd/MM/yyyy")}', 'dd/MM/yyyy') WHERE SINO='{ob.RefInv}'");
                         XtraMessageBox.Show("บันทึกข้อมูลเสร็จแล้ว", "ข้อความแจ้งเตือน", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         bbiNewOrder.Caption = $"Save";
                         bbiNewOrder.Enabled = false;
@@ -496,9 +502,9 @@ namespace InvoiceApp
             }
         }
 
-        bool SaveShorting()
+        DateTime SaveShorting()
         {
-            bool x = false;
+            DateTime ndte = DateTime.Now;
             //bool c = false;
             //DialogResult r = XtraMessageBox.Show("คุณต้องการที่จะสร้าง Invoice ใหม่เลยหรืไม่?", "ข้อความแจ้งเตือน", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             //if (r == DialogResult.Yes)
@@ -523,6 +529,7 @@ namespace InvoiceApp
                     string partno = ob.PartNo;
                     int shctn = ob.ShCtn;
                     ord.Add(orderno);
+                    ndte = new InvoiceControllers().GetNextInvoiceDate(refinv);
                     //update body 
                     int tctn = ob.BalCtn - ob.ShCtn;
                     while (tctn < ob.BalCtn)
@@ -533,7 +540,7 @@ namespace InvoiceApp
                     }
                     //string upbody = $"UPDATE TXP_ISSTRANSBODY b SET b.ORDERQTY={(ob.BalCtn - ob.ShCtn)}*b.STDPACK,b.SHORDERQTY={shctn}*b.STDPACK,b.UPDDTE = sysdate WHERE b.ISSUINGKEY = '{refinv}' AND b.PONO = '{orderno}' AND b.PARTNO = '{partno}'";
                     string upbody = $"UPDATE TXP_ISSTRANSBODY b SET b.SHORDERQTY={shctn}*b.STDPACK,b.UPDDTE = sysdate WHERE b.ISSUINGKEY = '{refinv}' AND b.PONO = '{orderno}' AND b.PARTNO = '{partno}'";
-                    string uporder = $"UPDATE TXP_ORDERPLAN p SET p.CURINV='',p.BALQTY={shctn}*p.BISTDP,p.ORDERSTATUS=3,p.UPDDTE=SYSDATE WHERE p.CURINV = '{refinv}' AND p.ORDERID = '{orderno}' AND p.PARTNO = '{partno}'";
+                    string uporder = $"UPDATE TXP_ORDERPLAN p SET etdtap=to_date('{ndte.ToString("ddMMyyyy")}', 'ddMMyyyy'),p.CURINV='',p.BALQTY={shctn}*p.BISTDP,p.ORDERSTATUS=3,p.UPDDTE=SYSDATE WHERE p.CURINV = '{refinv}' AND p.ORDERID = '{orderno}' AND p.PARTNO = '{partno}'";
                     new ConnDB().ExcuteSQL(upbody);
                     new ConnDB().ExcuteSQL(uporder);
                     i++;
@@ -543,14 +550,12 @@ namespace InvoiceApp
                     
                 //}
                 shlist.Clear();
-                x = true;
             }
             catch (Exception)
             {
-                x = false;
             }
             SplashScreenManager.CloseDefaultWaitForm();
-            return x;
+            return ndte;
         }
 
         private void bbiConfirmShort_ItemClick(object sender, ItemClickEventArgs e)
@@ -558,14 +563,12 @@ namespace InvoiceApp
             DialogResult r = XtraMessageBox.Show("ยืนยันคำสั่งตัด Short", "XPW Alert!", MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
             if (r == DialogResult.OK)
             {
-                if (SaveShorting())
+                DateTime d = SaveShorting();
+                r = XtraMessageBox.Show($"บันทึกข้อมูล Short เลื่อนไปที่วันที่ {d.ToString("dd/MM/yyyy")}", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                if (r == DialogResult.OK)
                 {
-                    r = XtraMessageBox.Show("บันทึกข้อมูลเสร็จแล้ว", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                    if (r == DialogResult.OK)
-                    {
-                        //save split order
-                        ReloadData();
-                    }
+                    //save split order
+                    ReloadData();
                 }
             }
         }

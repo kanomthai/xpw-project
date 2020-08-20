@@ -704,5 +704,20 @@ namespace XPWLibrary.Controllers
             }
             return x;
         }
+
+        public DateTime GetNextInvoiceDate(string refinv)
+        {
+            DateTime d = DateTime.Now;
+            Console.WriteLine(refinv.Substring(4, 6));
+            string sql = $"SELECT AFFCODE,BISHPC,BISAFN FROM TXP_ORDERPLAN WHERE CURINV ='{refinv}' GROUP BY AFFCODE,BISHPC,BISAFN";
+            DataSet dr = new ConnDB().GetFill(sql);
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                string s = $"SELECT ETDTAP FROM TXP_ORDERPLAN WHERE AFFCODE = '{r["affcode"].ToString()}' AND BISHPC = '{r["bishpc"].ToString()}' AND BISAFN = '{r["bisafn"].ToString()}' AND ETDTAP > TO_DATE('{refinv.Substring(4, 6)}', 'yyMMdd') GROUP BY ETDTAP";
+                dr = new ConnDB().GetFill(s);
+                d = DateTime.Parse(dr.Tables[0].Rows[0]["etdtap"].ToString());
+            }
+            return d;
+        }
     }
 }
