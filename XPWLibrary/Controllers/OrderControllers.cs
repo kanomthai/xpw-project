@@ -138,6 +138,7 @@ namespace XPWLibrary.Controllers
                 refinvoice = refno;
             }
             new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
+            new ConnDB().ExcuteSQL($"DELETE txp_isstransbody WHERE ISSUINGKEY = '{b.RefNo}'");
             new ConnDB().ExcuteSQL($"DELETE txp_isspackdetail WHERE ISSUINGKEY = '{b.RefNo}'");
             List<OrderBody> ord = GetOrderDetail(b);
             if (ord.Count > 0)
