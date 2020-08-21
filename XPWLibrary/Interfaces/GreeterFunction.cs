@@ -1006,7 +1006,7 @@ namespace XPWLibrary.Interfaces
         {
             try
             {
-                if (i > 0)
+                if (i > 0 && total > 0)
                 {
                     bool xcust = false;
                     string sql_check_cust = $"SELECT * FROM TXP_ISSTRANSENT WHERE ISSUINGKEY = '{inv}' AND CUSTNAME = '{StaticFunctionData.specialcustomer}'";
@@ -1207,11 +1207,22 @@ namespace XPWLibrary.Interfaces
                     int[] a_180 = AvgPlWireCount(ctn_180, "PL");
                     int[] a_181 = AvgPlWireCount(ctn_181, "PL");
 
-                    //180
-                    lastpl = WrPl(olkey, a_180[0], inv, "180", lastpl, a_180[4]);
+                    if (a_180[4] > a_181[4])
+                    {
+                        //180
+                        lastpl = WrPl(olkey, a_180[0], inv, "180", lastpl, a_180[4]);
 
-                    //181
-                    lastpl = WrPl(olkey, a_181[0], inv, "181", lastpl, a_180[4]);
+                        //181
+                        lastpl = WrPl(olkey, a_181[0], inv, "181", lastpl, a_181[4]);
+                    }
+                    else
+                    {
+                        //181
+                        lastpl = WrPl(olkey, a_181[0], inv, "181", lastpl, a_181[4]);
+
+                        //180
+                        lastpl = WrPl(olkey, a_180[0], inv, "180", lastpl, a_180[4]);
+                    }
 
                     //mix
                     Console.WriteLine("START MIX==========================");
