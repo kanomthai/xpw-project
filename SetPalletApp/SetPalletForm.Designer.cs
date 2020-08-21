@@ -46,6 +46,7 @@
             this.bbiPrintCarton = new DevExpress.XtraBars.BarButtonItem();
             this.bbiNewInvoice = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            this.btnSetNewInvoice = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -167,7 +168,6 @@
             this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
             this.popupMenu2 = new DevExpress.XtraBars.PopupMenu(this.components);
             this.popupMenu3 = new DevExpress.XtraBars.PopupMenu(this.components);
-            this.btnSetNewInvoice = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -377,6 +377,15 @@
             this.barButtonItem1.Caption = "barButtonItem1";
             this.barButtonItem1.Id = 28;
             this.barButtonItem1.Name = "barButtonItem1";
+            // 
+            // btnSetNewInvoice
+            // 
+            this.btnSetNewInvoice.Caption = "New Invoice";
+            this.btnSetNewInvoice.Id = 29;
+            this.btnSetNewInvoice.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSetNewInvoice.ImageOptions.Image")));
+            this.btnSetNewInvoice.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnSetNewInvoice.ImageOptions.LargeImage")));
+            this.btnSetNewInvoice.Name = "btnSetNewInvoice";
+            this.btnSetNewInvoice.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSetNewInvoice_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -591,7 +600,7 @@
             this.gridColumn49.FieldName = "OrderNo";
             this.gridColumn49.Name = "gridColumn49";
             this.gridColumn49.Visible = true;
-            this.gridColumn49.VisibleIndex = 3;
+            this.gridColumn49.VisibleIndex = 2;
             this.gridColumn49.Width = 110;
             // 
             // gridColumn50
@@ -604,7 +613,7 @@
             this.gridColumn50.FieldName = "PName";
             this.gridColumn50.Name = "gridColumn50";
             this.gridColumn50.Visible = true;
-            this.gridColumn50.VisibleIndex = 4;
+            this.gridColumn50.VisibleIndex = 3;
             this.gridColumn50.Width = 129;
             // 
             // gridColumn51
@@ -625,7 +634,7 @@
             this.gridColumn53.FieldName = "PlSize";
             this.gridColumn53.Name = "gridColumn53";
             this.gridColumn53.Visible = true;
-            this.gridColumn53.VisibleIndex = 2;
+            this.gridColumn53.VisibleIndex = 1;
             this.gridColumn53.Width = 93;
             // 
             // gridColumn54
@@ -650,7 +659,7 @@
             this.gridColumn55.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Sum, "Qty", "{0:n0}")});
             this.gridColumn55.Visible = true;
-            this.gridColumn55.VisibleIndex = 8;
+            this.gridColumn55.VisibleIndex = 7;
             this.gridColumn55.Width = 48;
             // 
             // gridColumn56
@@ -662,8 +671,6 @@
             this.gridColumn56.Caption = "PALLET NO.";
             this.gridColumn56.FieldName = "ShipPlNo";
             this.gridColumn56.Name = "gridColumn56";
-            this.gridColumn56.Visible = true;
-            this.gridColumn56.VisibleIndex = 1;
             this.gridColumn56.Width = 63;
             // 
             // gridColumn57
@@ -676,7 +683,7 @@
             this.gridColumn57.FieldName = "FTicket";
             this.gridColumn57.Name = "gridColumn57";
             this.gridColumn57.Visible = true;
-            this.gridColumn57.VisibleIndex = 6;
+            this.gridColumn57.VisibleIndex = 5;
             this.gridColumn57.Width = 105;
             // 
             // gridColumn58
@@ -689,7 +696,7 @@
             this.gridColumn58.FieldName = "SerialNo";
             this.gridColumn58.Name = "gridColumn58";
             this.gridColumn58.Visible = true;
-            this.gridColumn58.VisibleIndex = 7;
+            this.gridColumn58.VisibleIndex = 6;
             this.gridColumn58.Width = 107;
             // 
             // gridColumn59
@@ -708,7 +715,7 @@
             this.gridColumn60.Summary.AddRange(new DevExpress.XtraGrid.GridSummaryItem[] {
             new DevExpress.XtraGrid.GridColumnSummaryItem(DevExpress.Data.SummaryItemType.Count, "ITem", "{0}")});
             this.gridColumn60.Visible = true;
-            this.gridColumn60.VisibleIndex = 5;
+            this.gridColumn60.VisibleIndex = 4;
             this.gridColumn60.Width = 44;
             // 
             // gridColumn61
@@ -742,7 +749,7 @@
             this.gridColumn64.FieldName = "Status";
             this.gridColumn64.Name = "gridColumn64";
             this.gridColumn64.Visible = true;
-            this.gridColumn64.VisibleIndex = 10;
+            this.gridColumn64.VisibleIndex = 9;
             this.gridColumn64.Width = 103;
             // 
             // gridColumn65
@@ -751,7 +758,7 @@
             this.gridColumn65.FieldName = "PlOutNo";
             this.gridColumn65.Name = "gridColumn65";
             this.gridColumn65.Visible = true;
-            this.gridColumn65.VisibleIndex = 9;
+            this.gridColumn65.VisibleIndex = 8;
             this.gridColumn65.Width = 85;
             // 
             // groupControl1
@@ -1653,15 +1660,6 @@
             this.popupMenu3.ItemLinks.Add(this.bbiDelPartDetail);
             this.popupMenu3.Name = "popupMenu3";
             this.popupMenu3.Ribbon = this.ribbonControl;
-            // 
-            // btnSetNewInvoice
-            // 
-            this.btnSetNewInvoice.Caption = "New Invoice";
-            this.btnSetNewInvoice.Id = 29;
-            this.btnSetNewInvoice.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("btnSetNewInvoice.ImageOptions.Image")));
-            this.btnSetNewInvoice.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("btnSetNewInvoice.ImageOptions.LargeImage")));
-            this.btnSetNewInvoice.Name = "btnSetNewInvoice";
-            this.btnSetNewInvoice.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnSetNewInvoice_ItemClick);
             // 
             // SetPalletForm
             // 

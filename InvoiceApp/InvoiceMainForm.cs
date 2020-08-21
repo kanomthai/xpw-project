@@ -470,6 +470,10 @@ namespace InvoiceApp
                 bbiSendGedi.Enabled = false;
                 var custname = gridView.GetFocusedRowCellValue("Custname").ToString();
                 var rmctn = gridView.GetFocusedRowCellValue("RmCtn").ToString();
+                var rmcon = gridView.GetFocusedRowCellValue("RmCon").ToString();
+                var rmpl = gridView.GetFocusedRowCellValue("Plno").ToString();
+                var plcount = gridView.GetFocusedRowCellValue("Pl").ToString();
+                var plstatus = gridView.GetFocusedRowCellValue("Status").ToString();
                 bbiSendGedi.Caption = $"Send To GEDI";
                 bbiPrintShippingMark.Enabled = true;
                 var o = StaticFunctionData.shiping_label.FindAll(k => k.Contains(custname));
@@ -477,19 +481,39 @@ namespace InvoiceApp
                 {
                     bbiPrintShippingMark.Enabled = false;
                 }
+                else
+                {
+                    if (int.Parse(plcount) <= 0)
+                    {
+                        bbiPrintShippingMark.Enabled = false;
+                    }
+                    if (int.Parse(plstatus) <= 0)
+                    {
+                        bbiPrintShippingMark.Enabled = false;
+                    }
+                }
                 if (int.Parse(rmctn) <= 0)
                 {
                     string ikey = gridView.GetFocusedRowCellValue("Invoice").ToString();
                     bbiSendGedi.Caption = $"Send {ikey} To GEDI";
-                    var st = gridView.GetFocusedRowCellValue("Status").ToString();
-                    switch (st)
+                    switch (plstatus)
                     {
                         case "4":
                         case "5":
                         case "6":
                             break;
                         default:
-                            bbiSendGedi.Enabled = true;
+                            if (int.Parse(rmcon) > 0)
+                            {
+                                bbiSendGedi.Enabled = false;
+                            }
+                            else if (int.Parse(rmpl) > 0)
+                            {
+                                bbiSendGedi.Enabled = false;
+                            }
+                            else {
+                                bbiSendGedi.Enabled = true;
+                            }
                             break;
                     }
                 }

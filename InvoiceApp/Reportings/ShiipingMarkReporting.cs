@@ -33,7 +33,7 @@ namespace InvoiceApp.Reportings
                 List<string> orderno = GetPono(r["plout"].ToString());
                 list.Add(new ShipingMarkData()
                 {
-                    Pname = "PNA",//r[""].ToString(),
+                    Pname = r["custname"].ToString(),
                     PTech = "TECHNOLOGY",
                     PMadeIn = "MADE IN THAILAND",
                     PCount = "MALAYSIA",
