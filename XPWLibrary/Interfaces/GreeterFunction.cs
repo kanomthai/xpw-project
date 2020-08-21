@@ -1080,6 +1080,7 @@ namespace XPWLibrary.Interfaces
                                     {
                                         run++;
                                         Console.WriteLine($"NEXT => {run}");
+                                        SplashScreenManager.Default.SetWaitFormDescription($"{plnum.ToString()} SEQ => {run}");
                                     }
                                 }
                                 Console.WriteLine("==================================================");
