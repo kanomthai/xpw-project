@@ -66,19 +66,32 @@ namespace XPWLibrary.Controllers
         public bool CheckPalletSetSeq(string issuekey)
         {
             bool x = true;
-            if (CheckShippingSeq(issuekey) is false) {
-                string sql = $"SELECT UUID FROM TXP_ISSPACKDETAIL l WHERE l.ISSUINGKEY = '{issuekey}' ORDER BY l.SHIPPLNO,l.PONO,l.PARTNO,l.FTICKETNO";
-                DataSet dr = new ConnDB().GetFill(sql);
-                int i = 1;
-                if (dr.Tables[0].Rows.Count > 0)
+            //if (CheckShippingSeq(issuekey) is false) {
+            //    string sql = $"SELECT UUID FROM TXP_ISSPACKDETAIL l WHERE l.ISSUINGKEY = '{issuekey}' ORDER BY l.SHIPPLNO,l.PONO,l.PARTNO,l.FTICKETNO";
+            //    DataSet dr = new ConnDB().GetFill(sql);
+            //    int i = 1;
+            //    if (dr.Tables[0].Rows.Count > 0)
+            //    {
+            //        foreach (DataRow r in dr.Tables[0].Rows)
+            //        {
+            //            SplashScreenManager.Default.SetWaitFormCaption($"UPDATE SEQ");
+            //            SplashScreenManager.Default.SetWaitFormDescription($"{r["uuid"].ToString().Substring(0, 10)}...");
+            //            new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPACKDETAIL SET ITEM={i} WHERE UUID='{r["uuid"].ToString()}'");
+            //            i++;
+            //        }
+            //    }
+            //}
+            string sql = $"SELECT UUID FROM TXP_ISSPACKDETAIL l WHERE l.ISSUINGKEY = '{issuekey}' ORDER BY l.SHIPPLNO,l.FTICKETNO";
+            DataSet dr = new ConnDB().GetFill(sql);
+            int i = 1;
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                foreach (DataRow r in dr.Tables[0].Rows)
                 {
-                    foreach (DataRow r in dr.Tables[0].Rows)
-                    {
-                        SplashScreenManager.Default.SetWaitFormCaption($"UPDATE SEQ");
-                        SplashScreenManager.Default.SetWaitFormDescription($"{r["uuid"].ToString().Substring(0, 10)}...");
-                        new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPACKDETAIL SET ITEM={i} WHERE UUID='{r["uuid"].ToString()}'");
-                        i++;
-                    }
+                    SplashScreenManager.Default.SetWaitFormCaption($"UPDATE SEQ");
+                    SplashScreenManager.Default.SetWaitFormDescription($"{r["uuid"].ToString().Substring(0, 10)}...");
+                    new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPACKDETAIL SET ITEM={i} WHERE UUID='{r["uuid"].ToString()}'");
+                    i++;
                 }
             }
             return x;

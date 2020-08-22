@@ -27,7 +27,7 @@ namespace SetPalletApp
             this.Text = $"{issuekey} DETAIL";
             inv = issuekey;
             SplashScreenManager.ShowDefaultWaitForm();
-            new SetPalletControllers().CheckPalletSetSeq(issuekey);
+            //new SetPalletControllers().CheckPalletSetSeq(issuekey);
             Reload();
             SplashScreenManager.CloseDefaultWaitForm();
         }
@@ -287,6 +287,7 @@ namespace SetPalletApp
             //            $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{obj.RefNo}' AND PONO = '{obj.OrderNo}' AND PARTNO = '{obj.PartNo}' AND ROWNUM < {i}";
             //new ConnDB().ExcuteSQL(sql);
             new SetPlControllers().InsertPalletToPackingDetailAll(obj, plno);
+            new SetPalletControllers().CheckPalletSetSeq(obj.RefNo);
         }
 
         private void gridPartView_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)

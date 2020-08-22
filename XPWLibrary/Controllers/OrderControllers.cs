@@ -768,10 +768,12 @@ namespace XPWLibrary.Controllers
                 "LEFT JOIN TXP_PART m ON p.FACTORY = m.VENDORCD AND p.PARTNO = m.PARTNO\n";
             List<OrderBody> obj = new List<OrderBody>();
             sql += CheckOrderGroup(b);
-            string ordby = "\nORDER BY p.PARTNO,round(p.BALQTY/p.BISTDP),p.PONO";
+            string ordby = "\nGROUP BY p.FACTORY,p.PONO,p.PARTNO,b.ORDERQTY,b.STDPACK,p.PARTNAME,p.LOTNO,p.BIIVPX,p.BIOABT,p.COMMERCIAL,p.PC,p.UUID,p.BISTDP,p.BIWIDT,p.BILENG,p.BIHIGH,p.BIGRWT,p.BINEWT,p.ORDERTYPE,p.CURINV,e.refinvoice,p.ORDERSTATUS,p.REASONCD,p.upddte,p.bicomd\n" +
+                "ORDER BY p.PARTNO,round(sum(p.BALQTY / p.BISTDP)),p.PONO";
             if (b.Factory == "AW")
             {
-                ordby = "\nORDER BY m.KIDS,m.SIZES ,p.ORDERID,p.LOTNO,round(p.BALQTY/p.BISTDP)";
+                ordby = "\nGROUP BY p.FACTORY,p.PONO,p.PARTNO,b.ORDERQTY,b.STDPACK,p.PARTNAME,p.LOTNO,p.BIIVPX,p.BIOABT,p.COMMERCIAL,p.PC,p.UUID,p.BISTDP,p.BIWIDT,p.BILENG,p.BIHIGH,p.BIGRWT,p.BINEWT,p.ORDERTYPE,p.CURINV,e.refinvoice,p.ORDERSTATUS,p.REASONCD,p.upddte,p.bicomd\n" +
+                "ORDER BY m.KIDS,m.SIZES ,p.ORDERID,p.LOTNO,round(p.BALQTY/p.BISTDP)";
             }
             sql += ordby;
             foreach (OrderBody od in AddOrderJobList(b, sql))
