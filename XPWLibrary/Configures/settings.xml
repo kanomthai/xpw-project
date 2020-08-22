@@ -32,4 +32,5 @@
   <enable_note2>true</enable_note2>
   <enable_note3>true</enable_note3>
   <enable_container>true</enable_container>
+  <enable_container_date>true</enable_container_date>
 </data>

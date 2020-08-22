@@ -17,6 +17,7 @@ namespace BookingApp
         public BookingAddForm(Bookings b)
         {
             InitializeComponent();
+            bbiEtd.Enabled = StaticFunctionData.enable_container_date;
             if (b is null)
             {
                 this.Text = "ADD NEW BOOKING";

@@ -55,5 +55,6 @@ namespace XPWLibrary.Interfaces
         public static bool enable_note2 { get; internal set; }
         public static bool enable_note3 { get; internal set; }
         public static bool enable_container { get; internal set; }
+        public static bool enable_container_date { get; internal set; }
     }
 }

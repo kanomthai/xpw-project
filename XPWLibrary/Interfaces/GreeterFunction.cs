@@ -189,6 +189,7 @@ namespace XPWLibrary.Interfaces
             StaticFunctionData.enable_note2 = bool.Parse(node[29].InnerText.ToString());
             StaticFunctionData.enable_note3 = bool.Parse(node[30].InnerText.ToString());
             StaticFunctionData.enable_container = bool.Parse(node[31].InnerText.ToString());
+            StaticFunctionData.enable_container_date = bool.Parse(node[32].InnerText.ToString());
 
             Version version = Assembly.GetExecutingAssembly().GetName().Version;
 
