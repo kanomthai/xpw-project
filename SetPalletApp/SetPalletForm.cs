@@ -1,19 +1,14 @@
-﻿using System;
+﻿using DevExpress.XtraBars;
+using DevExpress.XtraEditors;
+using DevExpress.XtraSplashScreen;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DevExpress.XtraEditors;
-using DevExpress.XtraBars;
-using System.ComponentModel.DataAnnotations;
 using XPWLibrary.Controllers;
-using XPWLibrary.Models;
 using XPWLibrary.Interfaces;
-using DevExpress.XtraSplashScreen;
+using XPWLibrary.Models;
 
 namespace SetPalletApp
 {
@@ -287,7 +282,7 @@ namespace SetPalletApp
             //            $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{obj.RefNo}' AND PONO = '{obj.OrderNo}' AND PARTNO = '{obj.PartNo}' AND ROWNUM < {i}";
             //new ConnDB().ExcuteSQL(sql);
             new SetPlControllers().InsertPalletToPackingDetailAll(obj, plno);
-            new SetPalletControllers().CheckPalletSetSeq(obj.RefNo);
+            //new SetPalletControllers().CheckPalletSetSeq(obj.RefNo);
         }
 
         private void gridPartView_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
