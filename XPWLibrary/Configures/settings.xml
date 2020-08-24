@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <data>
   <factory>INJ</factory>
-  <fticket>POSTEKI300</fticket>
+  <fticket>I300</fticket>
   <cartonprinter>POSTEKI300</cartonprinter>
   <aw_totalpallet>45</aw_totalpallet>
   <aw_palletlimit>17</aw_palletlimit>
@@ -32,5 +32,5 @@
   <enable_note2>true</enable_note2>
   <enable_note3>true</enable_note3>
   <enable_container>true</enable_container>
-  <enable_container_date>true</enable_container_date>
+  <enable_container_date>false</enable_container_date>
 </data>

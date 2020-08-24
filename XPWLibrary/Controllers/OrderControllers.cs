@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Threading;
 using XPWLibrary.Interfaces;
 using XPWLibrary.Models;
 
@@ -372,6 +371,64 @@ namespace XPWLibrary.Controllers
             return x;
         }
 
+        public bool UpdateBodyNewInvoice(string invoice)
+        {
+            bool x = false;
+            string sql = $"SELECT l.ISSUINGKEY,l.PONO,l.PARTNO,(b.STDPACK * count(1)) ctn  FROM TXP_ISSPACKDETAIL l \n"+
+                    $"INNER JOIN TXP_ISSTRANSBODY b ON l.ISSUINGKEY = b.ISSUINGKEY  AND l.PONO = b.PONO  AND l.PARTNO = b.PARTNO \n"+
+                    $"WHERE l.ISSUINGKEY = '{invoice}' GROUP BY l.ISSUINGKEY,l.PONO,l.PARTNO,b.STDPACK";
+            DataSet dr = new ConnDB().GetFill(sql);
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                string upbody = $"update txp_isstransbody set orderqty='{r["ctn"].ToString()}' " +
+                    $"where ISSUINGKEY='{invoice}' and pono='{r["pono"].ToString()}' and partno='{r["partno"].ToString()}'";
+                new ConnDB().ExcuteSQL(upbody);
+            }
+            return x;
+        }
+
+        public bool CreateBody(string nkey, string oldekey, List<SetPallatData> obj)
+        {
+            bool x = false;
+            string sql_get_body = $"select issuingkey,pono,partno,sum(ORDERQTY) qty,sum(ORDERQTY)/count(*) stdpack,count(*) ctn from txp_isspackdetail " +
+                    $"where issuingkey='{nkey}' GROUP BY issuingkey,pono,partno";
+            Console.WriteLine(sql_get_body);
+            DataSet dr = new ConnDB().GetFill(sql_get_body);
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                bool xdul = ChecDuplicateOrder(nkey, r["pono"].ToString(), r["partno"].ToString());
+                if (xdul is false)
+                {
+                    string ins_body = $"insert into txp_isstransbody(issuingkey,issuingseq,pono,tagrp,partno,stdpack,orderqty,issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,upddte,sysdte,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,refinv)\n" +
+                                      $"select '{nkey}',0,'{r["pono"].ToString()}',tagrp,partno,stdpack,{r["qty"].ToString()},issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,sysdate,sysdate,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,'{obj[0].RefInv}' from txp_isstransbody where \n" +
+                                      $"issuingkey = '{oldekey}' and pono = '{r["pono"].ToString()}' and partno = '{r["partno"].ToString()}'";
+                    Console.WriteLine(ins_body);
+                    if (new ConnDB().ExcuteSQL(ins_body))
+                    {
+                        Console.WriteLine($"INSERT {r["partno"].ToString()}'");
+                    }
+                }
+            }
+            return x;
+        }
+
+        public bool CheckNewPalletNo(string invoice)
+        {
+            bool x = false;
+            string sql = $"select ISSUINGKEY,SHIPPLNO,SUBSTR(SHIPPLNO, 0, 2) pfre FROM TXP_ISSPACKDETAIL WHERE ISSUINGKEY='{invoice}' AND SHIPPLNO IS NOT NULL GROUP BY ISSUINGKEY,SHIPPLNO";
+            DataSet dr = new ConnDB().GetFill(sql);
+            int i = 1;
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                string pl = r["pfre"].ToString() + i.ToString("D3");
+                string upbody = $"update TXP_ISSPACKDETAIL set SHIPPLNO='{pl}' " +
+                    $"where ISSUINGKEY='{invoice}' and SHIPPLNO='{r["shipplno"].ToString()}'";
+                new ConnDB().ExcuteSQL(upbody);
+                i++;
+            }
+            return x;
+        }
+
         public bool CreateNewInvoice(List<SetPallatData> obj)
         {
             bool x = true;
@@ -390,28 +447,20 @@ namespace XPWLibrary.Controllers
                     string sql = $"UPDATE TXP_ISSPACKDETAIL SET ISSUINGKEY ='{nkey}' WHERE ISSUINGKEY = '{oldekey}' AND SHIPPLNO = '{r.ShipPlNo}'";
                     string sql_pallet = $"UPDATE TXP_ISSPALLET SET ISSUINGKEY ='{nkey}' WHERE ISSUINGKEY = '{oldekey}' AND PALLETNO = '{r.ShipPlNo}'";
                     Console.WriteLine(sql);
-                    new ConnDB().ExcuteSQL(sql);
-                    new ConnDB().ExcuteSQL(sql_pallet);
+                    Console.WriteLine(sql_pallet);
+                    if (new ConnDB().ExcuteSQL(sql) is false)
+                    {
+                        Console.WriteLine($"error set packing");
+                    }
+                    if (new ConnDB().ExcuteSQL(sql_pallet) is false){
+                        Console.WriteLine($"error set pallet");
+                    }
                     plnum.Add(r.ShipPlNo);
                     i++;
                 }
                 //create body
-                string sql_get_body = $"select issuingkey,pono,partno,sum(ORDERQTY) qty,sum(ORDERQTY)/count(*) stdpack,count(*) ctn from txp_isspackdetail " +
-                    $"where issuingkey='{nkey}' GROUP BY issuingkey,pono,partno";
-                Console.WriteLine(sql_get_body);
-                DataSet dr = new ConnDB().GetFill(sql_get_body);
-                foreach (DataRow r in dr.Tables[0].Rows)
-                {
-                    bool xdul = ChecDuplicateOrder(nkey, r["pono"].ToString(), r["partno"].ToString());
-                    if (xdul is false)
-                    {
-                        string ins_body = $"insert into txp_isstransbody(issuingkey,issuingseq,pono,tagrp,partno,stdpack,orderqty,issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,upddte,sysdte,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,refinv)\n" +
-                                          $"select '{nkey}',0,'{r["pono"].ToString()}',tagrp,partno,stdpack,{r["qty"].ToString()},issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,sysdate,sysdate,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,'{obj[0].RefInv}' from txp_isstransbody where \n" +
-                                          $"issuingkey = '{oldekey}' and pono = '{r["pono"].ToString()}' and partno = '{r["partno"].ToString()}'";
-                        Console.WriteLine(ins_body);
-                        new ConnDB().ExcuteSQL(ins_body);
-                    }
-                }
+                CreateBody(nkey, oldekey, obj);
+                CreateBody(oldekey, nkey, obj);
 
                 bool head = CheckIssueHeader(nkey);
                 if (head is false)
@@ -428,6 +477,10 @@ namespace XPWLibrary.Controllers
                 new ConnDB().ExcuteSQL(upnewiss);
                 Console.WriteLine(upolder);
                 Console.WriteLine(upnewiss);
+                UpdateBodyNewInvoice(oldekey);
+                UpdateBodyNewInvoice(nkey);
+                //CheckNewPalletNo(oldekey);
+                CheckNewPalletNo(nkey);
                 Console.WriteLine($"============================= END {DateTime.Now.ToShortTimeString()} ====================================");
             }
             catch (Exception)
