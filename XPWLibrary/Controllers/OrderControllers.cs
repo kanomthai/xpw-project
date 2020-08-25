@@ -46,7 +46,7 @@ namespace XPWLibrary.Controllers
                         OrderCtn = int.Parse(r["orderctn"].ToString()),
                         ItemCtn = int.Parse(r["item"].ToString()),
                         RefInv = ob["invoceno"].ToString(),
-                        RefNo = r["curinv"].ToString(),
+                        RefNo = ob["curinv"].ToString(),
                         OrderRewrite = r["rewrite"].ToString(),
                         Status = st,
                         Combinv = ob["combinv"].ToString(),
@@ -139,7 +139,9 @@ namespace XPWLibrary.Controllers
             new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
             new ConnDB().ExcuteSQL($"DELETE txp_isstransbody WHERE ISSUINGKEY = '{b.RefNo}'");
             new ConnDB().ExcuteSQL($"DELETE txp_isspackdetail WHERE ISSUINGKEY = '{b.RefNo}'");
-            new ConnDB().ExcuteSQL($"DELETE txp_isspallet WHERE ISSUINGKEY = '{b.RefNo}'");
+            //new ConnDB().ExcuteSQL($"DELETE txp_isspallet WHERE ISSUINGKEY = '{b.RefNo}'");
+            new ConnDB().ExcuteSQL($"update txp_orderplan set curinv = '',orderstatus=0,upddte = sysdate where curinv = '{refinvoice}'");
+            refinvoice = refno;
             List<OrderBody> ord = GetOrderDetail(b);
             if (ord.Count > 0)
             {
@@ -492,14 +494,16 @@ namespace XPWLibrary.Controllers
 
         public string GetRefInv(string prefix, string factory, DateTime etd)
         {
-            string sql = $"SELECT count(*) +1 ctn FROM TXP_ISSTRANSENT e WHERE TO_CHAR(etddte, 'yyyy-MM-dd') = '{etd.ToString("yyyy-MM-dd")}' and factory = '{factory}'";
-            DataSet dr = new ConnDB().GetFill(sql);
+            //string sql = $"SELECT count(*) +1 ctn FROM TXP_ISSTRANSENT e WHERE TO_CHAR(etddte, 'yyyy-MM-dd') = '{etd.ToString("yyyy-MM-dd")}' and factory = '{factory}'";
+            //DataSet dr = new ConnDB().GetFill(sql);
             string fac = $"I{prefix}-{etd.ToString("yyMMdd")}-";
             if (factory == "AW")
             {
                 fac = $"A{prefix}-{etd.ToString("yyMMdd")}-";
             }
-            string inv = fac + int.Parse(dr.Tables[0].Rows[0]["ctn"].ToString()).ToString("D5");
+            Random rnd = new Random();
+            int x = rnd.Next(1, 99999);
+            string inv = fac + x.ToString("D5");
             return inv;
         }
 
@@ -511,7 +515,7 @@ namespace XPWLibrary.Controllers
             switch (r["combinv"].ToString())
             {
                 case "E":
-                    sqlbody = $"SELECT SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite,max(p.biivpx) biivpx\n" +
+                    sqlbody = $"SELECT SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3) custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,p.CURINV CURINV,p.CURINV invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite,max(p.biivpx) biivpx\n" +
                           "FROM TXP_ORDERPLAN p\n" +
                           $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                           $"p.AFFCODE = '{r["affcode"]}' AND " +
@@ -522,12 +526,12 @@ namespace XPWLibrary.Controllers
                           $"AND p.PC = '{r["pc"]}' " +
                           $"AND p.BIOABT = '{r["bioabt"]}' AND " +
                           $"get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}'\n" +
-                          $"GROUP BY SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3)";
+                          $"GROUP BY SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3),p.CURINV";
                     //Console.WriteLine(sqlbody);
                     obb = AddOrderList(r, sqlbody);
                     break;
                 case "F":
-                    sqlbody = $"SELECT SUBSTR(p.orderid,1, 3) custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite,max(p.biivpx) biivpx\n" +
+                    sqlbody = $"SELECT SUBSTR(p.orderid,1, 3) custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,p.CURINV CURINV,p.CURINV invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite,max(p.biivpx) biivpx\n" +
                           "FROM TXP_ORDERPLAN p\n" +
                           $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                           $"p.AFFCODE = '{r["affcode"]}' AND " +
@@ -538,12 +542,12 @@ namespace XPWLibrary.Controllers
                           $"AND p.PC = '{r["pc"]}' " +
                           $"AND p.BIOABT = '{r["bioabt"]}' AND " +
                           $"get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}'\n" +
-                          $"GROUP BY SUBSTR(p.orderid,1, 3)";
+                          $"GROUP BY SUBSTR(p.orderid,1, 3),p.CURINV";
                     //Console.WriteLine(sqlbody);
                     obb = AddOrderList(r, sqlbody);
                     break;
                 case "N":
-                    sqlbody = $"SELECT 'ALL' custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite,max(p.biivpx) biivpx\n" +
+                    sqlbody = $"SELECT 'ALL' custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,p.CURINV CURINV,p.CURINV invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite,max(p.biivpx) biivpx\n" +
                           "FROM TXP_ORDERPLAN p\n" +
                           $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                          $"p.AFFCODE = '{r["affcode"]}' AND " +
@@ -553,12 +557,13 @@ namespace XPWLibrary.Controllers
                           $"AND p.COMMERCIAL = '{r["commercial"]}' " +
                           $"AND p.PC = '{r["pc"]}' " +
                           $"AND p.BIOABT = '{r["bioabt"]}' AND " +
-                          $"get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}'";
+                          $"get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}'\n" +
+                          $"GROUP BY p.CURINV";
                     //Console.WriteLine(sqlbody);
                     obb = AddOrderList(r, sqlbody);
                     break;
                 default:
-                    sqlbody = $"SELECT p.PONO custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,max(p.CURINV) CURINV,MIN(p.CURINV) invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite,max(p.biivpx) biivpx\n" +
+                    sqlbody = $"SELECT p.PONO custpono,count(p.PARTNO) item,CASE WHEN sum(round(p.BALQTY/p.BISTDP)) IS NULL THEN 0 ELSE sum(round(p.BALQTY/p.BISTDP)) END orderctn,p.CURINV CURINV,p.CURINV invoceno,CASE WHEN max(p.ORDERSTATUS) IS NULL THEN 0 ELSE max(p.ORDERSTATUS) END ORDERSTATUS,CASE WHEN max(p.REASONCD) IS NOT NULL THEN '1' ELSE '0' end rewrite,max(p.biivpx) biivpx\n" +
                           "FROM TXP_ORDERPLAN p\n" +
                           $"WHERE p.STATUS = 1 AND p.FACTORY = '{r["factory"]}' AND p.ETDTAP = to_date('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') AND " +
                           $"p.AFFCODE = '{r["affcode"]}' AND " +
@@ -569,7 +574,7 @@ namespace XPWLibrary.Controllers
                           $"AND p.PC = '{r["pc"]}' " +
                           $"AND p.BIOABT = '{r["bioabt"]}' AND " +
                           $"get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}'\n" +
-                          $"GROUP BY p.PONO";
+                          $"GROUP BY p.PONO,p.CURINV";
                     //Console.WriteLine(sqlbody);
                     obb = AddOrderList(r, sqlbody);
                     break;
@@ -588,6 +593,7 @@ namespace XPWLibrary.Controllers
             {
             }
             Console.WriteLine($"START ---> HEAD");
+            Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
             int i = 0;
             while (i < dr.Tables[0].Rows.Count)
@@ -625,12 +631,12 @@ namespace XPWLibrary.Controllers
             {
                 fdte = $"AND ETDTAP between TRUNC(to_date('{dte}', 'ddMMyyyy') - 1, 'DY') AND(TRUNC(to_date('{dte}', 'ddMMyyyy'), 'DY') + {wnum})";
             }
-            string sql = $"select distinct * from TBT_ORDERLIST where FACTORY = '{factory}' {fdte} ORDER BY affcode,bishpc,bisafn";
+            string sql = $"select * from TBT_ORDERLIST where FACTORY = '{factory}' {fdte} ORDER BY CURINV,affcode,bishpc,bisafn";
             Console.WriteLine(sql);
             List<OrderData> obj = GetOrderList(sql);
             if (obj.Count < 1)
             {
-                sql = $"select distinct * from TBT_ORDERLIST where FACTORY = '{factory}' {fdte} ORDER BY affcode,bishpc,bisafn";
+                sql = $"select * from TBT_ORDERLIST where FACTORY = '{factory}' {fdte} ORDER BY CURINV,affcode,bishpc,bisafn";
                 obj = GetOrderList(sql);
             }
             return obj;
