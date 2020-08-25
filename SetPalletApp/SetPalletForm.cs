@@ -328,6 +328,7 @@ namespace SetPalletApp
 
         private void gridPalletView_Click(object sender, EventArgs e)
         {
+            gridPalleteDetailControl.DataSource = null;
             try
             {
                 SetPallatData x = gridPalletView.GetFocusedRow() as SetPallatData;
