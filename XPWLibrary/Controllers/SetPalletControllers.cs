@@ -12,7 +12,7 @@ namespace XPWLibrary.Controllers
         public List<SetPallatData> GetPartListDetail(string issuekey)
         {
             List<SetPallatData> obj = new List<SetPallatData>();
-            string sql = $"SELECT * FROM TBT_SETPALLET l WHERE l.ISSUINGKEY = '{issuekey}' ORDER BY ORDERNO,PARTNO,PLSIZE ";
+            string sql = $"SELECT * FROM TBT_SETPALLET l WHERE l.ISSUINGKEY = '{issuekey}' ORDER BY PARTNO,PLSIZE,ORDERNO";
             Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow r in dr.Tables[0].Rows)
