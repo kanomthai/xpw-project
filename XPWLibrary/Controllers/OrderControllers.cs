@@ -271,6 +271,7 @@ namespace XPWLibrary.Controllers
                             Console.WriteLine($"create packing detail {rn} {r.OrderCtn}");
                             Guid gid = Guid.NewGuid();
                             string fkey = new GreeterFunction().getFTicket(r.Factory);
+                            SplashScreenManager.Default.SetWaitFormDescription($"{r.PartNo} {fkey}");
                             int lastseq =  GetLastSeq(refinvoice);
                             string sqldetail = $"insert into txp_isspackdetail(issuingkey,pono,tagrp,partno,fticketno,orderqty,issuedqty,unit,issuingstatus,upddte,sysdte,uuid,createdby,modifedby,ITEM,splorder)\n" +
                                 $"values('{refinvoice}','{r.OrderNo}','C','{r.PartNo}','{fkey}','{r.BiSTDP}',0,'PCS',0,sysdate,sysdate,'{gid.ToString()}','SYS','SYS',{lastseq},'{g.ToString()}')";

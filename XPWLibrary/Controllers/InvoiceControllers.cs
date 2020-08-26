@@ -654,11 +654,11 @@ namespace XPWLibrary.Controllers
                         label_qty_2 = null;
                         if (int.Parse(j["qty"].ToString()) > 1)
                         {
-                            qrcode = $"{custname}|{ordernumber}|{cartonnumber}|{cartonctn}|{j["partname"].ToString()};{j["partname"].ToString()}";
+                            qrcode = $"{custname}|{ordernumber}|{cartonnumber}|{cartonctn}|{j["partname"].ToString()};{j["partname"].ToString()}|{j["ploutno"].ToString()}";
                         }
                         else
                         {
-                            qrcode = $"{custname}|{ordernumber}|{cartonnumber}|{cartonctn}|{j["partname"].ToString()}";
+                            qrcode = $"{custname}|{ordernumber}|{cartonnumber}|{cartonctn}|{j["partname"].ToString()}|{j["ploutno"].ToString()}";
                         }
                     }
 
