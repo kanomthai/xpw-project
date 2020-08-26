@@ -87,11 +87,11 @@ namespace XPWLibrary.Controllers
             string sql = $"SELECT * FROM TBT_ISSUELIST t WHERE t.FACTORY = '{StaticFunctionData.Factory}' AND {etddate} AND t.CTN > 0\n";
             if (StaticFunctionData.Factory == "AW")
             {
-                sql += "ORDER BY t.ZNAME,t.ETDDTE,t.CUSTNAME,t.REFINVOICE,t.ISSUINGKEY";
+                sql += "ORDER BY t.ZNAME,t.ETDDTE,t.CUSTNAME,t.ord,t.REFINVOICE";
             }
             else
             {
-                sql += "ORDER BY t.ZNAME,t.ETDDTE,t.CUSTNAME,t.REFINVOICE,t.ISSUINGKEY";
+                sql += "ORDER BY t.ZNAME,t.ETDDTE,t.CUSTNAME,t.ord,t.REFINVOICE";
             }
             Console.WriteLine(sql);
             return AppendInvoiceDetail(sql);

@@ -136,12 +136,12 @@ namespace XPWLibrary.Controllers
             {
                 refinvoice = refno;
             }
-            new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
+            //new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
             new ConnDB().ExcuteSQL($"DELETE txp_isstransbody WHERE ISSUINGKEY = '{b.RefNo}'");
             new ConnDB().ExcuteSQL($"DELETE txp_isspackdetail WHERE ISSUINGKEY = '{b.RefNo}'");
             //new ConnDB().ExcuteSQL($"DELETE txp_isspallet WHERE ISSUINGKEY = '{b.RefNo}'");
             new ConnDB().ExcuteSQL($"update txp_orderplan set curinv = '',orderstatus=0,upddte = sysdate where curinv = '{refinvoice}'");
-            refinvoice = refno;
+            //refinvoice = refno;
             List<OrderBody> ord = GetOrderDetail(b);
             if (ord.Count > 0)
             {
@@ -205,26 +205,6 @@ namespace XPWLibrary.Controllers
                             while (rn < r.Ctn)
                             {
                                 int nums = (rn + 1);
-                                //string sqldetail = $"SELECT count(*) ctn FROM TXP_ISSPACKDETAIL d WHERE d.PARTNO = '{r.PartNo}' AND d.ITEM={nums} AND d.pono='{r.OrderNo}' AND d.ISSUINGKEY IN ({refkey})";
-                                //dr = new ConnDB().GetFill(sqldetail);
-                                //if (dr.Tables[0].Rows.Count > 0)
-                                //{
-                                //    if (int.Parse((dr.Tables[0].Rows[0][0]).ToString()) <= 0)
-                                //    {
-                                //        Guid gid = Guid.NewGuid();
-                                //        string fkey = new GreeterFunction().getFTicket(r.Factory);
-                                //        Console.WriteLine($"{nums}.CREATE {r.PartNo} => {fkey}");
-                                //        SplashScreenManager.Default.SetWaitFormCaption($"{(i + 1)}. {r.PartNo}");
-                                //        SplashScreenManager.Default.SetWaitFormDescription($"{nums}. {fkey}");
-                                //        int lastseq = GetLastSeq(refinvoice);
-                                //        string insql = $"insert into txp_isspackdetail(issuingkey,pono,tagrp,partno,fticketno,orderqty,issuedqty,unit,issuingstatus,upddte,sysdte,uuid,createdby,modifedby,ITEM,splorder)\n" +
-                                //            $"values('{refinvoice}','{r.OrderNo}','C','{r.PartNo}','{fkey}','{r.BiSTDP}',0,'PCS',0,sysdate,sysdate,'{gid.ToString()}','SYS','SYS',{lastseq},'{g.ToString()}')";
-                                //        new ConnDB().ExcuteSQL(insql);
-                                //        GreeterFunction.updateFTicket(r.Factory);
-                                //        Thread.Sleep(10);
-                                //    }
-                                //}
-
                                 Guid gid = Guid.NewGuid();
                                 string fkey = new GreeterFunction().getFTicket(r.Factory);
                                 Console.WriteLine($"{nums}.CREATE {r.PartNo} => {fkey}");
@@ -953,27 +933,70 @@ namespace XPWLibrary.Controllers
             return x;
         }
 
-        public int GetLastPalletCtn(string issno, string pltype)
+        private string GetConbinv(string inv)
         {
+            string comb = "N";
+            string sql = $"SELECT c.COMBINV FROM TXP_ISSTRANSENT e INNER JOIN TXM_CUSTOMER c ON e.AFFCODE = c.AFFCODE AND e.BISHPC = c.BISHPC AND e.CUSTNAME = c.CUSTNM AND e.FACTORY = c.FACTORY AND e.ISSUINGKEY ='{inv}'";
+            DataSet dr = new ConnDB().GetFill(sql);
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                comb = dr.Tables[0].Rows[0]["combinv"].ToString();
+            }
+            return comb;
+        }
+
+        private string GetCustomerByRefInvoice(string invoice)
+        {
+            string custname = "";
+            string sql = $"SELECT e.CUSTNAME FROM TXP_ISSTRANSENT e WHERE e.ISSUINGKEY ='{invoice}'";
+            DataSet dr = new ConnDB().GetFill(sql);
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                custname = dr.Tables[0].Rows[0]["custname"].ToString();
+            }
+            return custname;
+        }
+
+        private string GetLastAWIssue(string issuekey)
+        {
+            string inv = issuekey;
+            string custname = GetCustomerByRefInvoice(issuekey);
+            string sql = $"SELECT e.ISSUINGKEY,e.SYSDTE FROM TXP_ISSTRANSENT e WHERE e.CUSTNAME='{custname}' AND e.ETDDTE =to_date('{issuekey.Substring(4, 6)}', 'yyMMdd') AND  e.FACTORY ='AW' ORDER BY e.SYSDTE desc";
+            //$"SUBSTR(e.ISSUINGKEY, 0, 3) ='{issuekey.Substring(0, 3)}' AND e.ETDDTE =to_date('{issuekey.Substring(4, 6)}', 'yyMMdd') AND  e.FACTORY ='AW' ORDER BY e.SYSDTE desc";
+            DataSet dr = new ConnDB().GetFill(sql);
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                inv = dr.Tables[0].Rows[0]["issuingkey"].ToString();
+                if (dr.Tables[0].Rows.Count > 1)
+                {
+                    inv = dr.Tables[0].Rows[1]["issuingkey"].ToString();
+                }
+            }
+            return inv;
+        }
+
+        public int GetLastPalletCtn(string issno, string pltype, string inv)
+        {
+            string comb = GetConbinv(inv);
             int x = 0;
             if (pltype == "B")
             {
                 pltype = "C";
+            }
+            switch (comb)
+            {
+                case "N":
+                    issno = inv;
+                    break;
+                default:
+                    issno = GetLastAWIssue(inv);
+                    break;
             }
             string sql = $"SELECT SUBSTR(PALLETNO, 3) ctn FROM TXP_ISSPALLET l WHERE ISSUINGKEY = '{issno}' AND PALLETNO  LIKE '1{pltype}%' ORDER BY PALLETNO DESC";
             DataSet dr = new ConnDB().GetFill(sql);
             if (dr.Tables[0].Rows.Count > 0)
             {
                 x = int.Parse(dr.Tables[0].Rows[0]["ctn"].ToString());
-            }
-            else
-            {
-                sql = $"SELECT SUBSTR(PALLETNO, 3) ctn FROM TXP_ISSPALLET l WHERE SUBSTR(ISSUINGKEY, 0, 10) = '{issno.Substring(0,10)}' AND PALLETNO  LIKE '1{pltype}%' ORDER BY PALLETNO DESC";
-                dr = new ConnDB().GetFill(sql);
-                if (dr.Tables[0].Rows.Count > 0)
-                {
-                    x = int.Parse(dr.Tables[0].Rows[0]["ctn"].ToString());
-                }
             }
             return x;
         }

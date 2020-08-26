@@ -29,6 +29,7 @@ namespace SetPalletApp
 
         void Reload()
         {
+            npl.Clear();
             gridPartControl.DataSource = null;
             gridPalletControl.DataSource = null;
             gridPalleteDetailControl.DataSource = null;
@@ -99,7 +100,7 @@ namespace SetPalletApp
                         $"VALUES('{StaticFunctionData.Factory}', '{obj.RefNo}', '{plno}', '{obj.PlSize}', 0, current_timestamp, current_timestamp, {p}, '0', '{w}', '{ll}' ,'{hh}')";
                     new ConnDB().ExcuteSQL(ins);
                 }
-
+                npl.Clear();
                 npl = new SetPalletControllers().GetPartListCompletedDetail(inv);
                 gridPalletControl.BeginUpdate();
                 gridPalletControl.DataSource = npl;

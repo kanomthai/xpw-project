@@ -1063,27 +1063,34 @@ namespace XPWLibrary.Interfaces
                             }
                             if (new ConnDB().ExcuteSQL(sql))
                             {
-                                string sql_q = $"SELECT UUID FROM TXP_ISSPACKDETAIL WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{inv}' AND PARTNO LIKE '{pltype}%' AND ROWNUM <= {total} ORDER BY FTICKETNO,ITEM";
-                                if (pltype == "MIX")
-                                {
-                                    sql_q = $"SELECT UUID FROM TXP_ISSPACKDETAIL WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{inv}' AND ROWNUM <= {total} ORDER BY FTICKETNO,ITEM";
-                                }
-                                if (plnum.ToUpper().Substring(1, 1) == "C")
-                                {
-                                    sql_q = $"SELECT UUID FROM TXP_ISSPACKDETAIL WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{inv}' AND ROWNUM <= {total} ORDER BY FTICKETNO,ITEM";
-                                }
-                                DataSet ds = new ConnDB().GetFill(sql_q);
-                                int run = 0;
-                                foreach (DataRow r in ds.Tables[0].Rows)
-                                {
-                                    sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plnum.ToUpper()}',PLOUTNO='{PlKey}' WHERE UUID='{r["uuid"].ToString()}'";
-                                    if (new ConnDB().ExcuteSQL(sql))
-                                    {
-                                        run++;
-                                        Console.WriteLine($"NEXT => {run}");
-                                        SplashScreenManager.Default.SetWaitFormDescription($"{plnum.ToString()} SEQ => {run}");
-                                    }
-                                }
+                                //string sql_q = $"SELECT UUID FROM TXP_ISSPACKDETAIL WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{inv}' AND PARTNO LIKE '{pltype}%' AND ROWNUM <= {total} ORDER BY FTICKETNO,ITEM";
+                                //if (pltype == "MIX")
+                                //{
+                                //    sql_q = $"SELECT UUID FROM TXP_ISSPACKDETAIL WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{inv}' AND ROWNUM <= {total} ORDER BY FTICKETNO,ITEM";
+                                //}
+                                //if (plnum.ToUpper().Substring(1, 1) == "C")
+                                //{
+                                //    sql_q = $"SELECT UUID FROM TXP_ISSPACKDETAIL WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{inv}' AND ROWNUM <= {total} ORDER BY FTICKETNO,ITEM";
+                                //}
+                                //DataSet ds = new ConnDB().GetFill(sql_q);
+                                //if (ds.Tables[0].Rows.Count > 0)
+                                //{
+                                //    //string upsql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plnum.ToUpper()}',PLOUTNO='{PlKey}'  " +
+                                //    //    $"WHERE SHIPPLNO IS NULL AND ISSUINGKEY = '{inv}' AND ROWNUM <= {total}";
+                                //    //new ConnDB().ExcuteSQL(sql);
+
+                                //    int run = 0;
+                                //    foreach (DataRow r in ds.Tables[0].Rows)
+                                //    {
+                                //        sql = $"UPDATE TXP_ISSPACKDETAIL SET SHIPPLNO = '{plnum.ToUpper()}',PLOUTNO='{PlKey}' WHERE UUID='{r["uuid"].ToString()}'";
+                                //        if (new ConnDB().ExcuteSQL(sql))
+                                //        {
+                                //            run++;
+                                //            Console.WriteLine($"NEXT => {run}");
+                                //            SplashScreenManager.Default.SetWaitFormDescription($"{plnum.ToString()} SEQ => {run}");
+                                //        }
+                                //    }
+                                //}
                                 Console.WriteLine("==================================================");
                                 lastpl++;
                                 j++;
@@ -1267,7 +1274,7 @@ namespace XPWLibrary.Interfaces
             {
                 refinv = inv;
             }
-            x += new OrderControllers().GetLastPalletCtn(refinv, v);
+            x += new OrderControllers().GetLastPalletCtn(refinv, v, inv);
             return x;
         }
 
