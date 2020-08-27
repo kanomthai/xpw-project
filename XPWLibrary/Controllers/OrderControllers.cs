@@ -302,8 +302,17 @@ namespace XPWLibrary.Controllers
                 SplashScreenManager.Default.SetWaitFormCaption($"CHECK PALLET");
                 SplashScreenManager.Default.SetWaitFormDescription($"");
                 new GreeterFunction().SumPallet(refinvoice);
+                UpdatePallet(refinvoice);
             }
             return refinvoice;
+        }
+
+        private bool UpdatePallet(string refinv)
+        {
+            bool x = false;
+            string sql = $"update TXP_ISSPACKDETAIL set SHIPPLNO='1PXXX' where ISSUINGKEY='{refinv}'";
+            new ConnDB().ExcuteSQL(sql);
+            return x;
         }
 
         public string GetPrefix(string issuekey)
