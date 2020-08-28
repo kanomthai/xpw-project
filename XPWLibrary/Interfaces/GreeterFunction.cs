@@ -1201,7 +1201,7 @@ namespace XPWLibrary.Interfaces
         //    return x;
         //}
 
-        public bool SumPallet(string inv)
+        public bool SumPallet(string inv, string custname)
         {
             bool success = false;
             try
@@ -1209,7 +1209,7 @@ namespace XPWLibrary.Interfaces
                 List<PlListData> olkey = GetPlData(inv);
                 if (CountPl(inv))
                 {
-                    int lastpl = GetPalletCount(inv, "P");//get Last PL
+                    int lastpl = GetPalletCount(inv, "P", custname);//get Last PL
                     int ctn_180 = GetPartWireCtn(inv, "180");
                     int ctn_181 = GetPartWireCtn(inv, "181");
 
@@ -1247,7 +1247,7 @@ namespace XPWLibrary.Interfaces
                     else
                     {
                         Console.WriteLine("START BOX ==========================");
-                        lastpl = GetPalletCount(inv, "B");//get Last box
+                        lastpl = GetPalletCount(inv, "B", custname);//get Last box
                         int[] bbc = AvgPlWireCount(mmpl[2], "BX");
                         lastpl = WrPl(olkey, bbc[1], inv, "BOX", lastpl, 2);
                         if (bbc[3] > 0)
@@ -1266,7 +1266,7 @@ namespace XPWLibrary.Interfaces
             return success;
         }
 
-        private int GetPalletCount(string inv, string v)
+        private int GetPalletCount(string inv, string v, string custname)
         {
             int x = 1;
             string refinv = inv.Substring(0, 12) + (int.Parse(inv.Substring(13).ToString()) - 1).ToString("D4");
@@ -1274,7 +1274,7 @@ namespace XPWLibrary.Interfaces
             {
                 refinv = inv;
             }
-            x += new OrderControllers().GetLastPalletCtn(refinv, v, inv);
+            x += new OrderControllers().GetLastPalletCtn(refinv, v, inv, custname);
             return x;
         }
 

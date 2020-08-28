@@ -59,6 +59,7 @@ namespace XPWLibrary.Controllers
                     });
                 }
             }
+            Console.WriteLine($"------------------------ END BODY {ob["bisafn"].ToString()} --------------------------------");
             return obj;
         }
 
@@ -136,12 +137,16 @@ namespace XPWLibrary.Controllers
             {
                 refinvoice = refno;
             }
+
             //new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
-            new ConnDB().ExcuteSQL($"DELETE txp_isstransbody WHERE ISSUINGKEY = '{b.RefNo}'");
-            new ConnDB().ExcuteSQL($"DELETE txp_isspackdetail WHERE ISSUINGKEY = '{b.RefNo}'");
-            //new ConnDB().ExcuteSQL($"DELETE txp_isspallet WHERE ISSUINGKEY = '{b.RefNo}'");
-            new ConnDB().ExcuteSQL($"update txp_orderplan set curinv = '',orderstatus=0,upddte = sysdate where curinv = '{refinvoice}'");
-            //refinvoice = refno;
+            if (this.CheckInvoiceNotPrepare(b.RefNo) is false)
+            {
+                new ConnDB().ExcuteSQL($"DELETE txp_isstransbody WHERE ISSUINGKEY = '{b.RefNo}'");
+                new ConnDB().ExcuteSQL($"DELETE txp_isspackdetail WHERE ISSUINGKEY = '{b.RefNo}'");
+                new ConnDB().ExcuteSQL($"DELETE txp_isspallet WHERE ISSUINGKEY = '{b.RefNo}'");
+                new ConnDB().ExcuteSQL($"update txp_orderplan set curinv = '',orderstatus=0,upddte = sysdate where curinv = '{refinvoice}'");
+                refinvoice = refno;
+            }
             List<OrderBody> ord = GetOrderDetail(b);
             if (ord.Count > 0)
             {
@@ -301,7 +306,7 @@ namespace XPWLibrary.Controllers
                 //}
                 SplashScreenManager.Default.SetWaitFormCaption($"CHECK PALLET");
                 SplashScreenManager.Default.SetWaitFormDescription($"");
-                new GreeterFunction().SumPallet(refinvoice);
+                new GreeterFunction().SumPallet(refinvoice, b.Custname);
                 UpdatePallet(refinvoice);
             }
             return refinvoice;
@@ -502,6 +507,12 @@ namespace XPWLibrary.Controllers
             string sqlbody;
             DateTime d = DateTime.Parse(r["etdtap"].ToString());
             List<OrderData> obb;
+            string queryref = $"";
+            if (int.Parse(r["orderstatus"].ToString()) >= 1)
+            {
+                Console.WriteLine($"======================= CHECK {r["curinv"].ToString()} ==========================");
+                queryref = $" AND p.CURINV ='{r["curinv"].ToString()}' ";
+            }
             switch (r["combinv"].ToString())
             {
                 case "E":
@@ -515,7 +526,7 @@ namespace XPWLibrary.Controllers
                           $"AND p.COMMERCIAL = '{r["commercial"]}' " +
                           $"AND p.PC = '{r["pc"]}' " +
                           $"AND p.BIOABT = '{r["bioabt"]}' AND " +
-                          $"get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}'\n" +
+                          $"get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}' {queryref}\n" +
                           $"GROUP BY SUBSTR(p.ORDERID,LENGTH(p.ORDERID) - 2, 3),p.CURINV";
                     //Console.WriteLine(sqlbody);
                     obb = AddOrderList(r, sqlbody);
@@ -531,7 +542,7 @@ namespace XPWLibrary.Controllers
                           $"AND p.COMMERCIAL = '{r["commercial"]}' " +
                           $"AND p.PC = '{r["pc"]}' " +
                           $"AND p.BIOABT = '{r["bioabt"]}' AND " +
-                          $"get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}'\n" +
+                          $"get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}' {queryref}\n" +
                           $"GROUP BY SUBSTR(p.orderid,1, 3),p.CURINV";
                     //Console.WriteLine(sqlbody);
                     obb = AddOrderList(r, sqlbody);
@@ -547,7 +558,7 @@ namespace XPWLibrary.Controllers
                           $"AND p.COMMERCIAL = '{r["commercial"]}' " +
                           $"AND p.PC = '{r["pc"]}' " +
                           $"AND p.BIOABT = '{r["bioabt"]}' AND " +
-                          $"get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}'\n" +
+                          $"get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}' {queryref}\n" +
                           $"GROUP BY p.CURINV";
                     //Console.WriteLine(sqlbody);
                     obb = AddOrderList(r, sqlbody);
@@ -563,7 +574,7 @@ namespace XPWLibrary.Controllers
                           $"AND p.COMMERCIAL = '{r["commercial"]}' " +
                           $"AND p.PC = '{r["pc"]}' " +
                           $"AND p.BIOABT = '{r["bioabt"]}' AND " +
-                          $"get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}'\n" +
+                          $"get_zone(p.FACTORY,p.BIOABT) = '{r["zname"]}' {queryref}\n" +
                           $"GROUP BY p.PONO,p.CURINV";
                     //Console.WriteLine(sqlbody);
                     obb = AddOrderList(r, sqlbody);
@@ -621,12 +632,12 @@ namespace XPWLibrary.Controllers
             {
                 fdte = $"AND ETDTAP between TRUNC(to_date('{dte}', 'ddMMyyyy') - 1, 'DY') AND(TRUNC(to_date('{dte}', 'ddMMyyyy'), 'DY') + {wnum})";
             }
-            string sql = $"select * from TBT_ORDERLIST where FACTORY = '{factory}' {fdte} ORDER BY CURINV,affcode,bishpc,bisafn";
+            string sql = $"select * from TBT_ORDERLIST where FACTORY = '{factory}' {fdte} ORDER BY affcode,bishpc,bisafn";
             Console.WriteLine(sql);
             List<OrderData> obj = GetOrderList(sql);
             if (obj.Count < 1)
             {
-                sql = $"select * from TBT_ORDERLIST where FACTORY = '{factory}' {fdte} ORDER BY CURINV,affcode,bishpc,bisafn";
+                sql = $"select * from TBT_ORDERLIST where FACTORY = '{factory}' {fdte} ORDER BY affcode,bishpc,bisafn";
                 obj = GetOrderList(sql);
             }
             return obj;
@@ -955,7 +966,7 @@ namespace XPWLibrary.Controllers
             return comb;
         }
 
-        private string GetCustomerByRefInvoice(string invoice)
+        public string GetCustomerByRefInvoice(string invoice)
         {
             string custname = "";
             string sql = $"SELECT e.CUSTNAME FROM TXP_ISSTRANSENT e WHERE e.ISSUINGKEY ='{invoice}'";
@@ -967,10 +978,21 @@ namespace XPWLibrary.Controllers
             return custname;
         }
 
-        private string GetLastAWIssue(string issuekey)
+        private bool CheckInvoiceNotPrepare(string refinv)
+        {
+            bool x = false;
+            string sql = $"select * from txp_isspallet WHERE ISSUINGKEY = '{refinv}' and ploutno is not null";
+            DataSet dr = new ConnDB().GetFill(sql);
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                x = true;
+            }
+            return x;
+        }
+
+        private string GetLastAWIssue(string issuekey, string custname)
         {
             string inv = issuekey;
-            string custname = GetCustomerByRefInvoice(issuekey);
             string sql = $"SELECT e.ISSUINGKEY,e.SYSDTE FROM TXP_ISSTRANSENT e WHERE e.CUSTNAME='{custname}' AND e.ETDDTE =to_date('{issuekey.Substring(4, 6)}', 'yyMMdd') AND  e.FACTORY ='AW' ORDER BY e.SYSDTE desc";
             //$"SUBSTR(e.ISSUINGKEY, 0, 3) ='{issuekey.Substring(0, 3)}' AND e.ETDDTE =to_date('{issuekey.Substring(4, 6)}', 'yyMMdd') AND  e.FACTORY ='AW' ORDER BY e.SYSDTE desc";
             DataSet dr = new ConnDB().GetFill(sql);
@@ -985,7 +1007,7 @@ namespace XPWLibrary.Controllers
             return inv;
         }
 
-        public int GetLastPalletCtn(string issno, string pltype, string inv)
+        public int GetLastPalletCtn(string issno, string pltype, string inv, string custname)
         {
             string comb = GetConbinv(inv);
             int x = 0;
@@ -999,7 +1021,7 @@ namespace XPWLibrary.Controllers
                     issno = inv;
                     break;
                 default:
-                    issno = GetLastAWIssue(inv);
+                    issno = GetLastAWIssue(inv, custname);
                     break;
             }
             string sql = $"SELECT SUBSTR(PALLETNO, 3) ctn FROM TXP_ISSPALLET l WHERE ISSUINGKEY = '{issno}' AND PALLETNO  LIKE '1{pltype}%' ORDER BY PALLETNO DESC";

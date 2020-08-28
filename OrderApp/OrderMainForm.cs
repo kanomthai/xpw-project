@@ -4,6 +4,7 @@ using DevExpress.XtraSplashScreen;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using XPWLibrary.Controllers;
 using XPWLibrary.Interfaces;
@@ -37,8 +38,9 @@ namespace OrderApp
             if (sload)
             {
                 List<OrderData> obj = new OrderControllers().GetOrderData(bbiFactory.EditValue.ToString(), DateTime.Parse(bbiEtd.EditValue.ToString()), bool.Parse(bbiOnDay.EditValue.ToString()));
-                gridControl.DataSource = obj;
-                bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
+                List<OrderData> ob = obj.OrderBy(j => j.PoType).ToList();
+                gridControl.DataSource = ob;
+                bsiRecordsCount.Caption = "RECORDS : " + ob.Count;
             }
             sload = true;
             SplashScreenManager.CloseDefaultWaitForm();

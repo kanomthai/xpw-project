@@ -269,7 +269,8 @@ namespace InvoiceApp
                 }
                 else
                 {
-                    new GreeterFunction().SumPallet(invno);
+                    string custname = new OrderControllers().GetCustomerByRefInvoice(invno);
+                    new GreeterFunction().SumPallet(invno, custname);
                 }
                 XtraMessageBox.Show("อัพเดทข้อมูลเสร็จแล้ว");
             }
