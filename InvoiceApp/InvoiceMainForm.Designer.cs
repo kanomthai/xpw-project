@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InvoiceMainForm));
             this.ribbonControl = new DevExpress.XtraBars.Ribbon.RibbonControl();
             this.bbiPrintPreview = new DevExpress.XtraBars.BarButtonItem();
@@ -134,6 +133,7 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bbiExportSummaryPallet = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemRadioGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).BeginInit();
@@ -198,9 +198,10 @@
             this.bbiExitMe,
             this.bbiCheckOrder,
             this.bbiSendToDraft,
-            this.bbiPrintShippingMark});
+            this.bbiPrintShippingMark,
+            this.bbiExportSummaryPallet});
             this.ribbonControl.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl.MaxItemId = 26;
+            this.ribbonControl.MaxItemId = 27;
             this.ribbonControl.Name = "ribbonControl";
             this.ribbonControl.PageHeaderItemLinks.Add(this.skinDropDownButtonItem1);
             this.ribbonControl.PageHeaderItemLinks.Add(this.skinPalette);
@@ -508,6 +509,7 @@
             // ribbonPageGroup2
             // 
             this.ribbonPageGroup2.AllowTextClipping = false;
+            this.ribbonPageGroup2.ItemLinks.Add(this.bbiExportSummaryPallet);
             this.ribbonPageGroup2.ItemLinks.Add(this.bbiPrintPreview);
             this.ribbonPageGroup2.Name = "ribbonPageGroup2";
             this.ribbonPageGroup2.ShowCaptionButton = false;
@@ -1276,6 +1278,15 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // bbiExportSummaryPallet
+            // 
+            this.bbiExportSummaryPallet.Caption = "Export Summary Pallet";
+            this.bbiExportSummaryPallet.Id = 26;
+            this.bbiExportSummaryPallet.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiExportSummaryPallet.ImageOptions.Image")));
+            this.bbiExportSummaryPallet.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiExportSummaryPallet.ImageOptions.LargeImage")));
+            this.bbiExportSummaryPallet.Name = "bbiExportSummaryPallet";
+            this.bbiExportSummaryPallet.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiExportSummaryPallet_ItemClick);
+            // 
             // InvoiceMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1430,5 +1441,6 @@
         private DevExpress.XtraBars.BarButtonItem bbiCheckOrder;
         private DevExpress.XtraBars.BarButtonItem bbiSendToDraft;
         private DevExpress.XtraBars.BarButtonItem bbiPrintShippingMark;
+        private DevExpress.XtraBars.BarButtonItem bbiExportSummaryPallet;
     }
 }

@@ -60,12 +60,16 @@
     <Compile Include="Models\SetPlData.cs" />
     <Compile Include="Models\ShipingMarkData.cs" />
     <Compile Include="Models\ShortData.cs" />
+    <Compile Include="Models\SummaryReportData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Configures\invoice.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Documents\summary_pallet_delivery.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Labels\CK2_1DCTN.nlbl">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

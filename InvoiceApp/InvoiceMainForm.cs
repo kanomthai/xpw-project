@@ -1,4 +1,5 @@
 ﻿using BookingApp;
+using DevExpress.Export.Xl;
 using DevExpress.LookAndFeel;
 using DevExpress.XtraBars;
 using DevExpress.XtraEditors;
@@ -9,7 +10,10 @@ using ShortingApp;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
 using System.Drawing;
+using System.Globalization;
+using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using XPWLibrary.Controllers;
@@ -632,6 +636,61 @@ namespace InvoiceApp
 
             InvoiceShippingMarkPreviewForm frm = new InvoiceShippingMarkPreviewForm(ikey, null);
             frm.ShowDialog();
+        }
+
+        private List<string> GetPalletList(string invno)
+        {
+            string sql = $"SELECT * FROM TBT_SUMMARYPALLETLIST WHERE ISSUINGKEY ='{invno}'";
+            List<string> obj = new List<string>();
+            DataSet dr = new ConnDB().GetFill(sql);
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                obj.Add(r["plsize"].ToString());
+            }
+            return obj;
+        }
+
+        private void bbiExportSummaryPallet_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "Excel|*.xlsx";
+            saveFileDialog1.Title = "Save an Summary Pallet File";
+            saveFileDialog1.ShowDialog();
+
+            if (saveFileDialog1.FileName != "")
+            {
+                DateTime d = DateTime.Parse(bbiEtd.EditValue.ToString());
+                string sql = $"SELECT * FROM TBT_GETSUMMARYPALLET t WHERE t.ETDDTE = TO_DATE('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') ";
+                Console.WriteLine(sql);
+                List<SummaryReportDataDetail> list = new List<SummaryReportDataDetail>();
+                DataSet dr = new ConnDB().GetFill(sql);
+                foreach (DataRow r in dr.Tables[0].Rows)
+                {
+                    list.Add(new SummaryReportDataDetail()
+                    {
+                        Id = list.Count + 1,
+                        Affcode = r["affcode"].ToString(),
+                        Custname = r["custname"].ToString(),
+                        InvNo = r["invoice"].ToString(),
+                        Etd = DateTime.Parse(r["etddte"].ToString()),
+                        IssueNo = r["issuingkey"].ToString(),
+                        ZName = r["zname"].ToString(),
+                    });
+                }
+                Console.WriteLine(list.Count);
+                IXlExporter exporter = XlExport.CreateExporter(XlDocumentFormat.Xlsx);
+                // Create the FileStream object with the specified file path. 
+                using (FileStream stream = new FileStream(saveFileDialog1.FileName, FileMode.Create, FileAccess.ReadWrite))
+                {
+
+                    // Create a new document and write it to the specified stream. 
+                    using (IXlDocument document = exporter.CreateDocument(stream))
+                    {
+                        // Specify the document culture.
+                        document.Options.Culture = CultureInfo.CurrentCulture;
+                    }
+                }
+            }
         }
     }
 }

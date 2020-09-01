@@ -23,7 +23,7 @@ namespace SetPalletApp
             bbiEtdDate.EditValue = r.EtdDte;
             invno = new OrderControllers().GetRefInv(r.RefNo.Substring(1, 2), r.Factory, r.EtdDte);
             bbiShipType.EditValue = r.ShipType;
-            bbiInvoiceNo.EditValue = new GreeterFunction().GetLastInvoice(r.RefNo);
+            bbiInvoiceNo.EditValue = invno;// new GreeterFunction().GetLastInvoice(r.RefNo);
             this.Text = $"REFNO: {invno}";
         }
 

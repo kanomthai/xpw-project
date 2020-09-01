@@ -241,7 +241,6 @@ namespace XPWLibrary.Controllers
                              "combinv,pc,zonecode,note1,note2,upddte,sysdte,uuid,createdby,modifiedby,containertype,issuingmax)\n" +
                              $"values('{refinvoice}','{refinvoice}',0,to_date('{j.Etd.ToString("dd-MM-yyyy")}','DD-MM-YYYY'),'{j.Factory}','{j.Affcode}','{j.Custcode}','{j.Custname}','{j.Commercial}','{j.BioABT}','{j.Ship}',\n" +
                              $"'{j.Combinv}','{j.Pc}',{zonecode},'{Note1}','{Note2}',sysdate,sysdate,'{Guid.NewGuid().ToString()}','SYS','SYS','{Note3}','{ord.Count()}')";
-                    new ConnDB().ExcuteSQL(sqlhead);
                     //create body
                     int i = 0;
                     while (i < ord.Count)
@@ -249,7 +248,7 @@ namespace XPWLibrary.Controllers
                         OrderBody r = ord[i];
                         Guid g = Guid.NewGuid();
                         Console.WriteLine($"NEW {i} => {r.PartNo} ORDER => {r.OrderNo}");
-                        string sqlcheckbody = $"SELECT b.PARTNO,round(b.ORDERQTY/b.STDPACK) ctn FROM TXP_ISSTRANSBODY b WHERE b.PARTNO = '{r.PartNo}' AND b.PONO = '{r.OrderNo}' AND b.ISSUINGKEY IN ('{refinvoice}')";
+                        string sqlcheckbody = $"SELECT b.PARTNO,round(b.ORDERQTY/b.STDPACK) ctn FROM TXP_ISSTRANSBODY b WHERE b.PARTNO = '{r.PartNo}' AND b.PONO = '{r.OrderNo}' AND b.ISSUINGKEY ='{refinvoice}'";
                         //Console.WriteLine(sqlcheckbody);
                         DataSet dr = new ConnDB().GetFill(sqlcheckbody);
                         string sql;
@@ -273,11 +272,11 @@ namespace XPWLibrary.Controllers
                         int rn = 0;
                         while (rn < r.Ctn)
                         {
-                            Console.WriteLine($"create packing detail {rn} {r.OrderCtn}");
                             Guid gid = Guid.NewGuid();
                             string fkey = new GreeterFunction().getFTicket(r.Factory);
                             SplashScreenManager.Default.SetWaitFormDescription($"{r.PartNo} {fkey}");
                             int lastseq =  GetLastSeq(refinvoice);
+                            Console.WriteLine($"{rn}.create packing detail {r.OrderCtn} last {lastseq}");
                             string sqldetail = $"insert into txp_isspackdetail(issuingkey,pono,tagrp,partno,fticketno,orderqty,issuedqty,unit,issuingstatus,upddte,sysdte,uuid,createdby,modifedby,ITEM,splorder)\n" +
                                 $"values('{refinvoice}','{r.OrderNo}','C','{r.PartNo}','{fkey}','{r.BiSTDP}',0,'PCS',0,sysdate,sysdate,'{gid.ToString()}','SYS','SYS',{lastseq},'{g.ToString()}')";
                             new ConnDB().ExcuteSQL(sqldetail);
@@ -291,6 +290,7 @@ namespace XPWLibrary.Controllers
                         SplashScreenManager.Default.SetWaitFormCaption($"UPDATE STATUS");
                         i++;
                     }
+                    new ConnDB().ExcuteSQL(sqlhead);
                 }
             }
             //new SetPalletControllers().CheckPalletSetSeq(refinvoice);
@@ -348,6 +348,8 @@ namespace XPWLibrary.Controllers
         {
             bool x = false;
             string sql = $"SELECT * FROM TXP_ISSTRANSBODY b WHERE ISSUINGKEY ='{issuingkey}' AND PONO='{pono}' AND PARTNO ='{partno}'";
+            Console.WriteLine($"CHECK DUPL {issuingkey}  => {pono}  => {partno}");
+            Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
             if (dr.Tables[0].Rows.Count > 0)
             {
@@ -371,14 +373,12 @@ namespace XPWLibrary.Controllers
         public bool UpdateBodyNewInvoice(string invoice)
         {
             bool x = false;
-            string sql = $"SELECT l.ISSUINGKEY,l.PONO,l.PARTNO,(b.STDPACK * count(1)) ctn  FROM TXP_ISSPACKDETAIL l \n"+
-                    $"INNER JOIN TXP_ISSTRANSBODY b ON l.ISSUINGKEY = b.ISSUINGKEY  AND l.PONO = b.PONO  AND l.PARTNO = b.PARTNO \n"+
-                    $"WHERE l.ISSUINGKEY = '{invoice}' GROUP BY l.ISSUINGKEY,l.PONO,l.PARTNO,b.STDPACK";
+            string sql = $"select issuingkey,pono,partno,sum(ORDERQTY) qty,sum(ORDERQTY)/count(*) stdpack,count(*) ctn from txp_isspackdetail " +
+                    $"where issuingkey='{invoice}' GROUP BY issuingkey,pono,partno";
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow r in dr.Tables[0].Rows)
             {
-                string upbody = $"update txp_isstransbody set orderqty='{r["ctn"].ToString()}' " +
-                    $"where ISSUINGKEY='{invoice}' and pono='{r["pono"].ToString()}' and partno='{r["partno"].ToString()}'";
+                string upbody = $"update txp_isstransbody set orderqty='{r["qty"].ToString()}' where issuingkey='{invoice}' and pono = '{r["pono"].ToString()}' and partno = '{r["partno"].ToString()}'";
                 new ConnDB().ExcuteSQL(upbody);
             }
             return x;
@@ -404,6 +404,10 @@ namespace XPWLibrary.Controllers
                     {
                         Console.WriteLine($"INSERT {r["partno"].ToString()}'");
                     }
+                }
+                else
+                {
+                    Console.WriteLine($"INSERT DUPL. {r["partno"].ToString()}'");
                 }
             }
             return x;
@@ -449,15 +453,17 @@ namespace XPWLibrary.Controllers
                     {
                         Console.WriteLine($"error set packing");
                     }
-                    if (new ConnDB().ExcuteSQL(sql_pallet) is false){
+                    if (new ConnDB().ExcuteSQL(sql_pallet) is false)
+                    {
                         Console.WriteLine($"error set pallet");
                     }
                     plnum.Add(r.ShipPlNo);
                     i++;
                 }
-                //create body
+                //new body
                 CreateBody(nkey, oldekey, obj);
-                CreateBody(oldekey, nkey, obj);
+                ////older body
+                //CreateBody(oldekey, nkey, obj);
 
                 bool head = CheckIssueHeader(nkey);
                 if (head is false)
@@ -472,11 +478,13 @@ namespace XPWLibrary.Controllers
                 string upnewiss = $"UPDATE TXP_ISSTRANSENT SET ISSUINGMAX = (SELECT count(*) FROM TXP_ISSTRANSBODY WHERE ISSUINGKEY = '{nkey}') WHERE ISSUINGKEY = '{nkey}'";
                 new ConnDB().ExcuteSQL(upolder);
                 new ConnDB().ExcuteSQL(upnewiss);
-                Console.WriteLine(upolder);
-                Console.WriteLine(upnewiss);
-                UpdateBodyNewInvoice(oldekey);
-                UpdateBodyNewInvoice(nkey);
-                //CheckNewPalletNo(oldekey);
+                
+                //Console.WriteLine(upolder);
+                //Console.WriteLine(upnewiss);
+                //UpdateBodyNewInvoice(oldekey);
+                //UpdateBodyNewInvoice(nkey);
+
+                CheckNewPalletNo(oldekey);
                 CheckNewPalletNo(nkey);
                 Console.WriteLine($"============================= END {DateTime.Now.ToShortTimeString()} ====================================");
             }
