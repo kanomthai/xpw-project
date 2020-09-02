@@ -19,6 +19,9 @@ using System.Windows.Forms;
 using XPWLibrary.Controllers;
 using XPWLibrary.Interfaces;
 using XPWLibrary.Models;
+using IronXL;
+using System.Linq;
+using System.Diagnostics;
 
 namespace InvoiceApp
 {
@@ -652,45 +655,116 @@ namespace InvoiceApp
 
         private void bbiExportSummaryPallet_ItemClick(object sender, ItemClickEventArgs e)
         {
+            DateTime d = DateTime.Parse(bbiEtd.EditValue.ToString());
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.Filter = "Excel|*.xlsx";
             saveFileDialog1.Title = "Save an Summary Pallet File";
             saveFileDialog1.ShowDialog();
-
+            //saveFileDialog1.FileName = $"{StaticFunctionData.Factory}-{d.ToString("ddMMyyyy")}";
             if (saveFileDialog1.FileName != "")
             {
-                DateTime d = DateTime.Parse(bbiEtd.EditValue.ToString());
+                SplashScreenManager.ShowDefaultWaitForm();
                 string sql = $"SELECT * FROM TBT_GETSUMMARYPALLET t WHERE t.ETDDTE = TO_DATE('{d.ToString("ddMMyyyy")}', 'ddMMyyyy') ";
-                Console.WriteLine(sql);
                 List<SummaryReportDataDetail> list = new List<SummaryReportDataDetail>();
                 DataSet dr = new ConnDB().GetFill(sql);
-                foreach (DataRow r in dr.Tables[0].Rows)
-                {
-                    list.Add(new SummaryReportDataDetail()
-                    {
-                        Id = list.Count + 1,
-                        Affcode = r["affcode"].ToString(),
-                        Custname = r["custname"].ToString(),
-                        InvNo = r["invoice"].ToString(),
-                        Etd = DateTime.Parse(r["etddte"].ToString()),
-                        IssueNo = r["issuingkey"].ToString(),
-                        ZName = r["zname"].ToString(),
-                    });
-                }
-                Console.WriteLine(list.Count);
-                IXlExporter exporter = XlExport.CreateExporter(XlDocumentFormat.Xlsx);
-                // Create the FileStream object with the specified file path. 
-                using (FileStream stream = new FileStream(saveFileDialog1.FileName, FileMode.Create, FileAccess.ReadWrite))
-                {
+                string txtpath = $"{AppDomain.CurrentDomain.BaseDirectory}Documents\\summary_pallet_delivery.xlsx";
+                Microsoft.Office.Interop.Excel.Application oXL = null;
+                Microsoft.Office.Interop.Excel._Workbook oWB = null;
+                Microsoft.Office.Interop.Excel._Worksheet oSheet = null;
 
-                    // Create a new document and write it to the specified stream. 
-                    using (IXlDocument document = exporter.CreateDocument(stream))
+                try
+                {
+                    oXL = new Microsoft.Office.Interop.Excel.Application();
+                    oWB = oXL.Workbooks.Open(txtpath);
+                    oSheet = oWB.ActiveSheet;
+                    int i = 6;
+                    string refinv = null;
+                    string custn = null;
+                    string inv = null;
+                    string dte = null;
+
+                    foreach (DataRow r in dr.Tables[0].Rows)
                     {
-                        // Specify the document culture.
-                        document.Options.Culture = CultureInfo.CurrentCulture;
+                        SplashScreenManager.Default.SetWaitFormCaption("APPEND DATA");
+                        SplashScreenManager.Default.SetWaitFormDescription($"{r["custname"].ToString()}");
+                        d = DateTime.Parse(r["etddte"].ToString());
+                        if (refinv is null)
+                        {
+                            custn = r["custname"].ToString();
+                            refinv = r["invoice"].ToString();
+                            inv = r["invoice"].ToString();
+                            dte = d.ToString("dd/MM/yyyy");
+                        }
+                        else
+                        {
+                            if (refinv != r["invoice"].ToString())
+                            {
+                                custn = r["custname"].ToString();
+                                refinv = r["invoice"].ToString();
+                                inv = r["invoice"].ToString();
+                                dte = d.ToString("dd/MM/yyyy");
+                            }
+                            else
+                            {
+                                custn = "";
+                                inv = "";
+                                dte = "";
+                            }
+                        }
+                        oSheet.Cells[i, 1] = custn;
+                        oSheet.Cells[i, 2] = inv;
+                        oSheet.Cells[i, 3] = dte;
+                        oSheet.Cells[i, 4] = r["plsize"].ToString();
+                        oSheet.Cells[i, 9] = r["zname"].ToString();
+
+                        string txt = $"{int.Parse(r["plmin"].ToString())}";
+                        if (int.Parse(r["plmin"].ToString()) == int.Parse(r["plmax"].ToString()))
+                        {
+                            txt = $"{int.Parse(r["plmin"].ToString())}";
+                        }
+                        else
+                        {
+                            txt = $"{int.Parse(r["plmin"].ToString())}-{int.Parse(r["plmax"].ToString())}";
+                        };
+                        oSheet.Cells[i, 5] = txt;
+                        i++;
                     }
+                    oWB.SaveAs(saveFileDialog1.FileName.ToString());
                 }
+                catch (Exception ex)
+                {
+                    SplashScreenManager.CloseDefaultWaitForm();
+                    MessageBox.Show(ex.ToString());
+                    oWB.Close();
+                }
+                finally
+                {
+                    SplashScreenManager.CloseDefaultWaitForm();
+                    if (oWB != null)
+                        oWB.Close();
+                }
+                Process.Start(saveFileDialog1.FileName.ToString());
             }
+        }
+
+        void WritingShort(int type)
+        {
+            List<PartShortData> list = new InvoiceControllers().GetShortData(7, type);
+            //List<SummaryData> obj = new InvoiceControllers().GetDataSource();
+            if (list.Count <= 0)
+            {
+                XtraMessageBox.Show("ไม่พบข้อมูล", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void bbiShortingByPart_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            WritingShort(1);
+        }
+
+        private void bbiShortingByCustomer_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            WritingShort(2);
         }
     }
 }

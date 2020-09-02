@@ -61,6 +61,116 @@ namespace XPWLibrary.Controllers
             }
             return list;
         }
+
+        public List<PartShortData> GetShortData(int week, int xtype)
+        {
+            string srpre = "Sb.PrepQty";
+            string sql;
+            int zck2name = 4;
+            int upzname = 1;
+            if (StaticFunctionData.Factory == "AW")
+            {
+                zck2name = 1;
+                upzname = 4;
+            }
+
+            if (xtype == 1)
+            {
+                srpre = "ST.STKLOT";
+                sql = "SELECT sb.etddte,'' SHIPTYPE,'' CUSTNAME,'' issuingkey,'' pono,sb.LOTNO, sb.PARTNO,sb.PARTNAME,sb.ORDERQTY,sb.PrepQty,sb.SHQty,st.STKLOT,sb.ORMON,sb.ORTUE,sb.ORWED,sb.ORTHU,sb.ORFRI,sb.ORSAT,sb.ORSUN,sb.FACTORY,sb.AREA,sB.TAGRP,sb.STDPACK\n" +
+                       $"FROM(select\n" +
+                       $"  P.ETDDTE,P.FACTORY, CASE p.zoneid  WHEN '{upzname}'  THEN 'CK1'  WHEN '2'  THEN 'NESC' WHEN '3'  THEN 'ICAM' WHEN '{zck2name}'  THEN 'CK2' END AREA, B.LOTNO, B.TAGRP, B.PARTNO, B.PARTNAME,\n" +
+                       $"        MAX(b.stdpack)STDPACK, SUM(B.ORDERQTY / B.STDPACK) ORDERQTY, SUM(B.prepareqty / B.STDPACK) PrepQty, sum((b.orderqty - b.prepareqty) / B.STDPACK) SHQty, " +
+                       $"        SUM(CASE when to_char(P.ETDDTE, 'D') = 2 THEN DECODE(b.orderqty - b.prepareqty, null, 0, b.orderqty - b.prepareqty) / B.STDPACK END) ORMON,\n" +
+                       $"        SUM(CASE when to_char(P.ETDDTE, 'D') = 3 THEN DECODE(b.orderqty - b.prepareqty, null, 0, b.orderqty - b.prepareqty) / B.STDPACK END) ORTUE,\n" +
+                       $"        SUM(CASE when to_char(P.ETDDTE, 'D') = 4 THEN DECODE(b.orderqty - b.prepareqty, null, 0, b.orderqty - b.prepareqty) / B.STDPACK END) ORWED,\n" +
+                       $"        SUM(CASE when to_char(P.ETDDTE, 'D') = 5 THEN DECODE(b.orderqty - b.prepareqty, null, 0, b.orderqty - b.prepareqty) / B.STDPACK END) ORTHU,\n" +
+                       $"        SUM(CASE when to_char(P.ETDDTE, 'D') = 6 THEN DECODE(b.orderqty - b.prepareqty, null, 0, b.orderqty - b.prepareqty) / B.STDPACK END) ORFRI,\n" +
+                       $"        SUM(CASE when to_char(P.ETDDTE, 'D') = 7 THEN DECODE(b.orderqty - b.prepareqty, null, 0, b.orderqty - b.prepareqty) / B.STDPACK END) ORSAT,\n" +
+                       $"        SUM(CASE when to_char(P.ETDDTE, 'D') = 1 THEN DECODE(b.orderqty - b.prepareqty, null, 0, b.orderqty - b.prepareqty) / B.STDPACK END) ORSUN\n" +
+                       $"from TXP_ISSTRANSENT P inner join TXP_ISSTRANSBODY B on p.issuingkey = B.issuingkey\n" +
+                       $"WHERE P.FACTORY = '{StaticFunctionData.Factory}' AND P.Zoneid in ('{zck2name}') AND TO_CHAR(p.etddte, 'YYYY') = to_char(sysdate, 'yyyy') AND TO_CHAR(p.etddte, 'WW') = to_char(sysdate, 'WW') + {week} \n" +
+                       $"GROUP BY P.ETDDTE,P.FACTORY, CASE p.zoneid  WHEN '{upzname}'  THEN 'CK1'\n" +
+                       $"            WHEN '2'  THEN 'NESC'\n" +
+                       $"            WHEN '3'  THEN 'ICAM'\n" +
+                       $"            WHEN '{zck2name}'  THEN 'CK2' END, B.LOTNO, B.TAGRP, B.PARTNO, B.PARTNAME\n" +
+                       $"      ) SB\n" +
+                       $" LEFT JOIN(SELECT C.TAGRP, C.PARTNO, C.LOTNO, COUNT(*) STKLOT\n" +
+                       $"             FROM TXP_CARTONDETAILS C\n" +
+                       $"             INNER JOIN TXP_LEDGER L ON C.TAGRP || C.PARTNO = L.TAGRP || L.PARTNO\n" +
+                       $"             WHERE C.STOCKQUANTITY > 0 AND L.WHS = '{StaticFunctionData.Factory}'\n" +
+                       $"             GROUP BY C.TAGRP, C.PARTNO, C.LOTNO\n" +
+                       $") ST ON   SB.TAGRP || Sb.partno || Sb.lotno = ST.TAGRP || ST.partno || st.LOTNO\n" +
+                       $"WHERE Sb.ORDERQTY<> DECODE({srpre}, NULL,0,{srpre})\n" +
+                       $"ORDER BY SB.ETDDTE,SB.PARTNO,SB.LOTNO";
+            }
+            else
+            {
+                sql = "SELECT sb.etddte,'' SHIPTYPE,sb.CUSTNAME,'' issuingkey,sb.pono,sb.LOTNO, sb.PARTNO,sb.PARTNAME,sb.ORDERQTY,sb.PrepQty,sb.SHQty,st.STKLOT,sb.ORMON,sb.ORTUE,sb.ORWED,sb.ORTHU,sb.ORFRI,sb.ORSAT,sb.ORSUN,sb.FACTORY,sb.AREA,sB.TAGRP,sb.STDPACK\n" +
+                       $"FROM(select\n" +
+                       $"  p.CUSTNAME,b.PONO,P.ETDDTE,P.FACTORY, CASE p.zoneid  WHEN '{upzname}'  THEN 'CK1'  WHEN '2'  THEN 'NESC' WHEN '3'  THEN 'ICAM' WHEN '{zck2name}'  THEN 'CK2' END AREA, B.LOTNO, B.TAGRP, B.PARTNO, B.PARTNAME,\n" +
+                       $"        MAX(b.stdpack)STDPACK, SUM(B.ORDERQTY / B.STDPACK) ORDERQTY, SUM(B.prepareqty / B.STDPACK) PrepQty, sum((b.orderqty - b.prepareqty) / B.STDPACK) SHQty, " +
+                       $"        SUM(CASE when to_char(P.ETDDTE, 'D') = 2 THEN DECODE(b.orderqty - b.prepareqty, null, 0, b.orderqty - b.prepareqty) / B.STDPACK END) ORMON,\n" +
+                       $"        SUM(CASE when to_char(P.ETDDTE, 'D') = 3 THEN DECODE(b.orderqty - b.prepareqty, null, 0, b.orderqty - b.prepareqty) / B.STDPACK END) ORTUE,\n" +
+                       $"        SUM(CASE when to_char(P.ETDDTE, 'D') = 4 THEN DECODE(b.orderqty - b.prepareqty, null, 0, b.orderqty - b.prepareqty) / B.STDPACK END) ORWED,\n" +
+                       $"        SUM(CASE when to_char(P.ETDDTE, 'D') = 5 THEN DECODE(b.orderqty - b.prepareqty, null, 0, b.orderqty - b.prepareqty) / B.STDPACK END) ORTHU,\n" +
+                       $"        SUM(CASE when to_char(P.ETDDTE, 'D') = 6 THEN DECODE(b.orderqty - b.prepareqty, null, 0, b.orderqty - b.prepareqty) / B.STDPACK END) ORFRI,\n" +
+                       $"        SUM(CASE when to_char(P.ETDDTE, 'D') = 7 THEN DECODE(b.orderqty - b.prepareqty, null, 0, b.orderqty - b.prepareqty) / B.STDPACK END) ORSAT,\n" +
+                       $"        SUM(CASE when to_char(P.ETDDTE, 'D') = 1 THEN DECODE(b.orderqty - b.prepareqty, null, 0, b.orderqty - b.prepareqty) / B.STDPACK END) ORSUN\n" +
+                       $"from TXP_ISSTRANSENT P inner join TXP_ISSTRANSBODY B on p.issuingkey = B.issuingkey\n" +
+                       $"WHERE P.FACTORY = '{StaticFunctionData.Factory}' AND P.Zoneid in ('{zck2name}') AND TO_CHAR(p.etddte, 'YYYY') = to_char(sysdate, 'yyyy') AND TO_CHAR(p.etddte, 'WW') = to_char(sysdate, 'WW') + {week} \n" +
+                       $"GROUP BY P.ETDDTE,P.FACTORY, CASE p.zoneid  WHEN '{upzname}'  THEN 'CK1'\n" +
+                       $"            WHEN '2'  THEN 'NESC'\n" +
+                       $"            WHEN '3'  THEN 'ICAM'\n" +
+                       $"            WHEN '{zck2name}'  THEN 'CK2' END, B.LOTNO, B.TAGRP, B.PARTNO, B.PARTNAME,p.CUSTNAME,b.PONO\n" +
+                       $"      ) SB\n" +
+                       $" LEFT JOIN(SELECT C.TAGRP, C.PARTNO, C.LOTNO, COUNT(*) STKLOT\n" +
+                       $"             FROM TXP_CARTONDETAILS C\n" +
+                       $"             INNER JOIN TXP_LEDGER L ON C.TAGRP || C.PARTNO = L.TAGRP || L.PARTNO\n" +
+                       $"             WHERE C.STOCKQUANTITY > 0 AND L.WHS = '{StaticFunctionData.Factory}'\n" +
+                       $"             GROUP BY C.TAGRP, C.PARTNO, C.LOTNO\n" +
+                       $") ST ON   SB.TAGRP || Sb.partno || Sb.lotno = ST.TAGRP || ST.partno || st.LOTNO\n" +
+                       $"WHERE Sb.ORDERQTY<> DECODE({srpre}, NULL,0,{srpre})\n" +
+                       $"ORDER BY SB.ETDDTE,SB.CUSTNAME,sb.pono,SB.PARTNO,SB.LOTNO";
+            }
+
+            Console.WriteLine(sql);
+            List<PartShortData> list = new List<PartShortData>();
+            Console.WriteLine(sql);
+            DataSet dr = new ConnDB().GetFill(sql);
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                list.Add(new PartShortData()
+                {
+                    Id = list.Count + 1,
+                    Etd = DateTime.Parse(r["etddte"].ToString()),
+                    Custname = r["custname"].ToString(),//custname
+                    Invoice = r["issuingkey"].ToString(),//issuingkey
+                    OrderNumber = r["pono"].ToString(),//pono
+                    Lotno = r["lotno"].ToString(),//lotno
+                    PartNo = r["partno"].ToString(),//partname
+                    Partname = r["partname"].ToString(),//partname
+                    Orderctn = int.Parse(r["orderqty"].ToString()),//orderctn
+                    Prepctn = int.Parse(r["prepqty"].ToString()),//prepctn
+                    Shqty = int.Parse(r["shqty"].ToString()),//recctn
+                    Stdqty = int.Parse(r["stdpack"].ToString()),//remctn
+                    Currentstk = int.Parse(r["stklot"].ToString()),//lotstk
+                    Lotstk = int.Parse(r["stklot"].ToString()),//lotstk
+                    Ormon = int.Parse(r["ormon"].ToString()),//ormon
+                    Ortue = int.Parse(r["ortue"].ToString()),//ortue
+                    Orwed = int.Parse(r["orwed"].ToString()),//orwed
+                    Orthu = int.Parse(r["orthu"].ToString()),//orthu
+                    Orfri = int.Parse(r["orfri"].ToString()),//orfri
+                    Orsat = int.Parse(r["orsat"].ToString()),//orsat
+                    Orsun = int.Parse(r["orsun"].ToString()),//orsun
+                    Zone = r["area"].ToString(),
+                    Shiptype = r["shiptype"].ToString(),
+                });
+            }
+            return list;
+        }
+
+
         public List<InvoiceData> GetInvoiceData(DateTime etd, string zname)
         {
             string etddate = $"t.ETDDTE = to_date('{etd.ToString("dd/MM/yyyy")}', 'dd/MM/yyyy')";

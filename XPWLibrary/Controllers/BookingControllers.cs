@@ -32,6 +32,21 @@ namespace XPWLibrary.Controllers
             return obj;
         }
 
+        private List<string> GetCustName(string conno)
+        {
+            string sql = $"SELECT e.CUSTNAME FROM TXP_ISSPALLET l\n"+
+                        "INNER JOIN TXP_ISSTRANSENT e ON l.ISSUINGKEY = e.ISSUINGKEY\n"+
+                        $"WHERE l.CONTAINERNO = '{conno}'\n"+
+                        "GROUP BY e.CUSTNAME";
+            DataSet dr = new ConnDB().GetFill(sql);
+            List<string> list = new List<string>();
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                list.Add(r["custname"].ToString());
+            }
+            return list;
+        }
+
         public List<Bookings> GetContainerList(DateTime d)
         {
             string sql = $"select '' custname,c.etddte,c.containerno,c.sealno,c.containersize,'' invoice,0 grossweight,0 netweight,0 plcount," +
@@ -45,6 +60,7 @@ namespace XPWLibrary.Controllers
             List<Bookings> list = new List<Bookings>();
             foreach (DataRow r in dr.Tables[0].Rows)
             {
+                List<string> obj = GetCustName(r["containerno"].ToString());
                 list.Add(new Bookings()
                 {
                     Id = list.Count + 1,
@@ -52,7 +68,7 @@ namespace XPWLibrary.Controllers
                     ContainerSize = r["containersize"].ToString(),
                     Invoice = r["invoice"].ToString(),
                     SealNo = r["sealno"].ToString(),
-                    //Custname = r["custname"].ToString(),
+                    Custname = string.Join(",", obj),
                     Pallet = GetCountContainer(r["containerno"].ToString()),
                     LoadStatus = int.Parse(r["loadsts"].ToString()),
                     CloseStatus = int.Parse(r["closed"].ToString()),

@@ -55,6 +55,7 @@
     <Compile Include="Models\OrderCheckData.cs" />
     <Compile Include="Models\OrderData.cs" />
     <Compile Include="Models\PalletData.cs" />
+    <Compile Include="Models\PartShortData.cs" />
     <Compile Include="Models\PlCountData.cs" />
     <Compile Include="Models\PlListData.cs" />
     <Compile Include="Models\SetPlData.cs" />
@@ -69,6 +70,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Documents\summary_pallet_delivery.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Documents\temp_follow_parts_short.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Documents\temp_issue_follow_parts_short.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Labels\CK2_1DCTN.nlbl">
