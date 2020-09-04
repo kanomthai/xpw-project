@@ -270,6 +270,7 @@ namespace XPWLibrary.Controllers
                         Console.WriteLine(r.Uuid);
                         //create issue detail
                         int rn = 0;
+                        Console.WriteLine($"START => {refinvoice} PONO: {r.OrderNo} PARTNO: {r.PartNo}  CTN:{r.Ctn}");
                         while (rn < r.Ctn)
                         {
                             Guid gid = Guid.NewGuid();
@@ -282,9 +283,11 @@ namespace XPWLibrary.Controllers
                             new ConnDB().ExcuteSQL(sqldetail);
                             if (GreeterFunction.updateFTicket(r.Factory))
                             {
+                                Console.WriteLine($"RUNNING AT: {rn}");
                                 rn++;
                             }
                         }
+                        Console.WriteLine($"END => {refinvoice} PONO: {r.OrderNo} PARTNO: {r.PartNo}  CTN:{r.Ctn}");
                         string updateorder = $"update txp_orderplan set curinv = '{refinvoice}',orderstatus=1,upddte = sysdate where uuid = '{r.Uuid}'";
                         new ConnDB().ExcuteSQL(updateorder);
                         SplashScreenManager.Default.SetWaitFormCaption($"UPDATE STATUS");
