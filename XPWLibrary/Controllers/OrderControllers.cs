@@ -147,6 +147,7 @@ namespace XPWLibrary.Controllers
                 new ConnDB().ExcuteSQL($"update txp_orderplan set curinv = '',orderstatus=0,upddte = sysdate where curinv = '{refinvoice}'");
                 refinvoice = refno;
             }
+            //refinvoice = refno;
             List<OrderBody> ord = GetOrderDetail(b);
             if (ord.Count > 0)
             {
