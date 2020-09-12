@@ -960,7 +960,7 @@ namespace XPWLibrary.Interfaces
                         a = x / 45;
                         if ((x - (a * 45)) < 1)
                         {
-                            a_a = 1;
+                            a_a = a;
                             a_b = 0;
                             a_c = (x - (a * 45));
                             a_e = 45;

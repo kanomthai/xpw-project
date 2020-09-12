@@ -138,161 +138,161 @@ namespace XPWLibrary.Controllers
             //    refinvoice = refno;
             //}
 
-            ////new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
-            //if (this.CheckInvoiceNotPrepare(b.RefNo) is false)
-            //{
-            //    new ConnDB().ExcuteSQL($"DELETE txp_isstransbody WHERE ISSUINGKEY = '{b.RefNo}'");
-            //    new ConnDB().ExcuteSQL($"DELETE txp_isspackdetail WHERE ISSUINGKEY = '{b.RefNo}'");
-            //    new ConnDB().ExcuteSQL($"DELETE txp_isspallet WHERE ISSUINGKEY = '{b.RefNo}'");
-            //    new ConnDB().ExcuteSQL($"update txp_orderplan set curinv = '',orderstatus=0,upddte = sysdate where curinv = '{refinvoice}'");
-            //    refinvoice = refno;
-            //}
-            //List<OrderBody> ord = GetOrderDetail(b);
-            //if (ord.Count > 0)
-            //{
-            //    //create head
-            //    OrderBody j = ord[0];
-            //    string Note1 = new GreeterFunction().GetNote(1, j.BioABT, j.Ship, j.Factory);
-            //    string Note2 = new GreeterFunction().GetNote(2, j.BioABT, j.Ship, j.Factory);
-            //    string Note3 = new GreeterFunction().GetNote(3, j.BioABT, j.Ship, j.Factory);
-            //    string zonecode = $"TO_CHAR(SYSDATE,'YYMMDD')||'{j.Prefix}'|| LPAD(substr('{refinvoice}',-5),5)";
-            //    SplashScreenManager.Default.SetWaitFormCaption($"{refno}");
-            //    string sqlhead;
-            //    //check issue
-            //    List<string> h = GetOrderRefinvoice(b);
-            //    if (h.Count > 0)
-            //    {
-            //        string refkey = "'" + string.Join("','", h) + "'";
-            //        refinvoice = h[0];
-            //        zonecode = $"TO_CHAR(SYSDATE,'YYMMDD')||'{j.Prefix}'|| LPAD(substr('{refinvoice}',-5),5)";
-            //        sqlhead = $"update txp_isstransent set etddte=to_date('{j.Etd.ToString("dd-MM-yyyy")}','DD-MM-YYYY'),issuingkey='{refinvoice}',refinvoice='{refinvoice}',issuingmax='{ord.Count()}',zonecode={zonecode},upddte=sysdate where issuingkey='{refinvoice}'";
-            //        string uukey = Guid.NewGuid().ToString();
-            //        Console.WriteLine($"select count(*) ctn from txp_isstransent where issuingkey='{refinvoice}'");
-            //        DataSet drh = new ConnDB().GetFill($"select count(*) ctn from txp_isstransent where issuingkey='{refinvoice}'");
-            //        if (int.Parse(drh.Tables[0].Rows[0]["ctn"].ToString()) < 1)
-            //        {
-            //            sqlhead = $"insert into txp_isstransent(issuingkey,refinvoice,issuingstatus,etddte,factory,affcode,bishpc,custname,comercial,zoneid,shiptype,\n" +
-            //             "combinv,pc,zonecode,note1,note2,upddte,sysdte,uuid,createdby,modifiedby,containertype,issuingmax)\n" +
-            //             $"values('{refinvoice}','{refinvoice}',0,to_date('{j.Etd.ToString("dd-MM-yyyy")}','DD-MM-YYYY'),'{j.Factory}','{j.Affcode}','{j.Custcode}','{j.Custname}','{j.Commercial}','{j.BioABT}','{j.Ship}',\n" +
-            //             $"'{j.Combinv}','{j.Pc}',{zonecode},'{Note1}','{Note2}',sysdate,sysdate,'{uukey}','SYS','SYS','{Note3}','{ord.Count()}')";
-            //        }
-            //        new ConnDB().ExcuteSQL(sqlhead);
+            //new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
+            if (this.CheckInvoiceNotPrepare(b.RefNo) is false)
+            {
+                new ConnDB().ExcuteSQL($"DELETE txp_isstransbody WHERE ISSUINGKEY = '{b.RefNo}'");
+                new ConnDB().ExcuteSQL($"DELETE txp_isspackdetail WHERE ISSUINGKEY = '{b.RefNo}'");
+                new ConnDB().ExcuteSQL($"DELETE txp_isspallet WHERE ISSUINGKEY = '{b.RefNo}'");
+                new ConnDB().ExcuteSQL($"update txp_orderplan set curinv = '',orderstatus=0,upddte = sysdate where curinv = '{refinvoice}'");
+                refinvoice = refno;
+            }
+            List<OrderBody> ord = GetOrderDetail(b);
+            if (ord.Count > 0)
+            {
+                //create head
+                OrderBody j = ord[0];
+                string Note1 = new GreeterFunction().GetNote(1, j.BioABT, j.Ship, j.Factory);
+                string Note2 = new GreeterFunction().GetNote(2, j.BioABT, j.Ship, j.Factory);
+                string Note3 = new GreeterFunction().GetNote(3, j.BioABT, j.Ship, j.Factory);
+                string zonecode = $"TO_CHAR(SYSDATE,'YYMMDD')||'{j.Prefix}'|| LPAD(substr('{refinvoice}',-5),5)";
+                SplashScreenManager.Default.SetWaitFormCaption($"{refno}");
+                string sqlhead;
+                //check issue
+                List<string> h = GetOrderRefinvoice(b);
+                if (h.Count > 0)
+                {
+                    string refkey = "'" + string.Join("','", h) + "'";
+                    refinvoice = h[0];
+                    zonecode = $"TO_CHAR(SYSDATE,'YYMMDD')||'{j.Prefix}'|| LPAD(substr('{refinvoice}',-5),5)";
+                    sqlhead = $"update txp_isstransent set etddte=to_date('{j.Etd.ToString("dd-MM-yyyy")}','DD-MM-YYYY'),issuingkey='{refinvoice}',refinvoice='{refinvoice}',issuingmax='{ord.Count()}',zonecode={zonecode},upddte=sysdate where issuingkey='{refinvoice}'";
+                    string uukey = Guid.NewGuid().ToString();
+                    Console.WriteLine($"select count(*) ctn from txp_isstransent where issuingkey='{refinvoice}'");
+                    DataSet drh = new ConnDB().GetFill($"select count(*) ctn from txp_isstransent where issuingkey='{refinvoice}'");
+                    if (int.Parse(drh.Tables[0].Rows[0]["ctn"].ToString()) < 1)
+                    {
+                        sqlhead = $"insert into txp_isstransent(issuingkey,refinvoice,issuingstatus,etddte,factory,affcode,bishpc,custname,comercial,zoneid,shiptype,\n" +
+                         "combinv,pc,zonecode,note1,note2,upddte,sysdte,uuid,createdby,modifiedby,containertype,issuingmax)\n" +
+                         $"values('{refinvoice}','{refinvoice}',0,to_date('{j.Etd.ToString("dd-MM-yyyy")}','DD-MM-YYYY'),'{j.Factory}','{j.Affcode}','{j.Custcode}','{j.Custname}','{j.Commercial}','{j.BioABT}','{j.Ship}',\n" +
+                         $"'{j.Combinv}','{j.Pc}',{zonecode},'{Note1}','{Note2}',sysdate,sysdate,'{uukey}','SYS','SYS','{Note3}','{ord.Count()}')";
+                    }
+                    new ConnDB().ExcuteSQL(sqlhead);
 
-            //        SplashScreenManager.Default.SetWaitFormCaption($"CHECK BODY");
-            //        int i = 0;
-            //        while (i < ord.Count)
-            //        {
-            //            OrderBody r = ord[i];
-            //            Guid g = Guid.NewGuid();
-            //            Console.WriteLine($"OLD {i} => {r.PartNo} ORDER => {r.OrderNo} CTN => {r.Ctn}");
-            //            string sqlcheckbody = $"SELECT b.PARTNO,round(b.ORDERQTY/b.STDPACK) ctn FROM TXP_ISSTRANSBODY b WHERE b.PARTNO = '{r.PartNo}' AND b.PONO = '{r.OrderNo}' AND b.ISSUINGKEY IN ({refkey})";
-            //            //Console.WriteLine(sqlcheckbody);
-            //            DataSet dr = new ConnDB().GetFill(sqlcheckbody);
-            //            string upb;
-            //            if (dr.Tables[0].Rows.Count > 0)
-            //            {
-            //                //having data
-            //                upb = $"update txp_isstransbody set ISSUINGKEY='{refinvoice}',ORDERQTY={r.BalQty}  WHERE PARTNO = '{r.PartNo}' AND PONO = '{r.OrderNo}' AND ISSUINGKEY IN ({refkey})";
-            //            }
-            //            else
-            //            {
-            //                //insert body
-            //                upb = $"insert into txp_isstransbody(issuingkey,issuingseq,pono,tagrp,partno,stdpack,orderqty,issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,upddte,sysdte,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,refinv)\n" +
-            //                        $"values('{refinvoice}',{i},'{r.OrderNo}','C','{r.PartNo}','{r.BiSTDP}','{r.BalQty}',0,0,0,0,0,0,{r.BiWidt},{r.BiLeng},{r.BiHigh},{r.BiNetW},{r.BiGrwt},sysdate,sysdate,'{r.OrderType}','{r.PartName}','{r.Ship}'," +
-            //                        $"to_date('{r.Etd.ToString("yyyy/MM/dd")}', 'yyyy/MM/dd'),'{g.ToString()}','SYS','SYS','{r.PartType}','{r.LotNo}','{r.Uuid}')";
-            //            }
-            //            SplashScreenManager.Default.SetWaitFormCaption($"{refinvoice}");
-            //            SplashScreenManager.Default.SetWaitFormDescription($"CREATE DETAIL {r.PartNo}");
-            //            new ConnDB().ExcuteSQL(upb);
-            //            try
-            //            {
-            //                int rn = 0;
-            //                while (rn < r.Ctn)
-            //                {
-            //                    int nums = (rn + 1);
-            //                    Guid gid = Guid.NewGuid();
-            //                    string fkey = new GreeterFunction().getFTicket(r.Factory);
-            //                    Console.WriteLine($"{nums}.CREATE {r.PartNo} => {fkey}");
-            //                    SplashScreenManager.Default.SetWaitFormCaption($"{(i + 1)}. {r.PartNo}");
-            //                    SplashScreenManager.Default.SetWaitFormDescription($"{nums}. {fkey}");
-            //                    int lastseq = GetLastSeq(refinvoice);
-            //                    string insql = $"insert into txp_isspackdetail(issuingkey,pono,tagrp,partno,fticketno,orderqty,issuedqty,unit,issuingstatus,upddte,sysdte,uuid,createdby,modifedby,ITEM,splorder)\n" +
-            //                        $"values('{refinvoice}','{r.OrderNo}','C','{r.PartNo}','{fkey}','{r.BiSTDP}',0,'PCS',0,sysdate,sysdate,'{gid.ToString()}','SYS','SYS',{lastseq},'{g.ToString()}')";
-            //                    new ConnDB().ExcuteSQL(insql);
-            //                    GreeterFunction.updateFTicket(r.Factory);
-            //                    rn++;
-            //                }
-            //            }
-            //            catch (Exception ex)
-            //            {
-            //                throw ex;
-            //            }
-            //            string updateorder = $"update txp_orderplan set curinv = '{refinvoice}',orderstatus=1,upddte = sysdate where uuid = '{r.Uuid}'";
-            //            new ConnDB().ExcuteSQL(updateorder);
-            //            SplashScreenManager.Default.SetWaitFormCaption($"UPDATE STATUS");
-            //            SplashScreenManager.Default.SetWaitFormDescription($"{refinvoice}");
-            //            i++;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        refinvoice = refno;
-            //        sqlhead = $"insert into txp_isstransent(issuingkey,refinvoice,issuingstatus,etddte,factory,affcode,bishpc,custname,comercial,zoneid,shiptype,\n" +
-            //                 "combinv,pc,zonecode,note1,note2,upddte,sysdte,uuid,createdby,modifiedby,containertype,issuingmax)\n" +
-            //                 $"values('{refinvoice}','{refinvoice}',0,to_date('{j.Etd.ToString("dd-MM-yyyy")}','DD-MM-YYYY'),'{j.Factory}','{j.Affcode}','{j.Custcode}','{j.Custname}','{j.Commercial}','{j.BioABT}','{j.Ship}',\n" +
-            //                 $"'{j.Combinv}','{j.Pc}',{zonecode},'{Note1}','{Note2}',sysdate,sysdate,'{Guid.NewGuid().ToString()}','SYS','SYS','{Note3}','{ord.Count()}')";
-            //        //create body
-            //        int i = 0;
-            //        while (i < ord.Count)
-            //        {
-            //            OrderBody r = ord[i];
-            //            Guid g = Guid.NewGuid();
-            //            Console.WriteLine($"NEW {i} => {r.PartNo} ORDER => {r.OrderNo}");
-            //            string sqlcheckbody = $"SELECT b.PARTNO,round(b.ORDERQTY/b.STDPACK) ctn FROM TXP_ISSTRANSBODY b WHERE b.PARTNO = '{r.PartNo}' AND b.PONO = '{r.OrderNo}' AND b.ISSUINGKEY ='{refinvoice}'";
-            //            //Console.WriteLine(sqlcheckbody);
-            //            DataSet dr = new ConnDB().GetFill(sqlcheckbody);
-            //            string sql;
-            //            if (dr.Tables[0].Rows.Count < 1)
-            //            {
-            //                sql = $"insert into txp_isstransbody(issuingkey,issuingseq,pono,tagrp,partno,stdpack,orderqty,issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,upddte,sysdte,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,refinv)\n" +
-            //                      $"values('{refinvoice}',{i},'{r.OrderNo}','C','{r.PartNo}','{r.BiSTDP}','{r.BalQty}',0,0,0,0,0,0,{r.BiWidt},{r.BiLeng},{r.BiHigh},{r.BiNetW},{r.BiGrwt},sysdate,sysdate,'{r.OrderType}','{r.PartName}','{r.Ship}'," +
-            //                      $"to_date('{r.Etd.ToString("yyyy/MM/dd")}', 'yyyy/MM/dd'),'{g.ToString()}','SYS','SYS','{r.PartType}','{r.LotNo}','{r.Uuid}')";
-            //            }
-            //            else
-            //            {
-            //                sql = $"update txp_isstransbody set ISSUINGKEY='{refinvoice}',ORDERQTY={r.BalQty}  WHERE PARTNO = '{r.PartNo}' AND PONO = '{r.OrderNo}' AND ISSUINGKEY IN ('{refinvoice}')";
-            //            }
-            //            SplashScreenManager.Default.SetWaitFormCaption($"{refinvoice}");
-            //            SplashScreenManager.Default.SetWaitFormDescription($"CREATE {r.PartNo}");
-            //            new ConnDB().ExcuteSQL(sql);
-            //            Console.WriteLine(g.ToString());
-            //            Console.WriteLine(r.Ctn);
-            //            Console.WriteLine(r.Uuid);
-            //            //create issue detail
-            //            int rn = 0;
-            //            while (rn < r.Ctn)
-            //            {
-            //                Guid gid = Guid.NewGuid();
-            //                string fkey = new GreeterFunction().getFTicket(r.Factory);
-            //                SplashScreenManager.Default.SetWaitFormDescription($"{r.PartNo} {fkey}");
-            //                int lastseq =  GetLastSeq(refinvoice);
-            //                Console.WriteLine($"{rn}.create packing detail {r.OrderCtn} last {lastseq}");
-            //                string sqldetail = $"insert into txp_isspackdetail(issuingkey,pono,tagrp,partno,fticketno,orderqty,issuedqty,unit,issuingstatus,upddte,sysdte,uuid,createdby,modifedby,ITEM,splorder)\n" +
-            //                    $"values('{refinvoice}','{r.OrderNo}','C','{r.PartNo}','{fkey}','{r.BiSTDP}',0,'PCS',0,sysdate,sysdate,'{gid.ToString()}','SYS','SYS',{lastseq},'{g.ToString()}')";
-            //                new ConnDB().ExcuteSQL(sqldetail);
-            //                if (GreeterFunction.updateFTicket(r.Factory))
-            //                {
-            //                    rn++;
-            //                }
-            //            }
-            //            string updateorder = $"update txp_orderplan set curinv = '{refinvoice}',orderstatus=1,upddte = sysdate where uuid = '{r.Uuid}'";
-            //            new ConnDB().ExcuteSQL(updateorder);
-            //            SplashScreenManager.Default.SetWaitFormCaption($"UPDATE STATUS");
-            //            i++;
-            //        }
-            //        new ConnDB().ExcuteSQL(sqlhead);
-            //    }
-            //}
+                    SplashScreenManager.Default.SetWaitFormCaption($"CHECK BODY");
+                    int i = 0;
+                    while (i < ord.Count)
+                    {
+                        OrderBody r = ord[i];
+                        Guid g = Guid.NewGuid();
+                        Console.WriteLine($"OLD {i} => {r.PartNo} ORDER => {r.OrderNo} CTN => {r.Ctn}");
+                        string sqlcheckbody = $"SELECT b.PARTNO,round(b.ORDERQTY/b.STDPACK) ctn FROM TXP_ISSTRANSBODY b WHERE b.PARTNO = '{r.PartNo}' AND b.PONO = '{r.OrderNo}' AND b.ISSUINGKEY IN ({refkey})";
+                        //Console.WriteLine(sqlcheckbody);
+                        DataSet dr = new ConnDB().GetFill(sqlcheckbody);
+                        string upb;
+                        if (dr.Tables[0].Rows.Count > 0)
+                        {
+                            //having data
+                            upb = $"update txp_isstransbody set ISSUINGKEY='{refinvoice}',ORDERQTY={r.BalQty}  WHERE PARTNO = '{r.PartNo}' AND PONO = '{r.OrderNo}' AND ISSUINGKEY IN ({refkey})";
+                        }
+                        else
+                        {
+                            //insert body
+                            upb = $"insert into txp_isstransbody(issuingkey,issuingseq,pono,tagrp,partno,stdpack,orderqty,issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,upddte,sysdte,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,refinv)\n" +
+                                    $"values('{refinvoice}',{i},'{r.OrderNo}','C','{r.PartNo}','{r.BiSTDP}','{r.BalQty}',0,0,0,0,0,0,{r.BiWidt},{r.BiLeng},{r.BiHigh},{r.BiNetW},{r.BiGrwt},sysdate,sysdate,'{r.OrderType}','{r.PartName}','{r.Ship}'," +
+                                    $"to_date('{r.Etd.ToString("yyyy/MM/dd")}', 'yyyy/MM/dd'),'{g.ToString()}','SYS','SYS','{r.PartType}','{r.LotNo}','{r.Uuid}')";
+                        }
+                        SplashScreenManager.Default.SetWaitFormCaption($"{refinvoice}");
+                        SplashScreenManager.Default.SetWaitFormDescription($"CREATE DETAIL {r.PartNo}");
+                        new ConnDB().ExcuteSQL(upb);
+                        try
+                        {
+                            int rn = 0;
+                            while (rn < r.Ctn)
+                            {
+                                int nums = (rn + 1);
+                                Guid gid = Guid.NewGuid();
+                                string fkey = new GreeterFunction().getFTicket(r.Factory);
+                                Console.WriteLine($"{nums}.CREATE {r.PartNo} => {fkey}");
+                                SplashScreenManager.Default.SetWaitFormCaption($"{(i + 1)}. {r.PartNo}");
+                                SplashScreenManager.Default.SetWaitFormDescription($"{nums}. {fkey}");
+                                int lastseq = GetLastSeq(refinvoice);
+                                string insql = $"insert into txp_isspackdetail(issuingkey,pono,tagrp,partno,fticketno,orderqty,issuedqty,unit,issuingstatus,upddte,sysdte,uuid,createdby,modifedby,ITEM,splorder)\n" +
+                                    $"values('{refinvoice}','{r.OrderNo}','C','{r.PartNo}','{fkey}','{r.BiSTDP}',0,'PCS',0,sysdate,sysdate,'{gid.ToString()}','SYS','SYS',{lastseq},'{g.ToString()}')";
+                                new ConnDB().ExcuteSQL(insql);
+                                GreeterFunction.updateFTicket(r.Factory);
+                                rn++;
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            throw ex;
+                        }
+                        string updateorder = $"update txp_orderplan set curinv = '{refinvoice}',orderstatus=1,upddte = sysdate where uuid = '{r.Uuid}'";
+                        new ConnDB().ExcuteSQL(updateorder);
+                        SplashScreenManager.Default.SetWaitFormCaption($"UPDATE STATUS");
+                        SplashScreenManager.Default.SetWaitFormDescription($"{refinvoice}");
+                        i++;
+                    }
+                }
+                else
+                {
+                    refinvoice = refno;
+                    sqlhead = $"insert into txp_isstransent(issuingkey,refinvoice,issuingstatus,etddte,factory,affcode,bishpc,custname,comercial,zoneid,shiptype,\n" +
+                             "combinv,pc,zonecode,note1,note2,upddte,sysdte,uuid,createdby,modifiedby,containertype,issuingmax)\n" +
+                             $"values('{refinvoice}','{refinvoice}',0,to_date('{j.Etd.ToString("dd-MM-yyyy")}','DD-MM-YYYY'),'{j.Factory}','{j.Affcode}','{j.Custcode}','{j.Custname}','{j.Commercial}','{j.BioABT}','{j.Ship}',\n" +
+                             $"'{j.Combinv}','{j.Pc}',{zonecode},'{Note1}','{Note2}',sysdate,sysdate,'{Guid.NewGuid().ToString()}','SYS','SYS','{Note3}','{ord.Count()}')";
+                    //create body
+                    int i = 0;
+                    while (i < ord.Count)
+                    {
+                        OrderBody r = ord[i];
+                        Guid g = Guid.NewGuid();
+                        Console.WriteLine($"NEW {i} => {r.PartNo} ORDER => {r.OrderNo}");
+                        string sqlcheckbody = $"SELECT b.PARTNO,round(b.ORDERQTY/b.STDPACK) ctn FROM TXP_ISSTRANSBODY b WHERE b.PARTNO = '{r.PartNo}' AND b.PONO = '{r.OrderNo}' AND b.ISSUINGKEY ='{refinvoice}'";
+                        //Console.WriteLine(sqlcheckbody);
+                        DataSet dr = new ConnDB().GetFill(sqlcheckbody);
+                        string sql;
+                        if (dr.Tables[0].Rows.Count < 1)
+                        {
+                            sql = $"insert into txp_isstransbody(issuingkey,issuingseq,pono,tagrp,partno,stdpack,orderqty,issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,upddte,sysdte,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,refinv)\n" +
+                                  $"values('{refinvoice}',{i},'{r.OrderNo}','C','{r.PartNo}','{r.BiSTDP}','{r.BalQty}',0,0,0,0,0,0,{r.BiWidt},{r.BiLeng},{r.BiHigh},{r.BiNetW},{r.BiGrwt},sysdate,sysdate,'{r.OrderType}','{r.PartName}','{r.Ship}'," +
+                                  $"to_date('{r.Etd.ToString("yyyy/MM/dd")}', 'yyyy/MM/dd'),'{g.ToString()}','SYS','SYS','{r.PartType}','{r.LotNo}','{r.Uuid}')";
+                        }
+                        else
+                        {
+                            sql = $"update txp_isstransbody set ISSUINGKEY='{refinvoice}',ORDERQTY={r.BalQty}  WHERE PARTNO = '{r.PartNo}' AND PONO = '{r.OrderNo}' AND ISSUINGKEY IN ('{refinvoice}')";
+                        }
+                        SplashScreenManager.Default.SetWaitFormCaption($"{refinvoice}");
+                        SplashScreenManager.Default.SetWaitFormDescription($"CREATE {r.PartNo}");
+                        new ConnDB().ExcuteSQL(sql);
+                        Console.WriteLine(g.ToString());
+                        Console.WriteLine(r.Ctn);
+                        Console.WriteLine(r.Uuid);
+                        //create issue detail
+                        int rn = 0;
+                        while (rn < r.Ctn)
+                        {
+                            Guid gid = Guid.NewGuid();
+                            string fkey = new GreeterFunction().getFTicket(r.Factory);
+                            SplashScreenManager.Default.SetWaitFormDescription($"{r.PartNo} {fkey}");
+                            int lastseq =  GetLastSeq(refinvoice);
+                            Console.WriteLine($"{rn}.create packing detail {r.OrderCtn} last {lastseq}");
+                            string sqldetail = $"insert into txp_isspackdetail(issuingkey,pono,tagrp,partno,fticketno,orderqty,issuedqty,unit,issuingstatus,upddte,sysdte,uuid,createdby,modifedby,ITEM,splorder)\n" +
+                                $"values('{refinvoice}','{r.OrderNo}','C','{r.PartNo}','{fkey}','{r.BiSTDP}',0,'PCS',0,sysdate,sysdate,'{gid.ToString()}','SYS','SYS',{lastseq},'{g.ToString()}')";
+                            new ConnDB().ExcuteSQL(sqldetail);
+                            if (GreeterFunction.updateFTicket(r.Factory))
+                            {
+                                rn++;
+                            }
+                        }
+                        string updateorder = $"update txp_orderplan set curinv = '{refinvoice}',orderstatus=1,upddte = sysdate where uuid = '{r.Uuid}'";
+                        new ConnDB().ExcuteSQL(updateorder);
+                        SplashScreenManager.Default.SetWaitFormCaption($"UPDATE STATUS");
+                        i++;
+                    }
+                    new ConnDB().ExcuteSQL(sqlhead);
+                }
+            }
             //new SetPalletControllers().CheckPalletSetSeq(refinvoice);
             if (b.Factory == "AW")
             {
