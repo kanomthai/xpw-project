@@ -240,12 +240,13 @@ namespace XPWLibrary.Controllers
             return true;
         }
 
-        public List<BookingInvoicePallet> GetContainerDeaitl(string conns)
+        public List<BookingInvoicePallet> GetContainerDeaitl(string conns, DateTime etd)
         {
             List<BookingInvoicePallet> list = new List<BookingInvoicePallet>();
             string sql = $"SELECT e.FACTORY,e.ISSUINGKEY,l.PALLETNO,l.PONO,l.CUSTNAME,l.PLTYPE,l.PLOUTNO,l.PLOUTSTS,l.PLTOTAL,l.CONTAINERNO,l.BOOKED,l.PLWIDE,l.PLLENG,l.PLHIGHT,e.CUSTNAME,e.REFINVOICE FROM txp_isspallet l\n" +
-                        $"INNER JOIN TXP_ISSTRANSENT e ON l.ISSUINGKEY = e.ISSUINGKEY WHERE l.containerno = '{conns}'\n" +
-                        $"order by l.PLOUTNO,l.PALLETNO,l.PONO";
+                $"INNER JOIN TXP_LOADCONTAINER c ON l.CONTAINERNO  = c.CONTAINERNO " +        
+                $"INNER JOIN TXP_ISSTRANSENT e ON l.ISSUINGKEY = e.ISSUINGKEY WHERE l.containerno = '{conns}' AND c.ETDDTE = to_date('{etd.ToString("dd/MM/yyyy")}', 'dd/MM/yyyy')\n" +
+                $"order by l.PLOUTNO,l.PALLETNO,l.PONO";
             Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);
             foreach (DataRow r in dr.Tables[0].Rows)

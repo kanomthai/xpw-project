@@ -17,17 +17,19 @@ namespace BookingApp
         public BookingAddForm(Bookings b)
         {
             InitializeComponent();
-            bbiEtd.Enabled = StaticFunctionData.enable_container_date;
+            //bbiEtd.Enabled = StaticFunctionData.enable_container_date;
             if (b is null)
             {
                 this.Text = "ADD NEW BOOKING";
                 bbiEtd.EditValue = DateTime.Now;
+                bbiEtd.Enabled = true;
                 Reload();
             }
             else
             {
                 containerno = b.ContainerNo;
                 this.Text = $"{containerno} DETAIL";
+                bbiEtd.Enabled = false;
                 ReloadContainerDetail(b);
             }
         }
@@ -55,6 +57,7 @@ namespace BookingApp
             bbiEtd.EditValue = b.Etd;
             bbiRelDate.EditValue = b.ReleaseDate;
             bbiRelTimer.EditValue = b.ReleaseDate;
+            
             if (b.ContainerSize == "20F")
             {
                 bbi4oFt.Checked = false;
@@ -281,7 +284,8 @@ namespace BookingApp
 
         void ReloadContainer()
         {
-            gridContainerControl.DataSource = new BookingControllers().GetContainerDeaitl(bbiContainer.EditValue.ToString().ToUpper());
+            DateTime d = DateTime.Parse(bbiEtd.EditValue.ToString());
+            gridContainerControl.DataSource = new BookingControllers().GetContainerDeaitl(bbiContainer.EditValue.ToString().ToUpper(), d);
         }
 
         private void bbiRefresh_ItemClick(object sender, ItemClickEventArgs e)

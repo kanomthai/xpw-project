@@ -9,8 +9,8 @@
   <aw_netweight>1000</aw_netweight>
   <ipaddress>192.168.101.215</ipaddress>
   <dbname>RMW</dbname>
-  <user>sktsys</user>
-  <passwd>sktsys</passwd>
+  <user>expsys</user>
+  <passwd>expsys</passwd>
   <aw_plprinter>POSTEKI300</aw_plprinter>
   <inj_plprinter>POSTEKI300</inj_plprinter>
   <confirmlotno>true</confirmlotno>
@@ -32,5 +32,5 @@
   <enable_note2>true</enable_note2>
   <enable_note3>true</enable_note3>
   <enable_container>true</enable_container>
-  <enable_container_date>false</enable_container_date>
+  <enable_container_date>true</enable_container_date>
 </data>
