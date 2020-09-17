@@ -847,7 +847,17 @@ namespace XPWLibrary.Controllers
             }
             sql += ordby;
             Console.WriteLine(sql);
-            foreach (OrderBody od in AddOrderJobList(b, sql))
+
+            List<OrderBody> olist = AddOrderJobList(b, sql);
+            if (b.RefNo != null)
+            {
+                sql = $"SELECT b.PONO custpono,b.PARTNO,CASE WHEN e.FACTORY = 'INJ' THEN b.PARTNO ELSE b.PARTNAME END PARTNAME,b.LOTNO,b.ORDERQTY BALQTY,round(b.ORDERQTY/b.STDPACK) orderctn,SUBSTR(e.ISSUINGKEY, 1, 2) BIIVPX,e.ZONEID BIOABT,\n"+
+                      "e.COMERCIAL COMMERCIAL, e.PC,e.UUID,b.STDPACK BISTDP, b.BWIDE BIWIDT, b.BLENG BILENG, b.BHIGHT BIHIGH, b.GTWEIGHT BIGRWT, b.NEWEIGHT BINEWT, b.ORDERTYPE ORDERTYPE, e.ISSUINGKEY CURINV, e.refinvoice invoceno,1 ORDERSTATUS,'' rewrite,e.upddte,e.COMBINV bicomd FROM TXP_ISSTRANSBODY b\n"+
+                      "INNER JOIN TXP_ISSTRANSENT e ON b.ISSUINGKEY = e.ISSUINGKEY\n" +
+                      $"WHERE b.ISSUINGKEY = '{b.RefNo}'";
+                olist = AddOrderJobList(b, sql);
+            }
+            foreach (OrderBody od in olist)
             {
                 od.Id = obj.Count + 1;
                 obj.Add(od);
