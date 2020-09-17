@@ -141,6 +141,7 @@ namespace XPWLibrary.Controllers
             //new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
             if (this.CheckInvoiceNotPrepare(b.RefNo) is false)
             {
+                new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
                 new ConnDB().ExcuteSQL($"DELETE txp_isstransbody WHERE ISSUINGKEY = '{b.RefNo}'");
                 new ConnDB().ExcuteSQL($"DELETE txp_isspackdetail WHERE ISSUINGKEY = '{b.RefNo}'");
                 new ConnDB().ExcuteSQL($"DELETE txp_isspallet WHERE ISSUINGKEY = '{b.RefNo}'");
@@ -845,6 +846,7 @@ namespace XPWLibrary.Controllers
                 "ORDER BY m.KIDS,m.SIZES ,p.ORDERID,p.LOTNO,round(sum(p.BALQTY/p.BISTDP))";
             }
             sql += ordby;
+            Console.WriteLine(sql);
             foreach (OrderBody od in AddOrderJobList(b, sql))
             {
                 od.Id = obj.Count + 1;
