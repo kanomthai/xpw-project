@@ -24,7 +24,7 @@ namespace InvoiceApp
             SplashScreenManager.ShowDefaultWaitForm();
             ob = obj;
             bbiJobCardOnly.Enabled = true;
-            new SetPalletControllers().RunningSeq(ob.RefInv);
+            //new SetPalletControllers().RunningSeq(ob.RefInv);
             if (StaticFunctionData.Factory == "AW")
             {
                 gridView.OptionsSelection.MultiSelect = false;
@@ -44,7 +44,7 @@ namespace InvoiceApp
         void ShowFTicketByPart()
         {
             this.Text = $"PRINT JOBCARD {ob.RefInv} WITH {ob.PartNo}";
-            string sql = $"SELECT d.ITEM,d.PONO,d.PARTNO,p.PARTNAME,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,CASE WHEN d.PLOUTNO IS NULL THEN '' ELSE max(l.PALLETNO) END PALLETNO,c.SHELVE ,d.ISSUINGSTATUS FROM TXP_ISSPACKDETAIL d  \n" +
+            string sql = $"SELECT d.ITEM,d.PONO,d.PARTNO,case when substr('{ob.RefInv}',1, 1) = 'A' then p.partname else d.partno end PARTNAME,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,CASE WHEN d.PLOUTNO IS NULL THEN '' ELSE max(l.PALLETNO) END PALLETNO,c.SHELVE ,d.ISSUINGSTATUS FROM TXP_ISSPACKDETAIL d  \n" +
                 "INNER JOIN TXP_ISSTRANSBODY b ON d.ISSUINGKEY = b.ISSUINGKEY AND b.PARTNO = d.PARTNO\n" +
                 "LEFT JOIN TXP_ISSPALLET l ON b.ISSUINGKEY = l.ISSUINGKEY\n" +
                 "LEFT JOIN TXP_CARTONDETAILS c ON d.PLOUTNO = c.PLOUTNO\n" +
@@ -85,7 +85,7 @@ namespace InvoiceApp
         void ShowFTicketAll()
         {
             this.Text = $"Packing List({ob.RefInv})";
-            string sql = $"SELECT d.ITEM,d.PONO,d.PARTNO,p.PARTNAME,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,d.SHIPPLNO PALLETNO,c.SHELVE ,d.ISSUINGSTATUS FROM TXP_ISSPACKDETAIL d  \n" +
+            string sql = $"SELECT d.ITEM,d.PONO,d.PARTNO,case when substr('{ob.RefInv}',1, 1) = 'A' then p.partname else d.partno end PARTNAME,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,d.SHIPPLNO PALLETNO,c.SHELVE ,d.ISSUINGSTATUS FROM TXP_ISSPACKDETAIL d  \n" +
                  "INNER JOIN TXP_ISSTRANSBODY b ON d.ISSUINGKEY = b.ISSUINGKEY AND b.PARTNO = d.PARTNO\n" +
                  "LEFT JOIN TXP_ISSPALLET l ON b.ISSUINGKEY = l.ISSUINGKEY\n" +
                  "LEFT JOIN TXP_CARTONDETAILS c ON d.PLOUTNO = c.PLOUTNO\n" +
@@ -278,20 +278,20 @@ namespace InvoiceApp
 
         private void gridView_RowClick(object sender, DevExpress.XtraGrid.Views.Grid.RowClickEventArgs e)
         {
-            if (StaticFunctionData.Factory != "AW")
-            {
-                FTicketData f = gridView.GetFocusedRow() as FTicketData;
-                if (f.Status >= StaticFunctionData.StatusFTicket)
-                {
-                    XtraMessageBox.Show("Label นี้ปริ้น/จัดเตรียมไปแล้ว", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    gridView.SetRowCellValue(e.RowHandle, "PrintFTicket", false);
-                }
-                else if (f.PlNo == "")
-                {
-                    XtraMessageBox.Show("ไม่สามารถปริ้น FTicket ได้\nเนื่องจากยังไม่ระบุเลขที่พาเลท", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    gridView.SetRowCellValue(e.RowHandle, "PrintFTicket", false);
-                }
-            }
+            //if (StaticFunctionData.Factory != "AW")
+            //{
+            //    FTicketData f = gridView.GetFocusedRow() as FTicketData;
+            //    if (f.Status >= StaticFunctionData.StatusFTicket)
+            //    {
+            //        XtraMessageBox.Show("Label นี้ปริ้น/จัดเตรียมไปแล้ว", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        gridView.SetRowCellValue(e.RowHandle, "PrintFTicket", false);
+            //    }
+            //    else if (f.PlNo == "")
+            //    {
+            //        XtraMessageBox.Show("ไม่สามารถปริ้น FTicket ได้\nเนื่องจากยังไม่ระบุเลขที่พาเลท", "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        gridView.SetRowCellValue(e.RowHandle, "PrintFTicket", false);
+            //    }
+            //}
         }
 
         private void gridView_RowCellClick(object sender, DevExpress.XtraGrid.Views.Grid.RowCellClickEventArgs e)
