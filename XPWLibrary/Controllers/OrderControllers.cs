@@ -129,6 +129,17 @@ namespace XPWLibrary.Controllers
             return obj;
         }
 
+        int GetLastPacking(string sql) {
+            Console.WriteLine(sql);
+            DataSet dr = new ConnDB().GetFill(sql);
+            int i = 0;
+            foreach (DataRow r in dr.Tables[0].Rows)
+            {
+                i = int.Parse(r["ctn"].ToString());
+            }
+            return i;
+        }
+
         public string CreatedJobList(OrderData b)
         {
             string refinvoice = b.RefNo;
@@ -141,10 +152,10 @@ namespace XPWLibrary.Controllers
             //new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
             if (this.CheckInvoiceNotPrepare(b.RefNo) is false)
             {
-                new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
-                new ConnDB().ExcuteSQL($"DELETE txp_isstransbody WHERE ISSUINGKEY = '{b.RefNo}'");
-                new ConnDB().ExcuteSQL($"DELETE txp_isspackdetail WHERE ISSUINGKEY = '{b.RefNo}'");
-                new ConnDB().ExcuteSQL($"DELETE txp_isspallet WHERE ISSUINGKEY = '{b.RefNo}'");
+                //new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
+                //new ConnDB().ExcuteSQL($"DELETE txp_isstransbody WHERE ISSUINGKEY = '{b.RefNo}'");
+                //new ConnDB().ExcuteSQL($"DELETE txp_isspackdetail WHERE ISSUINGKEY = '{b.RefNo}'");
+                //new ConnDB().ExcuteSQL($"DELETE txp_isspallet WHERE ISSUINGKEY = '{b.RefNo}'");
                 new ConnDB().ExcuteSQL($"update txp_orderplan set curinv = '',orderstatus=0,upddte = sysdate where curinv = '{refinvoice}'");
                 refinvoice = refno;
             }
@@ -212,15 +223,19 @@ namespace XPWLibrary.Controllers
                             {
                                 int nums = (rn + 1);
                                 Guid gid = Guid.NewGuid();
-                                string fkey = new GreeterFunction().getFTicket(r.Factory);
-                                Console.WriteLine($"{nums}.CREATE {r.PartNo} => {fkey}");
-                                SplashScreenManager.Default.SetWaitFormCaption($"{(i + 1)}. {r.PartNo}");
-                                SplashScreenManager.Default.SetWaitFormDescription($"{nums}. {fkey}");
-                                int lastseq = GetLastSeq(refinvoice);
-                                string insql = $"insert into txp_isspackdetail(issuingkey,pono,tagrp,partno,fticketno,orderqty,issuedqty,unit,issuingstatus,upddte,sysdte,uuid,createdby,modifedby,ITEM,splorder)\n" +
-                                    $"values('{refinvoice}','{r.OrderNo}','C','{r.PartNo}','{fkey}','{r.BiSTDP}',0,'PCS',0,sysdate,sysdate,'{gid.ToString()}','SYS','SYS',{lastseq},'{g.ToString()}')";
-                                new ConnDB().ExcuteSQL(insql);
-                                GreeterFunction.updateFTicket(r.Factory);
+                                int lastctn = GetLastPacking($"SELECT count(*) ctn FROM TXP_ISSPACKDETAIL t WHERE t.PONO ='{r.OrderNo}' AND t.PARTNO ='{r.PartNo}' AND t.ISSUINGKEY = '{refinvoice}'");
+                                if (lastctn > r.Ctn)
+                                {
+                                    string fkey = new GreeterFunction().getFTicket(r.Factory);
+                                    Console.WriteLine($"{nums}.CREATE {r.PartNo} => {fkey}");
+                                    SplashScreenManager.Default.SetWaitFormCaption($"{(i + 1)}. {r.PartNo}");
+                                    SplashScreenManager.Default.SetWaitFormDescription($"{nums}. {fkey}");
+                                    int lastseq = GetLastSeq(refinvoice);
+                                    string insql = $"insert into txp_isspackdetail(issuingkey,pono,tagrp,partno,fticketno,orderqty,issuedqty,unit,issuingstatus,upddte,sysdte,uuid,createdby,modifedby,ITEM,splorder)\n" +
+                                        $"values('{refinvoice}','{r.OrderNo}','C','{r.PartNo}','{fkey}','{r.BiSTDP}',0,'PCS',0,sysdate,sysdate,'{gid.ToString()}','SYS','SYS',{lastseq},'{g.ToString()}')";
+                                    new ConnDB().ExcuteSQL(insql);
+                                    GreeterFunction.updateFTicket(r.Factory);
+                                }
                                 rn++;
                             }
                         }
@@ -274,17 +289,19 @@ namespace XPWLibrary.Controllers
                         while (rn < r.Ctn)
                         {
                             Guid gid = Guid.NewGuid();
-                            string fkey = new GreeterFunction().getFTicket(r.Factory);
-                            SplashScreenManager.Default.SetWaitFormDescription($"{r.PartNo} {fkey}");
-                            int lastseq =  GetLastSeq(refinvoice);
-                            Console.WriteLine($"{rn}.create packing detail {r.OrderCtn} last {lastseq}");
-                            string sqldetail = $"insert into txp_isspackdetail(issuingkey,pono,tagrp,partno,fticketno,orderqty,issuedqty,unit,issuingstatus,upddte,sysdte,uuid,createdby,modifedby,ITEM,splorder)\n" +
-                                $"values('{refinvoice}','{r.OrderNo}','C','{r.PartNo}','{fkey}','{r.BiSTDP}',0,'PCS',0,sysdate,sysdate,'{gid.ToString()}','SYS','SYS',{lastseq},'{g.ToString()}')";
-                            new ConnDB().ExcuteSQL(sqldetail);
-                            if (GreeterFunction.updateFTicket(r.Factory))
+                            int lastctn = GetLastPacking($"SELECT count(*) ctn FROM TXP_ISSPACKDETAIL t WHERE t.PONO ='{r.OrderNo}' AND t.PARTNO ='{r.PartNo}' AND t.ISSUINGKEY = '{refinvoice}'");
+                            if (lastctn > r.Ctn)
                             {
-                                rn++;
+                                string fkey = new GreeterFunction().getFTicket(r.Factory);
+                                SplashScreenManager.Default.SetWaitFormDescription($"{r.PartNo} {fkey}");
+                                int lastseq = GetLastSeq(refinvoice);
+                                Console.WriteLine($"{rn}.create packing detail {r.OrderCtn} last {lastseq}");
+                                string sqldetail = $"insert into txp_isspackdetail(issuingkey,pono,tagrp,partno,fticketno,orderqty,issuedqty,unit,issuingstatus,upddte,sysdte,uuid,createdby,modifedby,ITEM,splorder)\n" +
+                                    $"values('{refinvoice}','{r.OrderNo}','C','{r.PartNo}','{fkey}','{r.BiSTDP}',0,'PCS',0,sysdate,sysdate,'{gid.ToString()}','SYS','SYS',{lastseq},'{g.ToString()}')";
+                                new ConnDB().ExcuteSQL(sqldetail);
+                                GreeterFunction.updateFTicket(r.Factory);
                             }
+                            rn++;
                         }
                         string updateorder = $"update txp_orderplan set curinv = '{refinvoice}',orderstatus=1,upddte = sysdate where uuid = '{r.Uuid}'";
                         new ConnDB().ExcuteSQL(updateorder);
