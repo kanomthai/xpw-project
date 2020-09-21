@@ -224,7 +224,7 @@ namespace XPWLibrary.Controllers
                                 int nums = (rn + 1);
                                 Guid gid = Guid.NewGuid();
                                 int lastctn = GetLastPacking($"SELECT count(*) ctn FROM TXP_ISSPACKDETAIL t WHERE t.PONO ='{r.OrderNo}' AND t.PARTNO ='{r.PartNo}' AND t.ISSUINGKEY = '{refinvoice}'");
-                                if (lastctn > r.Ctn)
+                                if (lastctn <= r.Ctn)
                                 {
                                     string fkey = new GreeterFunction().getFTicket(r.Factory);
                                     Console.WriteLine($"{nums}.CREATE {r.PartNo} => {fkey}");
@@ -290,7 +290,7 @@ namespace XPWLibrary.Controllers
                         {
                             Guid gid = Guid.NewGuid();
                             int lastctn = GetLastPacking($"SELECT count(*) ctn FROM TXP_ISSPACKDETAIL t WHERE t.PONO ='{r.OrderNo}' AND t.PARTNO ='{r.PartNo}' AND t.ISSUINGKEY = '{refinvoice}'");
-                            if (lastctn > r.Ctn)
+                            if (lastctn <= r.Ctn)
                             {
                                 string fkey = new GreeterFunction().getFTicket(r.Factory);
                                 SplashScreenManager.Default.SetWaitFormDescription($"{r.PartNo} {fkey}");
