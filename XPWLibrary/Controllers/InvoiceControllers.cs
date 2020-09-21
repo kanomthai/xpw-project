@@ -335,10 +335,10 @@ namespace XPWLibrary.Controllers
         public List<InvoiceBodyData> GetInvoiceBody(InvoiceData ob)
         {
             List<InvoiceBodyData> list = new List<InvoiceBodyData>();
-            string sql = $"SELECT * FROM TBT_ISSUEDETAIL where issuingkey = '{ob.RefInv}' AND ORDERQTY > 0 ORDER BY PONO,KIDS,SIZES,LOTNO,SEQ ,CTN";
+            string sql = $"SELECT distinct * FROM TBT_ISSUEDETAIL where issuingkey = '{ob.RefInv}' AND ORDERQTY > 0 ORDER BY PONO,KIDS,SIZES,LOTNO,SEQ ,CTN";
             if (StaticFunctionData.Factory == "INJ")
             {
-                sql = $"SELECT * FROM TBT_ISSUEDETAIL where issuingkey = '{ob.RefInv}' AND ORDERQTY > 0 ORDER BY PARTNO,PONO,CTN";
+                sql = $"SELECT distinct * FROM TBT_ISSUEDETAIL where issuingkey = '{ob.RefInv}' AND ORDERQTY > 0 ORDER BY PARTNO,PONO,CTN";
             }
             Console.WriteLine(sql);
             DataSet dr = new ConnDB().GetFill(sql);

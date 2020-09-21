@@ -143,22 +143,22 @@ namespace XPWLibrary.Controllers
         public string CreatedJobList(OrderData b)
         {
             string refinvoice = b.RefNo;
-            string refno = GetRefInv(b.Prefix, b.Factory, b.Etd);
-            //if ((b.RefNo).Length <= 0)
-            //{
-            //    refinvoice = refno;
-            //}
+            //string refno = GetRefInv(b.Prefix, b.Factory, b.Etd);
+            if ((b.RefNo).Length <= 0)
+            {
+                refinvoice = GetRefInv(b.Prefix, b.Factory, b.Etd);
+            }
 
             //new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
-            if (this.CheckInvoiceNotPrepare(b.RefNo) is false)
-            {
-                //new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
-                //new ConnDB().ExcuteSQL($"DELETE txp_isstransbody WHERE ISSUINGKEY = '{b.RefNo}'");
-                //new ConnDB().ExcuteSQL($"DELETE txp_isspackdetail WHERE ISSUINGKEY = '{b.RefNo}'");
-                //new ConnDB().ExcuteSQL($"DELETE txp_isspallet WHERE ISSUINGKEY = '{b.RefNo}'");
-                new ConnDB().ExcuteSQL($"update txp_orderplan set curinv = '',orderstatus=0,upddte = sysdate where curinv = '{refinvoice}'");
-                refinvoice = refno;
-            }
+            //if (this.CheckInvoiceNotPrepare(b.RefNo) is false)
+            //{
+            //    new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
+            //    new ConnDB().ExcuteSQL($"DELETE txp_isstransbody WHERE ISSUINGKEY = '{b.RefNo}'");
+            //    new ConnDB().ExcuteSQL($"DELETE txp_isspackdetail WHERE ISSUINGKEY = '{b.RefNo}'");
+            //    new ConnDB().ExcuteSQL($"DELETE txp_isspallet WHERE ISSUINGKEY = '{b.RefNo}'");
+            //    new ConnDB().ExcuteSQL($"update txp_orderplan set curinv = '',orderstatus=0,upddte = sysdate where curinv = '{refinvoice}'");
+            //    refinvoice = refno;
+            //}
             List<OrderBody> ord = GetOrderDetail(b);
             if (ord.Count > 0)
             {
@@ -168,7 +168,7 @@ namespace XPWLibrary.Controllers
                 string Note2 = new GreeterFunction().GetNote(2, j.BioABT, j.Ship, j.Factory);
                 string Note3 = new GreeterFunction().GetNote(3, j.BioABT, j.Ship, j.Factory);
                 string zonecode = $"TO_CHAR(SYSDATE,'YYMMDD')||'{j.Prefix}'|| LPAD(substr('{refinvoice}',-5),5)";
-                SplashScreenManager.Default.SetWaitFormCaption($"{refno}");
+                SplashScreenManager.Default.SetWaitFormCaption($"{refinvoice}");
                 string sqlhead;
                 //check issue
                 List<string> h = GetOrderRefinvoice(b);
@@ -252,7 +252,7 @@ namespace XPWLibrary.Controllers
                 }
                 else
                 {
-                    refinvoice = refno;
+                    //refinvoice = refno;
                     sqlhead = $"insert into txp_isstransent(issuingkey,refinvoice,issuingstatus,etddte,factory,affcode,bishpc,custname,comercial,zoneid,shiptype,\n" +
                              "combinv,pc,zonecode,note1,note2,upddte,sysdte,uuid,createdby,modifiedby,containertype,issuingmax)\n" +
                              $"values('{refinvoice}','{refinvoice}',0,to_date('{j.Etd.ToString("dd-MM-yyyy")}','DD-MM-YYYY'),'{j.Factory}','{j.Affcode}','{j.Custcode}','{j.Custname}','{j.Commercial}','{j.BioABT}','{j.Ship}',\n" +
@@ -515,8 +515,8 @@ namespace XPWLibrary.Controllers
 
         public string GetRefInv(string prefix, string factory, DateTime etd)
         {
-            //string sql = $"SELECT count(*) +1 ctn FROM TXP_ISSTRANSENT e WHERE TO_CHAR(etddte, 'yyyy-MM-dd') = '{etd.ToString("yyyy-MM-dd")}' and factory = '{factory}'";
-            //DataSet dr = new ConnDB().GetFill(sql);
+            string sql = $"SELECT count(*) +1 ctn FROM TXP_ISSTRANSENT e WHERE TO_CHAR(etddte, 'yyyy-MM-dd') = '{etd.ToString("yyyy-MM-dd")}' and factory = '{factory}'";
+            DataSet dr = new ConnDB().GetFill(sql);
             string fac = $"I{prefix}-{etd.ToString("yyMMdd")}-";
             if (factory == "AW")
             {
@@ -524,6 +524,10 @@ namespace XPWLibrary.Controllers
             }
             Random rnd = new Random();
             int x = rnd.Next(1, 99999);
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                x = int.Parse(dr.Tables[0].Rows[0][0].ToString());
+            }
             string inv = fac + x.ToString("D5");
             return inv;
         }
@@ -977,10 +981,10 @@ namespace XPWLibrary.Controllers
 
         public int GetOrderNotCreateJobList(DateTime etd)
         {
-            string sql = $"SELECT p.ORDERID FROM TXP_ORDERPLAN p WHERE p.FACTORY= '{StaticFunctionData.Factory}' AND" +
+            string sql = $"SELECT p.pono FROM TXP_ORDERPLAN p WHERE p.FACTORY= '{StaticFunctionData.Factory}' AND" +
                 $" p.ETDTAP = to_date('{etd.ToString("dd/MM/yyyy")}', 'dd/MM/yyyy') AND " +
-                $"p.CURINV IS NULL AND p.CURINV IS NULL AND p.BALQTY > 0\n" +
-                $"GROUP BY p.ORDERID";
+                $"p.CURINV IS NULL\n" +
+                $"GROUP BY p.pono";
             Console.WriteLine(sql);
             int x = 0;
             DataSet dr = new ConnDB().GetFill(sql);

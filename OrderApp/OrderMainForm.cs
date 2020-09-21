@@ -144,7 +144,7 @@ namespace OrderApp
                     {
                         if (int.Parse(e.Value.ToString()) > 0)
                         {
-                            e.DisplayText = "REVISED";
+                            e.DisplayText = "";//disable "REVISED"
                         }
                     }
                     catch (Exception)
