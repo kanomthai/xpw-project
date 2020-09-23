@@ -3,8 +3,6 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraSplashScreen;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Drawing;
 using System.Linq;
@@ -308,6 +306,21 @@ namespace InvoiceApp
             else
             {
                 popupMenu1.HidePopup();
+            }
+        }
+
+        private void bbiRunningSeq_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            try
+            {
+                SplashScreenManager.ShowDefaultWaitForm();
+                new SetPalletControllers().RunningSeq(ob.RefInv);
+                SplashScreenManager.CloseDefaultWaitForm();
+                XtraMessageBox.Show("อัพเดทข้อมูลเสร็จแล้ว", "XPW Alrt!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
             }
         }
     }

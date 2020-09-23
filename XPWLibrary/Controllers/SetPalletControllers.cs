@@ -101,7 +101,7 @@ namespace XPWLibrary.Controllers
         public bool RunningSeq(string issuekey)
         {
             bool x = false;
-            string sql = $"SELECT UUID FROM TXP_ISSPACKDETAIL l WHERE l.ISSUINGKEY = '{issuekey}' ORDER BY l.SHIPPLNO,l.PONO,l.PARTNO,l.FTICKETNO";
+            string sql = $"SELECT UUID,SHIPPLNO FROM TXP_ISSPACKDETAIL l WHERE l.ISSUINGKEY = '{issuekey}' ORDER BY l.SHIPPLNO,l.PONO,l.PARTNO,l.FTICKETNO";
             DataSet dr = new ConnDB().GetFill(sql);
             int i = 1;
             if (dr.Tables[0].Rows.Count > 0)
@@ -109,7 +109,7 @@ namespace XPWLibrary.Controllers
                 foreach (DataRow r in dr.Tables[0].Rows)
                 {
                     SplashScreenManager.Default.SetWaitFormCaption($"UPDATE SEQ");
-                    SplashScreenManager.Default.SetWaitFormDescription($"{r["uuid"].ToString().Substring(0, 10)}...");
+                    SplashScreenManager.Default.SetWaitFormDescription($"{r["shipplno"].ToString()}=>{i.ToString()}...");
                     new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPACKDETAIL SET ITEM={i} WHERE UUID='{r["uuid"].ToString()}'");
                     i++;
                 }
