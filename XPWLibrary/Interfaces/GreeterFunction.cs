@@ -821,40 +821,47 @@ namespace XPWLibrary.Interfaces
             switch (x)
             {
                 case 1:
-                    switch ($"{abt}{factory}")
-                    {
-                        case "4INJ":
-                        case "1AW":
-                            n = "LOAD AT CK2";
-                            break;
-                        case "2AW":
-                        case "2INJ":
-                            n = "LOAD AT NESS";
-                            break;
-                        case "3AW":
-                        case "3INJ":
-                            n = "LOAD AT ICAM";
-                            break;
-                        case "1INJ":
-                        case "4AW":
-                            n = "LOAD AT CK1";
-                            break;
-                        default:
-                            n = "";
-                            break;
-                    }
+                    //switch ($"{abt}{factory}")
+                    //{
+                    //    case "4INJ":
+                    //    case "1AW":
+                    //        n = "LOAD AT CK2";
+                    //        break;
+                    //    case "2AW":
+                    //    case "2INJ":
+                    //        n = "LOAD AT NESS";
+                    //        break;
+                    //    case "3AW":
+                    //    case "3INJ":
+                    //        n = "LOAD AT ICAM";
+                    //        break;
+                    //    case "1INJ":
+                    //    case "4AW":
+                    //        n = "LOAD AT CK1";
+                    //        break;
+                    //    default:
+                    //        n = "";
+                    //        break;
+                    //}
+                    n = "";
                     break;
                 case 2:
                     switch ($"{abt}{factory}")
                     {
+                        case "1AW":
+                            n = "";
+                            break;
                         case "1INJ":
-                            n = "DOMESTIC";
+                            n = "LOADING AT CK-1 LCL";
+                            break;
+                        case "2INJ":
+                            n = "LOADING AT NESC";
+                            break;
+                        case "3INJ":
+                            n = "LOADING AT ICAM";
                             break;
                         case "4INJ":
-                            n = "BONDED";
-                            break;
-                        case "1AW":
-                            n = "BONDED";
+                            n = "LOADING AT CK-2";
                             break;
                         default:
                             n = "";
@@ -862,24 +869,40 @@ namespace XPWLibrary.Interfaces
                     }
                     break;
                 default:
-                    switch ($"{shiptype}{abt}{factory}")
+                    switch ($"{abt}{factory}")
                     {
-                        case "B4INJ":
-                        case "B1AW":
-                            n = "FCL"; break;
-                        case "B2AW":
-                        case "B3AW":
-                        case "B4AW":
-                        case "B1INJ":
-                        case "B2INJ":
-                        case "B3INJ":
-                            n = "LCL";
+                        case "4INJ":
+                            n = "BONDED";
+                            break;
+                        case "1AW":
+                            n = "BONDED(LOADING AT CK-2)";
+                            break;
+                        case "1INJ":
+                            n = "DOMESTIC";
                             break;
                         default:
                             n = "";
                             break;
                     }
                     break;
+                    //switch ($"{shiptype}{abt}{factory}")
+                    //{
+                    //    case "B4INJ":
+                    //    case "B1AW":
+                    //        n = "FCL"; break;
+                    //    case "B2AW":
+                    //    case "B3AW":
+                    //    case "B4AW":
+                    //    case "B1INJ":
+                    //    case "B2INJ":
+                    //    case "B3INJ":
+                    //        n = "LCL";
+                    //        break;
+                    //    default:
+                    //        n = "";
+                    //        break;
+                    //}
+                    //break;
             }
             return n;
         }

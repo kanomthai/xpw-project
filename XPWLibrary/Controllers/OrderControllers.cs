@@ -166,6 +166,11 @@ namespace XPWLibrary.Controllers
                 OrderBody j = ord[0];
                 string Note1 = new GreeterFunction().GetNote(1, j.BioABT, j.Ship, j.Factory);
                 string Note2 = new GreeterFunction().GetNote(2, j.BioABT, j.Ship, j.Factory);
+                if (b.Factory == "AW")
+                {
+                    Note1 = b.Custname;
+                    Note2 = b.CustPoType;
+                }
                 string Note3 = new GreeterFunction().GetNote(3, j.BioABT, j.Ship, j.Factory);
                 string zonecode = $"TO_CHAR(SYSDATE,'YYMMDD')||'{j.Prefix}'|| LPAD(substr('{refinvoice}',-5),5)";
                 SplashScreenManager.Default.SetWaitFormCaption($"{refinvoice}");
