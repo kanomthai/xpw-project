@@ -39,6 +39,7 @@
             this.bbiRefresh = new DevExpress.XtraBars.BarButtonItem();
             this.bbiPrintJobCard = new DevExpress.XtraBars.BarButtonItem();
             this.bbiJobCardOnly = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiRunningSeq = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup2 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -61,7 +62,6 @@
             this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
             this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
             this.popupMenu1 = new DevExpress.XtraBars.PopupMenu(this.components);
-            this.bbiRunningSeq = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControl1)).BeginInit();
             this.layoutControl1.SuspendLayout();
@@ -94,7 +94,7 @@
             this.ribbonPage1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.OfficeUniversal;
             this.ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
-            this.ribbonControl.Size = new System.Drawing.Size(1167, 91);
+            this.ribbonControl.Size = new System.Drawing.Size(1167, 93);
             this.ribbonControl.StatusBar = this.ribbonStatusBar;
             this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
@@ -141,6 +141,7 @@
             this.bbiRefresh.Id = 19;
             this.bbiRefresh.ImageOptions.ImageUri.Uri = "Refresh";
             this.bbiRefresh.Name = "bbiRefresh";
+            this.bbiRefresh.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiRefresh_ItemClick);
             // 
             // bbiPrintJobCard
             // 
@@ -159,6 +160,15 @@
             this.bbiJobCardOnly.ImageOptions.LargeImage = global::InvoiceApp.Properties.Resources.print_32x323;
             this.bbiJobCardOnly.Name = "bbiJobCardOnly";
             this.bbiJobCardOnly.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiJobCardOnly_ItemClick);
+            // 
+            // bbiRunningSeq
+            // 
+            this.bbiRunningSeq.Caption = "Reset SEQ";
+            this.bbiRunningSeq.Id = 22;
+            this.bbiRunningSeq.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiRunningSeq.ImageOptions.Image")));
+            this.bbiRunningSeq.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiRunningSeq.ImageOptions.LargeImage")));
+            this.bbiRunningSeq.Name = "bbiRunningSeq";
+            this.bbiRunningSeq.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiRunningSeq_ItemClick);
             // 
             // ribbonPage1
             // 
@@ -188,19 +198,19 @@
             // ribbonStatusBar
             // 
             this.ribbonStatusBar.ItemLinks.Add(this.bsiRecordsCount);
-            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 749);
+            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 744);
             this.ribbonStatusBar.Name = "ribbonStatusBar";
             this.ribbonStatusBar.Ribbon = this.ribbonControl;
-            this.ribbonStatusBar.Size = new System.Drawing.Size(1167, 26);
+            this.ribbonStatusBar.Size = new System.Drawing.Size(1167, 31);
             // 
             // layoutControl1
             // 
             this.layoutControl1.Controls.Add(this.gridControl);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl1.Location = new System.Drawing.Point(0, 91);
+            this.layoutControl1.Location = new System.Drawing.Point(0, 93);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.Root = this.Root;
-            this.layoutControl1.Size = new System.Drawing.Size(1167, 658);
+            this.layoutControl1.Size = new System.Drawing.Size(1167, 651);
             this.layoutControl1.TabIndex = 4;
             this.layoutControl1.Text = "layoutControl1";
             // 
@@ -210,7 +220,7 @@
             this.gridControl.MainView = this.gridView;
             this.gridControl.MenuManager = this.ribbonControl;
             this.gridControl.Name = "gridControl";
-            this.gridControl.Size = new System.Drawing.Size(1143, 634);
+            this.gridControl.Size = new System.Drawing.Size(1143, 627);
             this.gridControl.TabIndex = 4;
             this.gridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -378,7 +388,7 @@
             this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
             this.layoutControlItem1});
             this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(1167, 658);
+            this.Root.Size = new System.Drawing.Size(1167, 651);
             this.Root.TextVisible = false;
             // 
             // layoutControlItem1
@@ -386,7 +396,7 @@
             this.layoutControlItem1.Control = this.gridControl;
             this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(1147, 638);
+            this.layoutControlItem1.Size = new System.Drawing.Size(1147, 631);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
@@ -395,15 +405,6 @@
             this.popupMenu1.ItemLinks.Add(this.bbiDelete, true);
             this.popupMenu1.Name = "popupMenu1";
             this.popupMenu1.Ribbon = this.ribbonControl;
-            // 
-            // bbiRunningSeq
-            // 
-            this.bbiRunningSeq.Caption = "Reset SEQ";
-            this.bbiRunningSeq.Id = 22;
-            this.bbiRunningSeq.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiRunningSeq.ImageOptions.Image")));
-            this.bbiRunningSeq.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiRunningSeq.ImageOptions.LargeImage")));
-            this.bbiRunningSeq.Name = "bbiRunningSeq";
-            this.bbiRunningSeq.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiRunningSeq_ItemClick);
             // 
             // InvoiceJobCardForm
             // 

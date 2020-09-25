@@ -82,6 +82,7 @@ namespace InvoiceApp
 
         void ShowFTicketAll()
         {
+            gridControl.DataSource = null;
             this.Text = $"Packing List({ob.RefInv})";
             string sql = $"SELECT d.ITEM,d.PONO,d.PARTNO,case when substr('{ob.RefInv}',1, 1) = 'A' then p.partname else d.partno end PARTNAME,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,d.SHIPPLNO PALLETNO,c.SHELVE ,d.ISSUINGSTATUS FROM TXP_ISSPACKDETAIL d  \n" +
                  "INNER JOIN TXP_ISSTRANSBODY b ON d.ISSUINGKEY = b.ISSUINGKEY AND b.PARTNO = d.PARTNO\n" +
@@ -317,11 +318,17 @@ namespace InvoiceApp
                 new SetPalletControllers().RunningSeq(ob.RefInv);
                 SplashScreenManager.CloseDefaultWaitForm();
                 XtraMessageBox.Show("อัพเดทข้อมูลเสร็จแล้ว", "XPW Alrt!", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ShowFTicketAll();
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        private void bbiRefresh_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            ShowFTicketAll();
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿using DevExpress.XtraSplashScreen;
+﻿using DevExpress.XtraEditors;
+using DevExpress.XtraSplashScreen;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Windows.Forms;
 using XPWLibrary.Interfaces;
 using XPWLibrary.Models;
 
@@ -148,17 +150,15 @@ namespace XPWLibrary.Controllers
             {
                 refinvoice = GetRefInv(b.Prefix, b.Factory, b.Etd);
             }
-
-            //new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
-            //if (this.CheckInvoiceNotPrepare(b.RefNo) is false)
-            //{
-            //    new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
-            //    new ConnDB().ExcuteSQL($"DELETE txp_isstransbody WHERE ISSUINGKEY = '{b.RefNo}'");
-            //    new ConnDB().ExcuteSQL($"DELETE txp_isspackdetail WHERE ISSUINGKEY = '{b.RefNo}'");
-            //    new ConnDB().ExcuteSQL($"DELETE txp_isspallet WHERE ISSUINGKEY = '{b.RefNo}'");
-            //    new ConnDB().ExcuteSQL($"update txp_orderplan set curinv = '',orderstatus=0,upddte = sysdate where curinv = '{refinvoice}'");
-            //    refinvoice = refno;
-            //}
+            new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
+            new ConnDB().ExcuteSQL($"update txp_orderplan set curinv = '',orderstatus=0,upddte = sysdate where curinv='{b.RefNo}'");
+            if (this.CheckInvoiceNotPrepare(b.RefNo) is false)
+            {
+                new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
+                new ConnDB().ExcuteSQL($"DELETE txp_isstransbody WHERE ISSUINGKEY = '{b.RefNo}'");
+                new ConnDB().ExcuteSQL($"DELETE txp_isspackdetail WHERE ISSUINGKEY = '{b.RefNo}'");
+                new ConnDB().ExcuteSQL($"DELETE txp_isspallet WHERE ISSUINGKEY = '{b.RefNo}'");
+            }
             List<OrderBody> ord = GetOrderDetail(b);
             if (ord.Count > 0)
             {
@@ -412,21 +412,21 @@ namespace XPWLibrary.Controllers
             foreach (DataRow r in dr.Tables[0].Rows)
             {
                 bool xdul = ChecDuplicateOrder(nkey, r["pono"].ToString(), r["partno"].ToString());
+                string ins_body = $"update txp_isstransbody set orderqty={r["qty"].ToString()} where \n" +
+                                  $"issuingkey = '{nkey}' and pono = '{r["pono"].ToString()}' and partno = '{r["partno"].ToString()}'";
                 if (xdul is false)
                 {
-                    string ins_body = $"insert into txp_isstransbody(issuingkey,issuingseq,pono,tagrp,partno,stdpack,orderqty,issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,upddte,sysdte,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,refinv)\n" +
-                                      $"select '{nkey}',0,'{r["pono"].ToString()}',tagrp,partno,stdpack,{r["qty"].ToString()},issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,sysdate,sysdate,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,'{obj[0].RefInv}' from txp_isstransbody where \n" +
-                                      $"issuingkey = '{oldekey}' and pono = '{r["pono"].ToString()}' and partno = '{r["partno"].ToString()}'";
-                    Console.WriteLine(ins_body);
-                    if (new ConnDB().ExcuteSQL(ins_body))
-                    {
-                        Console.WriteLine($"INSERT {r["partno"].ToString()}'");
-                    }
+                    ins_body = $"insert into txp_isstransbody(issuingkey,issuingseq,pono,tagrp,partno,stdpack,orderqty,issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,upddte,sysdte,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,refinv)\n" +
+                               $"select '{nkey}',0,'{r["pono"].ToString()}',tagrp,partno,stdpack,{r["qty"].ToString()},issueokqty,shorderqty,prepareqty,revisedqty,issuedqty,issuingstatus,bwide,bleng,bhight,neweight,gtweight,sysdate,sysdate,parttype,partname,shiptype,edtdte,uuid,createdby,modifiedby,ordertype,lotno,'{obj[0].RefInv}' from txp_isstransbody where \n" +
+                               $"issuingkey = '{oldekey}' and pono = '{r["pono"].ToString()}' and partno = '{r["partno"].ToString()}'";
+                    //Console.WriteLine(ins_body);
+                    //Console.WriteLine($"INSERT {r["partno"].ToString()}'");
                 }
-                else
-                {
-                    Console.WriteLine($"INSERT DUPL. {r["partno"].ToString()}'");
-                }
+                //else
+                //{
+                //    Console.WriteLine($"UPDATE DUPL. {r["partno"].ToString()}'");
+                //}
+                new ConnDB().ExcuteSQL(ins_body);
             }
             return x;
         }
@@ -435,14 +435,24 @@ namespace XPWLibrary.Controllers
         {
             bool x = false;
             string sql = $"select ISSUINGKEY,SHIPPLNO,SUBSTR(SHIPPLNO, 0, 2) pfre FROM TXP_ISSPACKDETAIL WHERE ISSUINGKEY='{invoice}' AND SHIPPLNO IS NOT NULL GROUP BY ISSUINGKEY,SHIPPLNO";
+            //string update_set_null_pallet = $"update TXP_ISSPALLET set PALLETNO='' where ISSUINGKEY='{invoice}'";
             DataSet dr = new ConnDB().GetFill(sql);
             int i = 1;
             foreach (DataRow r in dr.Tables[0].Rows)
             {
                 string pl = r["pfre"].ToString() + i.ToString("D3");
-                string upbody = $"update TXP_ISSPACKDETAIL set SHIPPLNO='{pl}' " +
-                    $"where ISSUINGKEY='{invoice}' and SHIPPLNO='{r["shipplno"].ToString()}'";
+                string upbody = $"update TXP_ISSPACKDETAIL set SHIPPLNO='{pl}' where ISSUINGKEY='{invoice}' and SHIPPLNO='{r["shipplno"].ToString()}'";
                 new ConnDB().ExcuteSQL(upbody);
+                //try
+                //{
+                //    string upbody_pallet = $"update TXP_ISSPALLET set PALLETNO='{pl}' where ISSUINGKEY='{invoice}' and PALLETNO='{r["shipplno"].ToString()}'";
+                //    new ConnDB().ExcuteSQL(upbody_pallet);
+                //}
+                //catch (Exception ex)
+                //{
+                //    Console.WriteLine(ex.Message);
+                //    //throw;
+                //}
                 i++;
             }
             return x;
@@ -454,34 +464,29 @@ namespace XPWLibrary.Controllers
             try
             {
                 Console.WriteLine($"============================= START {DateTime.Now.ToShortTimeString()} ====================================");
-                int i = 0;
-                //create header
                 string oldekey = obj[0].RefOldNo;
                 string nkey = GetRefInv(obj[0].Prefix, obj[0].Factory, obj[0].EtdDte);
-                List<string> plnum = new List<string>();
+                int i = 0;
                 while (i < obj.Count)
                 {
                     var r = obj[i];
                     Console.WriteLine($"REFNO: {r.RefNo} PLNO: {r.ShipPlNo} QTY: {r.Ctn}");
-                    string sql = $"UPDATE TXP_ISSPACKDETAIL SET ISSUINGKEY ='{nkey}' WHERE ISSUINGKEY = '{oldekey}' AND SHIPPLNO = '{r.ShipPlNo}'";
-                    string sql_pallet = $"UPDATE TXP_ISSPALLET SET ISSUINGKEY ='{nkey}' WHERE ISSUINGKEY = '{oldekey}' AND PALLETNO = '{r.ShipPlNo}'";
-                    Console.WriteLine(sql);
-                    Console.WriteLine(sql_pallet);
-                    if (new ConnDB().ExcuteSQL(sql) is false)
+                    string sql = $"SELECT d.UUID FROM TXP_ISSPACKDETAIL d WHERE d.SHIPPLNO ='{r.ShipPlNo}' AND d.ISSUINGKEY ='{oldekey}'";
+                    DataSet dr_packing = new ConnDB().GetFill(sql);
+                    foreach (DataRow rd in dr_packing.Tables[0].Rows)
                     {
-                        Console.WriteLine($"error set packing");
+                        string sql_new_pl = $"UPDATE TXP_ISSPACKDETAIL SET ISSUINGKEY ='{nkey}' WHERE UUID='{rd["uuid"].ToString()}'";
+                        Console.WriteLine(sql_new_pl);
+                        new ConnDB().ExcuteSQL(sql_new_pl);
                     }
-                    if (new ConnDB().ExcuteSQL(sql_pallet) is false)
-                    {
-                        Console.WriteLine($"error set pallet");
-                    }
-                    plnum.Add(r.ShipPlNo);
+                    string plnum = $"1P{(i+1).ToString("D3")}";
+                    string sql_pl = $"UPDATE TXP_ISSPALLET SET ISSUINGKEY ='{nkey}',PALLETNO='{plnum}' WHERE ISSUINGKEY = '{oldekey}' AND PALLETNO = '{r.ShipPlNo}'";
+                    //Console.WriteLine(sql_pl);
+                    new ConnDB().ExcuteSQL(sql_pl);
                     i++;
                 }
-                //new body
+                CreateBody(oldekey, nkey, obj);
                 CreateBody(nkey, oldekey, obj);
-                ////older body
-                //CreateBody(oldekey, nkey, obj);
 
                 bool head = CheckIssueHeader(nkey);
                 if (head is false)
@@ -496,7 +501,7 @@ namespace XPWLibrary.Controllers
                 string upnewiss = $"UPDATE TXP_ISSTRANSENT SET ISSUINGMAX = (SELECT count(*) FROM TXP_ISSTRANSBODY WHERE ISSUINGKEY = '{nkey}') WHERE ISSUINGKEY = '{nkey}'";
                 new ConnDB().ExcuteSQL(upolder);
                 new ConnDB().ExcuteSQL(upnewiss);
-                
+
                 //Console.WriteLine(upolder);
                 //Console.WriteLine(upnewiss);
                 //UpdateBodyNewInvoice(oldekey);
@@ -506,9 +511,10 @@ namespace XPWLibrary.Controllers
                 CheckNewPalletNo(nkey);
                 Console.WriteLine($"============================= END {DateTime.Now.ToShortTimeString()} ====================================");
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                x = false;
+                XtraMessageBox.Show(ex.Message, "XPW Alert!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
             }
             return x;
         }
