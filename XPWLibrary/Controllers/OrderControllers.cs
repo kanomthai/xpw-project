@@ -150,14 +150,14 @@ namespace XPWLibrary.Controllers
             {
                 refinvoice = GetRefInv(b.Prefix, b.Factory, b.Etd);
             }
-            new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
+            //new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
             new ConnDB().ExcuteSQL($"update txp_orderplan set curinv = '',orderstatus=0,upddte = sysdate where curinv='{b.RefNo}'");
             if (this.CheckInvoiceNotPrepare(b.RefNo) is false)
             {
                 new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
-                new ConnDB().ExcuteSQL($"DELETE txp_isstransbody WHERE ISSUINGKEY = '{b.RefNo}'");
-                new ConnDB().ExcuteSQL($"DELETE txp_isspackdetail WHERE ISSUINGKEY = '{b.RefNo}'");
-                new ConnDB().ExcuteSQL($"DELETE txp_isspallet WHERE ISSUINGKEY = '{b.RefNo}'");
+                new ConnDB().ExcuteSQL($"DELETE txp_isstransbody WHERE ISSUINGKEY = '{b.RefNo}' and  ISSUEDQTY < 1");
+                new ConnDB().ExcuteSQL($"DELETE txp_isspackdetail WHERE ISSUINGKEY = '{b.RefNo}' and PLOUTNO IS NULL");
+                new ConnDB().ExcuteSQL($"DELETE txp_isspallet WHERE ISSUINGKEY = '{b.RefNo}' and PLOUTNO IS NULL");
             }
             List<OrderBody> ord = GetOrderDetail(b);
             if (ord.Count > 0)
@@ -479,7 +479,7 @@ namespace XPWLibrary.Controllers
                         Console.WriteLine(sql_new_pl);
                         new ConnDB().ExcuteSQL(sql_new_pl);
                     }
-                    string plnum = $"1P{(i+1).ToString("D3")}";
+                    string plnum = $"{r.ShipPlNo.Substring(0, 2)}{(i+1).ToString("D3")}";
                     string sql_pl = $"UPDATE TXP_ISSPALLET SET ISSUINGKEY ='{nkey}',PALLETNO='{plnum}' WHERE ISSUINGKEY = '{oldekey}' AND PALLETNO = '{r.ShipPlNo}'";
                     //Console.WriteLine(sql_pl);
                     new ConnDB().ExcuteSQL(sql_pl);
