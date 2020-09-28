@@ -868,7 +868,7 @@ namespace XPWLibrary.Interfaces
                             break;
                     }
                     break;
-                default:
+                case 3:
                     switch ($"{abt}{factory}")
                     {
                         case "4INJ":
@@ -885,6 +885,8 @@ namespace XPWLibrary.Interfaces
                             break;
                     }
                     break;
+                case 4:
+                    n = "";
                     //switch ($"{shiptype}{abt}{factory}")
                     //{
                     //    case "B4INJ":
@@ -903,6 +905,10 @@ namespace XPWLibrary.Interfaces
                     //        break;
                     //}
                     //break;
+                    break;
+                default:
+                    n = "";
+                    break;
             }
             return n;
         }

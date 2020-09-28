@@ -150,14 +150,14 @@ namespace XPWLibrary.Controllers
             {
                 refinvoice = GetRefInv(b.Prefix, b.Factory, b.Etd);
             }
-            //new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
-            new ConnDB().ExcuteSQL($"update txp_orderplan set curinv = '',orderstatus=0,upddte = sysdate where curinv='{b.RefNo}'");
+            
             if (this.CheckInvoiceNotPrepare(b.RefNo) is false)
             {
                 new ConnDB().ExcuteSQL($"DELETE TXP_ISSTRANSENT WHERE ISSUINGKEY = '{b.RefNo}'");
                 new ConnDB().ExcuteSQL($"DELETE txp_isstransbody WHERE ISSUINGKEY = '{b.RefNo}' and  ISSUEDQTY < 1");
                 new ConnDB().ExcuteSQL($"DELETE txp_isspackdetail WHERE ISSUINGKEY = '{b.RefNo}' and PLOUTNO IS NULL");
                 new ConnDB().ExcuteSQL($"DELETE txp_isspallet WHERE ISSUINGKEY = '{b.RefNo}' and PLOUTNO IS NULL");
+                new ConnDB().ExcuteSQL($"update txp_orderplan set curinv = '',orderstatus=0,upddte = sysdate where curinv='{b.RefNo}'");
             }
             List<OrderBody> ord = GetOrderDetail(b);
             if (ord.Count > 0)
@@ -172,6 +172,7 @@ namespace XPWLibrary.Controllers
                     Note2 = b.CustPoType;
                 }
                 string Note3 = new GreeterFunction().GetNote(3, j.BioABT, j.Ship, j.Factory);
+                string ContainerType = new GreeterFunction().GetNote(4, j.BioABT, j.Ship, j.Factory);
                 string zonecode = $"TO_CHAR(SYSDATE,'YYMMDD')||'{j.Prefix}'|| LPAD(substr('{refinvoice}',-5),5)";
                 SplashScreenManager.Default.SetWaitFormCaption($"{refinvoice}");
                 string sqlhead;
@@ -191,7 +192,7 @@ namespace XPWLibrary.Controllers
                         sqlhead = $"insert into txp_isstransent(issuingkey,refinvoice,issuingstatus,etddte,factory,affcode,bishpc,custname,comercial,zoneid,shiptype,\n" +
                          "combinv,pc,zonecode,note1,note2,upddte,sysdte,uuid,createdby,modifiedby,containertype,issuingmax)\n" +
                          $"values('{refinvoice}','{refinvoice}',0,to_date('{j.Etd.ToString("dd-MM-yyyy")}','DD-MM-YYYY'),'{j.Factory}','{j.Affcode}','{j.Custcode}','{j.Custname}','{j.Commercial}','{j.BioABT}','{j.Ship}',\n" +
-                         $"'{j.Combinv}','{j.Pc}',{zonecode},'{Note1}','{Note2}',sysdate,sysdate,'{uukey}','SYS','SYS','{Note3}','{ord.Count()}')";
+                         $"'{j.Combinv}','{j.Pc}',{zonecode},'{Note1}','{Note2}',sysdate,sysdate,'{uukey}','SYS','SYS','{ContainerType}','{ord.Count()}')";
                     }
                     new ConnDB().ExcuteSQL(sqlhead);
 
@@ -261,7 +262,7 @@ namespace XPWLibrary.Controllers
                     sqlhead = $"insert into txp_isstransent(issuingkey,refinvoice,issuingstatus,etddte,factory,affcode,bishpc,custname,comercial,zoneid,shiptype,\n" +
                              "combinv,pc,zonecode,note1,note2,upddte,sysdte,uuid,createdby,modifiedby,containertype,issuingmax)\n" +
                              $"values('{refinvoice}','{refinvoice}',0,to_date('{j.Etd.ToString("dd-MM-yyyy")}','DD-MM-YYYY'),'{j.Factory}','{j.Affcode}','{j.Custcode}','{j.Custname}','{j.Commercial}','{j.BioABT}','{j.Ship}',\n" +
-                             $"'{j.Combinv}','{j.Pc}',{zonecode},'{Note1}','{Note2}',sysdate,sysdate,'{Guid.NewGuid().ToString()}','SYS','SYS','{Note3}','{ord.Count()}')";
+                             $"'{j.Combinv}','{j.Pc}',{zonecode},'{Note1}','{Note2}',sysdate,sysdate,'{Guid.NewGuid().ToString()}','SYS','SYS','{ContainerType}','{ord.Count()}')";
                     //create body
                     int i = 0;
                     while (i < ord.Count)
@@ -448,16 +449,6 @@ namespace XPWLibrary.Controllers
                 string pl = r["pfre"].ToString() + i.ToString("D3");
                 string upbody = $"update TXP_ISSPACKDETAIL set SHIPPLNO='{pl}' where ISSUINGKEY='{invoice}' and SHIPPLNO='{r["shipplno"].ToString()}'";
                 new ConnDB().ExcuteSQL(upbody);
-                //try
-                //{
-                //    string upbody_pallet = $"update TXP_ISSPALLET set PALLETNO='{pl}' where ISSUINGKEY='{invoice}' and PALLETNO='{r["shipplno"].ToString()}'";
-                //    new ConnDB().ExcuteSQL(upbody_pallet);
-                //}
-                //catch (Exception ex)
-                //{
-                //    Console.WriteLine(ex.Message);
-                //    //throw;
-                //}
                 i++;
             }
             return x;
@@ -475,29 +466,28 @@ namespace XPWLibrary.Controllers
                 while (i < obj.Count)
                 {
                     var r = obj[i];
-                    Console.WriteLine($"REFNO: {r.RefNo} PLNO: {r.ShipPlNo} QTY: {r.Ctn}");
                     string sql = $"SELECT d.UUID FROM TXP_ISSPACKDETAIL d WHERE d.SHIPPLNO ='{r.ShipPlNo}' AND d.ISSUINGKEY ='{oldekey}'";
                     DataSet dr_packing = new ConnDB().GetFill(sql);
+                    string plnum = $"{r.ShipPlNo.Substring(0, 2)}{(i + 1).ToString("D3")}";
+                    string sql_pl = $"UPDATE TXP_ISSPALLET SET ISSUINGKEY ='{nkey}',PALLETNO='{plnum}' WHERE ISSUINGKEY = '{oldekey}' AND PALLETNO = '{r.ShipPlNo}'";
+                    new ConnDB().ExcuteSQL(sql_pl);
+                    Console.WriteLine($"REFNO:{r.RefNo} PLNO:{r.ShipPlNo} QTY:{r.Ctn} :::: NEW PALLETNO:{plnum}");
                     foreach (DataRow rd in dr_packing.Tables[0].Rows)
                     {
-                        string sql_new_pl = $"UPDATE TXP_ISSPACKDETAIL SET ISSUINGKEY ='{nkey}' WHERE UUID='{rd["uuid"].ToString()}'";
+                        string sql_new_pl = $"UPDATE TXP_ISSPACKDETAIL SET ISSUINGKEY ='{nkey}',SHIPPLNO='{plnum}' WHERE UUID='{rd["uuid"].ToString()}'";
                         Console.WriteLine(sql_new_pl);
                         new ConnDB().ExcuteSQL(sql_new_pl);
                     }
-                    string plnum = $"{r.ShipPlNo.Substring(0, 2)}{(i+1).ToString("D3")}";
-                    string sql_pl = $"UPDATE TXP_ISSPALLET SET ISSUINGKEY ='{nkey}',PALLETNO='{plnum}' WHERE ISSUINGKEY = '{oldekey}' AND PALLETNO = '{r.ShipPlNo}'";
-                    //Console.WriteLine(sql_pl);
-                    new ConnDB().ExcuteSQL(sql_pl);
                     i++;
                 }
-                CreateBody(oldekey, nkey, obj);
                 CreateBody(nkey, oldekey, obj);
+                CreateBody(oldekey, nkey, obj);
 
                 bool head = CheckIssueHeader(nkey);
                 if (head is false)
                 {
-                    string sqlhead = $"insert into txp_isstransent(issuingkey,refinvoice,issuingstatus,etddte,factory,affcode,bishpc,custname,comercial,zoneid,shiptype,combinv,pc,zonecode,note1,note2,upddte,sysdte,uuid,createdby,modifiedby,containertype,issuingmax)\n" +
-                                     $"SELECT '{nkey}', '{obj[0].RefInv}', 0, etddte, factory, affcode, bishpc, custname, comercial, zoneid, shiptype, combinv, pc, zonecode, note1, note2, upddte, sysdte, uuid, createdby, modifiedby, containertype, 0 FROM txp_isstransent where issuingkey = '{oldekey}'";
+                    string sqlhead = $"insert into txp_isstransent(issuingkey,refinvoice,issuingstatus,etddte,factory,affcode,bishpc,custname,comercial,zoneid,shiptype,combinv,pc,zonecode,note1,note2,note3,upddte,sysdte,uuid,createdby,modifiedby,containertype,issuingmax)\n" +
+                                     $"SELECT '{nkey}', '{obj[0].RefInv}', 0, etddte, factory, affcode, bishpc, custname, comercial, zoneid, shiptype, combinv, pc, zonecode, note1, note2, note3, upddte, sysdte, uuid, createdby, modifiedby, containertype, 0 FROM txp_isstransent where issuingkey = '{oldekey}'";
                     Console.WriteLine(sqlhead);
                     new ConnDB().ExcuteSQL(sqlhead);
                 }
@@ -507,13 +497,9 @@ namespace XPWLibrary.Controllers
                 new ConnDB().ExcuteSQL(upolder);
                 new ConnDB().ExcuteSQL(upnewiss);
 
-                //Console.WriteLine(upolder);
-                //Console.WriteLine(upnewiss);
-                //UpdateBodyNewInvoice(oldekey);
-                //UpdateBodyNewInvoice(nkey);
 
                 CheckNewPalletNo(oldekey);
-                CheckNewPalletNo(nkey);
+                //CheckNewPalletNo(nkey);
                 Console.WriteLine($"============================= END {DateTime.Now.ToShortTimeString()} ====================================");
             }
             catch (Exception ex)
