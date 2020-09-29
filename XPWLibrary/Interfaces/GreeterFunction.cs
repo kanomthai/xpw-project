@@ -821,28 +821,6 @@ namespace XPWLibrary.Interfaces
             switch (x)
             {
                 case 1:
-                    //switch ($"{abt}{factory}")
-                    //{
-                    //    case "4INJ":
-                    //    case "1AW":
-                    //        n = "LOAD AT CK2";
-                    //        break;
-                    //    case "2AW":
-                    //    case "2INJ":
-                    //        n = "LOAD AT NESS";
-                    //        break;
-                    //    case "3AW":
-                    //    case "3INJ":
-                    //        n = "LOAD AT ICAM";
-                    //        break;
-                    //    case "1INJ":
-                    //    case "4AW":
-                    //        n = "LOAD AT CK1";
-                    //        break;
-                    //    default:
-                    //        n = "";
-                    //        break;
-                    //}
                     n = "";
                     break;
                 case 2:
@@ -887,24 +865,6 @@ namespace XPWLibrary.Interfaces
                     break;
                 case 4:
                     n = "";
-                    //switch ($"{shiptype}{abt}{factory}")
-                    //{
-                    //    case "B4INJ":
-                    //    case "B1AW":
-                    //        n = "FCL"; break;
-                    //    case "B2AW":
-                    //    case "B3AW":
-                    //    case "B4AW":
-                    //    case "B1INJ":
-                    //    case "B2INJ":
-                    //    case "B3INJ":
-                    //        n = "LCL";
-                    //        break;
-                    //    default:
-                    //        n = "";
-                    //        break;
-                    //}
-                    //break;
                     break;
                 default:
                     n = "";
