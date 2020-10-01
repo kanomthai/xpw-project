@@ -98,10 +98,30 @@ namespace XPWLibrary.Controllers
             return x;
         }
 
+        private string GetLastFTicket(string pref)
+        {
+            string sql = $"SELECT SUBSTR(FTICKETNO, 4) FROM TXP_ISSPACKDETAIL WHERE FTICKETNO LIKE '{pref}%' ORDER BY FTICKETNO DESC ";
+            DataSet dr = new ConnDB().GetFill(sql);
+            string i = pref + (1).ToString("D10");
+            if (dr.Tables[0].Rows.Count > 0)
+            {
+                Console.WriteLine(dr.Tables[0].Rows[0][0].ToString());
+                int x = int.Parse(dr.Tables[0].Rows[0][0].ToString()) + 1;
+                i = $"{pref}{x.ToString("D10")}";
+            }
+            return i;
+        }
+
         public bool RunningSeq(string issuekey)
         {
             bool x = false;
             string sql = $"SELECT UUID,SHIPPLNO FROM TXP_ISSPACKDETAIL l WHERE l.ISSUINGKEY = '{issuekey}' ORDER BY l.SHIPPLNO,l.PONO,l.PARTNO,l.FTICKETNO";
+            DateTime d = DateTime.Now;
+            string pref = "C" + d.ToString("MM");
+            if (issuekey.Substring(0, 1) == "I")
+            {
+                pref = "V" + d.ToString("MM");
+            }
             DataSet dr = new ConnDB().GetFill(sql);
             int i = 1;
             if (dr.Tables[0].Rows.Count > 0)
@@ -110,7 +130,7 @@ namespace XPWLibrary.Controllers
                 {
                     SplashScreenManager.Default.SetWaitFormCaption($"UPDATE SEQ");
                     SplashScreenManager.Default.SetWaitFormDescription($"{r["shipplno"].ToString()}=>{i.ToString()}...");
-                    new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPACKDETAIL SET ITEM={i} WHERE UUID='{r["uuid"].ToString()}'");
+                    new ConnDB().ExcuteSQL($"UPDATE TXP_ISSPACKDETAIL SET ITEM={i},FTICKETNO='{GetLastFTicket(pref)}' WHERE UUID='{r["uuid"].ToString()}'");
                     i++;
                 }
             }

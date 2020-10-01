@@ -43,7 +43,7 @@ namespace InvoiceApp
         {
             this.Text = $"PRINT JOBCARD {ob.RefInv} WITH {ob.PartNo}";
             string sql = $"SELECT d.ITEM,d.PONO,d.PARTNO,case when substr('{ob.RefInv}',1, 1) = 'A' then p.partname else d.partno end PARTNAME,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,CASE WHEN d.PLOUTNO IS NULL THEN '' ELSE max(l.PALLETNO) END PALLETNO,c.SHELVE ,d.ISSUINGSTATUS FROM TXP_ISSPACKDETAIL d  \n" +
-                "INNER JOIN TXP_ISSTRANSBODY b ON d.ISSUINGKEY = b.ISSUINGKEY AND b.PARTNO = d.PARTNO\n" +
+                "INNER JOIN TXP_ISSTRANSBODY b ON d.ISSUINGKEY = b.ISSUINGKEY AND b.PARTNO = d.PARTNO AND d.PONO = b.PONO \n" +
                 "LEFT JOIN TXP_ISSPALLET l ON b.ISSUINGKEY = l.ISSUINGKEY\n" +
                 "LEFT JOIN TXP_CARTONDETAILS c ON d.PLOUTNO = c.PLOUTNO\n" +
                 "LEFT JOIN TXP_PART p ON d.PARTNO = p.PARTNO\n" +
@@ -85,7 +85,7 @@ namespace InvoiceApp
             gridControl.DataSource = null;
             this.Text = $"Packing List({ob.RefInv})";
             string sql = $"SELECT d.ITEM,d.PONO,d.PARTNO,case when substr('{ob.RefInv}',1, 1) = 'A' then p.partname else d.partno end PARTNAME,d.FTICKETNO,d.ORDERQTY,b.LOTNO,d.CTNSN,d.UNIT,d.PLOUTNO,d.SHIPPLNO PALLETNO,c.SHELVE ,d.ISSUINGSTATUS FROM TXP_ISSPACKDETAIL d  \n" +
-                 "INNER JOIN TXP_ISSTRANSBODY b ON d.ISSUINGKEY = b.ISSUINGKEY AND b.PARTNO = d.PARTNO\n" +
+                 "INNER JOIN TXP_ISSTRANSBODY b ON d.ISSUINGKEY = b.ISSUINGKEY AND b.PARTNO = d.PARTNO AND d.PONO = b.PONO \n" +
                  "LEFT JOIN TXP_ISSPALLET l ON b.ISSUINGKEY = l.ISSUINGKEY\n" +
                  "LEFT JOIN TXP_CARTONDETAILS c ON d.PLOUTNO = c.PLOUTNO\n" +
                  "LEFT JOIN TXP_PART p ON d.PARTNO = p.PARTNO\n" +
