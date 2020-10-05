@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             this.dataLayoutControl1 = new DevExpress.XtraDataLayout.DataLayoutControl();
-            this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
-            this.cbPalletObj = new DevExpress.XtraEditors.ComboBoxEdit();
-            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
-            this.bbiSave = new System.Windows.Forms.Button();
-            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.bbiCancel = new System.Windows.Forms.Button();
+            this.bbiSave = new System.Windows.Forms.Button();
+            this.cbPalletObj = new DevExpress.XtraEditors.ComboBoxEdit();
+            this.Root = new DevExpress.XtraLayout.LayoutControlGroup();
+            this.layoutControlItem1 = new DevExpress.XtraLayout.LayoutControlItem();
+            this.layoutControlItem2 = new DevExpress.XtraLayout.LayoutControlItem();
             this.layoutControlItem3 = new DevExpress.XtraLayout.LayoutControlItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).BeginInit();
             this.dataLayoutControl1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbPalletObj.Properties)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Root)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).BeginInit();
@@ -58,39 +58,16 @@
             this.dataLayoutControl1.TabIndex = 0;
             this.dataLayoutControl1.Text = "dataLayoutControl1";
             // 
-            // Root
+            // bbiCancel
             // 
-            this.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
-            this.Root.GroupBordersVisible = false;
-            this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
-            this.layoutControlItem1,
-            this.layoutControlItem2,
-            this.layoutControlItem3});
-            this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(274, 78);
-            this.Root.TextVisible = false;
-            // 
-            // cbPalletObj
-            // 
-            this.cbPalletObj.Location = new System.Drawing.Point(78, 12);
-            this.cbPalletObj.Name = "cbPalletObj";
-            this.cbPalletObj.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
-            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.cbPalletObj.Properties.Sorted = true;
-            this.cbPalletObj.Size = new System.Drawing.Size(184, 20);
-            this.cbPalletObj.StyleController = this.dataLayoutControl1;
-            this.cbPalletObj.TabIndex = 4;
-            // 
-            // layoutControlItem1
-            // 
-            this.layoutControlItem1.Control = this.cbPalletObj;
-            this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
-            this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(254, 24);
-            this.layoutControlItem1.Text = "PALLET NO.:";
-            this.layoutControlItem1.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
-            this.layoutControlItem1.TextSize = new System.Drawing.Size(61, 13);
-            this.layoutControlItem1.TextToControlDistance = 5;
+            this.bbiCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bbiCancel.Location = new System.Drawing.Point(150, 36);
+            this.bbiCancel.Name = "bbiCancel";
+            this.bbiCancel.Size = new System.Drawing.Size(112, 30);
+            this.bbiCancel.TabIndex = 6;
+            this.bbiCancel.Text = "CANCEL";
+            this.bbiCancel.UseVisualStyleBackColor = true;
+            this.bbiCancel.Click += new System.EventHandler(this.bbiCancel_Click);
             // 
             // bbiSave
             // 
@@ -103,6 +80,40 @@
             this.bbiSave.UseVisualStyleBackColor = true;
             this.bbiSave.Click += new System.EventHandler(this.bbiSave_Click);
             // 
+            // cbPalletObj
+            // 
+            this.cbPalletObj.Location = new System.Drawing.Point(78, 12);
+            this.cbPalletObj.Name = "cbPalletObj";
+            this.cbPalletObj.Properties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.cbPalletObj.Properties.Sorted = true;
+            this.cbPalletObj.Size = new System.Drawing.Size(184, 20);
+            this.cbPalletObj.StyleController = this.dataLayoutControl1;
+            this.cbPalletObj.TabIndex = 4;
+            // 
+            // Root
+            // 
+            this.Root.EnableIndentsWithoutBorders = DevExpress.Utils.DefaultBoolean.True;
+            this.Root.GroupBordersVisible = false;
+            this.Root.Items.AddRange(new DevExpress.XtraLayout.BaseLayoutItem[] {
+            this.layoutControlItem1,
+            this.layoutControlItem2,
+            this.layoutControlItem3});
+            this.Root.Name = "Root";
+            this.Root.Size = new System.Drawing.Size(274, 78);
+            this.Root.TextVisible = false;
+            // 
+            // layoutControlItem1
+            // 
+            this.layoutControlItem1.Control = this.cbPalletObj;
+            this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
+            this.layoutControlItem1.Name = "layoutControlItem1";
+            this.layoutControlItem1.Size = new System.Drawing.Size(254, 24);
+            this.layoutControlItem1.Text = "PALLET NO.:";
+            this.layoutControlItem1.TextAlignMode = DevExpress.XtraLayout.TextAlignModeItem.AutoSize;
+            this.layoutControlItem1.TextSize = new System.Drawing.Size(61, 13);
+            this.layoutControlItem1.TextToControlDistance = 5;
+            // 
             // layoutControlItem2
             // 
             this.layoutControlItem2.Control = this.bbiSave;
@@ -111,17 +122,6 @@
             this.layoutControlItem2.Size = new System.Drawing.Size(138, 34);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
-            // 
-            // bbiCancel
-            // 
-            this.bbiCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bbiCancel.Location = new System.Drawing.Point(150, 36);
-            this.bbiCancel.Name = "bbiCancel";
-            this.bbiCancel.Size = new System.Drawing.Size(112, 30);
-            this.bbiCancel.TabIndex = 6;
-            this.bbiCancel.Text = "CANCEL";
-            this.bbiCancel.UseVisualStyleBackColor = true;
-            this.bbiCancel.Click += new System.EventHandler(this.bbiCancel_Click);
             // 
             // layoutControlItem3
             // 
@@ -147,8 +147,8 @@
             this.Text = "ADD TO PALLET";
             ((System.ComponentModel.ISupportInitialize)(this.dataLayoutControl1)).EndInit();
             this.dataLayoutControl1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.cbPalletObj.Properties)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.Root)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.layoutControlItem3)).EndInit();
