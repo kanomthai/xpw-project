@@ -6,7 +6,7 @@ using XPWLibrary.Interfaces;
 using XPWLibrary.Models;
 
 namespace XPWLibrary.Controllers
-{
+{   
     public class SetPalletControllers
     {
         public List<SetPallatData> GetPartListDetail(string issuekey)

@@ -155,12 +155,17 @@ namespace InvoiceApp
         {
             if (e.Button.ToString() == "Right")
             {
-                List<InvoiceData> obj = gridControl.DataSource as List<InvoiceData>;
-                if (obj.Count < 1)
-                {
-                    bbiSendGedi.Enabled = false;
-                    ppMenu.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
-                }
+                //List<InvoiceData> obj = gridControl.DataSource as List<InvoiceData>;
+                //if (obj.Count < 1)
+                //{
+                //    bbiSendGedi.Enabled = false;
+                //    ppMenu.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
+                //}
+                bbiSendGedi.Enabled = true;
+                ppMenu.ShowPopup(new Point(MousePosition.X, MousePosition.Y));
+            }
+            else {
+                ppMenu.HidePopup();
             }
         }
 

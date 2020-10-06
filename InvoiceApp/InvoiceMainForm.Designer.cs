@@ -63,6 +63,8 @@
             this.bbiSendToDraft = new DevExpress.XtraBars.BarButtonItem();
             this.bbiPrintShippingMark = new DevExpress.XtraBars.BarButtonItem();
             this.bbiExportSummaryPallet = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiShortingByPart = new DevExpress.XtraBars.BarButtonItem();
+            this.bbiShortingByCustomer = new DevExpress.XtraBars.BarButtonItem();
             this.ribbonPage1 = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup3 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.ribbonPageGroup4 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -134,8 +136,6 @@
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.showToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.bbiShortingByPart = new DevExpress.XtraBars.BarButtonItem();
-            this.bbiShortingByCustomer = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemRadioGroup1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemDateEdit1)).BeginInit();
@@ -217,7 +217,7 @@
             this.repositoryItemDateEdit1});
             this.ribbonControl.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonControlStyle.OfficeUniversal;
             this.ribbonControl.ShowApplicationButton = DevExpress.Utils.DefaultBoolean.False;
-            this.ribbonControl.Size = new System.Drawing.Size(1376, 91);
+            this.ribbonControl.Size = new System.Drawing.Size(1376, 93);
             this.ribbonControl.StatusBar = this.ribbonStatusBar;
             this.ribbonControl.ToolbarLocation = DevExpress.XtraBars.Ribbon.RibbonQuickAccessToolbarLocation.Hidden;
             // 
@@ -365,11 +365,13 @@
             // 
             // skinPaletteDropDownButtonItem1
             // 
+            this.skinPaletteDropDownButtonItem1.Enabled = false;
             this.skinPaletteDropDownButtonItem1.Id = 6;
             this.skinPaletteDropDownButtonItem1.Name = "skinPaletteDropDownButtonItem1";
             // 
             // skinPalette
             // 
+            this.skinPalette.Enabled = false;
             this.skinPalette.Id = 11;
             this.skinPalette.Name = "skinPalette";
             // 
@@ -484,6 +486,24 @@
             this.bbiExportSummaryPallet.Name = "bbiExportSummaryPallet";
             this.bbiExportSummaryPallet.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiExportSummaryPallet_ItemClick);
             // 
+            // bbiShortingByPart
+            // 
+            this.bbiShortingByPart.Caption = "Shorting By Part";
+            this.bbiShortingByPart.Id = 27;
+            this.bbiShortingByPart.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiShortingByPart.ImageOptions.Image")));
+            this.bbiShortingByPart.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiShortingByPart.ImageOptions.LargeImage")));
+            this.bbiShortingByPart.Name = "bbiShortingByPart";
+            this.bbiShortingByPart.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiShortingByPart_ItemClick);
+            // 
+            // bbiShortingByCustomer
+            // 
+            this.bbiShortingByCustomer.Caption = "Shorting By Customer";
+            this.bbiShortingByCustomer.Id = 28;
+            this.bbiShortingByCustomer.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiShortingByCustomer.ImageOptions.Image")));
+            this.bbiShortingByCustomer.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiShortingByCustomer.ImageOptions.LargeImage")));
+            this.bbiShortingByCustomer.Name = "bbiShortingByCustomer";
+            this.bbiShortingByCustomer.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiShortingByCustomer_ItemClick);
+            // 
             // ribbonPage1
             // 
             this.ribbonPage1.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -538,20 +558,20 @@
             this.ribbonStatusBar.ItemLinks.Add(this.bbiDbName);
             this.ribbonStatusBar.ItemLinks.Add(this.bbiStVersion);
             this.ribbonStatusBar.ItemLinks.Add(this.bbiRunningReload);
-            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 761);
+            this.ribbonStatusBar.Location = new System.Drawing.Point(0, 756);
             this.ribbonStatusBar.Name = "ribbonStatusBar";
             this.ribbonStatusBar.Ribbon = this.ribbonControl;
-            this.ribbonStatusBar.Size = new System.Drawing.Size(1376, 26);
+            this.ribbonStatusBar.Size = new System.Drawing.Size(1376, 31);
             // 
             // layoutControl1
             // 
             this.layoutControl1.Controls.Add(this.groupControl1);
             this.layoutControl1.Controls.Add(this.gridControl);
             this.layoutControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl1.Location = new System.Drawing.Point(0, 91);
+            this.layoutControl1.Location = new System.Drawing.Point(0, 93);
             this.layoutControl1.Name = "layoutControl1";
             this.layoutControl1.Root = this.Root;
-            this.layoutControl1.Size = new System.Drawing.Size(1376, 670);
+            this.layoutControl1.Size = new System.Drawing.Size(1376, 663);
             this.layoutControl1.TabIndex = 4;
             this.layoutControl1.Text = "layoutControl1";
             // 
@@ -560,7 +580,7 @@
             this.groupControl1.Controls.Add(this.layoutControl2);
             this.groupControl1.Location = new System.Drawing.Point(1051, 12);
             this.groupControl1.Name = "groupControl1";
-            this.groupControl1.Size = new System.Drawing.Size(313, 646);
+            this.groupControl1.Size = new System.Drawing.Size(313, 639);
             this.groupControl1.TabIndex = 5;
             this.groupControl1.Text = "Navigator";
             // 
@@ -569,19 +589,19 @@
             this.layoutControl2.Controls.Add(this.groupControlForword);
             this.layoutControl2.Controls.Add(this.groupControlWeek);
             this.layoutControl2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.layoutControl2.Location = new System.Drawing.Point(2, 27);
+            this.layoutControl2.Location = new System.Drawing.Point(2, 22);
             this.layoutControl2.Name = "layoutControl2";
             this.layoutControl2.Root = this.layoutControlGroup1;
-            this.layoutControl2.Size = new System.Drawing.Size(309, 617);
+            this.layoutControl2.Size = new System.Drawing.Size(309, 615);
             this.layoutControl2.TabIndex = 0;
             this.layoutControl2.Text = "layoutControl2";
             // 
             // groupControlForword
             // 
             this.groupControlForword.Controls.Add(this.gridForwardControl);
-            this.groupControlForword.Location = new System.Drawing.Point(12, 284);
+            this.groupControlForword.Location = new System.Drawing.Point(12, 283);
             this.groupControlForword.Name = "groupControlForword";
-            this.groupControlForword.Size = new System.Drawing.Size(285, 321);
+            this.groupControlForword.Size = new System.Drawing.Size(285, 320);
             this.groupControlForword.TabIndex = 5;
             this.groupControlForword.Text = "WEEK ล่วงหน้า(งานสำหรับสัปดาห์หน้า)";
             // 
@@ -589,11 +609,11 @@
             // 
             this.gridForwardControl.Cursor = System.Windows.Forms.Cursors.Hand;
             this.gridForwardControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridForwardControl.Location = new System.Drawing.Point(2, 27);
+            this.gridForwardControl.Location = new System.Drawing.Point(2, 22);
             this.gridForwardControl.MainView = this.gridForwardView;
             this.gridForwardControl.MenuManager = this.ribbonControl;
             this.gridForwardControl.Name = "gridForwardControl";
-            this.gridForwardControl.Size = new System.Drawing.Size(281, 292);
+            this.gridForwardControl.Size = new System.Drawing.Size(281, 296);
             this.gridForwardControl.TabIndex = 0;
             this.gridForwardControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridForwardView});
@@ -711,7 +731,7 @@
             this.groupControlWeek.Controls.Add(this.gridWeekControl);
             this.groupControlWeek.Location = new System.Drawing.Point(12, 12);
             this.groupControlWeek.Name = "groupControlWeek";
-            this.groupControlWeek.Size = new System.Drawing.Size(285, 268);
+            this.groupControlWeek.Size = new System.Drawing.Size(285, 267);
             this.groupControlWeek.TabIndex = 4;
             this.groupControlWeek.Text = "WEEK ปัจจุบัน(งานที่จะต้องโหลดขึ้นตู้)";
             // 
@@ -719,11 +739,11 @@
             // 
             this.gridWeekControl.Cursor = System.Windows.Forms.Cursors.Hand;
             this.gridWeekControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.gridWeekControl.Location = new System.Drawing.Point(2, 27);
+            this.gridWeekControl.Location = new System.Drawing.Point(2, 22);
             this.gridWeekControl.MainView = this.gridWeekView;
             this.gridWeekControl.MenuManager = this.ribbonControl;
             this.gridWeekControl.Name = "gridWeekControl";
-            this.gridWeekControl.Size = new System.Drawing.Size(281, 239);
+            this.gridWeekControl.Size = new System.Drawing.Size(281, 243);
             this.gridWeekControl.TabIndex = 0;
             this.gridWeekControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridWeekView});
@@ -846,7 +866,7 @@
             this.layoutControlItem3,
             this.layoutControlItem4});
             this.layoutControlGroup1.Name = "layoutControlGroup1";
-            this.layoutControlGroup1.Size = new System.Drawing.Size(309, 617);
+            this.layoutControlGroup1.Size = new System.Drawing.Size(309, 615);
             this.layoutControlGroup1.TextVisible = false;
             // 
             // layoutControlItem3
@@ -854,16 +874,16 @@
             this.layoutControlItem3.Control = this.groupControlWeek;
             this.layoutControlItem3.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem3.Name = "layoutControlItem3";
-            this.layoutControlItem3.Size = new System.Drawing.Size(289, 272);
+            this.layoutControlItem3.Size = new System.Drawing.Size(289, 271);
             this.layoutControlItem3.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem3.TextVisible = false;
             // 
             // layoutControlItem4
             // 
             this.layoutControlItem4.Control = this.groupControlForword;
-            this.layoutControlItem4.Location = new System.Drawing.Point(0, 272);
+            this.layoutControlItem4.Location = new System.Drawing.Point(0, 271);
             this.layoutControlItem4.Name = "layoutControlItem4";
-            this.layoutControlItem4.Size = new System.Drawing.Size(289, 325);
+            this.layoutControlItem4.Size = new System.Drawing.Size(289, 324);
             this.layoutControlItem4.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem4.TextVisible = false;
             // 
@@ -874,7 +894,7 @@
             this.gridControl.MainView = this.gridView;
             this.gridControl.MenuManager = this.ribbonControl;
             this.gridControl.Name = "gridControl";
-            this.gridControl.Size = new System.Drawing.Size(1035, 646);
+            this.gridControl.Size = new System.Drawing.Size(1035, 639);
             this.gridControl.TabIndex = 4;
             this.gridControl.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView});
@@ -1218,7 +1238,7 @@
             this.layoutControlItem1,
             this.layoutControlItem2});
             this.Root.Name = "Root";
-            this.Root.Size = new System.Drawing.Size(1376, 670);
+            this.Root.Size = new System.Drawing.Size(1376, 663);
             this.Root.TextVisible = false;
             // 
             // layoutControlItem1
@@ -1226,7 +1246,7 @@
             this.layoutControlItem1.Control = this.gridControl;
             this.layoutControlItem1.Location = new System.Drawing.Point(0, 0);
             this.layoutControlItem1.Name = "layoutControlItem1";
-            this.layoutControlItem1.Size = new System.Drawing.Size(1039, 650);
+            this.layoutControlItem1.Size = new System.Drawing.Size(1039, 643);
             this.layoutControlItem1.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem1.TextVisible = false;
             // 
@@ -1235,7 +1255,7 @@
             this.layoutControlItem2.Control = this.groupControl1;
             this.layoutControlItem2.Location = new System.Drawing.Point(1039, 0);
             this.layoutControlItem2.Name = "layoutControlItem2";
-            this.layoutControlItem2.Size = new System.Drawing.Size(317, 650);
+            this.layoutControlItem2.Size = new System.Drawing.Size(317, 643);
             this.layoutControlItem2.TextSize = new System.Drawing.Size(0, 0);
             this.layoutControlItem2.TextVisible = false;
             // 
@@ -1289,24 +1309,6 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
-            // 
-            // bbiShortingByPart
-            // 
-            this.bbiShortingByPart.Caption = "Shorting By Part";
-            this.bbiShortingByPart.Id = 27;
-            this.bbiShortingByPart.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiShortingByPart.ImageOptions.Image")));
-            this.bbiShortingByPart.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiShortingByPart.ImageOptions.LargeImage")));
-            this.bbiShortingByPart.Name = "bbiShortingByPart";
-            this.bbiShortingByPart.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiShortingByPart_ItemClick);
-            // 
-            // bbiShortingByCustomer
-            // 
-            this.bbiShortingByCustomer.Caption = "Shorting By Customer";
-            this.bbiShortingByCustomer.Id = 28;
-            this.bbiShortingByCustomer.ImageOptions.Image = ((System.Drawing.Image)(resources.GetObject("bbiShortingByCustomer.ImageOptions.Image")));
-            this.bbiShortingByCustomer.ImageOptions.LargeImage = ((System.Drawing.Image)(resources.GetObject("bbiShortingByCustomer.ImageOptions.LargeImage")));
-            this.bbiShortingByCustomer.Name = "bbiShortingByCustomer";
-            this.bbiShortingByCustomer.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.bbiShortingByCustomer_ItemClick);
             // 
             // InvoiceMainForm
             // 
