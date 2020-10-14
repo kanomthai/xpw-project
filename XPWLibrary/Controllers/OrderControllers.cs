@@ -73,8 +73,8 @@ namespace XPWLibrary.Controllers
                         $"m.combinv,p.COMMERCIAL,p.PC,p.BIOABT,max(p.REASONCD) rewrite,max(p.upddte) upddte\n" +
                         "FROM TXP_ORDERPLAN p\n" +
                         "INNER JOIN TXM_CUSTOMER m ON p.FACTORY = m.FACTORY  AND p.AFFCODE = m.AFFCODE AND p.BISHPC = m.BISHPC AND p.BISAFN = m.CUSTNM \n" +
-                        "LEFT JOIN TXP_ISSTRANSENT e ON b.ISSUINGKEY= e.ISSUINGKEY\n" +
-                         $"WHERE p.FACTORY = '{StaticFunctionData.Factory}' AND p.ORDERID LIKE  '%{orderid.ToString().Trim().ToUpper()}%'\n" +
+                        "LEFT JOIN TXP_ISSTRANSENT e ON p.curinv= e.ISSUINGKEY\n" +
+                         $"WHERE p.FACTORY = '{StaticFunctionData.Factory}' AND p.PONO LIKE  '%{orderid.ToString().Trim().ToUpper()}%'\n" +
                         "GROUP BY p.ETDTAP,p.FACTORY,p.AFFCODE,p.BISHPC,p.BISAFN,p.COMMERCIAL,p.PC,p.SHIPTYPE,p.BIOABT,m.COMBINV\n" +
                         "ORDER BY p.ETDTAP,p.FACTORY,p.AFFCODE,p.BISHPC,p.BISAFN,p.COMMERCIAL,p.PC,p.SHIPTYPE,p.BIOABT,m.COMBINV";
             Console.WriteLine(sql);
@@ -106,7 +106,7 @@ namespace XPWLibrary.Controllers
                         $"m.combinv,p.COMMERCIAL,p.PC,p.BIOABT,max(p.REASONCD) rewrite,max(p.upddte) upddte\n" +
                         "FROM TXP_ORDERPLAN p\n" +
                         "INNER JOIN TXM_CUSTOMER m ON p.FACTORY = m.FACTORY  AND p.AFFCODE = m.AFFCODE AND p.BISHPC = m.BISHPC AND p.BISAFN = m.CUSTNM \n" +
-                        "LEFT JOIN TXP_ISSTRANSENT e ON b.ISSUINGKEY= e.ISSUINGKEY\n" +
+                        "LEFT JOIN TXP_ISSTRANSENT e ON p.curinv= e.ISSUINGKEY\n" +
                          $"WHERE p.FACTORY = '{StaticFunctionData.Factory}' AND p.LOTNO LIKE  '%{v.ToString().Trim().ToUpper()}%'\n" +
                         "GROUP BY p.ETDTAP,p.FACTORY,p.AFFCODE,p.BISHPC,p.BISAFN,p.COMMERCIAL,p.PC,p.SHIPTYPE,p.BIOABT,m.COMBINV\n" +
                         "ORDER BY p.ETDTAP,p.FACTORY,p.AFFCODE,p.BISHPC,p.BISAFN,p.COMMERCIAL,p.PC,p.SHIPTYPE,p.BIOABT,m.COMBINV";

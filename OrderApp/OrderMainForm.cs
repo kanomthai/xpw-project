@@ -232,6 +232,10 @@ namespace OrderApp
                             gridControl.DataSource = obj;
                             bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
                         }
+                        else
+                        {
+                            XtraMessageBox.Show("ไม่พบข้อมูลที่ต้องการค้นหา");
+                        }
                     }
                 }
                 SplashScreenManager.CloseDefaultWaitForm();
@@ -259,6 +263,10 @@ namespace OrderApp
                         {
                             gridControl.DataSource = obj;
                             bsiRecordsCount.Caption = "RECORDS : " + obj.Count;
+                        }
+                        else
+                        {
+                            XtraMessageBox.Show("ไม่พบข้อมูลที่ต้องการค้นหา");
                         }
                     }
                 }
